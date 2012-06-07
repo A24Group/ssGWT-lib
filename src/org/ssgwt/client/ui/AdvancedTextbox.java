@@ -112,6 +112,8 @@ public class AdvancedTextbox extends TextBox {
 	 * Attach all handlers to the input textbox.
 	 */
 	public void attacheHanlders() {
+		
+		// hide the placeholder text on focus
 		addFocusHandler( 
 			new FocusHandler() {
 				public void onFocus(FocusEvent event) {
@@ -120,6 +122,7 @@ public class AdvancedTextbox extends TextBox {
 			} 
 		);
 
+		// display the placeholder text when focus is lost. 
 		addBlurHandler(
 			new BlurHandler() {
 				public void onBlur(BlurEvent event) {
