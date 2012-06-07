@@ -90,7 +90,7 @@ public class AdvancedTextbox extends TextBox {
 	 * placeholder style name to the textbox when adding the placeholder text.
 	 */
 	public void displayPlaceholder() {
-		if ((this.getText().equals( "" )) && (!this.getPlaceholderText().equals(""))) {
+		if ((this.getText().equals("")) && (!this.getPlaceholderText().equals(""))) {
 			this.setText(this.getPlaceholderText());
 			this.addStyleName(this.getPlaceholderStyleName());
 		}
