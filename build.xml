@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="ssgwtlib" basedir="." default="compile-project-to-jar">
+	<property name="src.dir" value="./src/" />
+	<property name="classes.dir" value="./classes" />
+	
+	<path id="project.class.path">
+		<pathelement location="/opt/gwt/gwt-user.jar"/>
+		<fileset dir="/opt/gwt" includes="gwt-dev*.jar"/>
+	</path>
+
+	<target name="clean-project" description="Delete all generated files">
+		<echo level="info" message="Deleting compiled class files (${classes.dir})..." />
+		<delete dir="${classes.dir}" failonerror="false" />
+
+		<echo level="info" message="Deleting compiled jar file (${ant.project.name}.jar)..." />
+		<delete file="${ant.project.name}.jar" />
+	</target>
+
+	<target name="compile-project-classes" description="Compiles the java files to class files" depends="clean-project">
+		<echo level="info" message="Creating ${classes.dir} directory..." />
+		<mkdir dir="${classes.dir}" />
+
+		<echo level="info" message="Compiling class files into ${classes.dir}..." />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" >
+			<classpath refid="project.class.path"/>
+		</javac>
+	</target>
+
+	<target name="compile-project-to-jar" description="Compiles a jar  file for the project" depends="compile-project-classes">
+		<echo level="info" message="Compiling jar file at ${ant.project.name}.jar..." />
+		<jar destfile="dist/${ant.project.name}.jar" basedir="${classes.dir}" />
+	</target>
+
+</project>
