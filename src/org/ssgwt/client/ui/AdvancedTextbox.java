@@ -57,7 +57,7 @@ public class AdvancedTextbox extends TextBox {
 	 *
 	 * @param placeholderText The text to be used as the placeholder
 	 */ 
-	public void setPlaceholder( String placeholderText ) {
+	public void setPlaceholder(String placeholderText) {
 		this.placeholderText = placeholderText.trim();
 		this.displayPlaceholder();
 	}
@@ -67,21 +67,21 @@ public class AdvancedTextbox extends TextBox {
 	 *
 	 * @return The text to be used as the placeholder
 	 */ 
-	public String getPlaceholderText( ) {
+	public String getPlaceholderText() {
 		return this.placeholderText;
 	}	
 	
 	/**
 	 * Changes the style name for the placeholder text in the textbox.
 	 */
-	public void setPlaceholderStyleName( String placeholderStyleName ) {
+	public void setPlaceholderStyleName(String placeholderStyleName) {
 		 this.placeholderStyleName = placeholderStyleName.trim();
 	}
 	
 	/**
 	 * Returns the placeholder style name set on the textbox.
 	 */
-	public String getPlaceholderStyleName( ) {
+	public String getPlaceholderStyleName() {
 		return this.placeholderStyleName;
 	}
 	
@@ -90,9 +90,9 @@ public class AdvancedTextbox extends TextBox {
 	 * placeholder style name to the textbox when adding the placeholder text.
 	 */
 	public void displayPlaceholder() {
-		if ( ( this.getText().equals( "" ) ) && ( !this.getPlaceholderText().equals( "" ) ) ) {
-			this.setText( this.getPlaceholderText() );
-			this.addStyleName( this.getPlaceholderStyleName() );
+		if ((this.getText().equals( "" )) && (!this.getPlaceholderText().equals(""))) {
+			this.setText(this.getPlaceholderText());
+			this.addStyleName(this.getPlaceholderStyleName());
 		}
 	}
 	
@@ -102,9 +102,9 @@ public class AdvancedTextbox extends TextBox {
 	 * the textbox.
 	 */
 	public void hidePlaceholder() {
-		if ( this.getText().equals( this.getPlaceholderText() ) ) {
-			this.setText( "" );
-			this.removeStyleName( this.getPlaceholderStyleName() );
+		if (this.getText().equals(this.getPlaceholderText())) {
+			this.setText("");
+			this.removeStyleName(this.getPlaceholderStyleName());
 		}
 	}
 	
@@ -112,17 +112,21 @@ public class AdvancedTextbox extends TextBox {
 	 * Attach all handlers to the input textbox.
 	 */
 	public void attacheHanlders() {
-		addFocusHandler(new FocusHandler() {
-			public void onFocus(FocusEvent event) {
-				hidePlaceholder();
-			}
-		});
+		addFocusHandler( 
+			new FocusHandler() {
+				public void onFocus(FocusEvent event) {
+					hidePlaceholder();
+				}
+			} 
+		);
 
-		addBlurHandler(new BlurHandler() {
-			public void onBlur(BlurEvent event) {
-				displayPlaceholder();
+		addBlurHandler(
+			new BlurHandler() {
+				public void onBlur(BlurEvent event) {
+					displayPlaceholder();
+				}
 			}
-		});
+		);
 	}
 	
 	/**
