@@ -28,7 +28,7 @@
 
 	<target name="compile-project-to-jar" description="Compiles a jar  file for the project" depends="compile-project-classes">
 		<echo level="info" message="Compiling jar file at ${ant.project.name}.jar..." />
-		<jar destfile="dist/${ant.project.name}.jar" basedir="${classes.dir}" />
+		<jar destfile="dist/${ant.project.name}.jar" basedir="${src.dir}" />
 	</target>
 
 </project>
