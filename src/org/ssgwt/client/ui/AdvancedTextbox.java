@@ -47,6 +47,18 @@ public class AdvancedTextbox extends TextBox {
     protected String placeholderStyleName = "placeholder";
 
     /**
+     * Indicates whether the value for the textbox is required to be filled in
+     * when displayed on screen or not.
+     */
+    protected boolean required = false;
+
+    /**
+     * The style name to be added to the element if the element is marked as
+     * required,
+     */
+    protected String requiredStyleName = "required";
+
+    /**
      * Class constructor
      * 
      * @author Jaco Nel <jaco.nel@a24group.com>
@@ -101,6 +113,56 @@ public class AdvancedTextbox extends TextBox {
      */
     public String getPlaceholderStyleName() {
         return this.placeholderStyleName;
+    }
+
+    /**
+     * Returns whether the field is required or not
+     * 
+     * @return required or not
+     */
+    public boolean isRequired() {
+        return required;
+    }
+
+    /**
+     * Set the field to be either required or not. Will apply or remove the
+     * required style name from the element dependant on the value provided.
+     * 
+     * @param required
+     *            Whether the field is required or not
+     */
+    public void setRequired(boolean required) {
+        this.required = required;
+        if (this.required) {
+            this.addStyleName(this.getRequiredStyleName());
+        } else {
+            this.removeStyleName(this.getRequiredStyleName());
+        }
+
+    }
+
+    /**
+     * Retrieve the required style name
+     * 
+     * @return the requiredStyleName
+     */
+    public String getRequiredStyleName() {
+        return requiredStyleName;
+    }
+
+    /**
+     * Set the required style name
+     * 
+     * @param requiredStyleName
+     *            the required style name to set
+     */
+    public void setRequiredStyleName(String requiredStyleName) {
+        this.removeStyleName(this.getRequiredStyleName());
+
+        this.requiredStyleName = requiredStyleName;
+        if (this.required) {
+            this.addStyleName(this.getRequiredStyleName());
+        }
     }
 
     /**
