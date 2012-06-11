@@ -2,7 +2,8 @@
 <project name="ssgwtlib" basedir="." default="compile-project-to-jar">
 	<property name="src.dir" value="./src/" />
 	<property name="classes.dir" value="./classes" />
-	
+	<property name="dist.dir" value="./dist" />
+
 	<path id="project.class.path">
 		<pathelement location="/opt/gwt/gwt-user.jar"/>
 		<fileset dir="/opt/gwt" includes="gwt-dev*.jar"/>
@@ -27,8 +28,14 @@
 	</target>
 
 	<target name="compile-project-to-jar" description="Compiles a jar  file for the project" depends="compile-project-classes">
+		<echo level="info" message="Creating distribution dir at ${dist.dir}..." />
+		<mkdir dir="${dist.dir}"/>
+
 		<echo level="info" message="Compiling jar file at ${ant.project.name}.jar..." />
-		<jar destfile="dist/${ant.project.name}.jar" basedir="${src.dir}" />
+		<jar destfile="dist/${ant.project.name}.jar">
+			<fileset dir="${classes.dir}" includes="**/*.class"/>
+			<fileset dir="${src.dir}" includes="**/*"/>
+		</jar>
 	</target>
 
 </project>
