@@ -30,7 +30,7 @@ public class EmailValidator extends AbstractValidator implements ValidatorInterf
      * @return Whether the value is a valid email address or not.
      */
     public boolean isValid(String value) {
-        return value.matches( EMAIL_PATTERN );
+        return value.matches(EMAIL_PATTERN);
     }
 
     /**
