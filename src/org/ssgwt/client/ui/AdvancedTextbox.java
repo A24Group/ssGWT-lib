@@ -174,10 +174,10 @@ public class AdvancedTextbox extends TextBox {
      * @since 05 June 2012
      */
     public void displayPlaceholder() {
-        if ((this.getText().equals(""))
+        if ((super.getText().equals(""))
                 && (!this.getPlaceholderText().equals(""))) {
-            this.setText(this.getPlaceholderText());
-            this.addStyleName(this.getPlaceholderStyleName());
+            super.setText(this.getPlaceholderText());
+            super.addStyleName(this.getPlaceholderStyleName());
         }
     }
 
@@ -189,9 +189,9 @@ public class AdvancedTextbox extends TextBox {
      * @since 05 June 2012
      */
     public void hidePlaceholder() {
-        if (this.getText().equals(this.getPlaceholderText())) {
-            this.setText("");
-            this.removeStyleName(this.getPlaceholderStyleName());
+        if (super.getText().equals(this.getPlaceholderText())) {
+            super.setText("");
+            super.removeStyleName(this.getPlaceholderStyleName());
         }
     }
 
@@ -228,6 +228,10 @@ public class AdvancedTextbox extends TextBox {
      */
     @Override
     public String getText() {
-        return super.getText().trim();
+        if (super.getText().trim().equals(this.getPlaceholderText().trim())) {
+            return "";
+        } else {
+            return super.getText().trim();
+        }
     }
 }
