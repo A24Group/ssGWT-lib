@@ -41,7 +41,7 @@ public class FormValidator {
     /**
      * A hashmap used to store the validator interfaces
      */
-    private HashMap<String, ValidatorInterface<?>> validatorInstances;
+    private HashMap<String, ValidatorInterface<?>> validatorInstances = new HashMap<String, ValidatorInterface<?>>();
     
     /**
      * Calls the addField(FormField formfield) method with a formfield object created from the parameters
