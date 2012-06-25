@@ -21,3 +21,9 @@ Some validators may take in additional configuration, this configuration should 
 
 	boolean valid = strValidator.isValid("String to be tested")
 ```
+
+The FormValidator is used to send in store multiple fields to be validated through its addField function
+
+These fields can then be validated using the doValidation function
+
+The FormValidator will do this by creating the correct validators instance and then validating the fields based on the configuration set up

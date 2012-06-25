@@ -1,8 +1,26 @@
+/**
+ * Copyright 2012 A24Group
+ *  
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License. 
+ */
+
 package org.ssgwt.client.validation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.ssgwt.client.validation.validators.AbstractValidator;
+import org.ssgwt.client.validation.validators.DateValidator;
+import org.ssgwt.client.validation.validators.EmailValidator;
+import org.ssgwt.client.validation.validators.StringValidator;
+import org.ssgwt.client.validation.validators.UsernameValidator;
 import org.ssgwt.client.validation.validators.ValidatorInterface;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -88,18 +106,38 @@ public class FormValidator {
     }
     
     /**
-     * Returns the correct instance of required validator
+     * This is a factory function that will determine which instance of the
+     * validation classes to create and return based on the reference passed
+     * in
      * 
      * @param validatorReferenceName - the reference name to use in the factory
-     * @return AbstractValidator - an instance of the AbstractValidator
+     * @return ValidatorInterface - an instance of the required validation class
      */
-    private AbstractValidator validatorFactory(String validatorReferenceName) {
-        //if refname in array
-        //    return corresponding instance
-        //else
-        //create instance add to array
-        //return
-        return null;
-    } 
+    private ValidatorInterface<?> validatorFactory(String validatorReferenceName) {
+        //check if instance for validatorReferenceName is already in array and return if true
+        if (validatorInstances.containsKey(validatorReferenceName)) {
+            return validatorInstances.get(validatorReferenceName);
+        }
+        
+        //create variable to hold the instance to return 
+        ValidatorInterface<?> formValidationInstance = null;
+        
+        //check which instance of the validation classes to instantiate
+        if (validatorReferenceName.equals(FormFieldConstants.VALIDATE_DATE_REFERENCE)) {
+            formValidationInstance = new DateValidator();
+        } else if (validatorReferenceName.equals(FormFieldConstants.VALIDATE_EMAIL_REFERENCE)) {
+            formValidationInstance = new EmailValidator();
+        } else if (validatorReferenceName.equals(FormFieldConstants.VALIDATE_STRING_REFERENCE)) {
+            formValidationInstance = new StringValidator();
+        } else if (validatorReferenceName.equals(FormFieldConstants.VALIDATE_USERNAME_REFERENCE)) {
+            formValidationInstance = new UsernameValidator();
+        }
+        
+        //add validation class instance to array
+        validatorInstances.put(validatorReferenceName, formValidationInstance);
+        
+        //return the validation class instance
+        return formValidationInstance;
+    }
 
 }
