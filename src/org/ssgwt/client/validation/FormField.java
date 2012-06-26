@@ -39,12 +39,12 @@ public class FormField {
     /**
      * Validation configuration settings
      */
-    public HashMap<String, String> config;
+    public HashMap<String, Integer> config;
     
     /**
-     * The locale key for the message
+     * The error message to be displayed
      */
-    public String messageLocalKey;
+    public String errorMessage;
     
     /**
      * The error style type

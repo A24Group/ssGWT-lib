@@ -16,12 +16,13 @@ package org.ssgwt.client.validation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.ssgwt.client.validation.validators.AbstractValidator;
+import org.ssgwt.client.ui.AdvancedTextbox;
 import org.ssgwt.client.validation.validators.DateValidator;
 import org.ssgwt.client.validation.validators.EmailValidator;
 import org.ssgwt.client.validation.validators.StringValidator;
 import org.ssgwt.client.validation.validators.UsernameValidator;
 import org.ssgwt.client.validation.validators.ValidatorInterface;
+
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -36,7 +37,7 @@ public class FormValidator {
     /**
      * The array list used to store all the form fields
      */
-    private ArrayList<FormField> fields;
+    private ArrayList<FormField> fields = new ArrayList<FormField>();
     
     /**
      * A hashmap used to store the validator interfaces
@@ -49,11 +50,17 @@ public class FormValidator {
      * @param validatorReferenceName - The reference name for the validation
      * @param uiField - the ui field the validation is done on
      * @param config - Validation configuration settings
-     * @param messageLocaleKey - The locale key for the message
+     * @param errorMessage - The error message to be displayed
      * @param errorStyleName - the error style type
      */
-    public void addField(String validatorReferenceName, Widget uiField, HashMap<String, String> config, String messageLocaleKey, String errorStyleName) {
-        //Make an instance of the FormField with the params and call the other addField
+    public void addField(String validatorReferenceName, Widget uiField, HashMap<String, Integer> config, String errorMessage, String errorStyleName) {
+        FormField formField = new FormField();
+        formField.validatorReferenceName = validatorReferenceName;
+        formField.uiField = uiField;
+        formField.config = config;
+        formField.errorMessage = errorMessage;
+        formField.errorStyleName = errorStyleName;
+        this.addField(formField);
     }
     
     /**
@@ -62,10 +69,10 @@ public class FormValidator {
      * @param validatorReferenceName - The reference name for the validation
      * @param uiField - the ui field the validation is done on
      * @param config - Validation configuration settings
-     * @param messageLocaleKey - The locale key for the message
+     * @param errorMessage - The error message to be displayed
      */
-    public void addField(String validatorReferenceName, Widget uiField, HashMap<String, String> config, String messageLocaleKey) {
-        //call the other(top) addField with some params as null
+    public void addField(String validatorReferenceName, Widget uiField, HashMap<String, Integer> config, String errorMessage) {
+        this.addField(validatorReferenceName, uiField, config, errorMessage, null);
     }
 
     /**
@@ -75,8 +82,8 @@ public class FormValidator {
      * @param uiField - the ui field the validation is done on
      * @param config - Validation configuration settings
      */
-    public void addField(String validatorReferenceName, Widget uiField, HashMap<String, String> config) {
-        //call the other(top) addField with some params as null
+    public void addField(String validatorReferenceName, Widget uiField, HashMap<String, Integer> config) {
+        this.addField(validatorReferenceName, uiField, config, null, null);
     }
     
     /**
@@ -85,7 +92,7 @@ public class FormValidator {
      * @param formfield - a formfield object used
      */
     public void addField(FormField formfield) {
-        //add a field to the field array
+        fields.add(formfield);
     }
     
     /**
@@ -95,13 +102,33 @@ public class FormValidator {
      */
     public String doValidation(){
         //loops through the arraylist and remove all error styles if it is specified.
+        int fieldSize = fields.size();
+        for (int i = 0; i < fieldSize; i++){
+            if (fields.get(i).errorStyleName != null){
+                fields.get(i).uiField.removeStyleName(fields.get(i).errorStyleName.toString());
+            }
+        }
         //loops through the arraylist and retrieve their values from within the widget
-        //gets the instance of the validator 
-        //set the config hashmap on the validator
-        //check if the value is valid
-        //if error
-        //    add error style 
-        //    return error (return generic if no key found)
+        for (int i = 0; i < fieldSize; i++){
+            //gets the instance of the validator 
+            ValidatorInterface<String> validator = (ValidatorInterface<String>)validatorFactory(fields.get(i).validatorReferenceName);
+            //set the config hashmap on the validator
+            validator.setConfiguration(fields.get(i).config);
+            //check if the value is valid
+            boolean valid = validator.isValid(((AdvancedTextbox)fields.get(i).uiField).getValue());
+            if (!valid){
+                //add error style
+                if (fields.get(i).errorStyleName != null){
+                    fields.get(i).uiField.addStyleName(fields.get(i).errorStyleName.toString());
+                }
+                //return error (return generic if no key found)
+                if (fields.get(i).errorMessage != null){
+                    return fields.get(i).errorMessage;
+                } else {
+                    return validator.getDefaultValidationMessage();
+                }
+            }
+        }
         return null;
     }
     
@@ -135,7 +162,7 @@ public class FormValidator {
         
         //add validation class instance to array
         validatorInstances.put(validatorReferenceName, formValidationInstance);
-        
+
         //return the validation class instance
         return formValidationInstance;
     }
