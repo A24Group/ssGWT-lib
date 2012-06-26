@@ -73,7 +73,9 @@ public class EmailValidator extends AbstractValidator implements ValidatorInterf
      * 
      * @return The default error message to use
      */
+    @Override
     public String getDefaultValidationMessage() {;
         return EmailValidator.DEFAULT_VALIDATION_MESSAGE;
     }
+
 }

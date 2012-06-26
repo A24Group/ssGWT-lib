@@ -125,6 +125,7 @@ public class StringValidator extends AbstractValidator implements ValidatorInter
      * 
      * @return The default error message to use
      */
+    @Override
     public String getDefaultValidationMessage() {;
         return StringValidator.DEFAULT_VALIDATION_MESSAGE;
     }

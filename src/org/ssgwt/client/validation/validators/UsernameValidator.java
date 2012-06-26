@@ -74,6 +74,7 @@ public class UsernameValidator extends AbstractValidator implements ValidatorInt
      * 
      * @return The default error message to use
      */
+    @Override
     public String getDefaultValidationMessage() {;
         return UsernameValidator.DEFAULT_VALIDATION_MESSAGE;
     }

@@ -88,7 +88,9 @@ public class DateValidator extends AbstractValidator implements ValidatorInterfa
      * 
      * @return The default error message to use
      */
+    @Override
     public String getDefaultValidationMessage() {;
         return DateValidator.DEFAULT_VALIDATION_MESSAGE;
     }
+
 }
