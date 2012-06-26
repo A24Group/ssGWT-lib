@@ -71,8 +71,8 @@ public class FormValidator {
      * @param config - Validation configuration settings
      * @param errorMessage - The error message to be displayed
      */
-    public void addField(String validatorReferenceName, Widget uiField, HashMap<String, Integer> config, String messageLocaleKey) {
-        this.addField(validatorReferenceName, uiField, config, messageLocaleKey, null);
+    public void addField(String validatorReferenceName, Widget uiField, HashMap<String, Integer> config, String errorMessage) {
+        this.addField(validatorReferenceName, uiField, config, errorMessage, null);
     }
 
     /**
@@ -102,22 +102,23 @@ public class FormValidator {
      */
     public String doValidation(){
         //loops through the arraylist and remove all error styles if it is specified.
-        for(int i = 0; i < fields.size(); i++){
-            if(fields.get(i).errorStyleName != null){
+        int fieldSize = fields.size();
+        for (int i = 0; i < fieldSize; i++){
+            if (fields.get(i).errorStyleName != null){
                 fields.get(i).uiField.removeStyleName(fields.get(i).errorStyleName.toString());
             }
         }
         //loops through the arraylist and retrieve their values from within the widget
-        for(int i = 0; i < fields.size(); i++){
+        for (int i = 0; i < fieldSize; i++){
             //gets the instance of the validator 
             ValidatorInterface<String> validator = (ValidatorInterface<String>)validatorFactory(fields.get(i).validatorReferenceName);
             //set the config hashmap on the validator
             validator.setConfiguration(fields.get(i).config);
             //check if the value is valid
-            boolean valid = validator.isValid( ((AdvancedTextbox)fields.get(i).uiField).getValue() );
-            if(!valid){
+            boolean valid = validator.isValid(((AdvancedTextbox)fields.get(i).uiField).getValue());
+            if (!valid){
                 //add error style
-                if(fields.get(i).errorStyleName != null){
+                if (fields.get(i).errorStyleName != null){
                     fields.get(i).uiField.addStyleName(fields.get(i).errorStyleName.toString());
                 }
                 //return error (return generic if no key found)
