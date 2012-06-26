@@ -38,7 +38,12 @@ public class StringValidator extends AbstractValidator implements ValidatorInter
      * Constant representing the minimum length for the string.
      */
     public static final String OPTION_MIN_LENGTH = "min-length";
-
+    
+    /**
+     * Default error message to use for validation
+     */
+    private static final String DEFAULT_VALIDATION_MESSAGE = "Invalid or no text entered";
+    
     /**
      * Validates the value passed in.
      * 
@@ -110,5 +115,17 @@ public class StringValidator extends AbstractValidator implements ValidatorInter
     @Override
     public String getName() {
         return StringValidator.VALIDATOR_NAME;
+    }
+    
+    /**
+     * Returns default error message to use for validation
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 26 June 2012
+     * 
+     * @return The default error message to use
+     */
+    public String getDefaultValidationMessage() {;
+        return StringValidator.DEFAULT_VALIDATION_MESSAGE;
     }
 }

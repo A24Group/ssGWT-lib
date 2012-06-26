@@ -35,6 +35,11 @@ public class UsernameValidator extends AbstractValidator implements ValidatorInt
      * The regular expression patterns string to be used to validate the value.
      */
     private static final String USERNAME_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*";
+    
+    /**
+     * Default error message to use for validation
+     */
+    private static final String DEFAULT_VALIDATION_MESSAGE = "Invalid username entered";
 
     /**
      * Determines whether the value passed in is a valid email address or not.
@@ -59,5 +64,17 @@ public class UsernameValidator extends AbstractValidator implements ValidatorInt
     @Override
     public String getName() {
         return UsernameValidator.VALIDATOR_NAME;
+    }
+    
+    /**
+     * Returns default error message to use for validation
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 26 June 2012
+     * 
+     * @return The default error message to use
+     */
+    public String getDefaultValidationMessage() {;
+        return UsernameValidator.DEFAULT_VALIDATION_MESSAGE;
     }
 }

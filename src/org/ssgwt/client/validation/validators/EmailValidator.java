@@ -34,7 +34,12 @@ public class EmailValidator extends AbstractValidator implements ValidatorInterf
      * The regular expression patterns string to be used to validate the value.
      */
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
+    
+    /**
+     * Default error message to use for validation
+     */
+    private static final String DEFAULT_VALIDATION_MESSAGE = "Invalid email entered";
+    
     /**
      * Determines whether the value passed in is a valid email address or not.
      * 
@@ -58,5 +63,17 @@ public class EmailValidator extends AbstractValidator implements ValidatorInterf
     @Override
     public String getName() {
         return EmailValidator.VALIDATOR_NAME;
+    }
+    
+    /**
+     * Returns default error message to use for validation
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 26 June 2012
+     * 
+     * @return The default error message to use
+     */
+    public String getDefaultValidationMessage() {;
+        return EmailValidator.DEFAULT_VALIDATION_MESSAGE;
     }
 }

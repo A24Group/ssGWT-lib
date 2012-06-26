@@ -43,7 +43,17 @@ public interface ValidatorInterface<T> {
      * @return The validator name
      */
     public String getName();
-
+    
+    /**
+     * Returns default error message to use for validation
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 26 June 2012
+     * 
+     * @return The default error message to use
+     */
+    public String getDefaultValidationMessage();
+    
     /**
      * Sets the validators configuration if required.
      * 

@@ -39,7 +39,12 @@ public class DateValidator extends AbstractValidator implements ValidatorInterfa
      * Name of the validator name.
      */
     private static final String VALIDATOR_NAME = "DateValidator";
-
+    
+    /**
+     * Default error message to use for validation
+     */
+    private static final String DEFAULT_VALIDATION_MESSAGE = "Invalid date entered";
+    
     /**
      * Validates the value passed in.
      * 
@@ -73,5 +78,17 @@ public class DateValidator extends AbstractValidator implements ValidatorInterfa
     @Override
     public String getName() {
         return DateValidator.VALIDATOR_NAME;
+    }
+    
+    /**
+     * Returns default error message to use for validation
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 26 June 2012
+     * 
+     * @return The default error message to use
+     */
+    public String getDefaultValidationMessage() {;
+        return DateValidator.DEFAULT_VALIDATION_MESSAGE;
     }
 }
