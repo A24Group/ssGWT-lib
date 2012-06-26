@@ -1,14 +1,16 @@
 # Validation
 
-This pacakge contains reusable validation components. These components include validators and a ValidationChain.
+This pacakge contains reusable validation components. These components include validators that can be called by a ValidationChain or a FormValidator
 
 Each validator implements the ValidatorInterface to ensure that each validator has the `isValid()` method.
+
+## Validation Chain
 
 A ValidationChain allows you to chain together multiple validators to validate a single value.
 
 Some validators may take in additional configuration, this configuration should be passed in throught the `setConfiguration()`. If you create a validator that needs to take in additional configuration, please ensure that your validator extends the AbstractValidator
 
-# Example Usage
+### Example Usage
 
 ```java
 
@@ -22,7 +24,9 @@ Some validators may take in additional configuration, this configuration should 
 	boolean valid = strValidator.isValid("String to be tested")
 ```
 
-The FormValidator is used to send in store multiple fields to be validated through its addField function
+## Form Validator
+
+The FormValidator is used to send in and store multiple fields to be validated through its addField function
 
 These fields can then be validated using the doValidation function
 
