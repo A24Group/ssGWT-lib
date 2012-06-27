@@ -33,7 +33,7 @@ public class DateValidator extends AbstractValidator implements ValidatorInterfa
     /**
      * The date format to parse with.
      */
-    public static final String DATE_FORMAT = "dd/MM/yyyy";
+    public static final String DATE_FORMAT = "dd MMM yyyy";
 
     /**
      * Name of the validator name.
