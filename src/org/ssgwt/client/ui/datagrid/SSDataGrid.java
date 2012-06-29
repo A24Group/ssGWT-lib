@@ -55,6 +55,9 @@ public class SSDataGrid<T> extends Composite implements RequiresResize {
 
     /**
      * Class Constructor
+     * 
+     * @author Lodewyk Duminy
+     * @since 29 June 2012
      */
     public SSDataGrid() {
         this.initWidget(uiBinder.createAndBindUi(this));
@@ -70,6 +73,9 @@ public class SSDataGrid<T> extends Composite implements RequiresResize {
      * Setter to set the data that should be displayed on the DataGrid
      * 
      * @param data - The data the should be displayed on the data grid
+     * 
+     * @author Lodewyk Duminy
+     * @since 29 June 2012
      */
     public void setData(List<T> data) {
         
@@ -77,6 +83,9 @@ public class SSDataGrid<T> extends Composite implements RequiresResize {
 
     /**
      * Getter to retrieve the data currently being displayed on the DataGrid
+     * 
+     * @author Lodewyk Duminy
+     * @since 29 June 2012
      * 
      * @return The data being displayed on the DataGrid
      */
@@ -87,6 +96,9 @@ public class SSDataGrid<T> extends Composite implements RequiresResize {
     /**
      * Ensures that the datagrid has a scrollbar when the browser is too small
      * to display all the rows.
+     * 
+     * @author Lodewyk Duminy
+     * @since 29 June 2012
      */
     @Override
     public void onResize() {
