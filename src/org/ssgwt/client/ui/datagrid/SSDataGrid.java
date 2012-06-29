@@ -4,10 +4,12 @@ import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.RequiresResize;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -15,9 +17,10 @@ import com.google.gwt.user.client.ui.Widget;
  * sorting, filtering, selection clicking of row and paging
  * 
  * @author Johannes Gryffenberg
+ * @param <T>
  * @since 29 June 2012
  */
-public class SSDataGrid<T> extends Composite {
+public class SSDataGrid<T> extends Composite implements RequiresResize {
 
     /**
      * UiBinder interface for the composite
@@ -36,23 +39,31 @@ public class SSDataGrid<T> extends Composite {
     /**
      * The DataGrid that will be displayed on the screen
      */
-    private DataGrid<T> dataGrid = new DataGrid<T>();
+    @UiField( provided = true )
+    protected DataGrid<T> dataGrid = new DataGrid<T>();
 
     /**
      * The resource for the SimplePager
      */
-    private SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
+    protected SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
 
     /**
      * The pager that will handle the paging of the DataGrid
      */
-    private SimplePager pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
+    @UiField( provided = true )
+    protected SimplePager pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
 
     /**
      * Class Constructor
      */
     public SSDataGrid() {
-
+        this.initWidget(uiBinder.createAndBindUi(this));
+        
+        pager.setDisplay( dataGrid );
+        pager.setPageSize( 10 );
+        
+        this.setData( null );
+        
     }
 
     /**
@@ -61,7 +72,7 @@ public class SSDataGrid<T> extends Composite {
      * @param data - The data the should be displayed on the data grid
      */
     public void setData(List<T> data) {
-
+        
     }
 
     /**
@@ -72,5 +83,13 @@ public class SSDataGrid<T> extends Composite {
     public List<T> getData() {
         return null;
     }
-
+    
+    /**
+     * Ensures that the datagrid has a scrollbar when the browser is too small
+     * to display all the rows.
+     */
+    @Override
+    public void onResize() {
+        dataGrid.setHeight( this.getOffsetHeight( ) - 40 + "px" );
+    }
 }
