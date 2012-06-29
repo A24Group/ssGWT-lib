@@ -39,7 +39,7 @@ public class SSDataGrid<T> extends Composite implements RequiresResize {
     /**
      * The DataGrid that will be displayed on the screen
      */
-    @UiField( provided = true )
+    @UiField(provided = true)
     protected DataGrid<T> dataGrid = new DataGrid<T>();
 
     /**
@@ -50,7 +50,7 @@ public class SSDataGrid<T> extends Composite implements RequiresResize {
     /**
      * The pager that will handle the paging of the DataGrid
      */
-    @UiField( provided = true )
+    @UiField(provided = true)
     protected SimplePager pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
 
     /**
@@ -59,10 +59,10 @@ public class SSDataGrid<T> extends Composite implements RequiresResize {
     public SSDataGrid() {
         this.initWidget(uiBinder.createAndBindUi(this));
         
-        pager.setDisplay( dataGrid );
-        pager.setPageSize( 10 );
+        pager.setDisplay(dataGrid);
+        pager.setPageSize(10);
         
-        this.setData( null );
+        this.setData(null);
         
     }
 
@@ -90,6 +90,6 @@ public class SSDataGrid<T> extends Composite implements RequiresResize {
      */
     @Override
     public void onResize() {
-        dataGrid.setHeight( this.getOffsetHeight( ) - 40 + "px" );
+        dataGrid.setHeight((this.getOffsetHeight( ) - 40) + "px");
     }
 }
