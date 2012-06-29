@@ -1,0 +1,21 @@
+.pageDetails {
+  padding: 4px 8px;
+  text-align: center;
+}
+
+.button {
+  padding: 4px 1px 4px 1px;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.disabledButton {
+  cursor: default;   
+}
+
+.framedLayout {
+	min-width: 60px;
+	padding: 5px;
+	box-sizing: border-box;
+	border: thin solid #BDBFC5;
+}
