@@ -345,7 +345,7 @@ public class SSPager extends AbstractPager {
         /**
          * Gets called on a browser event
          * 
-         * @param The browser event
+         * @param event - The browser event
          */
         @Override
         public void onBrowserEvent(Event event) {
