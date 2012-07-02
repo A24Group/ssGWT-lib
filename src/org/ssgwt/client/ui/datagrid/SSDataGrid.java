@@ -3,7 +3,11 @@ package org.ssgwt.client.ui.datagrid;
 import java.util.List;
 
 import org.eclipse.jdt.internal.compiler.ast.DoStatement;
+import org.ssgwt.client.ui.datagrid.SSPager.TextLocation;
 
+import com.google.gwt.cell.client.Cell;
+import com.google.gwt.cell.client.CheckboxCell;
+import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.layout.client.Layout.Layer;
 import com.google.gwt.safehtml.shared.SafeHtml;
@@ -12,12 +16,11 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.Header;
-import com.google.gwt.user.cellview.client.SimplePager;
-import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.RequiresResize;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.ListDataProvider;
 
 /**
  * The SSDataGrid with a changeable action bar that dispatches events for
@@ -27,7 +30,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @param <T>
  * @since 29 June 2012
  */
-public class SSDataGrid<T> extends Composite implements RequiresResize {
+public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite implements RequiresResize {
 
     /**
      * UiBinder interface for the composite
@@ -65,36 +68,73 @@ public class SSDataGrid<T> extends Composite implements RequiresResize {
     @UiField
     protected FlowPanel actionBar;
 
+    /**
+     * The flow panel that will contain the action bar
+     */
     @UiField
     FlowPanel actionBarContainer;
+    
+    ListDataProvider<T> dataProvider = new ListDataProvider<T>();
     
     /**
      * The pager that will handle the paging of the DataGrid
      */
     @UiField(provided = true)
-    protected SimplePager pager;
+    protected SSPager pager;
 
     /**
      * Class Constructor
      * 
-     * @author Lodewyk Duminy
-     * @since 29 June 2012
+     * @author Michael Barnard
+     * @since 02 July 2012
+     * 
      */
     public SSDataGrid() {
-        this((DataGrid.Resources)GWT.create(DataGrid.Resources.class), (SimplePager.Resources)GWT.create(SimplePager.Resources.class));
+        this(false);
     }
     
     /**
      * Class Constructor
      * 
-     * @author Lodewyk Duminy
-     * @since 29 June 2012
+     * @author Michael Barnard
+     * @since 2 July 2012
+     * 
+     * @param multiSelect - Whether the data grid supports multiple selects
      */
-    public SSDataGrid(DataGrid.Resources dataGridResource, SimplePager.Resources pagerResource) {
-        this.initWidget(uiBinder.createAndBindUi(this));
+    public SSDataGrid(boolean multiSelect) {
+        this((DataGrid.Resources)GWT.create(DataGridResources.class), (SSPager.Resources)GWT.create(SSPager.Resources.class), multiSelect);
+    }
+    
+    /**
+     * Class Constructor
+     * 
+     * @author Michael Barnard
+     * @since 02 July 2012
+     * 
+     * @param dataGridResource - The resource that needs to be used for the data grid
+     * @param pagerResource - The resource  that needs to be used for the pager
+     */
+    public SSDataGrid(DataGrid.Resources dataGridResource, SSPager.Resources pagerResource) {
+        this(dataGridResource, pagerResource, false);
+    }
+    
+    /**
+     * Class Constructor
+     * 
+     * @author Michael Barnard
+     * @since 02 July 2012
+     * 
+     * @param dataGridResource - The resource that needs to be used for the data grid
+     * @param pagerResource - The resource  that needs to be used for the pager
+     * @param multiSelect - Whether the data grid supports multiple selects
+     */
+    public SSDataGrid(DataGrid.Resources dataGridResource, SSPager.Resources pagerResource, boolean multiSelect) {
         dataGrid = new DataGrid<T>(10, dataGridResource);
-        pager = new SimplePager(TextLocation.CENTER, pagerResource, false, 0, true);
+        dataProvider.addDataDisplay(dataGrid);
+        pager = new SSPager(TextLocation.CENTER, pagerResource, false, 0, true);
         pager.setDisplay(dataGrid);
+        setMultiSelect(multiSelect);
+        this.initWidget(uiBinder.createAndBindUi(this));
     }
 
     /**
@@ -106,7 +146,7 @@ public class SSDataGrid<T> extends Composite implements RequiresResize {
      * @since 29 June 2012
      */
     public void setData(List<T> data) {
-        
+        dataProvider.setList(data);
     }
 
     /**
@@ -118,7 +158,7 @@ public class SSDataGrid<T> extends Composite implements RequiresResize {
      * @return The data being displayed on the DataGrid
      */
     public List<T> getData() {
-        return null;
+        return dataProvider.getList();
     }
     
     /**
@@ -270,7 +310,8 @@ public class SSDataGrid<T> extends Composite implements RequiresResize {
     }
     
     /**
-     * Set whether or not the grid should support multiple row select
+     * Set whether or not the grid should support multiple row select.
+     * NOTE This needs to be set before any columns or data is set on the data grid.
      * 
      * @param multiSelect - Whether the data grid should support multiple row select
      */
@@ -280,7 +321,43 @@ public class SSDataGrid<T> extends Composite implements RequiresResize {
             dataGrid.removeStyleName("isMultiSelect");
         } else {
             dataGrid.addStyleName("isMultiSelect");
+            addMultiSelectField( );
         }
+    }
+    
+    /**
+     * Add a field that supports multiple selection
+     */
+    public void addMultiSelectField() {
+        Cell<Boolean> booleanCell = (Cell<Boolean>)new CheckboxCell( );
+        Column<T, Boolean> selectedColumn = new Column<T, Boolean>(booleanCell) {
+            
+            /**
+             * Get the value of the multi select field
+             * 
+             * @return the selected state of the row
+             */
+            @Override
+            public Boolean getValue(T object) {
+                return object.isSelected();
+            }
+            
+        };
+        this.addColumn(selectedColumn, "(X)");
+        selectedColumn.setFieldUpdater( new FieldUpdater<T, Boolean>() {
+
+            /**
+             * Update the selection state 
+             * 
+             * @param index - the index of the row to be updated
+             * @param object - The object currently being referenced
+             * @param value - the selected state of the current row
+             */
+            @Override
+            public void update(int index, T object, Boolean value) {
+                object.setSelected(value);
+            }
+        });
     }
     
     /**

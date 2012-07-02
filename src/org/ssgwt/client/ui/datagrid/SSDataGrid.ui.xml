@@ -1,5 +1,5 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-             xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:c="urn:import:com.google.gwt.user.cellview.client">
+             xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:d="urn:import:org.ssgwt.client.ui.datagrid" xmlns:c="urn:import:com.google.gwt.user.cellview.client">
 
     <g:FlowPanel>
         
@@ -16,7 +16,7 @@
                     <g:FlowPanel ui:field="actionBarContainer">
                         <!-- Space for optional widget -->
                     </g:FlowPanel>
-                    <c:SimplePager ui:field="pager" />
+                    <d:SSPager ui:field="pager" />
                 </g:FlowPanel>
             </g:layer>
         </g:LayoutPanel>
