@@ -23,7 +23,7 @@ import java.util.HashMap;
  * @since 12 June 2012
  */
 public interface ValidatorInterface<T> {
-
+    
     /**
      * Validates the value passed in.
      * 
