@@ -25,9 +25,9 @@ import com.google.gwt.user.cellview.client.DataGrid;
  */
 public interface DataGridResources extends DataGrid.Resources {
 
-	/**
-	 * The style used in the widget
-	 */
-	@Source("SSDataGridStyle.css")
-	DataGrid.Style dataGridStyle();
+    /**
+     * The style used in the widget
+     */
+    @Source("SSDataGridStyle.css")
+    DataGrid.Style dataGridStyle();
 }

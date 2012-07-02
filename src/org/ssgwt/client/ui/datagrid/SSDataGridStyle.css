@@ -32,9 +32,9 @@
 
 /*Styling of the first column of the data grid*/
 .dataGridLastColumn {
-	padding-right: 5px;
+    padding-right: 5px;
     box-sizing: border-box;
-	-moz-box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 /*Styling for the footer of the data grid*/
@@ -42,7 +42,7 @@
     border-top: 2px solid #6f7277;
     padding-left: 25px;
     box-sizing: border-box;
-	-moz-box-sizing: border-box;
+    -moz-box-sizing: border-box;
     text-align: left;
     color: #4b4a4a;
     text-shadow: #ddf 1px 1px 0;
@@ -55,7 +55,7 @@
     border-bottom: 2px solid #6f7277;
     padding-left: 25px;
     box-sizing: border-box;
-	-moz-box-sizing: border-box;
+    -moz-box-sizing: border-box;
     text-align: left;
     color: #4b4a4a;
     text-shadow: #ddf 1px 1px 0;
@@ -74,11 +74,11 @@
 .dataGridCell {
     font-family: 'PT Sans', sans-serif;
     font-size: 12px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	color: #777B88;
-	padding-top: 4px;
-	padding-left: 25px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    color: #777B88;
+    padding-top: 4px;
+    padding-left: 25px;
     overflow: hidden;
 }
 
@@ -152,27 +152,27 @@
 
 /*Style applied to the first child element of a row*/
 .dataGridHoveredRow td:first-child {
-	border-collapse: collapse;
+    border-collapse: collapse;
     border-left:solid thin #EABD7D;
     box-sizing: border-box;
-	-moz-box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 /*Style applied to the row*/
 .dataGridHoveredRow td {
-	border-collapse: collapse;
+    border-collapse: collapse;
     border-top:solid thin #EABD7D;
     border-bottom:solid thin #EABD7D;
     box-sizing: border-box;
-	-moz-box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 /*Style applied to the last child element of a row*/
 .dataGridHoveredRow td:last-child {
-	border-collapse: collapse;
+    border-collapse: collapse;
     border-right:solid thin #EABD7D;
     box-sizing: border-box;
-	-moz-box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 /*Cell styles*/
@@ -193,27 +193,27 @@
 
 /*First child style of selected row*/
 .dataGridSelectedRow td:first-child {
-	border-collapse: collapse;
+    border-collapse: collapse;
     border-left:solid thin #EABD7D;
     box-sizing: border-box;
-	-moz-box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 /*Selected row styling*/
 .dataGridSelectedRow td {
-	border-collapse: collapse;
+    border-collapse: collapse;
     border-top:solid thin #EABD7D;
     border-bottom:solid thin #EABD7D;
     box-sizing: border-box;
-	-moz-box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 /*Last child style of selected row*/
 .dataGridSelectedRow td:last-child {
-	border-collapse: collapse;
+    border-collapse: collapse;
     border-right:solid thin #EABD7D;
     box-sizing: border-box;
-	-moz-box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 /*Selected cell styles*/
