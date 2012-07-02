@@ -1,0 +1,214 @@
+/*
+ * Copyright 2011 Google Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+@def selectionBorderWidth 2px;
+.dataGridWidget {
+}
+
+@external .isSingleSelect;
+.isSingleSelect .dataGridFirstColumn {
+}
+
+@external .isMultiSelect;
+.isMultiSelect .dataGridFirstColumn {
+    display: block;
+    text-align: -webkit-center;
+}
+
+@external .isMultiSelect;
+.isMultiSelect .dataGridFirstColumn div:after {
+    color: #BDBFC5;
+    content: '|';
+    float: right;
+}
+
+.dataGridLastColumn {
+	padding-right: 5px;
+    box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+.dataGridFooter {
+    border-top: 2px solid #6f7277;
+    padding-left: 25px;
+    box-sizing: border-box;
+	-moz-box-sizing: border-box;
+    text-align: left;
+    color: #4b4a4a;
+    text-shadow: #ddf 1px 1px 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.dataGridHeader {
+    border-bottom: 2px solid #6f7277;
+    padding-left: 25px;
+    box-sizing: border-box;
+	-moz-box-sizing: border-box;
+    text-align: left;
+    color: #4b4a4a;
+    text-shadow: #ddf 1px 1px 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.dataGridHeader:after {
+    color: gray;
+    content: '|';
+    float: right;
+}
+
+.dataGridCell {
+    font-family: 'PT Sans', sans-serif;
+    font-size: 12px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	color: #777B88;
+	padding-top: 4px;
+	padding-left: 25px;
+    overflow: hidden;
+}
+
+.dataGridFirstColumnFooter {
+  
+}
+
+.dataGridFirstColumnHeader {
+  
+}
+
+.dataGridLastColumnFooter {
+}
+
+
+.dataGridLastColumnFooter {
+  
+}
+
+.dataGridLastColumnHeader {
+  
+}
+
+.dataGridSortableHeader {
+    cursor: pointer;
+    cursor: hand;
+}
+
+.dataGridSortableHeader:hover {
+	
+}
+
+.dataGridSortedHeaderAscending {
+  
+}
+
+.dataGridSortedHeaderDescending {
+  
+}
+
+.dataGridEvenRow {
+    background: #ECEBED;
+    border: red solid 1px;
+    height: 26px;
+}
+
+.dataGridEvenRowCell {
+}
+
+.dataGridOddRow {
+    background: white;
+    border: blue solid 1px;
+    height: 26px;
+}
+
+.dataGridOddRowCell {
+}
+
+@external .noClickAction;
+.noClickAction .dataGridHoveredRow {
+    background-color: #FEF1E3;
+    cursor: auto;
+}
+
+@external .hasClickAction;
+.hasClickAction .dataGridHoveredRow {
+    background-color: #FEF1E3;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.dataGridHoveredRow td:first-child {
+	border-collapse: collapse;
+    border-left:solid thin #EABD7D;
+    box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+.dataGridHoveredRow td {
+	border-collapse: collapse;
+    border-top:solid thin #EABD7D;
+    border-bottom:solid thin #EABD7D;
+    box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+.dataGridHoveredRow td:last-child {
+	border-collapse: collapse;
+    border-right:solid thin #EABD7D;
+    box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+.dataGridHoveredRowCell {
+}
+
+.dataGridKeyboardSelectedRow {
+}
+
+.dataGridKeyboardSelectedRowCell {
+}
+
+.dataGridSelectedRow {
+    background-color: #FEF1E3;
+}
+
+.dataGridSelectedRow td:first-child {
+	border-collapse: collapse;
+    border-left:solid thin #EABD7D;
+    box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+.dataGridSelectedRow td {
+	border-collapse: collapse;
+    border-top:solid thin #EABD7D;
+    border-bottom:solid thin #EABD7D;
+    box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+.dataGridSelectedRow td:last-child {
+	border-collapse: collapse;
+    border-right:solid thin #EABD7D;
+    box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+.dataGridSelectedRowCell {
+	
+}
+
+.dataGridKeyboardSelectedCell {
+}
