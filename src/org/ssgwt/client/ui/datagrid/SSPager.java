@@ -271,17 +271,17 @@ public class SSPager extends AbstractPager {
          * Class Constructor
          * 
          * @param resEnabled - The enabled image
-         * @param resDiabled - The disabled image
+         * @param resDisabled - The disabled image
          * @param disabledStyle - The disabled style
          * @param resOver - The hover image
          * @param resDown - The pressed image
          */
-        public ImageButton(ImageResource resEnabled, ImageResource resDiabled,
+        public ImageButton(ImageResource resEnabled, ImageResource resDisabled,
                 String disabledStyle, ImageResource resOver,
                 ImageResource resDown) {
             super(resEnabled);
             this.resEnabled = resEnabled;
-            this.resDisabled = resDiabled;
+            this.resDisabled = resDisabled;
             this.styleDisabled = disabledStyle;
             this.resOver = resOver;
             this.resDown = resDown;
@@ -290,7 +290,7 @@ public class SSPager extends AbstractPager {
                 /**
                  * Event triggered when mouse moves over the element.
                  * 
-                 * @param The Mouse event
+                 * @param event - The Mouse event
                  */
                 @Override
                 public void onMouseOver(MouseOverEvent event) {
@@ -305,7 +305,7 @@ public class SSPager extends AbstractPager {
                 /**
                  * Event triggered when mouse moves off the element.
                  * 
-                 * @param The Mouse event
+                 * @param event - The Mouse event
                  */
                 @Override
                 public void onMouseOut(MouseOutEvent event) {
@@ -321,7 +321,7 @@ public class SSPager extends AbstractPager {
                 /**
                  * Event triggered when mouse is pressed while over the element.
                  * 
-                 * @param The Mouse event
+                 * @param event -The Mouse event
                  */
                 @Override
                 public void onMouseDown(MouseDownEvent event) {
@@ -604,6 +604,8 @@ public class SSPager extends AbstractPager {
 
     /**
      * Gets the current page
+     * 
+     * @return the current page
      */
     @Override
     public int getPage() {
@@ -612,6 +614,8 @@ public class SSPager extends AbstractPager {
 
     /**
      * Gets the total count of pages
+     * 
+     * @return The amount of pages 
      */
     @Override
     public int getPageCount() {
@@ -620,6 +624,8 @@ public class SSPager extends AbstractPager {
 
     /**
      * Check to see if there is a next page
+     * 
+     * @return whether or not there is a next page
      */
     @Override
     public boolean hasNextPage() {
@@ -630,6 +636,8 @@ public class SSPager extends AbstractPager {
      * Checks to see if there is x amount of next pages
      * 
      * @param pages The x amount of pages
+     * 
+     * @return whether or not there is x amount of next pages
      */
     @Override
     public boolean hasNextPages(int pages) {
@@ -638,6 +646,8 @@ public class SSPager extends AbstractPager {
 
     /**
      * Checks if a specific  page exists
+     * 
+     * @return whether or not there is a page at index x
      */
     @Override
     public boolean hasPage(int index) {
@@ -646,6 +656,8 @@ public class SSPager extends AbstractPager {
 
     /**
      * Check if there is a previous page
+     * 
+     * @return whether or not htere is a previous page
      */
     @Override
     public boolean hasPreviousPage() {
@@ -656,6 +668,8 @@ public class SSPager extends AbstractPager {
      * Check if there is x amount of previous pages
      * 
      * @param pages - The amount of pages to check for
+     * 
+     * @return whether or not there is x amount of previous pages
      */
     @Override
     public boolean hasPreviousPages(int pages) {
@@ -752,7 +766,7 @@ public class SSPager extends AbstractPager {
 
     /**
      * Get the text to display in the pager that reflects the state of the
-     * pager.
+     * pager. This will show the range of records that are displayed
      * 
      * @return the text
      */
@@ -771,7 +785,7 @@ public class SSPager extends AbstractPager {
 
     /**
      * Get the text to display in the pager that reflects the state of the
-     * pager.
+     * pager. This will show the total amount of records
      * 
      * @return the text
      */
