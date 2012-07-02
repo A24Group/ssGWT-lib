@@ -11,9 +11,9 @@
             
             </g:layer>
             
-            <g:layer height="40px" left="0px" right="0px" bottom="0px" >
-                <g:FlowPanel>
-                    <g:FlowPanel>
+            <g:layer visible="true" height="40px" left="0px" right="0px" bottom="0px" >
+                <g:FlowPanel ui:field="actionBar" >
+                    <g:FlowPanel ui:field="actionBarContainer">
                         <!-- Space for optional widget -->
                     </g:FlowPanel>
                     <c:SimplePager ui:field="pager" />
