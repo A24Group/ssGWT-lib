@@ -28,6 +28,6 @@ public interface DataGridResources extends DataGrid.Resources {
 	/**
 	 * The style used in the widget
 	 */
-	@Source("dataGridDefaultStyle.css")
+	@Source("SSDataGridStyle.css")
 	DataGrid.Style dataGridStyle();
 }

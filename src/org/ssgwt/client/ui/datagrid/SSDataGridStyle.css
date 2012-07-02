@@ -17,14 +17,7 @@
 .dataGridWidget {
 }
 
-@external .isSingleSelect;
-.isSingleSelect .dataGridFirstColumn {
-}
-
-@external .isMultiSelect;
-.isMultiSelect .dataGridFirstColumn {
-    display: block;
-    text-align: -webkit-center;
+.dataGridFirstColumn {
 }
 
 @external .isMultiSelect;
@@ -120,7 +113,6 @@
 
 .dataGridEvenRow {
     background: #ECEBED;
-    border: red solid 1px;
     height: 26px;
 }
 
@@ -129,7 +121,6 @@
 
 .dataGridOddRow {
     background: white;
-    border: blue solid 1px;
     height: 26px;
 }
 
