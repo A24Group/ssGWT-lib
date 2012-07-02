@@ -188,32 +188,6 @@
 
 /*selected row styling*/
 .dataGridSelectedRow {
-    background-color: #FEF1E3;
-}
-
-/*First child style of selected row*/
-.dataGridSelectedRow td:first-child {
-    border-collapse: collapse;
-    border-left:solid thin #EABD7D;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-}
-
-/*Selected row styling*/
-.dataGridSelectedRow td {
-    border-collapse: collapse;
-    border-top:solid thin #EABD7D;
-    border-bottom:solid thin #EABD7D;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-}
-
-/*Last child style of selected row*/
-.dataGridSelectedRow td:last-child {
-    border-collapse: collapse;
-    border-right:solid thin #EABD7D;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
 }
 
 /*Selected cell styles*/
