@@ -16,13 +16,14 @@ package org.ssgwt.client.validation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import org.ssgwt.client.ui.AdvancedTextbox;
 import org.ssgwt.client.validation.validators.DateValidator;
 import org.ssgwt.client.validation.validators.EmailValidator;
+import org.ssgwt.client.validation.validators.StringRegexValidator;
 import org.ssgwt.client.validation.validators.StringValidator;
 import org.ssgwt.client.validation.validators.UsernameValidator;
 import org.ssgwt.client.validation.validators.ValidatorInterface;
-
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -53,7 +54,7 @@ public class FormValidator {
      * @param errorMessage - The error message to be displayed
      * @param errorStyleName - the error style type
      */
-    public void addField(String validatorReferenceName, Widget uiField, HashMap<String, Integer> config, String errorMessage, String errorStyleName) {
+    public void addField(String validatorReferenceName, Widget uiField, HashMap<String, ?> config, String errorMessage, String errorStyleName) {
         FormField formField = new FormField();
         formField.validatorReferenceName = validatorReferenceName;
         formField.uiField = uiField;
@@ -71,7 +72,7 @@ public class FormValidator {
      * @param config - Validation configuration settings
      * @param errorMessage - The error message to be displayed
      */
-    public void addField(String validatorReferenceName, Widget uiField, HashMap<String, Integer> config, String errorMessage) {
+    public void addField(String validatorReferenceName, Widget uiField, HashMap<String, ?> config, String errorMessage) {
         this.addField(validatorReferenceName, uiField, config, errorMessage, null);
     }
 
@@ -82,7 +83,7 @@ public class FormValidator {
      * @param uiField - the ui field the validation is done on
      * @param config - Validation configuration settings
      */
-    public void addField(String validatorReferenceName, Widget uiField, HashMap<String, Integer> config) {
+    public void addField(String validatorReferenceName, Widget uiField, HashMap<String, ?> config) {
         this.addField(validatorReferenceName, uiField, config, null, null);
     }
     
@@ -116,7 +117,7 @@ public class FormValidator {
             validator.setConfiguration(fields.get(i).config);
             //check if the value is valid
             boolean valid = validator.isValid(((AdvancedTextbox)fields.get(i).uiField).getValue());
-            if (!valid){
+            if (!valid) {
                 //add error style
                 if (fields.get(i).errorStyleName != null){
                     fields.get(i).uiField.addStyleName(fields.get(i).errorStyleName.toString());
@@ -158,6 +159,8 @@ public class FormValidator {
             formValidationInstance = new StringValidator();
         } else if (validatorReferenceName.equals(FormFieldConstants.VALIDATE_USERNAME_REFERENCE)) {
             formValidationInstance = new UsernameValidator();
+        } else if (validatorReferenceName.equals(FormFieldConstants.VALIDATE_REGEX_REFERENCE)) {
+            formValidationInstance = new StringRegexValidator();
         }
         
         //add validation class instance to array

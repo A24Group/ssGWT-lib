@@ -39,7 +39,7 @@ public class FormField {
     /**
      * Validation configuration settings
      */
-    public HashMap<String, Integer> config;
+    public HashMap<String, ?> config;
     
     /**
      * The error message to be displayed

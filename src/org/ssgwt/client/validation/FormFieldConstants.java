@@ -42,4 +42,9 @@ public class FormFieldConstants {
      * The reference to use when validating a username
      */
     public static final String VALIDATE_USERNAME_REFERENCE = "validateUsername";
+    
+    /**
+     * The reference to use when validating any given regular expression
+     */
+    public static final String VALIDATE_REGEX_REFERENCE = "validateRegexReference";
 }
