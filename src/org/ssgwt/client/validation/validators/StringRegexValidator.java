@@ -46,7 +46,7 @@ public class StringRegexValidator extends AbstractValidator implements
      * This regular expression is used to make sure that
      * no special characters can be part of a name
      */
-    public static final String REGEX_NAME_PATTERN = "^[A-Za-z]+([A-Z a-z&apos;\\-]*[A-Za-z]){0,}$";
+    public static final String REGEX_NAME_PATTERN = "^[A-Za-zàáâäãåèéêëìíîïòóôöõøùúûüÿýñçčšžÀÁÂÄÃÅÈÉÊËÌÍÎÏÒÓÔÖÕØÙÚÛÜŸÝÑßÇŒÆČŠŽ∂ð]+([A-Z a-zàáâäãåèéêëìíîïòóôöõøùúûüÿýñçčšžÀÁÂÄÃÅÈÉÊËÌÍÎÏÒÓÔÖÕØÙÚÛÜŸÝÑßÇŒÆČŠŽ∂ð\\-]*[A-Za-zàáâäãåèéêëìíîïòóôöõøùúûüÿýñçčšžÀÁÂÄÃÅÈÉÊËÌÍÎÏÒÓÔÖÕØÙÚÛÜŸÝÑßÇŒÆČŠŽ∂ð]){0,}$";
     
     /**
      * Validates the value passed in with the set regular expression.
