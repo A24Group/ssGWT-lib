@@ -44,6 +44,11 @@ public class SSDataGrid<T> extends Composite implements RequiresResize {
     private boolean multiSelect;
     
     /**
+     * Whether the data grid supports click actions
+     */
+    private boolean clickAction;
+    
+    /**
      * Instance of the UiBinder
      */
     private static Binder uiBinder = GWT.create(Binder.class);
@@ -261,7 +266,7 @@ public class SSDataGrid<T> extends Composite implements RequiresResize {
      * @return
      */
     public boolean isMultiSelect(){
-        return multiSelect;
+        return this.multiSelect;
     }
     
     /**
@@ -271,7 +276,36 @@ public class SSDataGrid<T> extends Composite implements RequiresResize {
      */
     public void setMultiSelect(boolean multiSelect){
         this.multiSelect = multiSelect;
-        //TODO: Waiting for some stuff from Ruan
+        if (!multiSelect){
+            dataGrid.removeStyleName("isMultiSelect");
+        } else {
+            dataGrid.addStyleName("isMultiSelect");
+        }
+    }
+    
+    /**
+     * Gets the current click action state for the data grid
+     * 
+     * @return Whether the data grid has click action support
+     */
+    public boolean hasClickAction(){
+        return this.clickAction;
+    }
+    
+    /**
+     * Gets the current click action state for the data grid
+     *
+     * @param clickAction - If the data grid should support click actions
+     */
+    public void setClickAction(boolean clickAction){
+        this.clickAction = clickAction;
+        if (!clickAction){
+            dataGrid.removeStyleName("hasClickAction");
+            dataGrid.addStyleName("noClickAction");
+        } else {
+            dataGrid.removeStyleName("noClickAction");
+            dataGrid.addStyleName("hasClickAction");
+        }
     }
     
 }
