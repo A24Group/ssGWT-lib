@@ -1,0 +1,224 @@
+/*
+ * Copyright 2011 Google Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+ /*the border of the selected rows border*/
+@def selectionBorderWidth 2px;
+.dataGridWidget {
+}
+
+/*Styling of the first column of the data grid*/
+.dataGridFirstColumn {
+}
+
+/*The styling applied if the data grid supports multi select*/
+@external .isMultiSelect;
+.isMultiSelect .dataGridFirstColumn div:after {
+    color: #BDBFC5;
+    content: '|';
+    float: right;
+}
+
+/*Styling of the first column of the data grid*/
+.dataGridLastColumn {
+    padding-right: 5px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+/*Styling for the footer of the data grid*/
+.dataGridFooter {
+    border-top: 2px solid #6f7277;
+    padding-left: 25px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    text-align: left;
+    color: #4b4a4a;
+    text-shadow: #ddf 1px 1px 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/*Styling for the header of the data grid*/
+.dataGridHeader {
+    border-bottom: 2px solid #6f7277;
+    padding-left: 25px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    text-align: left;
+    color: #4b4a4a;
+    text-shadow: #ddf 1px 1px 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/*This applies after every data grid header*/
+.dataGridHeader:after {
+    color: gray;
+    content: '|';
+    float: right;
+}
+
+/*Formatting applied to every cell*/
+.dataGridCell {
+    font-family: 'PT Sans', sans-serif;
+    font-size: 12px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    color: #777B88;
+    padding-top: 4px;
+    padding-left: 25px;
+    overflow: hidden;
+}
+
+/*First and last column styling(Not used yet)*/
+.dataGridFirstColumnFooter {
+}
+
+.dataGridFirstColumnHeader {
+}
+
+.dataGridLastColumnFooter {
+}
+
+
+.dataGridLastColumnFooter {
+}
+
+.dataGridLastColumnHeader {
+}
+
+/*Style for the sortable headers*/
+.dataGridSortableHeader {
+    cursor: pointer;
+    cursor: hand;
+}
+
+/*Other styles for the sortable headers*/
+.dataGridSortableHeader:hover {
+}
+
+.dataGridSortedHeaderAscending {
+}
+
+.dataGridSortedHeaderDescending {
+}
+
+/*Even row style*/
+.dataGridEvenRow {
+    background: #ECEBED;
+    height: 26px;
+}
+
+/*Even cell style*/
+.dataGridEvenRowCell {
+}
+
+/*Odd row style*/
+.dataGridOddRow {
+    background: white;
+    height: 26px;
+}
+
+/*Odd cell style*/
+.dataGridOddRowCell {
+}
+
+/*Style applied for un-clickable rows*/
+@external .noClickAction;
+.noClickAction .dataGridHoveredRow {
+    background-color: #FEF1E3;
+    cursor: auto;
+}
+
+/*Style applied for clickable rows*/
+@external .hasClickAction;
+.hasClickAction .dataGridHoveredRow {
+    background-color: #FEF1E3;
+    cursor: pointer;
+    cursor: hand;
+}
+
+/*Style applied to the first child element of a row*/
+.dataGridHoveredRow td:first-child {
+    border-collapse: collapse;
+    border-left:solid thin #EABD7D;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+/*Style applied to the row*/
+.dataGridHoveredRow td {
+    border-collapse: collapse;
+    border-top:solid thin #EABD7D;
+    border-bottom:solid thin #EABD7D;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+/*Style applied to the last child element of a row*/
+.dataGridHoveredRow td:last-child {
+    border-collapse: collapse;
+    border-right:solid thin #EABD7D;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+/*Cell styles*/
+.dataGridHoveredRowCell {
+}
+
+/*Keyboard applied styles*/
+.dataGridKeyboardSelectedRow {
+}
+
+.dataGridKeyboardSelectedRowCell {
+}
+
+/*selected row styling*/
+.dataGridSelectedRow {
+    background-color: #FEF1E3;
+}
+
+/*First child style of selected row*/
+.dataGridSelectedRow td:first-child {
+    border-collapse: collapse;
+    border-left:solid thin #EABD7D;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+/*Selected row styling*/
+.dataGridSelectedRow td {
+    border-collapse: collapse;
+    border-top:solid thin #EABD7D;
+    border-bottom:solid thin #EABD7D;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+/*Last child style of selected row*/
+.dataGridSelectedRow td:last-child {
+    border-collapse: collapse;
+    border-right:solid thin #EABD7D;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+/*Selected cell styles*/
+.dataGridSelectedRowCell {
+}
+
+.dataGridKeyboardSelectedCell {
+}
