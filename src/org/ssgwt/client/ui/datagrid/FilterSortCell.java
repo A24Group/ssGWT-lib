@@ -106,16 +106,19 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> {
      * @since 02 July 2012
      */
     interface Template extends SafeHtmlTemplates {
-        @Template("<div style=\"\">")
+        @Template("<div style=\"display: inline-block\">")
         SafeHtml openContainerTag();
+        
+        @Template("<div style=\"display: inline-block; padding-top: 2px;\">")
+        SafeHtml openContainerTagWithPadding();
 
-        @Template("<div style=\"float: left; padding-top: 1px; padding-right: 3px;\">")
+        @Template("<div style=\"display: inline; padding-right: 3px;\">")
         SafeHtml openInlineContainerTag();
 
         @Template("<img src=\"\" />")
         SafeHtml imageTag();
 
-        @Template("<div style=\"float: left;\">{0}</div>")
+        @Template("<div style=\"display: inline; vertical-align: top;\">{0}</div>")
         SafeHtml header(String columnName);
 
         @Template("</div>")
@@ -155,11 +158,14 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> {
         if (value.filterWidget != null) {
             value.filterWidget.setParentHeader(this);
         }
+        filterImage.getElement().setAttribute("name", "filterIcon");
         sb.append(template.openContainerTag());
+        sb.append(template.openContainerTagWithPadding());
         sb.append(template.openInlineContainerTag());
         sb.appendHtmlConstant(filterImage.toString());
         sb.append(template.closeContainerTag());
         sb.append(template.header(value.label));
+        sb.append(template.closeContainerTag());
         sb.append(template.closeContainerTag());
     }
 
@@ -228,7 +234,11 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> {
      * @return The element object that represents the image in the Cell
      */
     protected Element getImageElement(Element parent) {
-        return parent.getFirstChildElement().getElementsByTagName("img").getItem(0);
+        
+        if ( parent.getFirstChildElement().getElementsByTagName("img").getItem(0).getAttribute( "name" ).equals( "filterIcon" ) ) {
+            return parent.getFirstChildElement().getElementsByTagName("img").getItem(0);
+        }
+        return parent.getFirstChildElement().getElementsByTagName("img").getItem(1);
     }
 
 }

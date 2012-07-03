@@ -20,17 +20,18 @@
 
 /*Styling of the first column of the data grid*/
 .dataGridFirstColumn {
+    padding-left: 20px !Important;
 }
 
 /*The styling applied if the data grid supports multi select*/
 @external .isMultiSelect;
-.isMultiSelect .dataGridFirstColumn div:after {
+.isMultiSelect .dataGridFirstColumn > div:after {
     color: #BDBFC5;
     content: '|';
     float: right;
 }
 
-/*Styling of the first column of the data grid*/
+/*Styling of the last column of the data grid*/
 .dataGridLastColumn {
     padding-right: 5px;
     box-sizing: border-box;
@@ -53,21 +54,70 @@
 /*Styling for the header of the data grid*/
 .dataGridHeader {
     border-bottom: 2px solid #6f7277;
-    padding-left: 25px;
+    padding-left: 4px;
+    padding-bottom: 3px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     text-align: left;
-    color: #4b4a4a;
-    text-shadow: #ddf 1px 1px 0;
+    color: #41485A;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 12px;
+    height: 20px;
     overflow: hidden;
-    white-space: nowrap;
+    text-shadow: #ddf 1px 1px 0;
+    font-weight: normal;
+    overflow: hidden;
+    border-top: solid #BDBFC5 thin;
+    border-bottom: solid #BDBFC5 thin;
+    background: rgb(246,248,249); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(246,248,249,1) 29%, rgba(216,216,216,1) 100%, rgba(245,247,249,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(29%,rgba(246,248,249,1)), color-stop(100%,rgba(216,216,216,1)), color-stop(100%,rgba(245,247,249,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(246,248,249,1) 29%,rgba(216,216,216,1) 100%,rgba(245,247,249,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(246,248,249,1) 29%,rgba(216,216,216,1) 100%,rgba(245,247,249,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(246,248,249,1) 29%,rgba(216,216,216,1) 100%,rgba(245,247,249,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(246,248,249,1) 29%,rgba(216,216,216,1) 100%,rgba(245,247,249,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', endColorstr='#f5f7f9',GradientType=0 ); /* IE6-9 */
 }
 
-/*This applies after every data grid header*/
-.dataGridHeader:after {
-    color: gray;
+/*Styling for the first child of the data grid header*/
+.dataGridHeader:first-child {
+    border-left: solid #BDBFC5 thin;
+    border-radius: 3px 0 0 0;
+    -moz-border-radius: 3px 0 0 0;
+    -webkit-border-radius: 3px 0 0 0;
+}
+
+/*Style applied to the last child element of a data grid header*/
+.dataGridHeader:last-child {
+    border-right: solid #BDBFC5 thin;
+    border-radius: 0 3px 0 0;
+    -moz-border-radius: 0 3px 0 0;
+    -webkit-border-radius: 0 3px 0 0;
+}
+
+/*This applies before every data grid header*/
+.dataGridHeader:before {
+    color: #BDBFC5;
     content: '|';
     float: right;
+    text-shadow: none;
+}
+
+/*Styling of the first div in the header*/
+.dataGridHeader > div {
+    padding-left: 0px !Important;
+}
+
+/*Styling for the first child inside the second dif in the a header */
+.dataGridHeader > div > div:first-child {
+    magin-left: 40px;
+    right: 0px;
+}
+
+/*Styling for the image inside the second div in the header*/
+.dataGridHeader > div > div > img {
+    float: right;
+    padding-right: 15px;
 }
 
 /*Formatting applied to every cell*/
@@ -78,12 +128,17 @@
     -moz-box-sizing: border-box;
     color: #777B88;
     padding-top: 4px;
-    padding-left: 25px;
+    padding-left: 22px;
     overflow: hidden;
 }
 
 /*First and last column styling(Not used yet)*/
 .dataGridFirstColumnFooter {
+}
+
+/*Styling of the first column in the header*/
+.dataGridFirstColumnHeader {
+    padding-left: 22px !Important;
 }
 
 .dataGridFirstColumnHeader {
@@ -92,11 +147,9 @@
 .dataGridLastColumnFooter {
 }
 
-
-.dataGridLastColumnFooter {
-}
-
-.dataGridLastColumnHeader {
+/*Styling of the last element before the last column in header*/
+.dataGridLastColumnHeader:before {
+    content: '';
 }
 
 /*Style for the sortable headers*/
@@ -117,7 +170,7 @@
 
 /*Even row style*/
 .dataGridEvenRow {
-    background: #ECEBED;
+    background: white;
     height: 26px;
 }
 
@@ -127,7 +180,7 @@
 
 /*Odd row style*/
 .dataGridOddRow {
-    background: white;
+    background: #ECEBED;
     height: 26px;
 }
 
@@ -150,7 +203,7 @@
     cursor: hand;
 }
 
-/*Style applied to the first child element of a row*/
+/*Style applied to the first child element of a row when hovered over*/
 .dataGridHoveredRow td:first-child {
     border-collapse: collapse;
     border-left:solid thin #EABD7D;
@@ -158,7 +211,7 @@
     -moz-box-sizing: border-box;
 }
 
-/*Style applied to the row*/
+/*Style applied to the row when hovered over*/
 .dataGridHoveredRow td {
     border-collapse: collapse;
     border-top:solid thin #EABD7D;
@@ -167,7 +220,7 @@
     -moz-box-sizing: border-box;
 }
 
-/*Style applied to the last child element of a row*/
+/*Style applied to the last child element of a row when hovered over*/
 .dataGridHoveredRow td:last-child {
     border-collapse: collapse;
     border-right:solid thin #EABD7D;
