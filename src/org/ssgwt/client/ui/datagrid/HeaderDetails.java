@@ -13,34 +13,23 @@
  */
 package org.ssgwt.client.ui.datagrid;
 
+import org.ssgwt.client.ui.datagrid.filter.AbstractHeaderFilter;
+
 /**
- * The object type to be used when the multi select state wants to be used
+ * Object holding info of the FilterSortHeader for the FilterSortCell
  * 
- * @author Michael Barnard
- * @since 2 July 2012
+ * @author Johannes Gryffenberg
+ * @since 29 June 2012
  */
-public abstract class AbstractMultiSelectObject {
-    
+public class HeaderDetails {
+
     /**
-     * Whether or not the object is selected
+     * The label on the header
      */
-    private boolean selected;
-    
+    public String label;
+
     /**
-     * Sets whether the object is selected or not
-     * 
-     * @param selected - whether the object is selected
+     * The filter widget that should be displayed if the filte icon is clicked
      */
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-    
-    /**
-     * Get whether the object is selected or not
-     * 
-     * @return whether the object is selected
-     */
-    public boolean isSelected() {
-        return this.selected;
-    }
+    public AbstractHeaderFilter filterWidget;
 }
