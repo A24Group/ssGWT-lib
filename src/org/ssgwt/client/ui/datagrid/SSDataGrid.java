@@ -325,7 +325,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * 
      * @param visible - The visibility of the action bar
      */
-    public void hideActionBar(boolean visible) {
+    public void setActionBarVisible(boolean visible) {
         actionBar.setVisible(visible);
     }
     
