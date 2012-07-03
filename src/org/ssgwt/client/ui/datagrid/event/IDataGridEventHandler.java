@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package org.ssgwt.client.ui.datagrid;
+package org.ssgwt.client.ui.datagrid.event;
 
 import com.google.gwt.event.shared.EventHandler;
 
@@ -28,5 +28,5 @@ public interface IDataGridEventHandler extends EventHandler {
      * 
      * @param event - The event that should be handled
      */
-    void onA24DataEvent(DataGridSortEvent event);
+    void onDataEvent(DataGridSortEvent event);
 }
