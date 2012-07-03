@@ -195,6 +195,11 @@
     cursor: auto;
 }
 
+@external .selectedRow;
+.selectedRow {
+	background-color: #FEF1E3;
+}
+
 /*Style applied for clickable rows*/
 @external .hasClickAction;
 .hasClickAction .dataGridHoveredRow {
