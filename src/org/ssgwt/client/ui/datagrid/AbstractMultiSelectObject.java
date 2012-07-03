@@ -18,7 +18,7 @@ public abstract class AbstractMultiSelectObject {
      * 
      * @param selected - whether the object is selected
      */
-    public void setSelected(boolean selected){
+    public void setSelected(boolean selected) {
         this.selected = selected;
     }
     
@@ -27,7 +27,7 @@ public abstract class AbstractMultiSelectObject {
      * 
      * @return whether the object is selected
      */
-    public boolean isSelected(){
+    public boolean isSelected() {
         return this.selected;
     }
 }
