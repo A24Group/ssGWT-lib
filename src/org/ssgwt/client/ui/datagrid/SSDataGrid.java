@@ -1,9 +1,23 @@
+/**
+ * Copyright 2012 A24Group
+ *  
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License. 
+ */
 package org.ssgwt.client.ui.datagrid;
 
 import java.util.List;
 
 import org.eclipse.jdt.internal.compiler.ast.DoStatement;
 import org.ssgwt.client.ui.datagrid.SSPager.TextLocation;
+import org.ssgwt.client.ui.datagrid.filter.AbstractHeaderFilter;
 
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.CheckboxCell;
@@ -27,7 +41,6 @@ import com.google.gwt.view.client.ListDataProvider;
  * sorting, filtering, selection clicking of row and paging
  * 
  * @author Johannes Gryffenberg
- * @param <T>
  * @since 29 June 2012
  */
 public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite implements RequiresResize {
@@ -271,6 +284,8 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
     
     /**
      * Hides the action bar by setting it invisible
+     * 
+     * TODO: Fix this. We need to be able to change the action bar back to visible
      */
     public void hideActionBar() {
         actionBar.setVisible(false);
@@ -278,6 +293,8 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
     
     /**
      * Hides the header by setting it invisible
+     * 
+     * TODO: Fix this. We need to be able to change the action bar back to visible
      */
     public void hideHeader() {
         //TODO: Add functionality for reusability
@@ -386,4 +403,15 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
         }
     }
     
+    /**
+     * Adds a column to the data grid with a FilterSortHeader as a header
+     * 
+     * @param col - The column that should be added to the data grid
+     * @param label - The label that should be displayed in the header
+     * @param filterWidget - The filter widget that should be displayed if the user clicks on the filter icon
+     */
+    public void addFilterColumn(Column<T, ?> col, String label, AbstractHeaderFilter filterWidget) {
+        FilterSortHeader header = new FilterSortHeader(label, filterWidget);
+        this.addColumn(col, header);
+    }
 }
