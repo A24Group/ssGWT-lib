@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package org.ssgwt.client.ui.datagrid;
+package org.ssgwt.client.ui.datagrid.event;
 
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.user.cellview.client.Column;
@@ -101,7 +101,7 @@ public class DataGridSortEvent extends GwtEvent<IDataGridEventHandler> {
      * @param handler - instance of the event handler
      */
     protected void dispatch(IDataGridEventHandler handler) {
-        handler.onA24DataEvent(this);
+        handler.onDataEvent(this);
     }
 
 }

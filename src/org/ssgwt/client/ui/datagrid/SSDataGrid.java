@@ -17,6 +17,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.ssgwt.client.ui.datagrid.SSPager.TextLocation;
+import org.ssgwt.client.ui.datagrid.event.DataGridSortEvent;
+import org.ssgwt.client.ui.datagrid.event.IDataGridEventHandler;
+import org.ssgwt.client.ui.datagrid.event.ISelectAllEventHandler;
+import org.ssgwt.client.ui.datagrid.event.SelectAllEvent;
 import org.ssgwt.client.ui.datagrid.filter.AbstractHeaderFilter;
 
 import com.google.gwt.cell.client.Cell;
@@ -101,6 +105,11 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
     ListDataProvider<T> dataProvider = new ListDataProvider<T>();
     
     /**
+     * The header used for the select all column
+     */
+    SelectAllHeader header;
+    
+    /**
      * The pager that will handle the paging of the DataGrid
      */
     @UiField(provided = true)
@@ -154,6 +163,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      */
     public SSDataGrid(DataGrid.Resources dataGridResource, SSPager.Resources pagerResource, boolean multiSelect) {
         dataGrid = new DataGrid<T>(10, dataGridResource);
+        
         dataGrid.addColumnSortHandler(new ColumnSortEvent.Handler() {
             
             /**
@@ -174,6 +184,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
                 fireEvent(new DataGridSortEvent(event.getColumn(), columnSortDetail.get(event.getColumn()).isAscending()));
             }
         });
+        
         dataProvider.addDataDisplay(dataGrid);
         pager = new SSPager(TextLocation.CENTER, pagerResource, false, 0, true);
         pager.setDisplay(dataGrid);
@@ -399,7 +410,8 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
             }
             
         };
-        this.addColumn(selectedColumn, "(X)");
+        this.header = new SelectAllHeader();
+        dataGrid.addColumn(selectedColumn, header);
         selectedColumn.setFieldUpdater(new FieldUpdater<T, Boolean>() {
 
             /**
@@ -449,6 +461,16 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      */
     public HandlerRegistration addDataGridSortEvent(IDataGridEventHandler handler) {
         return this.addHandler(handler, DataGridSortEvent.TYPE);
+    }
+    
+    /**
+     * Adds a event handler to apply on the multi select column header
+     * 
+     * @param handler - The action handler to apply on the multi select column header
+     * @return {@link HandlerRegistration} used to remove the handler
+     */
+    public HandlerRegistration addSelectAllEvent(ISelectAllEventHandler handler) {
+        return this.header.addEventHandler(handler);
     }
     
     /**
