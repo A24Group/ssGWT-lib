@@ -15,34 +15,20 @@
  */
 package org.ssgwt.client.ui.datagrid;
 
+import com.google.gwt.event.shared.EventHandler;
+
 /**
- * The object type to be used when the multi select state wants to be used
+ * Custom data grid event handler
  * 
  * @author Michael Barnard
- * @since 2 July 2012
+ * @since 3 July 2012
  */
-public abstract class AbstractMultiSelectObject {
+public interface IDataGridEventHandler extends EventHandler {
     
     /**
-     * Whether or not the object is selected
-     */
-    private boolean selected;
-    
-    /**
-     * Sets whether the object is selected or not
+     * Handler function for the DataEvent
      * 
-     * @param selected - whether the object is selected
+     * @param event - The event that should be handled
      */
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-    
-    /**
-     * Get whether the object is selected or not
-     * 
-     * @return whether the object is selected
-     */
-    public boolean isSelected() {
-        return this.selected;
-    }
+    void onA24DataEvent(DataGridSortEvent event);
 }

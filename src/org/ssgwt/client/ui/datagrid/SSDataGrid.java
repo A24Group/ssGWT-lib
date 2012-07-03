@@ -1,19 +1,37 @@
+/*
+ * Copyright 2010 Google Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package org.ssgwt.client.ui.datagrid;
 
+import java.util.HashMap;
 import java.util.List;
 
-import org.eclipse.jdt.internal.compiler.ast.DoStatement;
 import org.ssgwt.client.ui.datagrid.SSPager.TextLocation;
 
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.layout.client.Layout.Layer;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.ColumnSortEvent;
+import com.google.gwt.user.cellview.client.ColumnSortList.ColumnSortInfo;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.Header;
 import com.google.gwt.user.client.ui.Composite;
@@ -74,6 +92,14 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
     @UiField
     FlowPanel actionBarContainer;
     
+    /**
+     * Sorting details of the columns
+     */
+    HashMap<Column, ColumnSortInfo> columnSortDetail = new HashMap<Column, ColumnSortInfo>();
+    
+    /**
+     * The data provider that will be used 
+     */
     ListDataProvider<T> dataProvider = new ListDataProvider<T>();
     
     /**
@@ -130,6 +156,26 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      */
     public SSDataGrid(DataGrid.Resources dataGridResource, SSPager.Resources pagerResource, boolean multiSelect) {
         dataGrid = new DataGrid<T>(10, dataGridResource);
+        dataGrid.addColumnSortHandler(new ColumnSortEvent.Handler() {
+            
+            /**
+             * Will be called on a column sort event
+             * 
+             * @param event - The event that initialise the handler
+             */
+            @Override
+            public void onColumnSort(ColumnSortEvent event) {
+                ColumnSortInfo columnSortInfo;
+                if ( ( columnSortInfo = columnSortDetail.get( event.getColumn( ) ) ) != null ) {
+                    columnSortDetail.remove( event.getColumn( ) );
+                    columnSortDetail.put( event.getColumn( ), new ColumnSortInfo( event.getColumn( ), !columnSortInfo.isAscending( ) ) );
+                } else {
+                    columnSortDetail.put( event.getColumn( ), new ColumnSortInfo( event.getColumn( ), true ) );
+                }
+                SSDataGrid.this.dataGrid.getColumnSortList().push(columnSortDetail.get( event.getColumn( ) ));
+                fireEvent(new DataGridSortEvent(event.getColumn( ), columnSortDetail.get( event.getColumn( ) ).isAscending()));
+            }
+        });
         dataProvider.addDataDisplay(dataGrid);
         pager = new SSPager(TextLocation.CENTER, pagerResource, false, 0, true);
         pager.setDisplay(dataGrid);
@@ -179,6 +225,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * @param col the column to be added
      */
     public void addColumn(Column<T, ?> col) {
+        col.setSortable(true);
         dataGrid.addColumn(col);
     }
 
@@ -189,6 +236,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * @param header the associated {@link Header}
      */
     public void addColumn(Column<T, ?> col, Header<?> header) {
+        col.setSortable(true);
         dataGrid.addColumn(col, header);
     }
 
@@ -200,6 +248,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * @param footer the associated footer (as a {@link Header} object)
      */
     public void addColumn(Column<T, ?> col, Header<?> header, Header<?> footer) {
+        col.setSortable(true);
         dataGrid.addColumn(col, header, footer);
     }
 
@@ -210,6 +259,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * @param headerString the associated header text, as a String
      */
     public void addColumn(Column<T, ?> col, String headerString) {
+        col.setSortable(true);
         dataGrid.addColumn(col, headerString);
     }
 
@@ -221,6 +271,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * @param headerHtml the associated header text, as safe HTML
      */
     public void addColumn(Column<T, ?> col, SafeHtml headerHtml) {
+        col.setSortable(true);
         dataGrid.addColumn(col, headerHtml);
     }
 
@@ -233,6 +284,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * @param footerString the associated footer text, as a String
      */
     public void addColumn(Column<T, ?> col, String headerString, String footerString) {
+        col.setSortable(true);
         dataGrid.addColumn(col, headerString, footerString);
     }
 
@@ -245,6 +297,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * @param footerHtml the associated footer text, as safe HTML
      */
     public void addColumn(Column<T, ?> col, SafeHtml headerHtml, SafeHtml footerHtml) {
+        col.setSortable(true);
         dataGrid.addColumn(col, headerHtml, footerHtml);
     }
     
@@ -384,6 +437,16 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
             dataGrid.removeStyleName("noClickAction");
             dataGrid.addStyleName("hasClickAction");
         }
+    }
+    
+    /**
+     * Adds a event handler to the data grid
+     * 
+     * @param handler - The action handler to apply on the data grid
+     * @return {@link HandlerRegistration} used to remove the handler
+     */
+    public HandlerRegistration addDataGridSortEvent( IDataGridEventHandler handler ) {
+        return this.addHandler( handler, DataGridSortEvent.TYPE );
     }
     
 }
