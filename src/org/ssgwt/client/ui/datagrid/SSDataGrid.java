@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.ssgwt.client.ui.datagrid.SSPager.TextLocation;
+import org.ssgwt.client.ui.datagrid.filter.AbstractHeaderFilter;
 
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.CheckboxCell;
@@ -43,7 +44,6 @@ import com.google.gwt.view.client.ListDataProvider;
  * sorting, filtering, selection clicking of row and paging
  * 
  * @author Johannes Gryffenberg
- * @param <T>
  * @since 29 June 2012
  */
 public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite implements RequiresResize {
@@ -331,6 +331,8 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
     
     /**
      * Hides the header by setting it invisible
+     * 
+     * TODO: Fix this. We need to be able to change the action bar back to visible
      */
     public void hideHeader() {
         //TODO: Add functionality for reusability
@@ -449,4 +451,15 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
         return this.addHandler(handler, DataGridSortEvent.TYPE);
     }
     
+    /**
+     * Adds a column to the data grid with a FilterSortHeader as a header
+     * 
+     * @param col - The column that should be added to the data grid
+     * @param label - The label that should be displayed in the header
+     * @param filterWidget - The filter widget that should be displayed if the user clicks on the filter icon
+     */
+    public void addFilterColumn(Column<T, ?> col, String label, AbstractHeaderFilter filterWidget) {
+        FilterSortHeader header = new FilterSortHeader(label, filterWidget);
+        this.addColumn(col, header);
+    }
 }
