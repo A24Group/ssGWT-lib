@@ -14,8 +14,6 @@
 
 package org.ssgwt.client.validation.validators;
 
-import java.util.regex.Pattern;
-
 /**
  * String regex validator class.
  * 
@@ -80,8 +78,7 @@ public class StringRegexValidator extends AbstractValidator implements
      * @return Whether the value matched the regex pattern or not
      */
     public boolean validateRegularExpressionPattern(String sValue, String sRegExpression) {
-        // Return whether the value matched the regular expression
-        return Pattern.matches(sRegExpression, sValue);
+        return sValue.matches(sRegExpression);
     }
 
     /**
