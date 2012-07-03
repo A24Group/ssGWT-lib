@@ -377,7 +377,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
             dataGrid.removeStyleName("isMultiSelect");
         } else {
             dataGrid.addStyleName("isMultiSelect");
-            addMultiSelectField( );
+            addMultiSelectField();
         }
     }
     
@@ -385,7 +385,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * Add a field that supports multiple selection
      */
     public void addMultiSelectField() {
-        Cell<Boolean> booleanCell = (Cell<Boolean>)new CheckboxCell( );
+        Cell<Boolean> booleanCell = (Cell<Boolean>)new CheckboxCell();
         Column<T, Boolean> selectedColumn = new Column<T, Boolean>(booleanCell) {
             
             /**
@@ -400,7 +400,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
             
         };
         this.addColumn(selectedColumn, "(X)");
-        selectedColumn.setFieldUpdater( new FieldUpdater<T, Boolean>() {
+        selectedColumn.setFieldUpdater(new FieldUpdater<T, Boolean>() {
 
             /**
              * Update the selection state 
@@ -447,8 +447,8 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * @param handler - The action handler to apply on the data grid
      * @return {@link HandlerRegistration} used to remove the handler
      */
-    public HandlerRegistration addDataGridSortEvent( IDataGridEventHandler handler ) {
-        return this.addHandler( handler, DataGridSortEvent.TYPE );
+    public HandlerRegistration addDataGridSortEvent(IDataGridEventHandler handler) {
+        return this.addHandler(handler, DataGridSortEvent.TYPE);
     }
     
 }
