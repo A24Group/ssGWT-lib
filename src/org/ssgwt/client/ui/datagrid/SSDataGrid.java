@@ -166,14 +166,14 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
             @Override
             public void onColumnSort(ColumnSortEvent event) {
                 ColumnSortInfo columnSortInfo;
-                if ( ( columnSortInfo = columnSortDetail.get( event.getColumn( ) ) ) != null ) {
-                    columnSortDetail.remove( event.getColumn( ) );
-                    columnSortDetail.put( event.getColumn( ), new ColumnSortInfo( event.getColumn( ), !columnSortInfo.isAscending( ) ) );
+                if ((columnSortInfo = columnSortDetail.get(event.getColumn())) != null) {
+                    columnSortDetail.remove(event.getColumn());
+                    columnSortDetail.put(event.getColumn(), new ColumnSortInfo(event.getColumn(), !columnSortInfo.isAscending()));
                 } else {
-                    columnSortDetail.put( event.getColumn( ), new ColumnSortInfo( event.getColumn( ), true ) );
+                    columnSortDetail.put(event.getColumn(), new ColumnSortInfo(event.getColumn(), true));
                 }
-                SSDataGrid.this.dataGrid.getColumnSortList().push(columnSortDetail.get( event.getColumn( ) ));
-                fireEvent(new DataGridSortEvent(event.getColumn( ), columnSortDetail.get( event.getColumn( ) ).isAscending()));
+                SSDataGrid.this.dataGrid.getColumnSortList().push(columnSortDetail.get(event.getColumn()));
+                fireEvent(new DataGridSortEvent(event.getColumn(), columnSortDetail.get(event.getColumn()).isAscending()));
             }
         });
         dataProvider.addDataDisplay(dataGrid);
@@ -323,10 +323,12 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
     }
     
     /**
-     * Hides the action bar by setting it invisible
+     * Hides or shows the action bar
+     * 
+     * @param visible - The visibility of the action bar
      */
-    public void hideActionBar() {
-        actionBar.setVisible(false);
+    public void hideActionBar(boolean visible) {
+        actionBar.setVisible(visible);
     }
     
     /**
