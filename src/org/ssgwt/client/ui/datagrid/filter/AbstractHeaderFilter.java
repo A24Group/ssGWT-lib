@@ -74,7 +74,7 @@ public abstract class AbstractHeaderFilter extends PopupPanel {
     /**
      * Getter that return whether the filter is active or not
      * 
-     * @return
+     * @return Flag indicating whether the filter is active or not
      */
     public boolean isFilterActive() {
         return filterActive;
