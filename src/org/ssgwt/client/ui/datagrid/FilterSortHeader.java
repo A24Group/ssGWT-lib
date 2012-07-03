@@ -31,7 +31,7 @@ public class FilterSortHeader extends Header<HeaderDetails> {
     /**
      * Holds details of the header
      */
-    private static HeaderDetails headerDetails = new HeaderDetails();
+    private HeaderDetails headerDetails = new HeaderDetails();
 
     /**
      * Constructor taking the label that should be displayed on the header
