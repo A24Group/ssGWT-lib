@@ -44,7 +44,9 @@ public class StringRegexValidator extends AbstractValidator implements
     
     /**
      * This regular expression is used to make sure that
-     * no special characters can be part of a name
+     * some special characters can be part of a name.
+     * We allow a hyphen or space in the middle of the name.
+     * Some accent and gravis symbols are also allowed.
      */
     public static final String REGEX_NAME_PATTERN = "^[A-Za-zàáâäãåèéêëìíîïòóôöõøùúûüÿýñçčšžÀÁÂÄÃÅÈÉÊËÌÍÎÏÒÓÔÖÕØÙÚÛÜŸÝÑßÇŒÆČŠŽ∂ð]+([A-Z a-zàáâäãåèéêëìíîïòóôöõøùúûüÿýñçčšžÀÁÂÄÃÅÈÉÊËÌÍÎÏÒÓÔÖÕØÙÚÛÜŸÝÑßÇŒÆČŠŽ∂ð\\-]*[A-Za-zàáâäãåèéêëìíîïòóôöõøùúûüÿýñçčšžÀÁÂÄÃÅÈÉÊËÌÍÎÏÒÓÔÖÕØÙÚÛÜŸÝÑßÇŒÆČŠŽ∂ð]){0,}$";
     
@@ -52,6 +54,8 @@ public class StringRegexValidator extends AbstractValidator implements
      * Validates the value passed in with the set regular expression.
      * 
      * Regular expression pattern is set via the config hash map
+     * 
+     * @param sValue The value to validate
      * 
      * @author Ryno Hartzer <ryno.hartzer@a24group.com>
      * @since 12 June 2012
