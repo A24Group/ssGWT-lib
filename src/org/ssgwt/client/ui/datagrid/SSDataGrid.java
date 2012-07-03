@@ -262,7 +262,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * Sets the amount of rows that the data grid will have. This
      * does not specify how many rows will be displayed.
      * 
-     * @param count - The amount of rows that the data grid will have
+     * @param size - The amount of rows that the data grid will have
      * @param isExact - Whether or not the row measurement is exact
      */
     public void setRowCount(int size, boolean isExact) {
@@ -272,14 +272,14 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
     /**
      * Hides the action bar by setting it invisible
      */
-    public void hideActionBar(){
+    public void hideActionBar() {
         actionBar.setVisible(false);
     }
     
     /**
      * Hides the header by setting it invisible
      */
-    public void hideHeader(){
+    public void hideHeader() {
         //TODO: Add functionality for reusability
     }
     
@@ -288,7 +288,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * 
      * @param actionBarWidget - The widget that needs to be added to the action bar
      */
-    public void setActionBarWidget(Widget actionBarWidget){
+    public void setActionBarWidget(Widget actionBarWidget) {
         this.actionBarContainer.add(actionBarWidget);
     }
     
@@ -302,10 +302,11 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
     }
     
     /**
+     * Whether or not the datagrid supports multi select
      * 
-     * @return
+     * @return Whether the data grid supports multi select
      */
-    public boolean isMultiSelect(){
+    public boolean isMultiSelect() {
         return this.multiSelect;
     }
     
@@ -315,9 +316,9 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * 
      * @param multiSelect - Whether the data grid should support multiple row select
      */
-    public void setMultiSelect(boolean multiSelect){
+    public void setMultiSelect(boolean multiSelect) {
         this.multiSelect = multiSelect;
-        if (!multiSelect){
+        if (!multiSelect) {
             dataGrid.removeStyleName("isMultiSelect");
         } else {
             dataGrid.addStyleName("isMultiSelect");
@@ -365,7 +366,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * 
      * @return Whether the data grid has click action support
      */
-    public boolean hasClickAction(){
+    public boolean hasClickAction() {
         return this.clickAction;
     }
     
@@ -374,9 +375,9 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      *
      * @param clickAction - If the data grid should support click actions
      */
-    public void setClickAction(boolean clickAction){
+    public void setClickAction(boolean clickAction) {
         this.clickAction = clickAction;
-        if (!clickAction){
+        if (!clickAction) {
             dataGrid.removeStyleName("hasClickAction");
             dataGrid.addStyleName("noClickAction");
         } else {
