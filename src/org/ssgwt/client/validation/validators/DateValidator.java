@@ -44,6 +44,11 @@ public class DateValidator extends AbstractValidator implements ValidatorInterfa
      * Default error message to use for validation
      */
     private static final String DEFAULT_VALIDATION_MESSAGE = "Invalid date entered";
+
+    /**
+     * The index for the configuration item to set a custom date format.
+     */
+    public static final String CONFIG_DATE_FORMAT = "dateFormat";
     
     /**
      * Validates the value passed in.
@@ -59,7 +64,16 @@ public class DateValidator extends AbstractValidator implements ValidatorInterfa
     @Override
     public boolean isValid(String value) {
         try {
-            Date date = DateTimeFormat.getFormat(DateValidator.DATE_FORMAT).parse(value);
+            String dateFormat;
+            if (this.configuration
+                    .containsKey(DateValidator.CONFIG_DATE_FORMAT)) {
+                dateFormat = this.configuration.get(
+                        DateValidator.CONFIG_DATE_FORMAT).toString();
+            } else {
+                dateFormat = DateValidator.DATE_FORMAT;
+            }
+
+            Date date = DateTimeFormat.getFormat(dateFormat).parse(value);
         } catch (Exception exception) {
             return false;
         }
