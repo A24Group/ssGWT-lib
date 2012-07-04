@@ -27,21 +27,30 @@ import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dev.resource.Resource;
+import com.google.gwt.dom.client.TableRowElement;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.layout.client.Layout.Layer;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent;
 import com.google.gwt.user.cellview.client.ColumnSortList.ColumnSortInfo;
+import com.google.gwt.user.cellview.client.DataGrid.Style;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.Header;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.RequiresResize;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.Range;
+import com.google.gwt.view.client.RangeChangeEvent;
 
 /**
  * The SSDataGrid with a changeable action bar that dispatches events for
@@ -61,6 +70,30 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
     interface Binder extends UiBinder<Widget, SSDataGrid> {
     }
 
+    /**
+     * A ClientBundle that provides images for this widget.
+     */
+    public interface Resources extends ClientBundle {
+        
+        public static final Resources INSTANCE = GWT.create(Resources.class);
+        
+        /**
+         * The styles used in this widget.
+         */
+        @Source("SSDataGrid.css")
+        Style dataGridStyle();
+    }
+    
+    public interface Style extends CssResource {
+        
+        /**
+         * Applied to every cell.
+         */
+        @ClassName("actionBarStyle")
+        String actionBarStyle();
+        
+    }
+    
     /**
      * Whether the data grid supports selecting multiple rows
      */
@@ -86,7 +119,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * The DataGrid that will be displayed on the screen
      */
     @UiField
-    protected FlowPanel actionBar;
+    protected LayoutPanel actionBar;
 
     /**
      * The flow panel that will contain the action bar
@@ -103,11 +136,6 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * The data provider that will be used 
      */
     ListDataProvider<T> dataProvider = new ListDataProvider<T>();
-    
-    /**
-     * The header used for the select all column
-     */
-    SelectAllHeader header;
     
     /**
      * The pager that will handle the paging of the DataGrid
@@ -189,7 +217,10 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
         pager = new SSPager(TextLocation.CENTER, pagerResource, false, 0, true);
         pager.setDisplay(dataGrid);
         setMultiSelect(multiSelect);
+        setClickAction(false);
         this.initWidget(uiBinder.createAndBindUi(this));
+        Resources.INSTANCE.dataGridStyle().ensureInjected();
+        actionBar.setStyleName( Resources.INSTANCE.dataGridStyle().actionBarStyle() );
     }
 
     /**
@@ -410,8 +441,43 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
             }
             
         };
-        this.header = new SelectAllHeader();
+        SelectAllHeader header = new SelectAllHeader();
+        header.addEventHandler( new ISelectAllEventHandler() {
+            
+            @Override
+            public void onSelectAllEvent(SelectAllEvent event) {
+                DataGrid dataGrid = SSDataGrid.this.dataGrid;
+                
+                Range rows = dataGrid.getVisibleRange( );
+                
+                int end = rows.getStart() + rows.getLength( );
+                int numRecordsDisplayed = rows.getLength( );
+                if ( end > dataGrid.getRowCount( ) ) {
+                    end = dataGrid.getRowCount( );
+                    numRecordsDisplayed = end % numRecordsDisplayed;
+                }
+                
+                boolean allSelected = true;
+                for ( int i = rows.getStart(); i < end; i++ ) {
+                    if( !dataProvider.getList().get(i).isSelected( ) ) {
+                        allSelected = false;
+                        break;
+                    }
+                }
+                
+                for ( int i = rows.getStart(); i < end; i++ ) {
+                    dataProvider.getList().get(i).setSelected( !allSelected );
+                }
+                
+                dataProvider.refresh();
+                
+                for ( int i = 0; i < numRecordsDisplayed; i++ ) {
+                    setRowSelectedStyle(i,!allSelected);
+                }
+            }
+        });
         dataGrid.addColumn(selectedColumn, header);
+        dataGrid.setColumnWidth(selectedColumn, "60px");
         selectedColumn.setFieldUpdater(new FieldUpdater<T, Boolean>() {
 
             /**
@@ -423,9 +489,31 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
              */
             @Override
             public void update(int index, T object, Boolean value) {
+                setRowSelectedStyle( ( index - SSDataGrid.this.dataGrid.getVisibleRange( ).getStart( ) ) , value);
                 object.setSelected(value);
             }
         });
+    }
+    
+    private void setRowSelectedStyle( int rowIndex, boolean selected ) {
+        TableRowElement tableRow = dataGrid.getRowElement( rowIndex );
+        
+        String styleNames = tableRow.getAttribute( "class" );
+        String newStyles = styleNames;
+        boolean containsStyle = styleNames.contains( "selectedRow" );
+        if ( containsStyle && !selected ) {
+            newStyles = "";
+            String[] styles = styleNames.split( " " );
+            for ( int i = 0; i < styles.length; i++ ) {
+                if ( !styles[i].equals( "selectedRow" ) ) {
+                    newStyles += " " + styles[i];
+                }
+            }
+        } else if( !containsStyle && selected ) {
+            newStyles += " selectedRow";
+        }
+        
+        tableRow.setAttribute("class", newStyles);
     }
     
     /**
@@ -464,16 +552,6 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
     }
     
     /**
-     * Adds a event handler to apply on the multi select column header
-     * 
-     * @param handler - The action handler to apply on the multi select column header
-     * @return {@link HandlerRegistration} used to remove the handler
-     */
-    public HandlerRegistration addSelectAllEvent(ISelectAllEventHandler handler) {
-        return this.header.addEventHandler(handler);
-    }
-    
-    /**
      * Adds a column to the data grid with a FilterSortHeader as a header
      * 
      * @param col - The column that should be added to the data grid
@@ -483,5 +561,16 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
     public void addFilterColumn(Column<T, ?> col, String label, AbstractHeaderFilter filterWidget) {
         FilterSortHeader header = new FilterSortHeader(label, filterWidget);
         this.addColumn(col, header);
+    }
+    
+    /**
+     * Adds a range change event handler to the data grid
+     * 
+     * @param handler - The handler the will act on the RangeChangeEvent
+     * 
+     * @return The handler registration object
+     */
+    public HandlerRegistration addRangeChangeHandler(RangeChangeEvent.Handler handler) {
+        return dataGrid.addRangeChangeHandler(handler);
     }
 }

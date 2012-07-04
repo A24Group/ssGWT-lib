@@ -2,6 +2,7 @@ This is an open source project under the Apache2 licence,
 make sure to include the following on all files created within
 this project:
 
+```
 /**
  * Copyright 2012 A24Group
  * 
@@ -15,5 +16,5 @@ this project:
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-
+```
 Easiest is to include this in your auto generated code stub
