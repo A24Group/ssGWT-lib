@@ -41,7 +41,7 @@ public class HelpHeader extends Header<Widget> {
      */
     public HelpHeader(Widget helpWidget) {
         super(new HelpCell());
-        HelpCell = ( HelpCell )getCell( );
+        HelpCell = (HelpCell)getCell();
         this.helpWidget = helpWidget;
     }
     
