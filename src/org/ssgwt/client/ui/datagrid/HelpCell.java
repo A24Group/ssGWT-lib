@@ -216,6 +216,5 @@ public class HelpCell extends AbstractCell<Widget> {
     public void displayHelpWidget() {
         //display helpWidget
         //will be implemented at a later stage
-        Window.alert( "Coming soon!" );
     }
 }
