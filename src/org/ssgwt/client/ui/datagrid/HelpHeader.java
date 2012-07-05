@@ -13,10 +13,8 @@
  */
 package org.ssgwt.client.ui.datagrid;
 
-import org.ssgwt.client.ui.datagrid.event.IHelpEventHandler;
-
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.cellview.client.Header;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * The header that is used for the help feature.
@@ -24,7 +22,7 @@ import com.google.gwt.user.cellview.client.Header;
  * @author Ruan Naude
  * @since 4 July 2012
  */
-public class HelpHeader extends Header<String> {
+public class HelpHeader extends Header<Widget> {
 
     /**
      * The cell that needs to be used as the header
@@ -32,30 +30,26 @@ public class HelpHeader extends Header<String> {
     HelpCell HelpCell;
     
     /**
-     * Constructor
+     * Holds the widget to display with the help header
      */
-    public HelpHeader() {
+    private Widget helpWidget;
+    
+    /**
+     * Constructor
+     * 
+     * @param helpWidget - The widget that should be displayed if the user clicks on the help icon
+     */
+    public HelpHeader(Widget helpWidget) {
         super(new HelpCell());
         HelpCell = ( HelpCell )getCell( );
+        this.helpWidget = helpWidget;
     }
     
     /**
      * Retrieves the header details
      */
     @Override
-    public String getValue() {
-        return null;
+    public Widget getValue() {
+        return helpWidget;
     }
-    
-    /**
-     * Adds a handler to the handler manager
-     * 
-     * @param handler - The handler to be added to the handle manager
-     * @return The handle registration 
-     */
-    public HandlerRegistration addEventHandler(
-            IHelpEventHandler handler) {
-        return HelpCell.addEventHandler(handler);
-    }
-
 }

@@ -13,9 +13,6 @@
  */
 package org.ssgwt.client.ui.datagrid;
 
-import org.ssgwt.client.ui.datagrid.event.IHelpEventHandler;
-import org.ssgwt.client.ui.datagrid.event.HelpEvent;
-
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.cell.client.Cell.Context;
@@ -24,14 +21,15 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * The cell that is used to display a Header for help
@@ -39,7 +37,7 @@ import com.google.gwt.user.client.ui.Image;
  * @author Ruan Naude
  * @since 4 July 2012
  */
-public class HelpCell extends AbstractCell<String> implements HasHandlers {
+public class HelpCell extends AbstractCell<Widget> {
 
     /**
      * Instance of the template
@@ -65,6 +63,11 @@ public class HelpCell extends AbstractCell<String> implements HasHandlers {
      * The handler manager used to handle events
      */
     private HandlerManager handlerManager;
+    
+    /**
+     * Holds the widget to display with the help header
+     */
+    private Widget helpWidget;
 
     /**
      * Create an instance on the default resources object if it the
@@ -143,8 +146,9 @@ public class HelpCell extends AbstractCell<String> implements HasHandlers {
      * The function that renders the content of the Cell
      */
     @Override
-    public void render(Context context, String value, SafeHtmlBuilder sb) {
+    public void render(Context context, Widget value, SafeHtmlBuilder sb) {
         helpImage = new Image(resources.helpIconUp());
+        this.helpWidget = value;
         
         sb.append(template.openContainerTag());
         sb.appendHtmlConstant(helpImage.toString());
@@ -162,7 +166,7 @@ public class HelpCell extends AbstractCell<String> implements HasHandlers {
      * @param valueUpdater - a {@link ValueUpdater}, or null if not specified
      */
     @Override
-    public void onBrowserEvent(Context context, Element parent, String value, NativeEvent event, ValueUpdater<String> valueUpdater) {
+    public void onBrowserEvent(Context context, Element parent, Widget value, NativeEvent event, ValueUpdater<Widget> valueUpdater) {
         super.onBrowserEvent(context, parent, value, event, valueUpdater);
 
         Element helpImageElement = getImageElement(parent);
@@ -177,7 +181,7 @@ public class HelpCell extends AbstractCell<String> implements HasHandlers {
                 replaceImageElement(resources.helpIconOut(), helpImageElement, helpImageParentElement);
             } else if ("mouseup".equals(event.getType())) {
                 replaceImageElement(resources.helpIconUp(), helpImageElement, helpImageParentElement);
-                fireEvent(new HelpEvent());
+                displayHelpWidget();
             }
         }
     }
@@ -207,23 +211,11 @@ public class HelpCell extends AbstractCell<String> implements HasHandlers {
     }
 
     /**
-     * This is used to fire an event
-     * 
-     * @param event - The event that needs to be fired
+     * This is used to display the help widget
      */
-    @Override
-    public void fireEvent(GwtEvent<?> event) {
-        handlerManager.fireEvent(event);
-    }
-
-    /**
-     * Adds a handler to the handler manager
-     * 
-     * @param handler - The handler to be added to the handle manager
-     * @return The handle registration 
-     */
-    public HandlerRegistration addEventHandler(
-            IHelpEventHandler handler) {
-        return handlerManager.addHandler(HelpEvent.TYPE, handler);
+    public void displayHelpWidget() {
+        //display helpWidget
+        //will be implemented at a later stage
+        Window.alert( "Coming soon!" );
     }
 }
