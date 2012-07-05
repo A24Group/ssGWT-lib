@@ -88,16 +88,16 @@ public class HelpCell extends AbstractCell<String> implements HasHandlers {
      */
     public interface Resources extends ClientBundle {
 
-        @Source("images/Header_Select_All_down.png")
-        ImageResource helpIconActive();
+        @Source("images/Help_button_up.png")
+        ImageResource helpIconOut();
 
-        @Source("images/Header_Select_All_up.png")
-        ImageResource helpIconInactive();
+        @Source("images/Help_button_up.png")
+        ImageResource helpIconUp();
 
-        @Source("images/Header_Select_All_over.png")
+        @Source("images/Help_button_over.png")
         ImageResource helpIconOver();
 
-        @Source("images/Header_Select_All_down.png")
+        @Source("images/Help_button_down.png")
         ImageResource helpIconDown();
     }
 
@@ -144,6 +144,8 @@ public class HelpCell extends AbstractCell<String> implements HasHandlers {
      */
     @Override
     public void render(Context context, String value, SafeHtmlBuilder sb) {
+        helpImage = new Image(resources.helpIconUp());
+        
         sb.append(template.openContainerTag());
         sb.appendHtmlConstant(helpImage.toString());
         sb.append(template.closeContainerTag());
@@ -163,23 +165,19 @@ public class HelpCell extends AbstractCell<String> implements HasHandlers {
     public void onBrowserEvent(Context context, Element parent, String value, NativeEvent event, ValueUpdater<String> valueUpdater) {
         super.onBrowserEvent(context, parent, value, event, valueUpdater);
 
-        Element filterImageElement = getImageElement(parent);
-        Element filterImageParentElement = filterImageElement.getParentElement();
+        Element helpImageElement = getImageElement(parent);
+        Element helpImageParentElement = helpImageElement.getParentElement();
 
-        if (event.getEventTarget().equals(filterImageElement)) {
+        if (event.getEventTarget().equals(helpImageElement)) {
             if ("mousedown".equals(event.getType())) {
-                replaceImageElement(resources.helpIconDown(), filterImageElement, filterImageParentElement);
+                replaceImageElement(resources.helpIconDown(), helpImageElement, helpImageParentElement);
             } else if ("mouseover".equals(event.getType())) {
-                replaceImageElement(resources.helpIconOver(), filterImageElement, filterImageParentElement);
+                replaceImageElement(resources.helpIconOver(), helpImageElement, helpImageParentElement);
             } else if ("mouseout".equals(event.getType())) {
-//                if (filterActive) {
-                    replaceImageElement(resources.helpIconActive(), filterImageElement, filterImageParentElement);
-//                } else {
-                    replaceImageElement(resources.helpIconInactive(), filterImageElement, filterImageParentElement);
-//                }
+                replaceImageElement(resources.helpIconOut(), helpImageElement, helpImageParentElement);
             } else if ("mouseup".equals(event.getType())) {
-                replaceImageElement(resources.helpIconOver(), filterImageElement, filterImageParentElement);
-                fireEvent(new HelpEvent());        
+                replaceImageElement(resources.helpIconUp(), helpImageElement, helpImageParentElement);
+                fireEvent(new HelpEvent());
             }
         }
     }
