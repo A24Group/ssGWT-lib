@@ -203,7 +203,7 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> {
                     replaceImageElement(resources.filterIconOver(), filterImageElement, filterImageParentElement);
                 }
             } else if ("mouseout".equals(event.getType())) {
-                if (Window.Navigator.getAppName().equals("Microsoft Internet Explorer")){
+                if (Window.Navigator.getAppName().equals("Microsoft Internet Explorer")) {
                     doMouseOver = true;
                 }
                 if (filterActive) {
