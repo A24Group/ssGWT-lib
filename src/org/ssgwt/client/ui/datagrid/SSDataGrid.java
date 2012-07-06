@@ -479,7 +479,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
                 
                 boolean allSelected = true;
                 for (int i = rows.getStart(); i < end; i++) {
-                    if(!dataProvider.getList().get(i).isSelected()) {
+                    if (!dataProvider.getList().get(i).isSelected()) {
                         allSelected = false;
                         break;
                     }
@@ -550,7 +550,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
                     newStyles += " " + styles[i];
                 }
             }
-        } else if(!containsStyle && selected) {
+        } else if (!containsStyle && selected) {
             if (!newStyles.equals("")) {
                 newStyles += " ";
             }
@@ -560,7 +560,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
         tableRow.setClassName(newStyles);
         
         Label l = new Label(" ");
-        if (Window.Navigator.getAppName().equals("Microsoft Internet Explorer")){
+        if (Window.Navigator.getAppName().equals("Microsoft Internet Explorer")) {
             tableRow.appendChild(l.getElement());
             
             tableRow.removeChild(l.getElement());
