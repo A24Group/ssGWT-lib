@@ -1,0 +1,154 @@
+/**
+ * Copyright 2012 A24Group
+ *  
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License. 
+ */
+
+/* The style for the panel that contains all the elements on the text filter */
+.textFilterStyle {
+    border: 1px solid #666666;
+    padding: 0px;
+}
+
+/* The style for the speech bubble arrow border */
+.arrowBorderStyle {
+    border-color: transparent transparent #666666 transparent;
+    border-style: solid;
+    border-width: 8px;
+    height: 0px;
+    width: 0px;
+    position: absolute;
+    top: -16px;
+    left: 8px;
+}
+
+/* The style for the speech bubble arrow */
+.arrowStyle {
+    border-color: transparent transparent #FFFFFF transparent;
+    border-style: solid;
+    border-width: 8px;
+    height: 0px;
+    width: 0px;
+    position: absolute;
+    top: -15px;
+    left: 8px;
+}
+
+/* The style for the title */
+.titleStyle {
+    padding-top: 5px;
+    padding-left: 8px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: "PT Sans", sans-serif;
+    font-size: 12px;
+    color: #42495A;
+}
+
+/* The style the sets the position of the remove filter icon */
+.removeFilterIconStyle {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* The style for the container that holds the checkbox */
+.checkBoxContainerStyle {
+    padding-top: 12px;
+    padding-left: 4px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* The style for the checkbox */
+.checkBoxStyle {
+    display: inline-block;
+}
+
+/* The style for the label of the checkbox */
+.checkBoxLabelStyle {
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 4px;
+    font-family: "PT Sans", sans-serif;
+    font-size: 10px;
+    color: #42495A;
+}
+
+/* The style for the text box label */
+.textBoxLabelStyle {
+	padding-top: 20px;
+    padding-left: 8px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: "PT Sans", sans-serif;
+    font-size: 12px;
+    color: #42495A;
+}
+
+/* The style for the container that holds the text box */
+.textBoxStyleContainer {
+	padding-top: 12px;
+    padding-left: 6px;
+    padding-right: 6px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* The style for the text box */
+.textBoxStyle {
+	height: 20px;
+    border: solid 1px #666666;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: "PT Sans", sans-serif;
+    font-size: 12px;
+    color: #42495A;
+}
+
+/* The style for the container that holds the apply button */
+.applyButtonContainer {
+    padding-top: 12px;
+    padding-bottom: 14px;
+    padding-left: 6px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* The style for the apply button */
+.applyButton {
+    height: 21px;
+    border: solid 1px #666666;
+    background-color: #FFF;
+    font-family: "PT Sans", sans-serif;
+    font-size: 12px;
+    color: #42495A;
+}
+
+/* The style for the apply button hover style */
+.applyButton:hover {
+	border: solid 1px #333333;
+	color: #333333;
+}
+
+/* The style for the apply button when it is selected */
+.applyButtonDown {
+	background-color: #CCCCCC;
+}
