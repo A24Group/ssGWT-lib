@@ -34,6 +34,7 @@ import com.google.gwt.resources.client.ImageResource.ImageOptions;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
@@ -75,6 +76,8 @@ public class SelectAllCell extends AbstractCell<String> implements HasHandlers {
      * The handler manager used to handle events
      */
     private HandlerManager handlerManager;
+    
+    private boolean doMouseOver = true;
 
     /**
      * Create an instance on the default resources object if it the
@@ -185,8 +188,16 @@ public class SelectAllCell extends AbstractCell<String> implements HasHandlers {
             if ("mousedown".equals(event.getType())) {
                 replaceImageElement(resources.filterIconDown(), filterImageElement, filterImageParentElement);
             } else if ("mouseover".equals(event.getType())) {
-                replaceImageElement(resources.filterIconOver(), filterImageElement, filterImageParentElement);
+                if (doMouseOver && Window.Navigator.getAppName().equals("Microsoft Internet Explorer")) {
+                    doMouseOver = false;
+                    replaceImageElement(resources.filterIconOver(), filterImageElement, filterImageParentElement);
+                } else if (!Window.Navigator.getAppName().equals("Microsoft Internet Explorer")) {
+                    replaceImageElement(resources.filterIconOver(), filterImageElement, filterImageParentElement);
+                }
             } else if ("mouseout".equals(event.getType())) {
+                if (Window.Navigator.getAppName().equals("Microsoft Internet Explorer")) {
+                    doMouseOver = true;
+                }
                 if (filterActive) {
                     replaceImageElement(resources.filterIconActive(), filterImageElement, filterImageParentElement);
                 } else {
