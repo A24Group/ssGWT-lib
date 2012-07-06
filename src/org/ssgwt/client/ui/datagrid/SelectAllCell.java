@@ -195,7 +195,7 @@ public class SelectAllCell extends AbstractCell<String> implements HasHandlers {
                     replaceImageElement(resources.filterIconOver(), filterImageElement, filterImageParentElement);
                 }
             } else if ("mouseout".equals(event.getType())) {
-                if (Window.Navigator.getAppName().equals("Microsoft Internet Explorer")){
+                if (Window.Navigator.getAppName().equals("Microsoft Internet Explorer")) {
                     doMouseOver = true;
                 }
                 if (filterActive) {
