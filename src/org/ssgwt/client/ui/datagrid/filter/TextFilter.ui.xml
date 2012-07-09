@@ -5,16 +5,16 @@
         <g:SimplePanel styleName="{resources.textFilterStyle.arrowBorderStyle}" />
         <g:SimplePanel styleName="{resources.textFilterStyle.arrowStyle}" />
         <g:FlowPanel width="100%" >
-            <g:Label text="Filter Email Address" styleName="{resources.textFilterStyle.titleStyle}" />
+            <g:Label ui:field="titleLabel" styleName="{resources.textFilterStyle.titleStyle}" />
             <g:Image ui:field="removeFilterIcon" resource="{resources.removeFilterIconUp}" styleName="{resources.textFilterStyle.removeFilterIconStyle}" />
         </g:FlowPanel>
         <g:FlowPanel styleName="{resources.textFilterStyle.checkBoxContainerStyle}" width="100%">
-            <g:CheckBox styleName="{resources.textFilterStyle.checkBoxStyle}"/>
-            <g:Label text="Find Empty Entries Only" styleName="{resources.textFilterStyle.checkBoxLabelStyle}"/>
+            <g:CheckBox ui:field="checkBox" styleName="{resources.textFilterStyle.checkBoxStyle}"/>
+            <g:Label ui:field="checkBoxLabel" text="Find Empty Entries Only" styleName="{resources.textFilterStyle.checkBoxLabelStyle}"/>
         </g:FlowPanel>
-        <g:Label text="Text to filter:" styleName="{resources.textFilterStyle.textBoxLabelStyle}" width="100%"/>
+        <g:Label ui:field="textBoxLabel" text="Text to filter:" styleName="{resources.textFilterStyle.textBoxLabelStyle}" width="100%"/>
         <g:FlowPanel styleName="{resources.textFilterStyle.textBoxStyleContainer}" width="100%">
-            <g:TextBox styleName="{resources.textFilterStyle.textBoxStyle}" width="100%"/>
+            <g:TextBox ui:field="textBox" styleName="{resources.textFilterStyle.textBoxStyle}" width="100%"/>
         </g:FlowPanel>
         <g:FlowPanel styleName="{resources.textFilterStyle.applyButtonContainer}" width="100%">
             <g:Button ui:field="applyButton" text="apply" styleName="{resources.textFilterStyle.applyButton}" />

@@ -15,31 +15,35 @@
 /* The style for the panel that contains all the elements on the text filter */
 .textFilterStyle {
     border: 1px solid #666666;
+    background-color: #FFFFFF;
     padding: 0px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 /* The style for the speech bubble arrow border */
 .arrowBorderStyle {
     border-color: transparent transparent #666666 transparent;
     border-style: solid;
-    border-width: 8px;
+    border-width: 6px;
     height: 0px;
     width: 0px;
     position: absolute;
-    top: -16px;
-    left: 8px;
+    top: -12px;
+    left: 6px;
 }
 
 /* The style for the speech bubble arrow */
 .arrowStyle {
     border-color: transparent transparent #FFFFFF transparent;
     border-style: solid;
-    border-width: 8px;
+    border-width: 6px;
     height: 0px;
     width: 0px;
     position: absolute;
-    top: -15px;
-    left: 8px;
+    top: -11px;
+    left: 6px;
 }
 
 /* The style for the title */
@@ -135,6 +139,7 @@
 /* The style for the apply button */
 .applyButton {
     height: 21px;
+    width: 72px;
     border: solid 1px #666666;
     background-color: #FFF;
     font-family: "PT Sans", sans-serif;
@@ -144,11 +149,12 @@
 
 /* The style for the apply button hover style */
 .applyButton:hover {
-	border: solid 1px #333333;
-	color: #333333;
+	border: solid 1px #41485A;
+	color: #41485A;
 }
 
 /* The style for the apply button when it is selected */
 .applyButtonDown {
-	background-color: #CCCCCC;
+	background-color: #A1A4AD;
+	border: solid 1px #41485A;
 }

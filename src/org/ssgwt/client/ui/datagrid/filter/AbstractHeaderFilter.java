@@ -36,7 +36,7 @@ public abstract class AbstractHeaderFilter extends PopupPanel {
     /**
      * Object holding the filter criteria
      */
-    private Criteria filterCirteria;
+    protected Criteria filterCirteria;
     
     /**
      * The header the filter is linked to
@@ -56,7 +56,7 @@ public abstract class AbstractHeaderFilter extends PopupPanel {
          * 
          * @return The image resource to be used with a image
          */
-        @Source( "images/Hover_Delete_Applied_filter_up.png" )
+        @Source("images/Hover_Delete_Applied_filter_up.png")
         ImageResource removeFilterIconUp();
         
         /**
@@ -64,7 +64,7 @@ public abstract class AbstractHeaderFilter extends PopupPanel {
          * 
          * @return The image resource to be used with a image
          */
-        @Source( "images/Hover_Delete_Applied_filter_hover.png" )
+        @Source("images/Hover_Delete_Applied_filter_hover.png")
         ImageResource removeFilterIconOver();
         
         /**
@@ -72,7 +72,7 @@ public abstract class AbstractHeaderFilter extends PopupPanel {
          * 
          * @return The image resource to be used with a image
          */
-        @Source( "images/Hover_Delete_Applied_filter_down.png" )
+        @Source("images/Hover_Delete_Applied_filter_down.png")
         ImageResource removeFilterIconDown();
         
     }
@@ -184,7 +184,7 @@ public abstract class AbstractHeaderFilter extends PopupPanel {
      * 
      * @param filterCirteria - The criteria for the filter
      */
-    public void setCriteria( Criteria filterCirteria ) {
+    public void setCriteria(Criteria filterCirteria) {
         this.filterCirteria = filterCirteria;
         updateFieldData();
     }
@@ -210,4 +210,18 @@ public abstract class AbstractHeaderFilter extends PopupPanel {
         }
         this.hide();
     }
+    
+    /**
+     * Updates the fields to their previous state before the page the popup is hidden
+     */
+    public void hide(boolean autoClosed) {
+        updateFieldData();
+        super.hide(autoClosed);
+        
+    }
+    
+    /**
+     * Clear all the ui fields to their default states
+     */
+    protected abstract void clearFields();
 }

@@ -14,6 +14,7 @@
 package org.ssgwt.client.ui.datagrid.filter;
 
 import org.ssgwt.client.ui.datagrid.FilterSortCell.Resources;
+import org.ssgwt.client.ui.datagrid.filter.AbstractHeaderFilter.Criteria;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dev.resource.Resource;
@@ -25,14 +26,21 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.resources.client.ClientBundle.Source;
+import com.google.gwt.resources.client.TextResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -59,6 +67,36 @@ public class TextFilter extends AbstractHeaderFilter {
     private TextFilterResources resources;
     
     /**
+     * The title label
+     */
+    @UiField
+    Label titleLabel;
+    
+    /**
+     * The check box on the filter popup
+     */
+    @UiField
+    CheckBox checkBox;
+    
+    /**
+     * The label of the check box
+     */
+    @UiField
+    Label checkBoxLabel;
+    
+    /**
+     * The label of the text box
+     */
+    @UiField
+    Label textBoxLabel;
+    
+    /**
+     * The text box
+     */
+    @UiField
+    TextBox textBox;
+    
+    /**
      * The icon that clears a the filter criteria
      */
     @UiField
@@ -69,6 +107,11 @@ public class TextFilter extends AbstractHeaderFilter {
      */
     @UiField
     Button applyButton;
+    
+    /**
+     * Holds the text that was previously entered in the text box
+     */
+    String previousText;
     
     /**
      * UiBinder interface for the composite
@@ -92,7 +135,7 @@ public class TextFilter extends AbstractHeaderFilter {
          * 
          * @return An implementation of the Style interface
          */
-        @Source( "TextFilter.css" )
+        @Source("TextFilter.css")
         Style textFilterStyle();
     }
     
@@ -215,6 +258,29 @@ public class TextFilter extends AbstractHeaderFilter {
          * The criteria the user entered on the text filter
          */
         private String criteria;
+        
+        /**
+         * Flag to indicate if the user is looking for empty entries only
+         */
+        private boolean findEmptyEntriesOnly;
+        
+        /**
+         * Retrieve the flag that indicates if the user is looking for empty entries only
+         * 
+         * @return The flag that indicates if the user is looking for empty entries only
+         */
+        public boolean isFindEmptyEntriesOnly() {
+            return findEmptyEntriesOnly;
+        }
+
+        /**
+         * Sets the flag that the user is looking for empty entries only or not
+         * 
+         * @param findEmptyEntriesOnly - The new value for the flag value
+         */
+        public void setFindEmptyEntriesOnly(boolean findEmptyEntriesOnly) {
+            this.findEmptyEntriesOnly = findEmptyEntriesOnly;
+        }
 
         /**
          * Retrieves the criteria the user entered on the text filter
@@ -249,19 +315,38 @@ public class TextFilter extends AbstractHeaderFilter {
      * @param resources - The resources the text filter should use
      */
     public TextFilter(TextFilterResources resources) {
-        super(false);
+        super(true);
         this.resources = resources;
         this.resources.textFilterStyle().ensureInjected();
         this.setStyleName("");
         this.setWidget(uiBinder.createAndBindUi(this));
-        addRemoveIconEventsHandlers();
-        addApplyButtonEventsHandlers();
+        setCriteria(new TextFilterCriteria());
+        addRemoveIconEventHandlers();
+        addApplyButtonEventHandlers();
+        addCheckBoxEventHandlers();
     }
     
+    private void addCheckBoxEventHandlers() {
+        this.checkBox.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+            
+            @Override
+            public void onValueChange(ValueChangeEvent<Boolean> event) {
+                if (event.getValue()) {
+                    textBox.setEnabled(false);
+                    previousText = textBox.getValue();
+                    textBox.setValue("");
+                } else {
+                    textBox.setEnabled(true);
+                    textBox.setValue(previousText);
+                }
+            }
+        });
+    }
+
     /**
      * Function that adds the required events handlers to the apply button
      */
-    private void addApplyButtonEventsHandlers() {
+    private void addApplyButtonEventHandlers() {
         this.applyButton.addMouseDownHandler(new MouseDownHandler() {
             
             /**
@@ -285,6 +370,7 @@ public class TextFilter extends AbstractHeaderFilter {
             @Override
             public void onMouseUp(MouseUpEvent event) {
                 applyButton.removeStyleName(resources.textFilterStyle().applyButtonDown());
+                closeFilterPopup(false);
             }
         });
         
@@ -305,7 +391,7 @@ public class TextFilter extends AbstractHeaderFilter {
     /**
      * Adds the required events handlers to the remove filter icon
      */
-    private void addRemoveIconEventsHandlers() {
+    private void addRemoveIconEventHandlers() {
         this.removeFilterIcon.addMouseOverHandler(new MouseOverHandler() {
             
             /**
@@ -355,6 +441,7 @@ public class TextFilter extends AbstractHeaderFilter {
             @Override
             public void onMouseUp(MouseUpEvent event) {
                 removeFilterIcon.setResource(resources.removeFilterIconOver());
+                clearFields();
             }
         });
     }
@@ -380,7 +467,7 @@ public class TextFilter extends AbstractHeaderFilter {
      */
     @Override
     public void setTitle(String title) {
-        
+        titleLabel.setText(title);
     }
     
     /**
@@ -398,9 +485,9 @@ public class TextFilter extends AbstractHeaderFilter {
      * @return The criteria of the obejct
      */
     public TextFilterCriteria getCriteria() {
-        return null;
+        return (TextFilterCriteria)this.filterCirteria;
     }
-
+    
     /**
      * Function that check if the filter is active by checking the value on the criteria object
      * 
@@ -408,6 +495,11 @@ public class TextFilter extends AbstractHeaderFilter {
      */
     @Override
     protected boolean checkFilterActive() {
+        if (((TextFilterCriteria)this.filterCirteria).isFindEmptyEntriesOnly()) {
+            return true;
+        } else if (((TextFilterCriteria)this.filterCirteria).getCriteria() != null && !((TextFilterCriteria)this.filterCirteria).getCriteria().trim().equals("")) {
+            return true;
+        }
         return false;
     }
 
@@ -416,6 +508,8 @@ public class TextFilter extends AbstractHeaderFilter {
      */
     @Override
     protected void updateCriteriaObject() {
+        ((TextFilterCriteria)this.filterCirteria).setFindEmptyEntriesOnly(checkBox.getValue());
+        ((TextFilterCriteria)this.filterCirteria).setCriteria(textBox.getValue());
     }
 
     /**
@@ -423,6 +517,8 @@ public class TextFilter extends AbstractHeaderFilter {
      */
     @Override
     protected void setCriteriaObjectEmpty() {
+        ((TextFilterCriteria)this.filterCirteria).setFindEmptyEntriesOnly(false);
+        ((TextFilterCriteria)this.filterCirteria).setCriteria("");
     }
 
     /**
@@ -430,5 +526,20 @@ public class TextFilter extends AbstractHeaderFilter {
      */
     @Override
     protected void updateFieldData() {
+        checkBox.setValue(((TextFilterCriteria)this.filterCirteria).isFindEmptyEntriesOnly());
+        textBox.setValue(((TextFilterCriteria)this.filterCirteria).getCriteria());
+    }
+    
+    /**
+     * Clear all the ui fields to their default states
+     */
+    protected void clearFields() {
+        checkBox.setValue(false);
+        textBox.setValue("");
+        if (checkBox.getValue()) {
+            textBox.setEnabled(false);
+        } else {
+            textBox.setEnabled(true);
+        }
     }
 }

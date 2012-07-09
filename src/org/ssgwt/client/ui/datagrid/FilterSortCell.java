@@ -63,7 +63,17 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> {
      * Holds the filter image that is displayed in the header
      */
     private Image filterImage;
-
+    
+    /**
+     * The parent element of the Cell
+     */
+    private Element parent;
+    
+    /**
+     * Holds the header details
+     */
+    private HeaderDetails headerDetails;
+    
     /**
      * Create an instance on the default resources object if it the
      * DEFAULT_RESOURCES variable is null if not it just return the object in
@@ -86,7 +96,7 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> {
      */
     public interface Resources extends ClientBundle {
 
-        @Source("images/Header-Filter-Button_down_applied.png")
+        @Source("images/Header-Filter-Button_active.png")
         ImageResource filterIconActive();
 
         @Source("images/Header-Filter-Button_up.png")
@@ -95,7 +105,7 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> {
         @Source("images/Header-Filter-Button_over.png")
         ImageResource filterIconOver();
 
-        @Source("images/Header-Filter-Button_down_applied.png")
+        @Source("images/Header-Filter-Button_down.png")
         ImageResource filterIconDown();
     }
 
@@ -150,6 +160,7 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> {
      */
     @Override
     public void render(Context context, HeaderDetails value, SafeHtmlBuilder sb) {
+        this.headerDetails = value;
         if (filterActive) {
             filterImage = new Image(resources.filterIconActive());
         } else {
@@ -182,7 +193,7 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> {
     @Override
     public void onBrowserEvent(Context context, Element parent, HeaderDetails value, NativeEvent event, ValueUpdater<HeaderDetails> valueUpdater) {
         super.onBrowserEvent(context, parent, value, event, valueUpdater);
-
+        this.parent = parent;
         Element filterImageElement = getImageElement(parent);
         Element filterImageParentElement = filterImageElement.getParentElement();
 
@@ -199,9 +210,24 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> {
                 }
             } else if ("mouseup".equals(event.getType())) {
                 replaceImageElement(resources.filterIconOver(), filterImageElement, filterImageParentElement);
-                
+                displayHeader();
             }
         }
+    }
+    
+    /**
+     * Displays the filter popup for the header column
+     */
+    private void displayHeader() {
+        if (this.parent.getOffsetWidth() > 300) {
+            this.headerDetails.filterWidget.setWidth("300px");
+        } else if (this.parent.getOffsetWidth() > 200) {
+            this.headerDetails.filterWidget.setWidth("" + this.parent.getOffsetWidth() + "px");
+        } else {
+            this.headerDetails.filterWidget.setWidth("200px");
+        }
+        this.headerDetails.filterWidget.center();
+        this.headerDetails.filterWidget.setPopupPosition(this.parent.getAbsoluteLeft(), (this.parent.getAbsoluteTop() + this.parent.getOffsetHeight() + 10));
     }
 
     /**
@@ -224,6 +250,14 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> {
      */
     public void setFilterActive(boolean filterActive) {
         this.filterActive = filterActive;
+        
+        Element filterImageElement = getImageElement(parent);
+        Element filterImageParentElement = filterImageElement.getParentElement();
+        if (filterActive) {
+            replaceImageElement(resources.filterIconActive(), filterImageElement, filterImageParentElement);
+        } else {
+            replaceImageElement(resources.filterIconInactive(), filterImageElement, filterImageParentElement);
+        }
     }
 
     /**
@@ -235,7 +269,7 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> {
      */
     protected Element getImageElement(Element parent) {
         
-        if ( parent.getFirstChildElement().getElementsByTagName("img").getItem(0).getAttribute( "name" ).equals( "filterIcon" ) ) {
+        if (parent.getFirstChildElement().getElementsByTagName("img").getItem(0).getAttribute("name").equals("filterIcon")) {
             return parent.getFirstChildElement().getElementsByTagName("img").getItem(0);
         }
         return parent.getFirstChildElement().getElementsByTagName("img").getItem(1);
