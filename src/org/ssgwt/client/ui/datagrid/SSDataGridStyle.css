@@ -21,6 +21,14 @@
 /*Styling of the first column of the data grid*/
 .dataGridFirstColumn {
     padding-left: 20px !Important;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+/*Styling of the first column of the data grid*/
+.dataGridFirstColumn > div {
+    white-space: normal !Important;
 }
 
 /*The styling applied if the data grid supports multi select*/
@@ -36,6 +44,7 @@
     padding-right: 5px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 /*Styling for the footer of the data grid*/
@@ -44,6 +53,7 @@
     padding-left: 25px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     text-align: left;
     color: #4b4a4a;
     text-shadow: #ddf 1px 1px 0;
@@ -53,11 +63,12 @@
 
 /*Styling for the header of the data grid*/
 .dataGridHeader {
-    border-bottom: 2px solid #6f7277;
+    border-collapse: collapse;
     padding-left: 4px;
     padding-bottom: 3px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     text-align: left;
     color: #41485A;
     font-family: 'PT Sans', sans-serif;
@@ -69,14 +80,16 @@
     overflow: hidden;
     border-top: solid #BDBFC5 thin;
     border-bottom: solid #BDBFC5 thin;
-    background: rgb(246,248,249); /* Old browsers */
+    position: relative;
+    z-index: -1;
+    background: rgb(207,208,212);
     background: -moz-linear-gradient(top, rgba(246,248,249,1) 29%, rgba(216,216,216,1) 100%, rgba(245,247,249,1) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(29%,rgba(246,248,249,1)), color-stop(100%,rgba(216,216,216,1)), color-stop(100%,rgba(245,247,249,1))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, rgba(246,248,249,1) 29%,rgba(216,216,216,1) 100%,rgba(245,247,249,1) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, rgba(246,248,249,1) 29%,rgba(216,216,216,1) 100%,rgba(245,247,249,1) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, rgba(246,248,249,1) 29%,rgba(216,216,216,1) 100%,rgba(245,247,249,1) 100%); /* IE10+ */
-    background: linear-gradient(to bottom, rgba(246,248,249,1) 29%,rgba(216,216,216,1) 100%,rgba(245,247,249,1) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', endColorstr='#f5f7f9',GradientType=0 ); /* IE6-9 */
+    background: -webkit-linear-gradient(top, rgba(246,248,249,1) 29%,rgba(216,216,216,1) 100%,rgba(245,247,249,1) 100%); /*Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(246,248,249,1) 29%,rgba(216,216,216,1) 100%,rgba(245,247,249,1) 100%); /*Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(246,248,249,1) 29%,rgba(216,216,216,1) 100%,rgba(245,247,249,1) 100%); /*IE10+ */
+    background: linear-gradient(to bottom, rgba(246,248,249,1) 29%,rgba(216,216,216,1) 100%,rgba(245,247,249,1) 100%); /*W3C */
+    filter: literal("progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFf5f7f9', endColorstr='#4Af6f8f9',GradientType=0 )");  /*IE6-9 */
 }
 
 /*Styling for the first child of the data grid header*/
@@ -85,14 +98,6 @@
     border-radius: 3px 0 0 0;
     -moz-border-radius: 3px 0 0 0;
     -webkit-border-radius: 3px 0 0 0;
-}
-
-/*Style applied to the last child element of a data grid header*/
-.dataGridHeader:last-child {
-    border-right: solid #BDBFC5 thin;
-    border-radius: 0 3px 0 0;
-    -moz-border-radius: 0 3px 0 0;
-    -webkit-border-radius: 0 3px 0 0;
 }
 
 /*This applies before every data grid header*/
@@ -106,18 +111,27 @@
 /*Styling of the first div in the header*/
 .dataGridHeader > div {
     padding-left: 0px !Important;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 /*Styling for the first child inside the second dif in the a header */
 .dataGridHeader > div > div:first-child {
     magin-left: 40px;
     right: 0px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 /*Styling for the image inside the second div in the header*/
 .dataGridHeader > div > div > img {
     float: right;
     padding-right: 15px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 /*Formatting applied to every cell*/
@@ -126,10 +140,19 @@
     font-size: 12px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    white-space:nowrap;
     color: #777B88;
     padding-top: 4px;
     padding-left: 22px;
     overflow: hidden;
+}
+
+.dataGridCell > div {
+    margin-top:-1px;
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: clip;
 }
 
 /*First and last column styling(Not used yet)*/
@@ -139,6 +162,9 @@
 /*Styling of the first column in the header*/
 .dataGridFirstColumnHeader {
     padding-left: 22px !Important;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 .dataGridFirstColumnHeader {
@@ -147,7 +173,16 @@
 .dataGridLastColumnFooter {
 }
 
+
+
 /*Styling of the last element before the last column in header*/
+.dataGridLastColumnHeader {
+    border-right:1px solid #BDBFC5;
+    border-radius: 0 3px 0 0;
+    -moz-border-radius: 0 3px 0 0;
+    -webkit-border-radius: 0 3px 0 0;
+}
+
 .dataGridLastColumnHeader:before {
     content: '';
 }
@@ -197,7 +232,7 @@
 
 @external .selectedRow;
 .selectedRow {
-	background-color: #FEF1E3;
+    background-color: #FEF1E3;
 }
 
 /*Style applied for clickable rows*/
@@ -214,6 +249,12 @@
     border-left:solid thin #EABD7D;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.dataGridHoveredRow td:first-child > div {
+      margin-left:-1px;
+      overflow: auto;
 }
 
 /*Style applied to the row when hovered over*/
@@ -223,6 +264,7 @@
     border-bottom:solid thin #EABD7D;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 /*Style applied to the last child element of a row when hovered over*/
@@ -231,6 +273,7 @@
     border-right:solid thin #EABD7D;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 /*Cell styles*/

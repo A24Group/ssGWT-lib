@@ -28,6 +28,7 @@ import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dev.resource.Resource;
+import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.TableRowElement;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.layout.client.Layout.Layer;
@@ -43,8 +44,10 @@ import com.google.gwt.user.cellview.client.ColumnSortList.ColumnSortInfo;
 import com.google.gwt.user.cellview.client.DataGrid.Style;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.Header;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.RequiresResize;
 import com.google.gwt.user.client.ui.Widget;
@@ -220,7 +223,19 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
         setClickAction(false);
         this.initWidget(uiBinder.createAndBindUi(this));
         Resources.INSTANCE.dataGridStyle().ensureInjected();
-        actionBar.setStyleName( Resources.INSTANCE.dataGridStyle().actionBarStyle() );
+        actionBar.setStyleName(Resources.INSTANCE.dataGridStyle().actionBarStyle());
+        dataGrid.addRangeChangeHandler(new RangeChangeEvent.Handler() {
+            
+            /**
+             * Event that is called when the pager navigation buttons are clicked
+             * 
+             * @param event - The event that is triggered
+             */
+            @Override
+            public void onRangeChange(RangeChangeEvent event) {
+                refresh();
+            }
+        });
     }
 
     /**
@@ -442,38 +457,39 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
             
         };
         SelectAllHeader header = new SelectAllHeader();
-        header.addEventHandler( new ISelectAllEventHandler() {
+        header.addEventHandler(new ISelectAllEventHandler() {
             
+            /**
+             * Event triggered when the select all button is clicked
+             * 
+             * @param event - The event that was fired
+             */
             @Override
             public void onSelectAllEvent(SelectAllEvent event) {
                 DataGrid dataGrid = SSDataGrid.this.dataGrid;
                 
-                Range rows = dataGrid.getVisibleRange( );
+                Range rows = dataGrid.getVisibleRange();
                 
-                int end = rows.getStart() + rows.getLength( );
-                int numRecordsDisplayed = rows.getLength( );
-                if ( end > dataGrid.getRowCount( ) ) {
-                    end = dataGrid.getRowCount( );
+                int end = rows.getStart() + rows.getLength();
+                int numRecordsDisplayed = rows.getLength();
+                if (end > dataGrid.getRowCount()) {
+                    end = dataGrid.getRowCount();
                     numRecordsDisplayed = end % numRecordsDisplayed;
                 }
                 
                 boolean allSelected = true;
-                for ( int i = rows.getStart(); i < end; i++ ) {
-                    if( !dataProvider.getList().get(i).isSelected( ) ) {
+                for (int i = rows.getStart(); i < end; i++) {
+                    if (!dataProvider.getList().get(i).isSelected()) {
                         allSelected = false;
                         break;
                     }
                 }
                 
-                for ( int i = rows.getStart(); i < end; i++ ) {
-                    dataProvider.getList().get(i).setSelected( !allSelected );
+                for (int i = rows.getStart(); i < end; i++) {
+                    dataProvider.getList().get(i).setSelected(!allSelected);
                 }
                 
-                dataProvider.refresh();
-                
-                for ( int i = 0; i < numRecordsDisplayed; i++ ) {
-                    setRowSelectedStyle(i,!allSelected);
-                }
+                refresh();
             }
         });
         dataGrid.addColumn(selectedColumn, header);
@@ -489,31 +505,66 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
              */
             @Override
             public void update(int index, T object, Boolean value) {
-                setRowSelectedStyle( ( index - SSDataGrid.this.dataGrid.getVisibleRange( ).getStart( ) ) , value);
                 object.setSelected(value);
+                refresh();
             }
         });
     }
     
-    private void setRowSelectedStyle( int rowIndex, boolean selected ) {
-        TableRowElement tableRow = dataGrid.getRowElement( rowIndex );
+    /**
+     * Refresh the data grid
+     */
+    private void refresh() {
+        dataProvider.refresh();
         
-        String styleNames = tableRow.getAttribute( "class" );
+        Range rows = dataGrid.getVisibleRange();
+        
+        int end = rows.getStart() + rows.getLength();
+        int numRecordsDisplayed = rows.getLength();
+        if (end > dataGrid.getRowCount()) {
+            end = dataGrid.getRowCount();
+            numRecordsDisplayed = end % numRecordsDisplayed;
+        }
+        for (int i = 0; i < numRecordsDisplayed; i++) {
+            setRowSelectedStyle(i,dataProvider.getList().get((rows.getStart() + i)).isSelected());
+        }
+    }
+    
+    /**
+     * Sets the style of a selected row at a certain index
+     * 
+     * @param rowIndex - The index of the row that needs to change
+     * @param selected - Whether or not the row is selected
+     */
+    private void setRowSelectedStyle(int rowIndex, boolean selected) {
+        TableRowElement tableRow = dataGrid.getRowElement(rowIndex);
+        
+        String styleNames = tableRow.getClassName();
         String newStyles = styleNames;
-        boolean containsStyle = styleNames.contains( "selectedRow" );
-        if ( containsStyle && !selected ) {
+        boolean containsStyle = styleNames.contains("selectedRow");
+        if (containsStyle && !selected) {
             newStyles = "";
-            String[] styles = styleNames.split( " " );
-            for ( int i = 0; i < styles.length; i++ ) {
-                if ( !styles[i].equals( "selectedRow" ) ) {
+            String[] styles = styleNames.split(" ");
+            for (int i = 0; i < styles.length; i++) {
+                if (!styles[i].equals("selectedRow")) {
                     newStyles += " " + styles[i];
                 }
             }
-        } else if( !containsStyle && selected ) {
-            newStyles += " selectedRow";
+        } else if (!containsStyle && selected) {
+            if (!newStyles.equals("")) {
+                newStyles += " ";
+            }
+            newStyles += "selectedRow ";
         }
         
-        tableRow.setAttribute("class", newStyles);
+        tableRow.setClassName(newStyles);
+        
+        Label l = new Label(" ");
+        if (Window.Navigator.getAppName().equals("Microsoft Internet Explorer")) {
+            tableRow.appendChild(l.getElement());
+            
+            tableRow.removeChild(l.getElement());
+        }
     }
     
     /**
