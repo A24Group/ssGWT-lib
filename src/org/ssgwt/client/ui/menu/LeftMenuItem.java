@@ -58,7 +58,7 @@ public class LeftMenuItem extends Composite {
     /**
      * The image to use for the unselected menu item state
      */
-    @UiField( provided = true )
+    @UiField(provided = true)
     Image notSelectedImage;
     
     /**
@@ -77,7 +77,7 @@ public class LeftMenuItem extends Composite {
     /**
      * The image to use for the selected menu item state
      */
-    @UiField( provided = true )
+    @UiField(provided = true)
     Image selectedImage;
     
     /**
@@ -182,7 +182,7 @@ public class LeftMenuItem extends Composite {
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 09 July 2012
      */
-    public LeftMenuItem(MenuItem menuItem){
+    public LeftMenuItem(MenuItem menuItem) {
         this(menuItem, getDefaultResources());
     }
     
@@ -195,7 +195,7 @@ public class LeftMenuItem extends Composite {
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 09 July 2012
      */
-    public LeftMenuItem(MenuItem menuItem, LeftMenuItemResources resources){
+    public LeftMenuItem(MenuItem menuItem, LeftMenuItemResources resources) {
         this.resources = resources;
         this.resources.leftMenuItemStyle().ensureInjected();
         
