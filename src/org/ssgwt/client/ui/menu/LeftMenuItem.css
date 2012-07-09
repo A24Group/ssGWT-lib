@@ -1,0 +1,28 @@
+.leftMenuItem {
+    width: 128px;
+    height: 59px;
+}
+
+.notSelectedPanel {
+    height: 100%;
+    width: 100%;
+    background: red;
+}
+
+.notSelectedImage {
+}
+
+.notSelectedLabel {
+}
+
+.selectedPanel {
+    height: 100%;
+    width: 100%;
+    background: blue;
+}
+
+.selectedImage {
+}
+
+.selectedLabel {
+}
