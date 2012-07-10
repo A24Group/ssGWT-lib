@@ -1,0 +1,23 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+    
+    <ui:with field='resources' type='org.ssgwt.client.ui.datagrid.filter.TextFilter.TextFilterResources'/>
+    <g:FlowPanel styleName="{resources.textFilterStyle.textFilterStyle}" >
+        <g:SimplePanel styleName="{resources.textFilterStyle.arrowBorderStyle}" />
+        <g:SimplePanel styleName="{resources.textFilterStyle.arrowStyle}" />
+        <g:FlowPanel width="100%" >
+            <g:Label ui:field="titleLabel" styleName="{resources.textFilterStyle.titleStyle}" />
+            <g:Image ui:field="removeFilterIcon" resource="{resources.removeFilterIconUp}" styleName="{resources.textFilterStyle.removeFilterIconStyle}" />
+        </g:FlowPanel>
+        <g:FlowPanel styleName="{resources.textFilterStyle.checkBoxContainerStyle}" width="100%">
+            <g:CheckBox ui:field="checkBox" styleName="{resources.textFilterStyle.checkBoxStyle}"/>
+            <g:Label ui:field="checkBoxLabel" text="Find Empty Entries Only" styleName="{resources.textFilterStyle.checkBoxLabelStyle}"/>
+        </g:FlowPanel>
+        <g:Label ui:field="textBoxLabel" text="Text to filter:" styleName="{resources.textFilterStyle.textBoxLabelStyle}" width="100%"/>
+        <g:FlowPanel styleName="{resources.textFilterStyle.textBoxStyleContainer}" width="100%">
+            <g:TextBox ui:field="textBox" styleName="{resources.textFilterStyle.textBoxStyle}" width="100%"/>
+        </g:FlowPanel>
+        <g:FlowPanel styleName="{resources.textFilterStyle.applyButtonContainer}" width="100%">
+            <g:Button ui:field="applyButton" text="apply" styleName="{resources.textFilterStyle.applyButton}" />
+        </g:FlowPanel>
+    </g:FlowPanel>
+</ui:UiBinder>
