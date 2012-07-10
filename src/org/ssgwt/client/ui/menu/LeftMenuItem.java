@@ -1,13 +1,40 @@
+/**
+ * Copyright 2012 A24Group
+ *  
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License. 
+ */
 package org.ssgwt.client.ui.menu;
 
+import org.ssgwt.client.ui.menu.event.ILeftMenuItemSelectEventHandler;
+import org.ssgwt.client.ui.menu.event.LeftMenuItemSelectEvent;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -43,6 +70,17 @@ public class LeftMenuItem extends Composite {
     private MenuItem menuItem;
     
     /**
+     * Boolean to determine whether the menu item
+     * can be click at the moment
+     */
+    private boolean isClickable = true;
+    
+    /**
+     * The handler manager used to handle events
+     */
+    private HandlerManager handlerManager;
+    
+    /**
      * The container for the whole left menu item
      */
     @UiField
@@ -53,12 +91,19 @@ public class LeftMenuItem extends Composite {
      * the unselected items of the menu item
      */
     @UiField
+    FlowPanel notSelectedFlowPanel;
+    
+    /**
+     * The focus panel that contains
+     * the unselected items of the menu item
+     */
+    @UiField
     FocusPanel notSelectedPanel;
     
     /**
      * The image to use for the unselected menu item state
      */
-    @UiField( provided = true )
+    @UiField(provided = true)
     Image notSelectedImage;
     
     /**
@@ -77,7 +122,7 @@ public class LeftMenuItem extends Composite {
     /**
      * The image to use for the selected menu item state
      */
-    @UiField( provided = true )
+    @UiField(provided = true)
     Image selectedImage;
     
     /**
@@ -127,12 +172,36 @@ public class LeftMenuItem extends Composite {
         String leftMenuItem();
         
         /**
-         * The style for the flow panel that contains
+         * The up state style for the flow panel that contains
          * the unselected items of the menu item
          * 
          * @return The name of the compiled style
          */
-        String notSelectedPanel();
+        String notSelectedPanelUpState();
+        
+        /**
+         * The over state style for the flow panel that contains
+         * the unselected items of the menu item
+         * 
+         * @return The name of the compiled style
+         */
+        String notSelectedPanelOverState();
+        
+        /**
+         * The down state style for the flow panel that contains
+         * the unselected items of the menu item
+         * 
+         * @return The name of the compiled style
+         */
+        String notSelectedPanelDownState();
+        
+        /**
+         * The out state style for the flow panel that contains
+         * the unselected items of the menu item
+         * 
+         * @return The name of the compiled style
+         */
+        String notSelectedPanelOutState();
         
         /**
          * The style for the unselected menu item
@@ -182,7 +251,7 @@ public class LeftMenuItem extends Composite {
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 09 July 2012
      */
-    public LeftMenuItem(MenuItem menuItem){
+    public LeftMenuItem(MenuItem menuItem) {
         this(menuItem, getDefaultResources());
     }
     
@@ -195,22 +264,25 @@ public class LeftMenuItem extends Composite {
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 09 July 2012
      */
-    public LeftMenuItem(MenuItem menuItem, LeftMenuItemResources resources){
+    public LeftMenuItem(MenuItem menuItem, LeftMenuItemResources resources) {
         this.resources = resources;
         this.resources.leftMenuItemStyle().ensureInjected();
+        handlerManager = new HandlerManager(this);
         
         //if the passed in menuItem is not empty then set styles
         //on elements and related details in menuItem on elements
         if (menuItem != null) {
+            this.menuItem = menuItem;
             //get images from menuItem
             notSelectedImage = new Image(menuItem.getUnSelectedImage());
             selectedImage = new Image(menuItem.getSelectedImage());
             this.initWidget(uiBinder.createAndBindUi(this));
             
             leftMenuItem.setStyleName(resources.leftMenuItemStyle().leftMenuItem());
-            notSelectedPanel.setStyleName(resources.leftMenuItemStyle().notSelectedPanel());
+            notSelectedPanel.setStyleName(resources.leftMenuItemStyle().notSelectedPanelOutState());
             
             //add click handler to notSelectedPanel to trigger the animation on the menu item
+            //and add the mouse up, out, down and over state
             notSelectedPanel.addMouseUpHandler(new MouseUpHandler() {
                 
                 /**
@@ -220,7 +292,52 @@ public class LeftMenuItem extends Composite {
                  */
                 @Override
                 public void onMouseUp(MouseUpEvent event) {
-                    setSelected();
+                    notSelectedPanel.setStyleName(LeftMenuItem.this.resources.leftMenuItemStyle().notSelectedPanelUpState());
+                    if (isClickable) {
+                        isClickable = false;
+                        setSelected();
+                        LeftMenuItem.this.menuItem.getCommand().execute();
+                        fireEvent(new LeftMenuItemSelectEvent());
+                    }
+                }
+            });
+            
+            notSelectedPanel.addMouseDownHandler(new MouseDownHandler() {
+                
+                /**
+                 * Will handle the mouse down event on the panel
+                 * 
+                 * @param event The mouse event
+                 */
+                @Override
+                public void onMouseDown(MouseDownEvent event) {
+                    notSelectedPanel.setStyleName(LeftMenuItem.this.resources.leftMenuItemStyle().notSelectedPanelDownState());
+                }
+            });
+            
+            notSelectedPanel.addMouseOverHandler(new MouseOverHandler() {
+                
+                /**
+                 * Will handle the mouse over event on the panel
+                 * 
+                 * @param event The mouse event
+                 */
+                @Override
+                public void onMouseOver(MouseOverEvent event) {
+                    notSelectedPanel.setStyleName(LeftMenuItem.this.resources.leftMenuItemStyle().notSelectedPanelOverState());
+                }
+            });
+            
+            notSelectedPanel.addMouseOutHandler(new MouseOutHandler() {
+                
+                /**
+                 * Will handle the mouse out event on the panel
+                 * 
+                 * @param event The mouse event
+                 */
+                @Override
+                public void onMouseOut(MouseOutEvent event) {
+                    notSelectedPanel.setStyleName(LeftMenuItem.this.resources.leftMenuItemStyle().notSelectedPanelOutState());
                 }
             });
             
@@ -261,8 +378,9 @@ public class LeftMenuItem extends Composite {
      */
     public void setSelected() {
         //will create the slide animation from right to left
-        leftMenuItem.setWidgetLeftRight(selectedPanel, 0, com.google.gwt.dom.client.Style.Unit.PX, 0, com.google.gwt.dom.client.Style.Unit.PX);
-        leftMenuItem.animate(1000);
+        leftMenuItem.setWidgetLeftRight(selectedPanel, 0, Unit.PX, 0, Unit.PX);
+        leftMenuItem.setWidgetLeftWidth(notSelectedFlowPanel, -100, Unit.PCT, 100, Unit.PCT);
+        leftMenuItem.animate(600);
     }
     
     /**
@@ -274,7 +392,37 @@ public class LeftMenuItem extends Composite {
      */
     public void setUnselected() {
         //will create the slide animation from left to right
-        leftMenuItem.setWidgetRightWidth(selectedPanel, 0, com.google.gwt.dom.client.Style.Unit.PX, 0, com.google.gwt.dom.client.Style.Unit.PX);
-        leftMenuItem.animate(1000);
+        leftMenuItem.setWidgetRightWidth(selectedPanel, 0, Unit.PX, 0, Unit.PX);
+        leftMenuItem.setWidgetLeftWidth(notSelectedFlowPanel, 0, Unit.PX, 100, Unit.PCT);
+        leftMenuItem.animate(600);
+        isClickable = true;
+    }
+    
+    /**
+     * This is used to fire an event
+     * 
+     * @param event - The event that needs to be fired
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 09 July 2012
+     */
+    @Override
+    public void fireEvent(GwtEvent<?> event) {
+        handlerManager.fireEvent(event);
+    }
+
+    /**
+     * Adds a handler to the handler manager
+     * 
+     * @param handler - The handler to be added to the handle manager
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 09 July 2012
+     * 
+     * @return The handle registration
+     */
+    public HandlerRegistration addEventHandler(
+            ILeftMenuItemSelectEventHandler handler) {
+        return handlerManager.addHandler(LeftMenuItemSelectEvent.TYPE, handler);
     }
 }
