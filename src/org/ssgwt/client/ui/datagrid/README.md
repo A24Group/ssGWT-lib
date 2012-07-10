@@ -91,6 +91,4 @@ __OR__
  * Explain how to add a widget to the action bar
 
 ### Current issue we are still working on
- * When user manually selects all visible rows and then clicks on the header of the first column the styles are updated for the rows but the checkboxes are not
- * When changing pages on the data grid after selecting records and the returning to the same page the selected styles of the rows that are selected are not set
- * Checkboxes in the first column move about 1 pixel when the hover style is applied
+ * Internet Explorer 8 seems to move the data in the column to the side when you click on it. Other browsers don't seem to have this problem
