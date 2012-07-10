@@ -48,6 +48,9 @@ public class LeftMenuBar extends Composite {
      */
     private static LeftMenuBarResources DEFAULT_RESOURCES;
     
+    /**
+     * The left menu bar container that will hold the menu items
+     */
     @UiField
     FlowPanel leftMenuBarContainer;
     
@@ -137,7 +140,7 @@ public class LeftMenuBar extends Composite {
                     max = current;
                 }
             }
-            for( int x = 0; x <= max; x++){
+            for(int x = 0; x <= max; x++){
                 for (MenuItem menuItem : menuItems) {
                     int current = menuItem.getOrder();
                     if (current == x) {
@@ -158,7 +161,7 @@ public class LeftMenuBar extends Composite {
                     
                     containsDefault = true;
                 } else {
-                    if (menuItem.isDefaultSelected() ){
+                    if (menuItem.isDefaultSelected()){
                         selectedItem = item;
                         item.setSelected();
                     } else {
