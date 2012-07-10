@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * The header that is used for the help feature.
  * 
- * @author Ruan Naude
+ * @author Ruan Naude<ruan.naude@a24group.com>
  * @since 4 July 2012
  */
 public class HelpHeader extends Header<Widget> {
@@ -38,6 +38,9 @@ public class HelpHeader extends Header<Widget> {
      * Constructor
      * 
      * @param helpWidget - The widget that should be displayed if the user clicks on the help icon
+     * 
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since 4 July 2012
      */
     public HelpHeader(Widget helpWidget) {
         super(new HelpCell());
@@ -47,6 +50,9 @@ public class HelpHeader extends Header<Widget> {
     
     /**
      * Retrieves the header details
+     * 
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since 4 July 2012
      */
     @Override
     public Widget getValue() {

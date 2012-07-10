@@ -579,6 +579,9 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * Adds a column to the data grid with a help icon as a header
      * 
      * @param helpWidget - The filter widget that should be displayed if the user clicks on the help icon
+     * 
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since 4 July 2012
      */
     public void setHelpWidget(Widget helpWidget) {
         if (helpWidget != null) {

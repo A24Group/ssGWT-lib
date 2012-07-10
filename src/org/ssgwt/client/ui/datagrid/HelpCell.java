@@ -31,7 +31,7 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * The cell that is used to display a Header for help
  * 
- * @author Ruan Naude
+ * @author Ruan Naude<ruan.naude@a24group.com>
  * @since 4 July 2012
  */
 public class HelpCell extends AbstractCell<Widget> {
@@ -71,6 +71,9 @@ public class HelpCell extends AbstractCell<Widget> {
      * DEFAULT_RESOURCES variable is null if not it just return the object in
      * the DEFAULT_RESOURCES variable
      * 
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since 4 July 2012
+     * 
      * @return the default resource object
      */
     private static Resources getDefaultResources() {
@@ -83,8 +86,8 @@ public class HelpCell extends AbstractCell<Widget> {
     /**
      * A ClientBundle that provides images for this widget.
      * 
-     * @author Ruan Naude
-     * @since 04 July 2012
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since 4 July 2012
      */
     public interface Resources extends ClientBundle {
 
@@ -104,8 +107,8 @@ public class HelpCell extends AbstractCell<Widget> {
     /**
      * Template providing SafeHTML templates to build the widget
      * 
-     * @author Ruan Naude
-     * @since 04 July 2012
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since 4 July 2012
      */
     interface Template extends SafeHtmlTemplates {
         @Template("<div style=\"\">")
@@ -120,6 +123,9 @@ public class HelpCell extends AbstractCell<Widget> {
 
     /**
      * Default class constructor
+     * 
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since 4 July 2012
      */
     public HelpCell() {
         this(getDefaultResources());
@@ -127,6 +133,9 @@ public class HelpCell extends AbstractCell<Widget> {
 
     /**
      * Class constructor that allows the user to use a custom resource
+     * 
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since 4 July 2012
      * 
      * @param resources - The resources object that should be used
      */
@@ -141,6 +150,9 @@ public class HelpCell extends AbstractCell<Widget> {
 
     /**
      * The function that renders the content of the Cell
+     * 
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since 4 July 2012
      */
     @Override
     public void render(Context context, Widget value, SafeHtmlBuilder sb) {
@@ -161,6 +173,9 @@ public class HelpCell extends AbstractCell<Widget> {
      * @param value - the value associated with the cell
      * @param event - the native browser event
      * @param valueUpdater - a {@link ValueUpdater}, or null if not specified
+     * 
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since 4 July 2012
      */
     @Override
     public void onBrowserEvent(Context context, Element parent, Widget value, NativeEvent event, ValueUpdater<Widget> valueUpdater) {
@@ -189,6 +204,9 @@ public class HelpCell extends AbstractCell<Widget> {
      * @param newImage - The new image the should be displayed
      * @param elementToReplace - The image element that should be replaced
      * @param parentOfElementToReplace - The parent of the element that should be replaced
+     * 
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since 4 July 2012
      */
     public void replaceImageElement(ImageResource newImage, Element elementToReplace, Element parentOfElementToReplace) {
         helpImage.setResource(newImage);
@@ -201,6 +219,9 @@ public class HelpCell extends AbstractCell<Widget> {
      * 
      * @param parent - The top level container of the Cell
      * 
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since 4 July 2012
+     * 
      * @return The element object that represents the image in the Cell
      */
     protected Element getImageElement(Element parent) {
@@ -209,6 +230,9 @@ public class HelpCell extends AbstractCell<Widget> {
 
     /**
      * This is used to display the help widget
+     * 
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since 4 July 2012
      */
     public void displayHelpWidget() {
         //display helpWidget
