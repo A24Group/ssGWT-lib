@@ -36,7 +36,19 @@ The FormValidator will do this by creating the correct validators instance and t
 
 ## Menu
 
-#TODO:Add Menu description
+The Menu package contains four classes
+
+### LeftMenuBar
+This class displays a left menu that is populated by a list of MenuItems sent in to it. This class will create a LeftMenuItem of each MenuItem that is contained in the list.
+
+### LeftMenuItem
+This class contains the styling and action application of the MenuItems for the front end
+
+### MenuItem
+This class stores the values used for both the LeftMenuBar and the TopMenuBar buttons
+
+### TopMenuBar
+This class will display the the top menu based on buttons made from a list on MenuItems sent in to it
 
 ## Datagrid
 
@@ -49,7 +61,3 @@ This will add an extra field selected to the object.
 Setting and retrieving data from the SSDataGrid is done using the setData and getData functions
 The default style for the SSDataGrid will not align the header and content correctly if you don't use a FilterSortHeader. 
 All columns will always be set as sortable.
-
-## Current issue we are still working on
- * Internet Explorer 8 seems to move the data in the column to the side when you click on it. Other browsers don't seem to have this problem.
- * Internet Explorer 8 seems to apply its own styling to the button top menu bar buttons when it is clicked. This causes the text in the button to move which it should not do unless the style spesifically sais so.
