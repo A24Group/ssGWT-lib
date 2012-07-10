@@ -40,6 +40,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent;
+import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.ColumnSortList.ColumnSortInfo;
 import com.google.gwt.user.cellview.client.DataGrid.Style;
 import com.google.gwt.user.cellview.client.DataGrid;
@@ -623,5 +624,30 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      */
     public HandlerRegistration addRangeChangeHandler(RangeChangeEvent.Handler handler) {
         return dataGrid.addRangeChangeHandler(handler);
+    }
+    
+    /**
+     * Adds a column to the data grid with a help icon as a header
+     * 
+     * @param helpWidget - The filter widget that should be displayed if the user clicks on the help icon
+     * 
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since 4 July 2012
+     */
+    public void setHelpWidget(Widget helpWidget) {
+        if (helpWidget != null) {
+            HelpHeader header = new HelpHeader(helpWidget);
+            // Add empty column for the help header
+            TextColumn<T> helpColumn = new TextColumn<T>() {
+                
+                @Override
+                public String getValue(T object) {
+                    return "";
+                }
+                
+            };
+            dataGrid.addColumn(helpColumn, header);
+            dataGrid.setColumnWidth(helpColumn, "26px");
+        }
     }
 }

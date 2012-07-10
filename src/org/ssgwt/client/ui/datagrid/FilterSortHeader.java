@@ -37,15 +37,6 @@ public class FilterSortHeader extends Header<HeaderDetails> {
      * Constructor taking the label that should be displayed on the header
      * 
      * @param label - The label for the header
-     */
-    public FilterSortHeader(String label) {
-        this(label, null);
-    }
-
-    /**
-     * Constructor taking the label that should be displayed on the header
-     * 
-     * @param label - The label for the header
      * @param filterWidget - The widget that should be displayed if the user clicks on the filter icon
      */
     public FilterSortHeader(String label, AbstractHeaderFilter filterWidget) {
