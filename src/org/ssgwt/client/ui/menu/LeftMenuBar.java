@@ -140,7 +140,7 @@ public class LeftMenuBar extends Composite {
                     max = current;
                 }
             }
-            for(int x = 0; x <= max; x++){
+            for (int x = 0; x <= max; x++) {
                 for (MenuItem menuItem : menuItems) {
                     int current = menuItem.getOrder();
                     if (current == x) {
