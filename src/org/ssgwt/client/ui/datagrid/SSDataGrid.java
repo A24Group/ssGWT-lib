@@ -13,11 +13,15 @@
  */
 package org.ssgwt.client.ui.datagrid;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import org.ssgwt.client.ui.datagrid.SSPager.TextLocation;
+import org.ssgwt.client.ui.datagrid.event.DataGridRowSelectionChangedEvent;
 import org.ssgwt.client.ui.datagrid.event.DataGridSortEvent;
+import org.ssgwt.client.ui.datagrid.event.FilterChangeEvent;
 import org.ssgwt.client.ui.datagrid.event.IDataGridEventHandler;
 import org.ssgwt.client.ui.datagrid.event.ISelectAllEventHandler;
 import org.ssgwt.client.ui.datagrid.event.SelectAllEvent;
@@ -52,9 +56,12 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.RequiresResize;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.AsyncDataProvider;
+import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.RangeChangeEvent;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 /**
  * The SSDataGrid with a changeable action bar that dispatches events for
@@ -63,7 +70,7 @@ import com.google.gwt.view.client.RangeChangeEvent;
  * @author Johannes Gryffenberg
  * @since 29 June 2012
  */
-public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite implements RequiresResize {
+public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite implements RequiresResize, FilterChangeEvent.FilterChangeHandler {
 
     /**
      * UiBinder interface for the composite
@@ -135,11 +142,6 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * Sorting details of the columns
      */
     HashMap<Column, ColumnSortInfo> columnSortDetail = new HashMap<Column, ColumnSortInfo>();
-    
-    /**
-     * The data provider that will be used 
-     */
-    ListDataProvider<T> dataProvider = new ListDataProvider<T>();
     
     /**
      * The pager that will handle the paging of the DataGrid
@@ -217,7 +219,6 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
             }
         });
         
-        dataProvider.addDataDisplay(dataGrid);
         pager = new SSPager(TextLocation.CENTER, pagerResource, false, 0, true);
         pager.setDisplay(dataGrid);
         setMultiSelect(multiSelect);
@@ -225,30 +226,45 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
         this.initWidget(uiBinder.createAndBindUi(this));
         Resources.INSTANCE.dataGridStyle().ensureInjected();
         actionBar.setStyleName(Resources.INSTANCE.dataGridStyle().actionBarStyle());
-        dataGrid.addRangeChangeHandler(new RangeChangeEvent.Handler() {
-            
-            /**
-             * Event that is called when the pager navigation buttons are clicked
-             * 
-             * @param event - The event that is triggered
-             */
-            @Override
-            public void onRangeChange(RangeChangeEvent event) {
-                refresh();
-            }
-        });
+//        dataGrid.addRangeChangeHandler(new RangeChangeEvent.Handler() {
+//            
+//            /**
+//             * Event that is called when the pager navigation buttons are clicked
+//             * 
+//             * @param event - The event that is triggered
+//             */
+//            @Override
+//            public void onRangeChange(RangeChangeEvent event) {
+//                refresh();
+//            }
+//        });
     }
 
     /**
-     * Setter to set the data that should be displayed on the DataGrid
+     * Set the complete list of values to display on one page
      * 
      * @param data - The data the should be displayed on the data grid
      * 
      * @author Lodewyk Duminy
      * @since 29 June 2012
      */
-    public void setData(List<T> data) {
-        dataProvider.setList(data);
+    public void setRowData(List<T> data) {
+        dataGrid.setRowData(data);
+        refresh();
+    }
+
+    /**
+     * Set the complete list of values to display on one page
+     * 
+     * @param startRow - The start row the data is for
+     * @param data - The data the should be displayed on the data grid
+     * 
+     * @author Lodewyk Duminy
+     * @since 29 June 2012
+     */
+    public void setRowData(int startRow, List<T> data) {
+        dataGrid.setRowData(startRow, data);
+        refresh();
     }
 
     /**
@@ -259,8 +275,8 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * 
      * @return The data being displayed on the DataGrid
      */
-    public List<T> getData() {
-        return dataProvider.getList();
+    public List<T> getVisibleItems() {
+        return dataGrid.getVisibleItems();
     }
     
     /**
@@ -293,6 +309,9 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      */
     public void addColumn(Column<T, ?> col, Header<?> header) {
         col.setSortable(true);
+        if ( header instanceof FilterSortHeader ) {
+            ((FilterSortHeader)header).addFilterChangeHandler(this);
+        }
         dataGrid.addColumn(col, header);
     }
 
@@ -305,6 +324,9 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      */
     public void addColumn(Column<T, ?> col, Header<?> header, Header<?> footer) {
         col.setSortable(true);
+        if ( header instanceof FilterSortHeader ) {
+            ((FilterSortHeader)header).addFilterChangeHandler(this);
+        }
         dataGrid.addColumn(col, header, footer);
     }
 
@@ -479,17 +501,17 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
                 }
                 
                 boolean allSelected = true;
-                for (int i = rows.getStart(); i < end; i++) {
-                    if (!dataProvider.getList().get(i).isSelected()) {
+                for (int i = 0; i < numRecordsDisplayed; i++) {
+                    if (!((T)dataGrid.getVisibleItem(i)).isSelected()) {
                         allSelected = false;
                         break;
                     }
                 }
                 
-                for (int i = rows.getStart(); i < end; i++) {
-                    dataProvider.getList().get(i).setSelected(!allSelected);
+                for (int i = 0; i < numRecordsDisplayed; i++) {
+                    ((T)dataGrid.getVisibleItem(i)).setSelected(!allSelected);
                 }
-                
+                DataGridRowSelectionChangedEvent.fire(SSDataGrid.this, dataGrid.getVisibleItems());
                 refresh();
             }
         });
@@ -508,6 +530,9 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
             public void update(int index, T object, Boolean value) {
                 object.setSelected(value);
                 refresh();
+                List<AbstractMultiSelectObject> selectedRowList = new ArrayList<AbstractMultiSelectObject>();
+                selectedRowList.add(object);
+                DataGridRowSelectionChangedEvent.fire(SSDataGrid.this, selectedRowList);
             }
         });
     }
@@ -516,7 +541,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * Refresh the data grid
      */
     private void refresh() {
-        dataProvider.refresh();
+        dataGrid.redraw();
         
         Range rows = dataGrid.getVisibleRange();
         
@@ -527,7 +552,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
             numRecordsDisplayed = end % numRecordsDisplayed;
         }
         for (int i = 0; i < numRecordsDisplayed; i++) {
-            setRowSelectedStyle(i,dataProvider.getList().get((rows.getStart() + i)).isSelected());
+            setRowSelectedStyle(i, dataGrid.getVisibleItem(i).isSelected());
         }
     }
     
@@ -612,7 +637,30 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      */
     public void addFilterColumn(Column<T, ?> col, String label, AbstractHeaderFilter filterWidget) {
         FilterSortHeader header = new FilterSortHeader(label, filterWidget);
+        header.addFilterChangeHandler(this);
         this.addColumn(col, header);
+    }
+    
+    /**
+     * Adds a event handler for the FilterChangeEvent
+     * 
+     * @param handler - The event handler
+     * 
+     * @return The handler registration object that will be used to remove the event handler
+     */
+    public HandlerRegistration addFilterChangeHandler(FilterChangeEvent.FilterChangeHandler handler) {
+        return this.addHandler(handler, FilterChangeEvent.TYPE);
+    }
+    
+    /**
+     * Adds a event handler for the FilterChangeEvent
+     * 
+     * @param handler - The event handler
+     * 
+     * @return The handler registration object that will be used to remove the event handler
+     */
+    public HandlerRegistration addDataGridRowSelectionChangedHandler(DataGridRowSelectionChangedEvent.DataGridRowSelectionChangedHandler handler) {
+        return this.addHandler(handler, DataGridRowSelectionChangedEvent.TYPE);
     }
     
     /**
@@ -649,5 +697,15 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
             dataGrid.addColumn(helpColumn, header);
             dataGrid.setColumnWidth(helpColumn, "26px");
         }
+    }
+
+    /**
+     * Handles the FilterChangeEvent of the headers
+     * 
+     * @param event - The event that should be handled
+     */
+    @Override
+    public void onFilterChange(FilterChangeEvent event) {
+        FilterChangeEvent.fire(this);
     }
 }
