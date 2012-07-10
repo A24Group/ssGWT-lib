@@ -33,6 +33,7 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -74,6 +75,18 @@ public class LeftMenuItem extends Composite {
      * can be click at the moment
      */
     private boolean isClickable = true;
+    
+    /**
+     * Boolean to determine whether the menu item
+     * is busy animating
+     */
+    private boolean isAnimating = false;
+    
+    /**
+     * Boolean to determine whether a que to
+     * make the menu item unselected has been made
+     */
+    private boolean isUnselectQued = false;
     
     /**
      * The handler manager used to handle events
@@ -378,9 +391,23 @@ public class LeftMenuItem extends Composite {
      */
     public void setSelected() {
         //will create the slide animation from right to left
-        leftMenuItem.setWidgetLeftRight(selectedPanel, 0, Unit.PX, 0, Unit.PX);
-        leftMenuItem.setWidgetLeftWidth(notSelectedFlowPanel, -100, Unit.PCT, 100, Unit.PCT);
-        leftMenuItem.animate(600);
+        if (isAnimating) {
+        } else {
+            isAnimating = true;
+            leftMenuItem.setWidgetLeftRight(selectedPanel, 0, Unit.PX, 0, Unit.PX);
+            leftMenuItem.setWidgetLeftWidth(notSelectedFlowPanel, -100, Unit.PCT, 100, Unit.PCT);
+            leftMenuItem.animate(600);
+            Timer timer = new Timer() {
+                public void run() {
+                    isAnimating = false;
+                    if (isUnselectQued) {
+                        isUnselectQued = false;
+                        setUnselected();
+                    }
+                }
+            };
+            timer.schedule(680);
+        }
     }
     
     /**
@@ -392,10 +419,21 @@ public class LeftMenuItem extends Composite {
      */
     public void setUnselected() {
         //will create the slide animation from left to right
-        leftMenuItem.setWidgetRightWidth(selectedPanel, 0, Unit.PX, 0, Unit.PX);
-        leftMenuItem.setWidgetLeftWidth(notSelectedFlowPanel, 0, Unit.PX, 100, Unit.PCT);
-        leftMenuItem.animate(600);
-        isClickable = true;
+        if (isAnimating) {
+            isUnselectQued = true;
+        } else {
+            isAnimating = true;
+            leftMenuItem.setWidgetRightWidth(selectedPanel, 0, Unit.PX, 0, Unit.PX);
+            leftMenuItem.setWidgetLeftWidth(notSelectedFlowPanel, 0, Unit.PX, 100, Unit.PCT);
+            leftMenuItem.animate(600);
+            Timer timer = new Timer(){
+                public void run(){
+                    isClickable = true;
+                    isAnimating = false;
+                }
+            };
+            timer.schedule(600);
+        }
     }
     
     /**
