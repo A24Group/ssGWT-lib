@@ -131,7 +131,7 @@ public class LeftMenuBar extends Composite {
     	this.resources.leftMenuBarStyle().ensureInjected();
         initWidget(uiBinder.createAndBindUi(this));
         
-        if (menuItems != null){
+        if (menuItems != null) {
             List<MenuItem> sorted = new ArrayList<MenuItem>();
             int max = 0;
             for (int x = 0; x  < menuItems.size(); x++) {
@@ -155,13 +155,13 @@ public class LeftMenuBar extends Composite {
             }
             for (MenuItem menuItem : menuItems) {
                 final LeftMenuItem item = new LeftMenuItem(menuItem);
-                if (!containsDefault){
+                if (!containsDefault) {
                     selectedItem = item;
                     item.setSelected();
                     
                     containsDefault = true;
                 } else {
-                    if (menuItem.isDefaultSelected()){
+                    if (menuItem.isDefaultSelected()) {
                         selectedItem = item;
                         item.setSelected();
                     } else {
