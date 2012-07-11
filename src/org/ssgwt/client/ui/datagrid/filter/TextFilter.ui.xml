@@ -17,7 +17,7 @@
             <g:TextBox ui:field="textBox" styleName="{resources.textFilterStyle.textBoxStyle}" width="100%"/>
         </g:FlowPanel>
         <g:FlowPanel styleName="{resources.textFilterStyle.applyButtonContainer}" width="100%">
-            <g:Button ui:field="applyButton" text="apply" styleName="{resources.textFilterStyle.applyButton}" />
+            <g:Button ui:field="applyButton" text="Apply" styleName="{resources.textFilterStyle.applyButton}" />
         </g:FlowPanel>
     </g:FlowPanel>
 </ui:UiBinder>

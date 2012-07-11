@@ -13,6 +13,9 @@
  */
 package org.ssgwt.client.ui.datagrid;
 
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.resources.client.ClientBundle.Source;
+import com.google.gwt.resources.client.ImageResource.ImageOptions;
 import com.google.gwt.user.cellview.client.DataGrid;
 
 /**
@@ -23,6 +26,20 @@ import com.google.gwt.user.cellview.client.DataGrid;
  */
 public interface DataGridResources extends DataGrid.Resources {
 
+    /**
+     * Icon used when a column is sorted in ascending order.
+     */
+    @Source("images/sortAscending.png")
+    @ImageOptions(flipRtl = true)
+    ImageResource dataGridSortAscending();
+
+    /**
+     * Icon used when a column is sorted in descending order.
+     */
+    @Source("images/sortDescending.png")
+    @ImageOptions(flipRtl = true)
+    ImageResource dataGridSortDescending();
+    
     /**
      * The style used in the widget
      */
