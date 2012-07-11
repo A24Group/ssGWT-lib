@@ -140,6 +140,7 @@
 .applyButton {
     height: 21px;
     width: 72px;
+    padding-bottom: 3px;
     border: solid 1px #666666;
     background-color: #FFF;
     font-family: "PT Sans", sans-serif;
@@ -155,6 +156,7 @@
 
 /* The style for the apply button when it is selected */
 .applyButtonDown {
+	color: #FFFFFF !Important;
 	background-color: #A1A4AD;
 	border: solid 1px #41485A;
 }
