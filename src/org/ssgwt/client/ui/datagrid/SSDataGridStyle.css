@@ -81,7 +81,6 @@
     border-top: solid #BDBFC5 thin;
     border-bottom: solid #BDBFC5 thin;
     position: relative;
-    z-index: -1;
     background: rgb(207,208,212);
     background: -moz-linear-gradient(top, rgba(246,248,249,1) 29%, rgba(216,216,216,1) 100%, rgba(245,247,249,1) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(29%,rgba(246,248,249,1)), color-stop(100%,rgba(216,216,216,1)), color-stop(100%,rgba(245,247,249,1))); /* Chrome,Safari4+ */
