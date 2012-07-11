@@ -720,7 +720,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * 
      * @param pixels - The number of pixels the table should be indented with
      */
-    public void indentTable( int pixels ) {
+    public void indentTable(int pixels) {
         mainContainer.setWidgetLeftRight(dataGrid, pixels, Unit.PX, 0, Unit.PX);
     }
 }
