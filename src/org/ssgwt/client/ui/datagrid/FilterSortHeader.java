@@ -13,10 +13,12 @@
  */
 package org.ssgwt.client.ui.datagrid;
 
+import org.ssgwt.client.ui.datagrid.event.FilterChangeEvent;
 import org.ssgwt.client.ui.datagrid.filter.AbstractHeaderFilter;
 
 import com.gargoylesoftware.htmlunit.javascript.host.Element;
 import com.google.gwt.cell.client.ValueUpdater;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.cellview.client.Header;
 
 /**
@@ -52,5 +54,16 @@ public class FilterSortHeader extends Header<HeaderDetails> {
     public HeaderDetails getValue() {
         return headerDetails;
     }
-
+    
+    /**
+     * Adds a event handler for the FilterChangeEvent
+     * 
+     * @param handler - The event handler
+     * 
+     * @return The handler registration object that will be used to remove the event handler
+     */
+    public HandlerRegistration addFilterChangeHandler(FilterChangeEvent.FilterChangeHandler handler) {
+        return ((FilterSortCell)this.getCell()).addFilterChangeHandler(handler);
+    }
+    
 }

@@ -13,6 +13,9 @@
  */
 package org.ssgwt.client.ui.datagrid;
 
+import org.ssgwt.client.ui.datagrid.event.FilterChangeEvent;
+import org.ssgwt.client.ui.datagrid.event.SelectAllEvent;
+
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.cell.client.Cell.Context;
@@ -20,6 +23,10 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.resources.client.ClientBundle.Source;
@@ -38,7 +45,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Johannes Gryffenberg
  * @since 29 June 2012
  */
-public class FilterSortCell extends AbstractCell<HeaderDetails> {
+public class FilterSortCell extends AbstractCell<HeaderDetails> implements HasHandlers {
 
     /**
      * Instance of the template
@@ -79,6 +86,11 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> {
      * Internet Explorer support to eliminate double event fires
      */
     private boolean doMouseOver = true;
+
+    /**
+     * The handler manager used to handle events
+     */
+    private HandlerManager handlerManager;
     
     /**
      * Create an instance on the default resources object if it the
@@ -159,6 +171,7 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> {
         if (template == null) {
             template = GWT.create(Template.class);
         }
+        handlerManager = new HandlerManager(this);
     }
 
     /**
@@ -272,6 +285,7 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> {
         } else {
             replaceImageElement(resources.filterIconInactive(), filterImageElement, filterImageParentElement);
         }
+        FilterChangeEvent.fire(this);
     }
 
     /**
@@ -287,6 +301,27 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> {
             return parent.getFirstChildElement().getElementsByTagName("img").getItem(0);
         }
         return parent.getFirstChildElement().getElementsByTagName("img").getItem(1);
+    }
+
+    /**
+     * Adds a event handler for the FilterChangeEvent
+     * 
+     * @param handler - The event handler
+     * 
+     * @return The handler registration object that will be used to remove the event handler
+     */
+    public HandlerRegistration addFilterChangeHandler(FilterChangeEvent.FilterChangeHandler handler) {
+        return handlerManager.addHandler(FilterChangeEvent.TYPE, handler);
+    }
+
+    /**
+     * This is used to fire an event
+     * 
+     * @param event - The event that needs to be fired
+     */
+    @Override
+    public void fireEvent(GwtEvent<?> event) {
+        handlerManager.fireEvent(event);
     }
 
 }
