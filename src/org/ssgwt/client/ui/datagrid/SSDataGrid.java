@@ -33,6 +33,7 @@ import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dev.resource.Resource;
 import com.google.gwt.dom.client.Node;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.TableRowElement;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.layout.client.Layout.Layer;
@@ -61,7 +62,6 @@ import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.RangeChangeEvent;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 /**
  * The SSDataGrid with a changeable action bar that dispatches events for
@@ -149,6 +149,12 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
     @UiField(provided = true)
     protected SSPager pager;
 
+    /**
+     * The layout panel that holds all the Widget for the component
+     */
+    @UiField
+    LayoutPanel mainContainer;
+    
     /**
      * Class Constructor
      * 
@@ -707,5 +713,14 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
     @Override
     public void onFilterChange(FilterChangeEvent event) {
         FilterChangeEvent.fire(this);
+    }
+    
+    /**
+     * Indents the table with a specified amount of pixels this leaves the action bar on 100% width
+     * 
+     * @param pixels - The number of pixels the table should be indented with
+     */
+    public void indentTable( int pixels ) {
+        mainContainer.setWidgetLeftRight(dataGrid, pixels, Unit.PX, 0, Unit.PX);
     }
 }

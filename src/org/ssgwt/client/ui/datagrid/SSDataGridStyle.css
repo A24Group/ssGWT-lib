@@ -118,7 +118,7 @@
 /*Styling for the first child inside the second dif in the a header */
 .dataGridHeader > div > div:first-child {
     left: 40px !Important;
-    right: 0px;
+    right: 5px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;

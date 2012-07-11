@@ -111,7 +111,7 @@ public class HelpCell extends AbstractCell<Widget> {
      * @since 4 July 2012
      */
     interface Template extends SafeHtmlTemplates {
-        @Template("<div style=\"\">")
+        @Template("<div style=\"padding-top: 2px;\">")
         SafeHtml openContainerTag();
 
         @Template("<img src=\"\" />")
