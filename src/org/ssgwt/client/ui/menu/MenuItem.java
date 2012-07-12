@@ -73,10 +73,9 @@ public class MenuItem {
      * @param label - The text to display on the menu item
      * @param iOrder - The order in which to load the menu items
      * @param defaultSelected - whether this item should be defaultly selected
-     * @param command - The command action to perform when the item is selected
      */
-    public MenuItem(String placeName, String label, int iOrder, boolean defaultSelected, Command command) {
-        this(placeName, label, iOrder, defaultSelected, command, null, null, null);
+    public MenuItem(String placeName, String label, int iOrder, boolean defaultSelected) {
+        this(placeName, label, iOrder, defaultSelected, null, null, null);
     }
     
     /**
@@ -91,12 +90,11 @@ public class MenuItem {
      * @param unSelectedImage - The image to show when the button is not selected
      * @param subMenus - A list of sub menu items to use
      */
-    public MenuItem(String placeName, String label, int iOrder, boolean defaultSelected, Command command, String selectedImage, String unSelectedImage, List<MenuItem> subMenus) {
+    public MenuItem(String placeName, String label, int iOrder, boolean defaultSelected, String selectedImage, String unSelectedImage, List<MenuItem> subMenus) {
         this.placeName = placeName;
         this.label = label;
         this.iOrder = iOrder;
         this.defaultSelected = defaultSelected;
-        this.command = command;
         this.selectedImage = selectedImage;
         this.unSelectedImage = unSelectedImage;
         this.subMenus = subMenus;
