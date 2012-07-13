@@ -202,10 +202,12 @@ public class TopMenuBar extends Composite {
                     selectedItem = button;
                     button.setStyleName(resources.topMenuStyle().buttonSelectedStyle());
                     containsDefault = true;
+                    currentMenuItem.getCommand().execute();
                 } else {
                     if (menuItem.isDefaultSelected()) {
                         selectedItem = button;
                         button.setStyleName(resources.topMenuStyle().buttonSelectedStyle());
+                        menuItem.getCommand().execute();
                     } else {
                         button.setStyleName(resources.topMenuStyle().buttonStyle());
                     }
