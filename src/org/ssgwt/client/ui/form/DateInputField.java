@@ -1,17 +1,13 @@
 package org.ssgwt.client.ui.form;
 
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.Widget;
+import java.util.Date;
 
-/**
- * A TextBox input field for the DynamicForm
- * 
- * @author Johannes Gryffenberg<johannes.gryffenberg@gmail.com>
- * @since 12 July 2012
- *
- * @param <T> The object type the Dynamic form uses to get values from updates the value of the fields on
- */
-public abstract class TextInputField<T> extends TextBox implements InputField<T, String> {
+import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.datepicker.client.DateBox;
+import com.google.gwt.user.datepicker.client.DatePicker;
+import com.google.gwt.user.datepicker.client.DateBox.Format;
+
+public abstract class DateInputField<T> extends DateBox implements InputField<T, Date> {
 
     /**
      * The value from the object that should the displayed on the input field
@@ -21,7 +17,7 @@ public abstract class TextInputField<T> extends TextBox implements InputField<T,
     /**
      * Class Constructor
      */
-    public TextInputField() {
+    public DateInputField() {
         super();
     }
     
@@ -30,8 +26,32 @@ public abstract class TextInputField<T> extends TextBox implements InputField<T,
      * 
      * @param required - The value from the object that should the displayed on the input field
      */
-    public TextInputField(boolean required) {
+    public DateInputField(boolean required) {
         super();
+        setRequired(required);
+    }
+    
+    /**
+     * Class Constructor
+     *
+     * @param date the default date.
+     * @param picker the picker to drop down from the date box
+     * @param format to use to parse and format dates
+     */
+    public DateInputField(DatePicker picker, Date date, Format format) {
+        super(picker, date, format);
+    }
+    
+    /**
+     * Class Constructor
+     *
+     * @param date - The default date.
+     * @param picker - The picker to drop down from the date box
+     * @param format - The format to use to parse and format dates
+     * @param required - The value from the object that should the displayed on the input field
+     */
+    public DateInputField(DatePicker picker, Date date, Format format, boolean required) {
+        super(picker, date, format);
         setRequired(required);
     }
     
@@ -43,7 +63,7 @@ public abstract class TextInputField<T> extends TextBox implements InputField<T,
      * @return The value that should be displayed ob the field
      */
     @Override
-    public abstract String getValue(T object);
+    public abstract Date getValue(T object);
 
     /**
      * Sets the value from the input field on the object
@@ -52,7 +72,7 @@ public abstract class TextInputField<T> extends TextBox implements InputField<T,
      * @param value - The value that is currently being displayed on the input field
      */
     @Override
-    public abstract void setValue(T object, String value);
+    public abstract void setValue(T object, Date value);
 
     /**
      * Retrieve the flag that indicates whether the input field is required or not
@@ -83,7 +103,7 @@ public abstract class TextInputField<T> extends TextBox implements InputField<T,
     public Widget getInputFieldWidget() {
         return this;
     }
-    
+
     /**
      * Set all the field as readOnly
      * 
@@ -91,7 +111,7 @@ public abstract class TextInputField<T> extends TextBox implements InputField<T,
      */
     @Override
     public void setReadOnly(boolean readOnly) {
-        super.setReadOnly(readOnly);
+        super.getTextBox().setReadOnly(readOnly);
     }
     
     /**
@@ -101,7 +121,7 @@ public abstract class TextInputField<T> extends TextBox implements InputField<T,
      */
     @Override
     public boolean isReadOnly() {
-        return super.isReadOnly();
+        return super.getTextBox().isReadOnly();
     }
     
     /**
@@ -111,6 +131,6 @@ public abstract class TextInputField<T> extends TextBox implements InputField<T,
      */
     @Override
     public Class getReturnType() {
-        return String.class;
+        return Date.class;
     }
 }
