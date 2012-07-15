@@ -74,8 +74,14 @@ public class DynamicForm<T> extends Composite {
             this.fieldLabel.setStyleName(labelStyleName);
             this.inputField.getWidget().setStyleName(inputFieldStyleName);
             this.requiredStar.setStyleName(requiredIndicatorStyle);
+            this.inputField.setReadOnly(readOnly);
         }
     }
+    
+    /**
+     * The flag that indicates whether the fields on the form is read only
+     */
+    private boolean readOnly;
     
     /**
      * The main container of the component
@@ -269,6 +275,7 @@ public class DynamicForm<T> extends Composite {
             field.inputField.getWidget().setStyleName(inputFieldStyleName);
             field.requiredStar.setStyleName(requiredIndicatorStyle);
             field.requiredStar.setVisible(field.inputField.isRequired());
+            field.inputField.setReadOnly(this.readOnly);
         }
     }
     
@@ -363,5 +370,24 @@ public class DynamicForm<T> extends Composite {
     public void setRequiredIndicatorStyle(String requiredIndicatorStyle) {
         this.requiredIndicatorStyle = requiredIndicatorStyle;
         redraw();
+    }
+    
+    /**
+     * Set all the fields on the form as readOnly
+     * 
+     * @param readOnly - Flag to indicate whether the fields should be read only
+     */
+    public void setFieldsReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+        redraw();
+    }
+    
+    /**
+     * Retrieve the flag that indicates whether the fields on the form is read only
+     * 
+     * @return The flag that indicates whether the fields on the form is read only
+     */
+    public boolean isFieldsReadOnly() {
+        return this.readOnly;
     }
 }
