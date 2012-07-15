@@ -7,6 +7,14 @@ import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.user.datepicker.client.DatePicker;
 import com.google.gwt.user.datepicker.client.DateBox.Format;
 
+/**
+ * A DateBox input field for the DynamicForm
+ * 
+ * @author Johannes Gryffenberg<johannes.gryffenberg@gmail.com>
+ * @since 15 July 2012
+ *
+ * @param <T> The object type the Dynamic form uses to get values from updates the value of the fields on
+ */
 public abstract class DateInputField<T> extends DateBox implements InputField<T, Date> {
 
     /**
