@@ -309,7 +309,6 @@ public class LeftMenuItem extends Composite {
                     if (isClickable) {
                         isClickable = false;
                         setSelected();
-                        LeftMenuItem.this.menuItem.getCommand().execute();
                         fireEvent(new LeftMenuItemSelectEvent());
                     }
                 }
@@ -391,8 +390,8 @@ public class LeftMenuItem extends Composite {
      */
     public void setSelected() {
         //will create the slide animation from right to left
-        if (isAnimating) {
-        } else {
+        if (!isAnimating) {
+            LeftMenuItem.this.menuItem.getCommand().execute();
             isAnimating = true;
             leftMenuItem.setWidgetLeftRight(selectedPanel, 0, Unit.PX, 0, Unit.PX);
             leftMenuItem.setWidgetLeftWidth(notSelectedFlowPanel, -100, Unit.PCT, 100, Unit.PCT);
