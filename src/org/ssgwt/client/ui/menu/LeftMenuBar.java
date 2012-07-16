@@ -127,10 +127,14 @@ public class LeftMenuBar extends Composite {
      * @since 09 July 2012
      */
     public LeftMenuBar(List<MenuItem> menuItems, LeftMenuBarResources resources) {
-    	this.resources = resources;
-    	this.resources.leftMenuBarStyle().ensureInjected();
+        this.resources = resources;
+        this.resources.leftMenuBarStyle().ensureInjected();
         initWidget(uiBinder.createAndBindUi(this));
         
+        this.setLeftMenuBar(menuItems);
+    }
+    
+    public void setLeftMenuBar(List<MenuItem> menuItems) {
         if (menuItems != null) {
             List<MenuItem> sorted = new ArrayList<MenuItem>();
             int max = 0;
