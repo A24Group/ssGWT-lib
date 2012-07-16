@@ -109,7 +109,14 @@ public class TopMenuBar extends Composite {
          * @return The name of the compiled style
          */
         String buttonStyle();
-
+        
+        /**
+         * The fix for the broken bottom padding in firefox
+         * 
+         * @return The name of the compiled style
+         */
+        String bottomPadding();
+        
         /**
          * The style for the selected button 
          *    
@@ -129,10 +136,10 @@ public class TopMenuBar extends Composite {
     /**
      * The class constructor
      * 
-     * @param menuItems - The list of menu items that needs to be added to the menu bar
+     * @param topMenuList - The list of menu items that needs to be added to the menu bar
      */
-    public TopMenuBar(List<MenuItem> menuItems) {
-        this(menuItems, getDefaultResources());
+    public TopMenuBar(List<MenuItem> topMenuList) {
+        this(topMenuList, getDefaultResources());
     }
 
     /**
@@ -148,7 +155,7 @@ public class TopMenuBar extends Composite {
         this.setTopMenuBar(menuItems);
     }
     
-    /**
+	/**
      * Setter for the menu Items
      * 
      * @param menuItems - The list of menu items that needs to be added to the menu bar
@@ -192,24 +199,24 @@ public class TopMenuBar extends Composite {
                      */
                     @Override
                     public void onMouseUp(MouseUpEvent event) {
-                        selectedItem.setStyleName(TopMenuBar.this.resources.topMenuStyle().buttonStyle());
-                        button.setStyleName(TopMenuBar.this.resources.topMenuStyle().buttonSelectedStyle());
+                        selectedItem.setStyleName(TopMenuBar.this.resources.topMenuStyle().buttonStyle() + " " + TopMenuBar.this.resources.topMenuStyle().bottomPadding());
+                        button.setStyleName(TopMenuBar.this.resources.topMenuStyle().buttonSelectedStyle() + " " + TopMenuBar.this.resources.topMenuStyle().bottomPadding());
                         selectedItem = button;
                         currentMenuItem.getCommand().execute();
                     }
                 });
                 if (!containsDefault) {
                     selectedItem = button;
-                    button.setStyleName(resources.topMenuStyle().buttonSelectedStyle());
+                    button.setStyleName(resources.topMenuStyle().buttonSelectedStyle() + " " + TopMenuBar.this.resources.topMenuStyle().bottomPadding());
                     containsDefault = true;
                     currentMenuItem.getCommand().execute();
                 } else {
                     if (menuItem.isDefaultSelected()) {
                         selectedItem = button;
-                        button.setStyleName(resources.topMenuStyle().buttonSelectedStyle());
+                        button.setStyleName(resources.topMenuStyle().buttonSelectedStyle() + " " + TopMenuBar.this.resources.topMenuStyle().bottomPadding());
                         menuItem.getCommand().execute();
                     } else {
-                        button.setStyleName(resources.topMenuStyle().buttonStyle());
+                        button.setStyleName(resources.topMenuStyle().buttonStyle() + " " + TopMenuBar.this.resources.topMenuStyle().bottomPadding());
                     }
                 }
                 topMenu.setStyleName(resources.topMenuStyle().containerStyle());
