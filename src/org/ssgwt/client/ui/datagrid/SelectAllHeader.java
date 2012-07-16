@@ -36,7 +36,7 @@ public class SelectAllHeader extends Header<String> {
      */
     public SelectAllHeader() {
         super(new SelectAllCell());
-        selectAllCell = ( SelectAllCell )getCell( );
+        selectAllCell = (SelectAllCell)getCell();
         
     }
     
