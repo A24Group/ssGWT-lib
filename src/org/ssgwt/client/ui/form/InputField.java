@@ -50,4 +50,18 @@ public interface InputField<T, FieldValueType> {
      * @return The input field as a widget
      */
     public Widget getWidget();
+    
+    /**
+     * Set all the field as readOnly
+     * 
+     * @param readOnly - Flag to indicate whether the field should be read only
+     */
+    public void setReadOnly(boolean readOnly);
+    
+    /**
+     * Retrieve the flag that indicates whether the field is read only
+     * 
+     * @return The flag that indicates whether the field is read only
+     */
+    public boolean isReadOnly();
 }
