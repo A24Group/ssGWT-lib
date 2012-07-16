@@ -102,16 +102,16 @@ public class FormValidator {
      * 
      * @return String - The error string or null if the validation passes
      */
-    public String doValidation(){
+    public String doValidation() {
         //loops through the arraylist and remove all error styles if it is specified.
         int fieldSize = fields.size();
-        for (int i = 0; i < fieldSize; i++){
-            if (fields.get(i).errorStyleName != null){
+        for (int i = 0; i < fieldSize; i++) {
+            if (fields.get(i).errorStyleName != null) {
                 fields.get(i).uiField.removeStyleName(fields.get(i).errorStyleName.toString());
             }
         }
         //loops through the arraylist and retrieve their values from within the widget
-        for (int i = 0; i < fieldSize; i++){
+        for (int i = 0; i < fieldSize; i++) {
             //gets the instance of the validator 
             ValidatorInterface<String> validator = (ValidatorInterface<String>)validatorFactory(fields.get(i).validatorReferenceName);
             //set the config hashmap on the validator
@@ -120,11 +120,11 @@ public class FormValidator {
             boolean valid = validator.isValid(((HasValue<String>)fields.get(i).uiField).getValue());
             if (!valid) {
                 //add error style
-                if (fields.get(i).errorStyleName != null){
+                if (fields.get(i).errorStyleName != null) {
                     fields.get(i).uiField.addStyleName(fields.get(i).errorStyleName.toString());
                 }
                 //return error (return generic if no key found)
-                if (fields.get(i).errorMessage != null){
+                if (fields.get(i).errorMessage != null) {
                     return fields.get(i).errorMessage;
                 } else {
                     return validator.getDefaultValidationMessage();

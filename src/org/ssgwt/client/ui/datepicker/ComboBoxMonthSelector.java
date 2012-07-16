@@ -188,7 +188,7 @@ public class ComboBoxMonthSelector extends MonthSelector {
                 int iDirection = 0;
                 if (targetMonth.getTime() < currentMonth.getTime()) {
                     iDirection = -1;
-                } else if (targetMonth.getTime() > currentMonth.getTime()){
+                } else if (targetMonth.getTime() > currentMonth.getTime()) {
                     iDirection = 1;
                 }
 
