@@ -83,4 +83,24 @@ public abstract class TextInputField<T> extends TextBox implements InputField<T,
     public Widget getWidget() {
         return this;
     }
+    
+    /**
+     * Set all the field as readOnly
+     * 
+     * @param readOnly - Flag to indicate whether the field should be read only
+     */
+    @Override
+    public void setReadOnly(boolean readOnly) {
+        super.setReadOnly(readOnly);
+    }
+    
+    /**
+     * Retrieve the flag that indicates whether the field is read only
+     * 
+     * @return The flag that indicates whether the field is read only
+     */
+    @Override
+    public boolean isReadOnly() {
+        return super.isReadOnly();
+    }
 }
