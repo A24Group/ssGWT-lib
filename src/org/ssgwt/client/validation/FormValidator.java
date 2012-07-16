@@ -24,6 +24,8 @@ import org.ssgwt.client.validation.validators.StringRegexValidator;
 import org.ssgwt.client.validation.validators.StringValidator;
 import org.ssgwt.client.validation.validators.UsernameValidator;
 import org.ssgwt.client.validation.validators.ValidatorInterface;
+
+import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -31,7 +33,6 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * @author Michael Barnard
  * @since 22 June 2012
- *
  */
 public class FormValidator {
     
@@ -116,7 +117,7 @@ public class FormValidator {
             //set the config hashmap on the validator
             validator.setConfiguration(fields.get(i).config);
             //check if the value is valid
-            boolean valid = validator.isValid(((AdvancedTextbox)fields.get(i).uiField).getValue());
+            boolean valid = validator.isValid(((HasValue<String>)fields.get(i).uiField).getValue());
             if (!valid) {
                 //add error style
                 if (fields.get(i).errorStyleName != null){
@@ -165,7 +166,7 @@ public class FormValidator {
         
         //add validation class instance to array
         validatorInstances.put(validatorReferenceName, formValidationInstance);
-
+        
         //return the validation class instance
         return formValidationInstance;
     }
