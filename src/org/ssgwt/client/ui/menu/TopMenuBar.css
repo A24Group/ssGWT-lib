@@ -98,3 +98,14 @@
     background: linear-gradient(top, rgba(225, 160, 40, 1) 0%,rgba(228, 185, 39, 1) 100%,rgba(228, 185, 39, 1) 100%); /*W3C */
     filter: literal("progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFDB7627', endColorstr='#FFE4B924',GradientType=0 )");/*IE 8*/
 }
+
+@if user.agent firefox {
+/* padding fix */
+	.bottomPadding {
+	    padding-bottom: 18px;
+	}
+} @else {
+	.bottomPadding {
+	    padding-bottom: 3px;
+	}
+}
