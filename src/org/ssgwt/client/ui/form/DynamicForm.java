@@ -1,6 +1,7 @@
 package org.ssgwt.client.ui.form;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -68,11 +69,11 @@ public class DynamicForm<T> extends Composite {
             this.fieldLabel.setText(label);
             this.container.add(this.fieldLabel);
             this.container.add(this.inputFieldContainer);
-            this.inputFieldContainer.add(this.inputField.getWidget());
+            this.inputFieldContainer.add(this.inputField.getInputFieldWidget());
             this.inputFieldContainer.add(this.requiredStar);
             this.requiredStar.setVisible(this.inputField.isRequired());
             this.fieldLabel.setStyleName(labelStyleName);
-            this.inputField.getWidget().setStyleName(inputFieldStyleName);
+            this.inputField.getInputFieldWidget().setStyleName(inputFieldStyleName);
             this.requiredStar.setStyleName(requiredIndicatorStyle);
             this.inputField.setReadOnly(readOnly);
         }
@@ -210,8 +211,12 @@ public class DynamicForm<T> extends Composite {
      * Updates the data object that was set using the setData function with the data in the fields
      */
     protected void updateDataObject() {
-        for(InputField<T, String> field : fields.keySet()) {
-            field.setValue(dataObject, ((HasValue<String>)field).getValue());
+        for(InputField<T, ?> field : fields.keySet()) {
+            if (String.class.equals(field.getReturnType())) {
+                ((InputField<T, String>)field).setValue(dataObject, ((HasValue<String>)field).getValue());
+            } else if (Date.class.equals(field.getReturnType())) {
+                ((InputField<T, Date>)field).setValue(dataObject, ((HasValue<Date>)field).getValue());
+            }
         }
     }
     
@@ -219,8 +224,12 @@ public class DynamicForm<T> extends Composite {
      * Updates the fields with the data that was set using the setData function
      */
     protected void updateFieldData() {
-        for(InputField<T, String> field : fields.keySet()) {
-            ((HasValue<String>)field).setValue(field.getValue(dataObject));
+        for(InputField<T, ?> field : fields.keySet()) {
+            if (String.class.equals(field.getReturnType())) {
+                ((HasValue<String>)field).setValue(((InputField<T, String>)field).getValue(dataObject));
+            } else if (Date.class.equals(field.getReturnType())) {
+                ((HasValue<Date>)field).setValue(((InputField<T, Date>)field).getValue(dataObject));
+            }
         }
     }
     
@@ -261,7 +270,7 @@ public class DynamicForm<T> extends Composite {
      */
     private void drawField(InputField<T, ?> inputField, String label) {
         Field fieldInfo = new Field(inputField, label);
-        inputField.getWidget().setWidth(fieldWidth);
+        inputField.getInputFieldWidget().setWidth(fieldWidth);
         mainConatiner.add(fieldInfo);
         fields.put(inputField, fieldInfo);
     }
@@ -272,7 +281,7 @@ public class DynamicForm<T> extends Composite {
     public void redraw() {
         for (Field field : fields.values()) {
             field.fieldLabel.setStyleName(labelStyleName);
-            field.inputField.getWidget().setStyleName(inputFieldStyleName);
+            field.inputField.getInputFieldWidget().setStyleName(inputFieldStyleName);
             field.requiredStar.setStyleName(requiredIndicatorStyle);
             field.requiredStar.setVisible(field.inputField.isRequired());
             field.inputField.setReadOnly(this.readOnly);
@@ -287,7 +296,7 @@ public class DynamicForm<T> extends Composite {
      * @param config - Validation configuration settings
      */
     public void addFieldValidation(InputField<T, ?> inputField, String validatorReferenceName, HashMap<String, ?> config) {
-        formValidator.addField(validatorReferenceName, inputField.getWidget(), config);
+        formValidator.addField(validatorReferenceName, inputField.getInputFieldWidget(), config);
     }
     
     /**
@@ -299,7 +308,7 @@ public class DynamicForm<T> extends Composite {
      * @param errorMessage - The error message to be displayed
      */
     public void addFieldValidation(InputField<T, ?> inputField, String validatorReferenceName, HashMap<String, ?> config, String errorMessage) {
-        formValidator.addField(validatorReferenceName, inputField.getWidget(), config, errorMessage);
+        formValidator.addField(validatorReferenceName, inputField.getInputFieldWidget(), config, errorMessage);
     }
     
     /**
@@ -312,7 +321,7 @@ public class DynamicForm<T> extends Composite {
      * @param errorStyleName - the error style type
      */
     public void addFieldValidation(InputField<T, ?> inputField, String validatorReferenceName, HashMap<String, ?> config, String errorMessage, String errorStyleName) {
-        formValidator.addField(validatorReferenceName, inputField.getWidget(), config, errorMessage, errorStyleName);
+        formValidator.addField(validatorReferenceName, inputField.getInputFieldWidget(), config, errorMessage, errorStyleName);
     }
     
     /**
