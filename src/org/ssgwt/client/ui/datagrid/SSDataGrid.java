@@ -315,7 +315,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      */
     public void addColumn(Column<T, ?> col, Header<?> header) {
         col.setSortable(true);
-        if ( header instanceof FilterSortHeader ) {
+        if (header instanceof FilterSortHeader) {
             ((FilterSortHeader)header).addFilterChangeHandler(this);
         }
         dataGrid.addColumn(col, header);
@@ -330,7 +330,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      */
     public void addColumn(Column<T, ?> col, Header<?> header, Header<?> footer) {
         col.setSortable(true);
-        if ( header instanceof FilterSortHeader ) {
+        if (header instanceof FilterSortHeader) {
             ((FilterSortHeader)header).addFilterChangeHandler(this);
         }
         dataGrid.addColumn(col, header, footer);
