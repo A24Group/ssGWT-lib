@@ -362,8 +362,8 @@ public class RangedCalendarView extends CalendarView {
                     divChild.addClassName(css().wrap("DayValue"));
                     getElement().appendChild(divChild);
                 }
-                DOM.setInnerText(divChild, value);
                 DOM.setInnerText(getElement(), "");
+                DOM.setInnerText(divChild, value);
                 DOM.appendChild(getElement(), divChild);
             }
 
