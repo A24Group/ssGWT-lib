@@ -180,3 +180,43 @@ Add the following to your style sheet
     color: #DC8726;
 }
 ```
+
+### Available Input Fields that work with the DynamicForm
+
+#### TextInputField
+```
+    TextInputField<Contact> nameInputField = new TextInputField<Contact>(true) {
+
+        @Override
+        public String getValue(Contact object) {
+            return object.name;
+        }
+
+        @Override
+        public void setValue(Contact object, String value) {
+            object.name = value;
+        }
+    };
+    
+    form.addField(nameInputField, "Name:");
+```
+
+#### DateInputField
+```
+    SSDatePicker datePicker = new SSDatePicker();
+    datePicker.setStyleName( "dtPickerSize" );
+    DateInputField<Contact> testDateField = new DateInputField<Contact>(datePicker, null, SSDateBox.DEFAULT_FORMAT, true) {
+
+        @Override
+        public Date getValue(Contact object) {
+            return object.testDate;
+        }
+
+        @Override
+        public void setValue(Contact object, Date value) {
+            object.testDate = value;
+        }
+    };
+    
+    form.addField(testDateField, "Test Date Field:");
+```

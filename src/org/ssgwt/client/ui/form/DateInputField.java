@@ -2,10 +2,12 @@ package org.ssgwt.client.ui.form;
 
 import java.util.Date;
 
+import org.ssgwt.client.ui.datepicker.DateBox;
+import org.ssgwt.client.ui.datepicker.DateBox.Format;
+import org.ssgwt.client.ui.datepicker.DatePicker;
+import org.ssgwt.client.ui.datepicker.SSDatePicker;
+
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.datepicker.client.DateBox;
-import com.google.gwt.user.datepicker.client.DatePicker;
-import com.google.gwt.user.datepicker.client.DateBox.Format;
 
 /**
  * A DateBox input field for the DynamicForm
@@ -46,7 +48,7 @@ public abstract class DateInputField<T> extends DateBox implements InputField<T,
      * @param picker the picker to drop down from the date box
      * @param format to use to parse and format dates
      */
-    public DateInputField(DatePicker picker, Date date, Format format) {
+    public DateInputField(SSDatePicker picker, Date date, Format format) {
         super(picker, date, format);
     }
     
