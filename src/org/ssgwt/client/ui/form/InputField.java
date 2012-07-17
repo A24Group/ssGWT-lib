@@ -49,7 +49,7 @@ public interface InputField<T, FieldValueType> {
      * 
      * @return The input field as a widget
      */
-    public Widget getWidget();
+    public Widget getInputFieldWidget();
     
     /**
      * Set all the field as readOnly
@@ -64,4 +64,11 @@ public interface InputField<T, FieldValueType> {
      * @return The flag that indicates whether the field is read only
      */
     public boolean isReadOnly();
+    
+    /**
+     * Retrieve the class type the input field returns
+     * 
+     * @return The class type the input field returns
+     */
+    public Class getReturnType();
 }
