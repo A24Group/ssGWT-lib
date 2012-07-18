@@ -145,6 +145,36 @@ public class LeftMenuItem extends Composite {
     Label selectedLabel;
     
     /**
+     * The container for the non selected menu item count
+     */
+    @UiField
+    FlowPanel notSelectedNotificationContainer;
+    
+    /**
+     * The label for the non selected menu item count
+     */
+    @UiField
+    Label notSelectedNotificationCount;
+    
+    /**
+     * The container for the selected menu item label and notification count
+     */
+    @UiField
+    FlowPanel selectedLabelContainer;
+    
+    /**
+     * The container for the selected menu item count
+     */
+    @UiField
+    FlowPanel selectedNotificationContainer;
+    
+    /**
+     * The label for the non selected menu item count
+     */
+    @UiField
+    Label selectedNotificationCount;
+    
+    /**
      * UiBinder interface for the composite
      * 
      * @author Ruan Naude <ruan.naude@a24group.com>
@@ -254,6 +284,30 @@ public class LeftMenuItem extends Composite {
          */
         String selectedLabel();
         
+        /**
+         * The style for the container for the non selected menu item count
+         */
+        String notSelectedNotificationContainer();
+        
+        /**
+         * The style for the label for the non selected menu item count
+         */
+        String notSelectedNotificationCount();
+        
+        /**
+         * The style for the container for the selected menu item label and notification count
+         */
+        String selectedLabelContainer();
+        
+        /**
+         * The style for the container for the selected menu item count
+         */
+        String selectedNotificationContainer();
+        
+        /**
+         * The style for the label for the non selected menu item count
+         */
+        String selectedNotificationCount();
     }
     
     /**
@@ -356,11 +410,19 @@ public class LeftMenuItem extends Composite {
             notSelectedImage.setStyleName(resources.leftMenuItemStyle().notSelectedImage());
             notSelectedLabel.setStyleName(resources.leftMenuItemStyle().notSelectedLabel());
             notSelectedLabel.setText(menuItem.getLabel());
+            notSelectedNotificationContainer.setStyleName(resources.leftMenuItemStyle().notSelectedNotificationContainer());
+            notSelectedNotificationCount.setStyleName(resources.leftMenuItemStyle().notSelectedNotificationCount());
             
             selectedImage.setStyleName(resources.leftMenuItemStyle().selectedImage());
             selectedLabel.setStyleName(resources.leftMenuItemStyle().selectedLabel());
             selectedLabel.setText(menuItem.getLabel());
             selectedPanel.setStyleName(resources.leftMenuItemStyle().selectedPanel());
+            selectedLabelContainer.setStyleName(resources.leftMenuItemStyle().selectedLabelContainer());
+            selectedNotificationContainer.setStyleName(resources.leftMenuItemStyle().selectedNotificationContainer());
+            selectedNotificationCount.setStyleName(resources.leftMenuItemStyle().selectedNotificationCount());
+            
+            removeNotificationCount();
+            
             leftMenuItem.forceLayout();
         }
     }
@@ -433,6 +495,38 @@ public class LeftMenuItem extends Composite {
             };
             timer.schedule(600);
         }
+    }
+    
+    /**
+     * This function will set the notification count for the
+     * selected and unselected state of the menu item
+     * 
+     * @param count The number to display as the notification count
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 18 July 2012
+     */
+    public void setNotificationCount(int count) {
+        if (count != 0) {
+            selectedNotificationCount.setText("" + count);
+            notSelectedNotificationCount.setText("" + count);
+            selectedNotificationContainer.setVisible(true);
+            notSelectedNotificationContainer.setVisible(true);
+        }
+    }
+    
+    /**
+     * This function will remove and hide the notification count for the
+     * selected and unselected state of the menu item
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 18 July 2012
+     */
+    public void removeNotificationCount() {
+        selectedNotificationCount.setText("");
+        notSelectedNotificationCount.setText("");
+        selectedNotificationContainer.setVisible(false);
+        notSelectedNotificationContainer.setVisible(false);
     }
     
     /**

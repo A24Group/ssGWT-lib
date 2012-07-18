@@ -6,6 +6,9 @@
             <g:FlowPanel ui:field="notSelectedFlowPanel" width="100%" height="100%">
                 <g:FocusPanel ui:field="notSelectedPanel">
                     <g:FlowPanel>
+                        <g:FlowPanel ui:field="notSelectedNotificationContainer">
+                            <g:Label ui:field="notSelectedNotificationCount"/>
+                        </g:FlowPanel>
                         <g:Image ui:field="notSelectedImage"/>
                         <g:Label ui:field="notSelectedLabel"/>
                     </g:FlowPanel>
@@ -18,7 +21,12 @@
                     <g:Image ui:field="selectedImage"/>
                 </g:layer>
                 <g:layer ui:field="selectedLabelLayer">
-                    <g:Label ui:field="selectedLabel"/>
+                    <g:FlowPanel ui:field="selectedLabelContainer">
+                        <g:Label ui:field="selectedLabel"/>
+                        <g:FlowPanel ui:field="selectedNotificationContainer">
+                            <g:Label ui:field="selectedNotificationCount"/>
+                        </g:FlowPanel>
+                    </g:FlowPanel>
                 </g:layer>
             </g:LayoutPanel>
         </g:layer>

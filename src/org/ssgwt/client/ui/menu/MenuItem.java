@@ -16,7 +16,6 @@ package org.ssgwt.client.ui.menu;
 import java.util.List;
 
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.ui.Image;
 
 /**
  * This class will hold details for a menu item. This can be in different places
@@ -67,6 +66,16 @@ public class MenuItem {
     private List<MenuItem> subMenus;
     
     /**
+     * The reference name for the menu item
+     */
+    private String referenceName;
+    
+    /**
+     * The order in which to load the menu items
+     */
+    private int notificationCount;
+    
+    /**
      * The class constructor
      * 
      * @param placeName - The place name of the menu item
@@ -90,7 +99,28 @@ public class MenuItem {
      * @param unSelectedImage - The image to show when the button is not selected
      * @param subMenus - A list of sub menu items to use
      */
-    public MenuItem(String placeName, String label, int iOrder, boolean defaultSelected, String selectedImage, String unSelectedImage, List<MenuItem> subMenus) {
+    public MenuItem(String placeName, String label, int iOrder, boolean defaultSelected,
+            String selectedImage, String unSelectedImage, List<MenuItem> subMenus) {
+        this(placeName, label, iOrder, defaultSelected, selectedImage, unSelectedImage, subMenus, null, 0);
+    }
+    
+    /**
+     * The class constructor
+     *  
+     * @param placeName - The place name of the menu item
+     * @param label - The text to display on the menu item
+     * @param iOrder - The order in which to load the menu items
+     * @param defaultSelected - whether this item should be defaultly selected
+     * @param command - The command action to perform when the item is selected
+     * @param selectedImage - The image to show when the button is selected
+     * @param unSelectedImage - The image to show when the button is not selected
+     * @param subMenus - A list of sub menu items to use
+     * @param referenceName - The reference name for the menu item
+     * @param notificationCount - The notification count
+     */
+    public MenuItem(String placeName, String label, int iOrder, boolean defaultSelected,
+            String selectedImage, String unSelectedImage, List<MenuItem> subMenus,
+            String referenceName, int notificationCount) {
         this.placeName = placeName;
         this.label = label;
         this.iOrder = iOrder;
@@ -98,6 +128,8 @@ public class MenuItem {
         this.selectedImage = selectedImage;
         this.unSelectedImage = unSelectedImage;
         this.subMenus = subMenus;
+        this.referenceName = referenceName;
+        this.notificationCount = notificationCount;
     }
     
     /**
@@ -244,4 +276,39 @@ public class MenuItem {
         this.subMenus = subMenus;
     }
     
+    /**
+     * Getter for the reference name for the menu item
+     * 
+     * @return The reference name for the menu item
+     */
+    public String getReferenceName() {
+        return this.referenceName;
+    }
+    
+    /**
+     * Setter for the reference name for the menu item
+     *  
+     * @param referenceName - The reference name for the menu item
+     */
+    public void setReferenceName(String referenceName) {
+        this.referenceName = referenceName;
+    }
+    
+    /**
+     * Getter for the notification count
+     * 
+     * @return The notification count
+     */
+    public int getNotificationCount() {
+        return this.notificationCount;
+    }
+    
+    /**
+     * Setter for the notification count
+     * 
+     * @param notificationCount - The notification count
+     */
+    public void setNotificationCount(int notificationCount) {
+        this.notificationCount = notificationCount;
+    }
 }

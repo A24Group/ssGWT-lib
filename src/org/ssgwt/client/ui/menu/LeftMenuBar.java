@@ -15,6 +15,8 @@ package org.ssgwt.client.ui.menu;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.ssgwt.client.ui.menu.event.ILeftMenuItemSelectEventHandler;
 import org.ssgwt.client.ui.menu.event.LeftMenuItemSelectEvent;
@@ -47,6 +49,11 @@ public class LeftMenuBar extends Composite {
      * The default resource to use for the LeftMenuItem class
      */
     private static LeftMenuBarResources DEFAULT_RESOURCES;
+    
+    /**
+     * Holds all the menu items that have a reference name
+     */
+    private HashMap<String, LeftMenuItem> menuItemsReference = new HashMap<String, LeftMenuItem>();
     
     /**
      * The left menu bar container that will hold the menu items
@@ -134,6 +141,17 @@ public class LeftMenuBar extends Composite {
         this.setLeftMenuBar(menuItems);
     }
     
+    /**
+     * This function will set the left menu bar by sorting
+     * the creating a menu item for each item in the list
+     * and then sorting them and setting the default selected
+     * item
+     * 
+     * @param menuItems List of menu items
+     * 
+     * @author Lodewyk Duminy
+     * @since 09 July 2012
+     */
     public void setLeftMenuBar(List<MenuItem> menuItems) {
         if (menuItems != null) {
             List<MenuItem> sorted = new ArrayList<MenuItem>();
@@ -159,6 +177,12 @@ public class LeftMenuBar extends Composite {
             }
             for (MenuItem menuItem : menuItems) {
                 final LeftMenuItem item = new LeftMenuItem(menuItem);
+                
+                if (!(menuItem.getReferenceName() == null) && !menuItem.getReferenceName().trim().equals("")) {
+                    menuItemsReference.put(menuItem.getReferenceName().trim(), item);
+                    setNotificationCount(menuItem.getReferenceName().trim(), menuItem.getNotificationCount());
+                }
+                
                 if (!containsDefault) {
                     selectedItem = item;
                     item.setSelected();
@@ -190,6 +214,42 @@ public class LeftMenuBar extends Composite {
                 
                 leftMenuBarContainer.add(item);
             }
+        }
+    }
+    
+    /**
+     * This function will set the notification count for the
+     * specified left menu item reference name
+     * 
+     * @param count The number to display as the notification count
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 18 July 2012
+     */
+    private void setNotificationCount(String leftMenuItemReference, int count) {
+        LeftMenuItem leftMenuItem = null;
+        if (menuItemsReference.containsKey(leftMenuItemReference.trim())) {
+            leftMenuItem = menuItemsReference.get(leftMenuItemReference.trim());
+            if (count == 0) {
+                leftMenuItem.removeNotificationCount();
+            } else {
+                leftMenuItem.setNotificationCount(count);
+            }
+        }
+    }
+    
+    /**
+     * This function will set the notification count for the
+     * left menu item reference names in the hashmap
+     * 
+     * @param notificationCounts The left menu item reference names with notification counts
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 18 July 2012
+     */
+    public void setNotificationCounts(HashMap<String, Integer> notificationCounts) {
+        for (Map.Entry<String, Integer> notificationCount : notificationCounts.entrySet()) {
+            setNotificationCount(notificationCount.getKey().trim(), notificationCount.getValue());
         }
     }
     

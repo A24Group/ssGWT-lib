@@ -150,8 +150,69 @@
     font-size: 14pt;
     font-weight: bold;
     color: #404040;
+    display: inline;
+}
+
+/*The style for the container for the non selected menu item count*/
+.notSelectedNotificationContainer {
+    text-align: center;
+	float: right;
+	height: 14px;
+	width: 14px;
+	background: #999;
+	position: absolute;
+	right: 27px;
+	top: 1px;
+	-moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/*The style for the label for the non selected menu item count*/
+.notSelectedNotificationCount{
+    color: white;
+    font-family: PT Sans, sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+/*The style for the container for the selected menu item label and notification count*/
+.selectedLabelContainer{
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     padding-top: 18px;
     padding-left: 10px;
     position: absolute;
     left: 15px;
+}
+
+/*The style for the container for the selected menu item count*/
+.selectedNotificationContainer{
+    text-align: center;
+    height: 14px;
+    width: 14px;
+    background: #999;
+    top: 22px;
+    left: 104px;
+    position: absolute;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/*The style for the label for the non selected menu item count*/
+.selectedNotificationCount{
+    color: white;
+    font-family: PT Sans, sans-serif;
+    font-size: 10px;
+    font-weight: bold;
 }
