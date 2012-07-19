@@ -208,7 +208,7 @@ public class AdvancedDateBox extends DateBox {
      * @since 18 July 2012
      */
     public void displayPlaceholder() {
-        if ( super.getTextBox().getText().equals(getPlaceholderText()) || (super.getTextBox().getText().equals(""))) {
+        if (super.getTextBox().getText().equals(getPlaceholderText()) || (super.getTextBox().getText().equals(""))) {
             super.getTextBox().setText(this.getPlaceholderText());
             super.getTextBox().addStyleName(this.getPlaceholderStyleName());
         }

@@ -47,6 +47,8 @@ import java.util.Date;
 /**
  * A text box that shows a {@link DatePicker} when the user focuses on it.
  *
+ * Edited by Michael Barnard<michael.barnard@a24group.com>
+ *
  * <h3>CSS Style Rules</h3>
  *
  * <dl>
@@ -275,10 +277,13 @@ public class DateBox extends Composite implements HasValue<Date>,
     /**
      * Create a new date box.
      *
-     * @param date the default date.
      * @param picker the picker to drop down from the date box
+     * @param date the default date.
      * @param format to use to parse and format dates
      * @param addHandlers indicating whether a default handler should be added or not
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 18 July 2012
      */
     protected DateBox(DatePicker picker, Date date, Format format, boolean addHandlers) {
         this.picker = picker;
