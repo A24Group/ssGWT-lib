@@ -222,6 +222,7 @@ public class LeftMenuBar extends Composite {
      * specified left menu item reference name
      * 
      * @param count The number to display as the notification count
+     * @param leftMenuItemReference The left menu item reference name
      * 
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 18 July 2012

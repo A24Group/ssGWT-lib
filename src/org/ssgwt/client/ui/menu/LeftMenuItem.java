@@ -169,7 +169,7 @@ public class LeftMenuItem extends Composite {
     FlowPanel selectedNotificationContainer;
     
     /**
-     * The label for the non selected menu item count
+     * The label for the selected menu item count
      */
     @UiField
     Label selectedNotificationCount;
@@ -305,7 +305,7 @@ public class LeftMenuItem extends Composite {
         String selectedNotificationContainer();
         
         /**
-         * The style for the label for the non selected menu item count
+         * The style for the label for the selected menu item count
          */
         String selectedNotificationCount();
     }

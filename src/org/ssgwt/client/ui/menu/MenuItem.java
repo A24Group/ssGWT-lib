@@ -20,7 +20,7 @@ import com.google.gwt.user.client.Command;
 /**
  * This class will hold details for a menu item. This can be in different places
  * 
- * @author Michael Barnard
+ * @author Michael Barnard <michael.barnard@a24group.com>
  * @since 9 July 2012
  */
 public class MenuItem {
@@ -71,7 +71,7 @@ public class MenuItem {
     private String referenceName;
     
     /**
-     * The order in which to load the menu items
+     * The notification count for the menu item
      */
     private int notificationCount;
     
@@ -82,6 +82,9 @@ public class MenuItem {
      * @param label - The text to display on the menu item
      * @param iOrder - The order in which to load the menu items
      * @param defaultSelected - whether this item should be defaultly selected
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
      */
     public MenuItem(String placeName, String label, int iOrder, boolean defaultSelected) {
         this(placeName, label, iOrder, defaultSelected, null, null, null);
@@ -94,10 +97,12 @@ public class MenuItem {
      * @param label - The text to display on the menu item
      * @param iOrder - The order in which to load the menu items
      * @param defaultSelected - whether this item should be defaultly selected
-     * @param command - The command action to perform when the item is selected
      * @param selectedImage - The image to show when the button is selected
      * @param unSelectedImage - The image to show when the button is not selected
      * @param subMenus - A list of sub menu items to use
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 18 July 2012
      */
     public MenuItem(String placeName, String label, int iOrder, boolean defaultSelected,
             String selectedImage, String unSelectedImage, List<MenuItem> subMenus) {
@@ -111,12 +116,14 @@ public class MenuItem {
      * @param label - The text to display on the menu item
      * @param iOrder - The order in which to load the menu items
      * @param defaultSelected - whether this item should be defaultly selected
-     * @param command - The command action to perform when the item is selected
      * @param selectedImage - The image to show when the button is selected
      * @param unSelectedImage - The image to show when the button is not selected
      * @param subMenus - A list of sub menu items to use
      * @param referenceName - The reference name for the menu item
      * @param notificationCount - The notification count
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 18 July 2012
      */
     public MenuItem(String placeName, String label, int iOrder, boolean defaultSelected,
             String selectedImage, String unSelectedImage, List<MenuItem> subMenus,
@@ -135,6 +142,9 @@ public class MenuItem {
     /**
      * Getter for the placename of the menu item
      * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
+     * 
      * @return the placename of the menu item
      */
     public String getPlaceName() {
@@ -145,6 +155,9 @@ public class MenuItem {
      * Setter for the placename
      * 
      * @param placeName - The placename of the menu item
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
      */
     public void setPlaceName(String placeName) {
         this.placeName = placeName;
@@ -152,6 +165,9 @@ public class MenuItem {
     
     /**
      * Getter for label of the menu item
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
      * 
      * @return The label of the menu item
      */
@@ -163,6 +179,9 @@ public class MenuItem {
      * Setter got the label of the menu item
      *  
      * @param label - The label that will be displayed on the menu item
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
      */
     public void setLabel(String label) {
         this.label = label;
@@ -170,6 +189,9 @@ public class MenuItem {
     
     /**
      * Getter for the order of the current menu item
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
      * 
      * @return The order of the current menu item
      */
@@ -181,6 +203,9 @@ public class MenuItem {
      * Setter for the order that this button
      * 
      * @param iOrder - The order of this menu item
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
      */
     public void setOrder(int iOrder) {
         this.iOrder = iOrder;
@@ -188,6 +213,9 @@ public class MenuItem {
     
     /**
      * Getter for the default selected state of the menu item
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
      * 
      * @return Whether the menu item should be defaultly selected
      */
@@ -199,6 +227,9 @@ public class MenuItem {
      * Setter for the default selected state of the menu item
      * 
      * @param defaultSelected - The default selected state of the menu item
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
      */
     public void setDefaultSelected(boolean defaultSelected) {
         this.defaultSelected = defaultSelected;
@@ -206,6 +237,9 @@ public class MenuItem {
     
     /**
      * Getter for the command action of the menu item
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
      * 
      * @return The command action for the menu item
      */
@@ -217,6 +251,9 @@ public class MenuItem {
      * Setter for the command action of the menu item
      * 
      * @param command - The command action of the menu item
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
      */
     public void setCommand(Command command) {
         this.command = command;
@@ -224,6 +261,9 @@ public class MenuItem {
     
     /**
      * Getter for the selected image of the menu item
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
      * 
      * @return The image of the menu item when it is selected
      */
@@ -235,6 +275,9 @@ public class MenuItem {
      * Setter for the selected image of the menu item
      * 
      * @param selectedImage - The image of the menu item when it is selected
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
      */
     public void setSelectedImage(String selectedImage) {
         this.selectedImage = selectedImage;
@@ -242,6 +285,9 @@ public class MenuItem {
     
     /**
      * Getter for the unselected image of the menu item
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
      * 
      * @return The unselected image of the menu item
      */
@@ -253,6 +299,9 @@ public class MenuItem {
      * Setter for the not selected image of the menu item
      * 
      * @param unSelectedImage - The image of the menu item when it is not selected
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
      */
     public void setUnSelectedImage(String unSelectedImage) {
         this.unSelectedImage = unSelectedImage;
@@ -260,6 +309,9 @@ public class MenuItem {
     
     /**
      * Getter for the sub menu items of this menu item
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
      * 
      * @return The sub menu items of this menu item
      */
@@ -271,6 +323,9 @@ public class MenuItem {
      * Setter for the sub menu items of this menu item
      * 
      * @param subMenu - The sub menu items of this menu item
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 9 July 2012
      */
     public void setSubMenus(List<MenuItem> subMenus) {
         this.subMenus = subMenus;
@@ -278,6 +333,9 @@ public class MenuItem {
     
     /**
      * Getter for the reference name for the menu item
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 18 July 2012
      * 
      * @return The reference name for the menu item
      */
@@ -289,6 +347,9 @@ public class MenuItem {
      * Setter for the reference name for the menu item
      *  
      * @param referenceName - The reference name for the menu item
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 18 July 2012
      */
     public void setReferenceName(String referenceName) {
         this.referenceName = referenceName;
@@ -296,6 +357,9 @@ public class MenuItem {
     
     /**
      * Getter for the notification count
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 18 July 2012
      * 
      * @return The notification count
      */
@@ -307,6 +371,9 @@ public class MenuItem {
      * Setter for the notification count
      * 
      * @param notificationCount - The notification count
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 18 July 2012
      */
     public void setNotificationCount(int notificationCount) {
         this.notificationCount = notificationCount;
