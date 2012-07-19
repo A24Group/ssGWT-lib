@@ -94,7 +94,7 @@ public class AdvancedPasswordBox extends Composite implements HasValue<String> {
             
             @Override
             public void onBlur(BlurEvent event) {
-                if ( passwordBox.getText() == null || passwordBox.getText().equals("") ) {
+                if (passwordBox.getText() == null || passwordBox.getText().equals("")) {
                     placeholder.setVisible(true);
                     passwordBox.setVisible(false);
                 }
