@@ -78,6 +78,11 @@ public class AdvancedPasswordBox extends Composite implements HasValue<String> {
         
         placeholder.addFocusHandler(new FocusHandler() {
             
+            /**
+             * Function called when the place holder gains focus
+             * 
+             * @param event - The event that should be handled
+             */
             @Override
             public void onFocus(FocusEvent event) {
                 placeholder.setVisible(false);
@@ -92,6 +97,11 @@ public class AdvancedPasswordBox extends Composite implements HasValue<String> {
         
         passwordBox.addBlurHandler(new BlurHandler() {
             
+            /**
+             * Function called when the password box loses focus
+             * 
+             * @param event - The event that should be handled
+             */
             @Override
             public void onBlur(BlurEvent event) {
                 if (passwordBox.getText() == null || passwordBox.getText().equals("")) {
