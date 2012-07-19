@@ -156,14 +156,14 @@
 /*The style for the container for the non selected menu item count*/
 .notSelectedNotificationContainer {
     text-align: center;
-	float: right;
-	height: 14px;
-	width: 14px;
-	background: #999;
-	position: absolute;
-	right: 27px;
-	top: 1px;
-	-moz-border-radius: 3px;
+    float: right;
+    height: 14px;
+    width: 14px;
+    background: #999;
+    position: absolute;
+    right: 27px;
+    top: 1px;
+    -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     -khtml-border-radius: 3px;
     border-radius: 3px;
@@ -182,7 +182,7 @@
 
 /*The style for the container for the selected menu item label and notification count*/
 .selectedLabelContainer{
-	-webkit-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     padding-top: 18px;
