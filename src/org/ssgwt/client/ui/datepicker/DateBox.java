@@ -47,6 +47,8 @@ import java.util.Date;
 /**
  * A text box that shows a {@link DatePicker} when the user focuses on it.
  *
+ * Edited by Michael Barnard<michael.barnard@a24group.com>
+ *
  * <h3>CSS Style Rules</h3>
  *
  * <dl>
@@ -184,7 +186,7 @@ public class DateBox extends Composite implements HasValue<Date>,
         void reset(DateBox dateBox, boolean abandon);
     }
 
-    private class DateBoxHandler implements ValueChangeHandler<Date>,
+    protected class DateBoxHandler implements ValueChangeHandler<Date>,
             FocusHandler, BlurHandler, ClickHandler, KeyDownHandler,
             CloseHandler<PopupPanel> {
 
@@ -252,6 +254,7 @@ public class DateBox extends Composite implements HasValue<Date>,
     private LeafValueEditor<Date> editor;
     private Format format;
     private boolean allowDPShow = true;
+    protected DateBoxHandler handler = new DateBoxHandler();
 
     /**
      * Create a date box with a new {@link DatePicker}.
@@ -268,6 +271,21 @@ public class DateBox extends Composite implements HasValue<Date>,
      * @param format to use to parse and format dates
      */
     public DateBox(DatePicker picker, Date date, Format format) {
+        this(picker, date, format, true);
+    }
+    
+    /**
+     * Create a new date box.
+     *
+     * @param picker the picker to drop down from the date box
+     * @param date the default date.
+     * @param format to use to parse and format dates
+     * @param addHandlers indicating whether a default handler should be added or not
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 18 July 2012
+     */
+    protected DateBox(DatePicker picker, Date date, Format format, boolean addHandlers) {
         this.picker = picker;
         this.popup = new PopupPanel(true);
         assert format != null : "You may not construct a date box with a null format";
@@ -280,14 +298,24 @@ public class DateBox extends Composite implements HasValue<Date>,
         initWidget(box);
         setStyleName(DEFAULT_STYLENAME);
 
-        DateBoxHandler handler = new DateBoxHandler();
+        if (addHandlers) {
+            addHandlers(handler);
+        }
+        setValue(date);
+    }
+    
+    /**
+     * Adds a custom handler to the item
+     * 
+     * @param handler to use in on the object
+     */
+    protected void addHandlers(DateBoxHandler handler) {
         picker.addValueChangeHandler(handler);
         box.addFocusHandler(handler);
         box.addBlurHandler(handler);
         box.addClickHandler(handler);
         box.addKeyDownHandler(handler);
         popup.addCloseHandler(handler);
-        setValue(date);
     }
 
     public HandlerRegistration addValueChangeHandler(
