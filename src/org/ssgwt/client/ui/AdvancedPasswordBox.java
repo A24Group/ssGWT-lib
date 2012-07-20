@@ -272,6 +272,8 @@ public class AdvancedPasswordBox extends Composite implements HasValue<String> {
     /**
      * Changes the style name for the placeholder text in the textbox.
      * 
+     * @param placeholderStyleName Name of the style to apply
+     * 
      * @author Jaco Nel <jaco.nel@a24group.com>
      * @since 05 June 2012
      */
