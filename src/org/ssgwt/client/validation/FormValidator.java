@@ -15,9 +15,12 @@
 package org.ssgwt.client.validation;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
+import org.ssgwt.client.ui.AdvancedInputField;
 import org.ssgwt.client.ui.AdvancedTextbox;
+import org.ssgwt.client.ui.form.InputField;
 import org.ssgwt.client.validation.validators.DateValidator;
 import org.ssgwt.client.validation.validators.EmailValidator;
 import org.ssgwt.client.validation.validators.StringRegexValidator;
@@ -113,11 +116,21 @@ public class FormValidator {
         //loops through the arraylist and retrieve their values from within the widget
         for (int i = 0; i < fieldSize; i++) {
             //gets the instance of the validator 
-            ValidatorInterface<String> validator = (ValidatorInterface<String>)validatorFactory(fields.get(i).validatorReferenceName);
+            ValidatorInterface<?> validator = (ValidatorInterface<?>)validatorFactory(fields.get(i).validatorReferenceName);
             //set the config hashmap on the validator
             validator.setConfiguration(fields.get(i).config);
             //check if the value is valid
-            boolean valid = validator.isValid(((HasValue<String>)fields.get(i).uiField).getValue());
+            boolean valid = false;
+            try {
+                Class<?> type = ((AdvancedInputField)fields.get(i).uiField).getReturnType();
+                if (String.class.equals(type)) {
+                    valid = ((ValidatorInterface<String>)validator).isValid(((HasValue<String>)fields.get(i).uiField).getValue());
+                } else if (Date.class.equals(type)) {
+                    valid = ((ValidatorInterface<Date>)validator).isValid(((HasValue<Date>)fields.get(i).uiField).getValue());
+                }
+            } catch (Exception e) {
+                valid = ((ValidatorInterface<String>)validator).isValid(((HasValue<String>)fields.get(i).uiField).getValue());
+            }
             if (!valid) {
                 //add error style
                 if (fields.get(i).errorStyleName != null) {

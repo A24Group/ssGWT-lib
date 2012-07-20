@@ -17,6 +17,8 @@
  */
 package org.ssgwt.client.ui;
 
+import java.util.Date;
+
 import org.ssgwt.client.ui.datepicker.DateBox;
 import org.ssgwt.client.ui.datepicker.SSDateBox;
 import org.ssgwt.client.ui.datepicker.SSDatePicker;
@@ -33,7 +35,7 @@ import com.google.gwt.event.dom.client.FocusEvent;
  * @author Michael Barnard <michael.barnard@a24group.com>
  * @since 18 July 2012
  */
-public class AdvancedDateBox extends DateBox {
+public class AdvancedDateBox extends DateBox implements AdvancedInputField<Date> {
     
     /**
      * The DateBoxHandler that replaces the origional handlers
@@ -226,5 +228,15 @@ public class AdvancedDateBox extends DateBox {
             super.getTextBox().setText("");
             super.getTextBox().removeStyleName(this.getPlaceholderStyleName());
         }
+    }
+
+    /**
+     * Used to get the type of the input
+     * 
+     * @return The class type 
+     */
+    @Override
+    public Class<Date> getReturnType() {
+        return Date.class;
     }
 } 
