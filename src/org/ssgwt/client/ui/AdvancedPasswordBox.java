@@ -291,10 +291,26 @@ public class AdvancedPasswordBox extends Composite implements HasValue<String> {
         return this.placeholderStyleName;
     }
     
+    /**
+     * Sets the container style name
+     * 
+     * @param containerStyleName The style to apply
+     * 
+     * @author Lodewyk Duminy <lodewyk.duminy@a24group.com>
+     * @since 20 July 2012
+     */
     public void setContainerStyle(String containerStyleName) {
         super.setStyleName(containerStyleName);
     }
     
+    /**
+     * Returns the container stylename
+     * 
+     * @author Lodewyk Duminy <lodewyk.duminy@a24group.com>
+     * @since 20 July 2012
+     * 
+     * @return The container styleName
+     */
     public String getContainerStyleName() {
         return super.getStyleName();
     }
