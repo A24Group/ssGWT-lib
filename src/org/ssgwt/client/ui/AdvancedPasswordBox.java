@@ -39,7 +39,7 @@ import com.google.gwt.user.client.ui.TextBox;
  * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
  * @since 19 July 2012
  */
-public class AdvancedPasswordBox extends Composite implements HasValue<String> {
+public class AdvancedPasswordBox extends Composite implements HasValue<String>, AdvancedInputField<String> {
 
     /**
      * The panel that holds the place holder and the password field
@@ -315,5 +315,15 @@ public class AdvancedPasswordBox extends Composite implements HasValue<String> {
      */
     public String getContainerStyleName() {
         return super.getStyleName();
+    }
+
+    /**
+     * Used to get the type of the input
+     * 
+     * @return The class type 
+     */
+    @Override
+    public Class<String> getReturnType() {
+        return String.class;
     }
 }
