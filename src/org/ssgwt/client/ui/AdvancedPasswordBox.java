@@ -67,6 +67,12 @@ public class AdvancedPasswordBox extends Composite implements HasValue<String> {
     private String requiredStyleName;
     
     /**
+     * Style name to be applied to the textbox when the placeholder is being
+     * displayed. Defaults to 'placeholder'.
+     */
+    protected String placeholderStyleName = "placeholder";
+    
+    /**
      * Class constructor
      */
     public AdvancedPasswordBox() {
@@ -259,6 +265,37 @@ public class AdvancedPasswordBox extends Composite implements HasValue<String> {
      */
     public void setStyleName(String style) {
         placeholder.setStyleName(style);
+        placeholder.addStyleName(placeholderStyleName);
         passwordBox.setStyleName(style);
+    }
+    
+    /**
+     * Changes the style name for the placeholder text in the textbox.
+     * 
+     * @author Jaco Nel <jaco.nel@a24group.com>
+     * @since 05 June 2012
+     */
+    public void setPlaceholderStyleName(String placeholderStyleName) {
+        this.placeholderStyleName = placeholderStyleName.trim();
+    }
+
+    /**
+     * Returns the placeholder style name set on the textbox.
+     * 
+     * @author Jaco Nel <jaco.nel@a24group.com>
+     * @since 05 June 2012
+     * 
+     * @return The placeholder styleName
+     */
+    public String getPlaceholderStyleName() {
+        return this.placeholderStyleName;
+    }
+    
+    public void setContainerStyle(String containerStyleName) {
+        super.setStyleName(containerStyleName);
+    }
+    
+    public String getContainerStyleName() {
+        return super.getStyleName();
     }
 }
