@@ -140,7 +140,7 @@ public abstract class DateInputField<T> extends DateBox implements InputField<T,
      * @return The class type the input field returns
      */
     @Override
-    public Class getReturnType() {
+    public Class<Date> getReturnType() {
         return Date.class;
     }
 }

@@ -33,7 +33,7 @@ import com.google.gwt.user.client.ui.TextBox;
  * @author Jaco Nel <jaco.nel@a24group.com>
  * @since 05 June 2012
  */
-public class AdvancedTextbox extends TextBox {
+public class AdvancedTextbox extends TextBox implements AdvancedInputField<String> {
 
     /**
      * The text to be used as place holder inside the textbox.
@@ -233,5 +233,15 @@ public class AdvancedTextbox extends TextBox {
         } else {
             return super.getText().trim();
         }
+    }
+
+    /**
+     * Used to get the type of the input
+     * 
+     * @return The class type 
+     */
+    @Override
+    public Class<String> getReturnType() {
+        return String.class;
     }
 }

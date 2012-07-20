@@ -110,7 +110,7 @@ public abstract class TextInputField<T> extends TextBox implements InputField<T,
      * @return The class type the input field returns
      */
     @Override
-    public Class getReturnType() {
+    public Class<String> getReturnType() {
         return String.class;
     }
 }

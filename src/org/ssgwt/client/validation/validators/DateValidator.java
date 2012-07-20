@@ -28,7 +28,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
  * @author Jaco Nel <jaco.nel@a24group.com>
  * @since 12 June 2012
  */
-public class DateValidator extends AbstractValidator implements ValidatorInterface<String> {
+public class DateValidator extends AbstractValidator implements ValidatorInterface<Date> {
 
     /**
      * The date format to parse with.
@@ -62,18 +62,11 @@ public class DateValidator extends AbstractValidator implements ValidatorInterfa
      * @return whether the value is valid or not
      */
     @Override
-    public boolean isValid(String value) {
+    public boolean isValid(Date value) {
         try {
-            String dateFormat;
-            if (this.configuration
-                    .containsKey(DateValidator.CONFIG_DATE_FORMAT)) {
-                dateFormat = this.configuration.get(
-                        DateValidator.CONFIG_DATE_FORMAT).toString();
-            } else {
-                dateFormat = DateValidator.DATE_FORMAT;
+            if ( value == null ) {
+                return false;
             }
-
-            Date date = DateTimeFormat.getFormat(dateFormat).parse(value);
         } catch (Exception exception) {
             return false;
         }

@@ -1,5 +1,7 @@
 package org.ssgwt.client.ui.form;
 
+import org.ssgwt.client.ui.AdvancedInputField;
+
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -11,7 +13,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @param <T> The object type the Dynamic form uses to get values from updates the value of the fields on
  * @param <FieldValueType> The object type the field will return
  */
-public interface InputField<T, FieldValueType> {
+public interface InputField<T, FieldValueType> extends AdvancedInputField<FieldValueType> {
     
     /**
      * Retrieve the value from the object that should the displayed on the input field
@@ -64,11 +66,4 @@ public interface InputField<T, FieldValueType> {
      * @return The flag that indicates whether the field is read only
      */
     public boolean isReadOnly();
-    
-    /**
-     * Retrieve the class type the input field returns
-     * 
-     * @return The class type the input field returns
-     */
-    public Class getReturnType();
 }
