@@ -226,8 +226,8 @@ public class AdvancedDateBox extends DateBox implements AdvancedInputField<Date>
     public void hidePlaceholder() {
         if (super.getTextBox().getText().equals(this.getPlaceholderText())) {
             super.getTextBox().setText("");
-            super.getTextBox().removeStyleName(this.getPlaceholderStyleName());
         }
+        super.getTextBox().removeStyleName(this.getPlaceholderStyleName());
     }
 
     /**
