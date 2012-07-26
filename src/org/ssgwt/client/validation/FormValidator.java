@@ -21,6 +21,7 @@ import java.util.HashMap;
 import org.ssgwt.client.ui.AdvancedInputField;
 import org.ssgwt.client.ui.AdvancedTextbox;
 import org.ssgwt.client.ui.form.InputField;
+import org.ssgwt.client.validation.validators.AgeValidator;
 import org.ssgwt.client.validation.validators.DateValidator;
 import org.ssgwt.client.validation.validators.EmailValidator;
 import org.ssgwt.client.validation.validators.StringRegexValidator;
@@ -175,6 +176,8 @@ public class FormValidator {
             formValidationInstance = new UsernameValidator();
         } else if (validatorReferenceName.equals(FormFieldConstants.VALIDATE_REGEX_REFERENCE)) {
             formValidationInstance = new StringRegexValidator();
+        } else if (validatorReferenceName.equals(FormFieldConstants.VALIDATE_AGE_REFERENCE)) {
+            formValidationInstance = new AgeValidator();
         }
         
         //add validation class instance to array

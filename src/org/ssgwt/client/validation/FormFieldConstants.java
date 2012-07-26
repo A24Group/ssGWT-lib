@@ -47,4 +47,9 @@ public class FormFieldConstants {
      * The reference to use when validating any given regular expression
      */
     public static final String VALIDATE_REGEX_REFERENCE = "validateRegexReference";
+    
+    /**
+     * The reference to use when validating a age
+     */
+    public static final String VALIDATE_AGE_REFERENCE = "validateAge";
 }
