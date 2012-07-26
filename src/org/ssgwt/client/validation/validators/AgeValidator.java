@@ -14,7 +14,6 @@
 
 package org.ssgwt.client.validation.validators;
 
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -58,15 +57,12 @@ public class AgeValidator extends AbstractValidator implements ValidatorInterfac
         if (this.configuration.containsKey(AgeValidator.CONFIG_MIN_AGE)) {
             //get the current date and subtract the minimum age to get
             //the minimun date back into the past that is allowed
-            Calendar calander = Calendar.getInstance();
-            calander.add(Calendar.YEAR, -((Integer)this.configuration.get(AgeValidator.CONFIG_MIN_AGE)));
-            calander.set(Calendar.MILLISECOND, 1);
-            calander.set(Calendar.SECOND, 0);
-            calander.set(Calendar.MINUTE, 0);
-            calander.set(Calendar.HOUR_OF_DAY, 0);
-            
-            //convert to date object for validation against date object passed in
-            Date minAgeDate = new Date(calander.getTimeInMillis());
+            Date minAgeDate = new Date();
+            int year = minAgeDate.getYear();
+            minAgeDate.setYear(year-(Integer)configuration.get(AgeValidator.CONFIG_MIN_AGE));
+            minAgeDate.setHours(0);
+            minAgeDate.setMinutes(0);
+            minAgeDate.setSeconds(1);
             
             //check if the date passed in is after the 
             //minimun date back into the past that is allowed
@@ -100,7 +96,7 @@ public class AgeValidator extends AbstractValidator implements ValidatorInterfac
      * @return The default error message to use
      */
     @Override
-    public String getDefaultValidationMessage() {;
+    public String getDefaultValidationMessage() {
         return AgeValidator.DEFAULT_VALIDATION_MESSAGE;
     }
 
