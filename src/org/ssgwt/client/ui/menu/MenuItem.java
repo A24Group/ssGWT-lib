@@ -103,6 +103,13 @@ public class MenuItem {
     
     /**
      * The class constructor
+     */
+    public MenuItem() {
+        
+    }
+    
+    /**
+     * The class constructor
      * 
      * @param placeName - The place name of the menu item
      * @param label - The text to display on the menu item
