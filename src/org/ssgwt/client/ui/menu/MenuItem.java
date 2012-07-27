@@ -63,7 +63,7 @@ public class MenuItem {
     /**
      * The order in which to load the menu items
      */
-    private int iOrder;
+    private int order;
     
     /**
      * whether this item should be defaultly selected
@@ -156,7 +156,7 @@ public class MenuItem {
             String referenceName, int notificationCount) {
         this.placeName = placeName;
         this.label = label;
-        this.iOrder = iOrder;
+        this.order = iOrder;
         this.defaultSelected = defaultSelected;
         this.selectedImage = selectedImage;
         this.unSelectedImage = unSelectedImage;
@@ -222,7 +222,7 @@ public class MenuItem {
      * @return The order of the current menu item
      */
     public int getOrder() {
-        return this.iOrder;
+        return this.order;
     }
     
     /**
@@ -234,7 +234,7 @@ public class MenuItem {
      * @since 9 July 2012
      */
     public void setOrder(int iOrder) {
-        this.iOrder = iOrder;
+        this.order = iOrder;
     }
     
     /**
