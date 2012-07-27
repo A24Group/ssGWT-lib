@@ -15,6 +15,11 @@ package org.ssgwt.client.ui.menu;
 
 import java.util.List;
 
+import name.pehl.piriti.commons.client.Transient;
+import name.pehl.piriti.json.client.JsonReader;
+import name.pehl.piriti.json.client.JsonWriter;
+
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
 
 /**
@@ -24,7 +29,27 @@ import com.google.gwt.user.client.Command;
  * @since 9 July 2012
  */
 public class MenuItem {
-
+    
+    /**
+     * Json reader
+     */
+    public interface JsonModuleReader extends JsonReader<MenuItem> {}
+    
+    /**
+     * Json writer
+     */
+    public interface JsonModuleWriter extends JsonWriter<MenuItem> {}
+    
+    /**
+     * Json reader
+     */
+    public static final JsonModuleReader JSON_READER = GWT.create( JsonModuleReader.class );
+    
+    /**
+     * Json writer
+     */
+    public static final JsonModuleWriter JSON_WRITER = GWT.create( JsonModuleWriter.class );
+    
     /**
      * The place name of the menu item
      */
@@ -48,6 +73,7 @@ public class MenuItem {
     /**
      * The command action to perform when the item is selected
      */
+    @Transient
     private Command command;
     
     /**
