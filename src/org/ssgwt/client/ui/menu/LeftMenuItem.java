@@ -17,6 +17,7 @@ import org.ssgwt.client.ui.menu.event.ILeftMenuItemSelectEventHandler;
 import org.ssgwt.client.ui.menu.event.LeftMenuItemSelectEvent;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
@@ -33,6 +34,7 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -457,7 +459,12 @@ public class LeftMenuItem extends Composite {
             isAnimating = true;
             leftMenuItem.setWidgetLeftRight(selectedPanel, 0, Unit.PX, 0, Unit.PX);
             leftMenuItem.setWidgetLeftWidth(notSelectedFlowPanel, -100, Unit.PCT, 100, Unit.PCT);
-            leftMenuItem.animate(600);
+            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand () {
+                public void execute () {
+                    leftMenuItem.animate(600);
+                }
+            });
+            
             Timer timer = new Timer() {
                 public void run() {
                     isAnimating = false;
