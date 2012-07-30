@@ -15,6 +15,11 @@ package org.ssgwt.client.ui.menu;
 
 import java.util.List;
 
+import name.pehl.piriti.commons.client.Transient;
+import name.pehl.piriti.json.client.JsonReader;
+import name.pehl.piriti.json.client.JsonWriter;
+
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
 
 /**
@@ -24,7 +29,27 @@ import com.google.gwt.user.client.Command;
  * @since 9 July 2012
  */
 public class MenuItem {
-
+    
+    /**
+     * Json reader
+     */
+    public interface JsonModuleReader extends JsonReader<MenuItem> {}
+    
+    /**
+     * Json writer
+     */
+    public interface JsonModuleWriter extends JsonWriter<MenuItem> {}
+    
+    /**
+     * Json reader
+     */
+    public static final JsonModuleReader JSON_READER = GWT.create( JsonModuleReader.class );
+    
+    /**
+     * Json writer
+     */
+    public static final JsonModuleWriter JSON_WRITER = GWT.create( JsonModuleWriter.class );
+    
     /**
      * The place name of the menu item
      */
@@ -38,7 +63,7 @@ public class MenuItem {
     /**
      * The order in which to load the menu items
      */
-    private int iOrder;
+    private int order;
     
     /**
      * whether this item should be defaultly selected
@@ -48,6 +73,7 @@ public class MenuItem {
     /**
      * The command action to perform when the item is selected
      */
+    @Transient
     private Command command;
     
     /**
@@ -74,6 +100,13 @@ public class MenuItem {
      * The notification count for the menu item
      */
     private int notificationCount;
+    
+    /**
+     * The class constructor
+     */
+    public MenuItem() {
+        
+    }
     
     /**
      * The class constructor
@@ -130,7 +163,7 @@ public class MenuItem {
             String referenceName, int notificationCount) {
         this.placeName = placeName;
         this.label = label;
-        this.iOrder = iOrder;
+        this.order = iOrder;
         this.defaultSelected = defaultSelected;
         this.selectedImage = selectedImage;
         this.unSelectedImage = unSelectedImage;
@@ -196,7 +229,7 @@ public class MenuItem {
      * @return The order of the current menu item
      */
     public int getOrder() {
-        return this.iOrder;
+        return this.order;
     }
     
     /**
@@ -208,7 +241,7 @@ public class MenuItem {
      * @since 9 July 2012
      */
     public void setOrder(int iOrder) {
-        this.iOrder = iOrder;
+        this.order = iOrder;
     }
     
     /**
