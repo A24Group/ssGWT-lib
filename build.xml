@@ -6,6 +6,7 @@
 
 	<path id="project.class.path">
 		<pathelement location="/opt/gwt/gwt-user.jar"/>
+		<fileset dir="war/WEB-INF/lib" includes="*.jar"/>
 		<fileset dir="/opt/gwt" includes="gwt-dev*.jar"/>
 	</path>
 
