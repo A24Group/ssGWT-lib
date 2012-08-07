@@ -36,6 +36,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.view.client.HasRows;
 import com.google.gwt.view.client.Range;
+import com.sun.java.swing.plaf.windows.resources.windows;
 
 /**
  * A pager for controlling a {@link HasRows} that only supports simple page
@@ -748,7 +749,17 @@ public class SSPager extends AbstractPager {
      */
     @Override
     public void setPageStart(int index) {
-        super.setPageStart(index);
+    	if (this.getDisplay() != null) {
+            Range range = this.getDisplay().getVisibleRange();
+            int pageSize = range.getLength();
+//          if (isRangeLimited && display.isRowCountExact()) {
+//              index = Math.min(index, display.getRowCount() - pageSize);
+//          }
+            index = Math.max(0, index);
+            if (index != range.getStart()) {
+                this.getDisplay().setVisibleRange(index, pageSize);
+            }
+        }
     }
 
     /**
