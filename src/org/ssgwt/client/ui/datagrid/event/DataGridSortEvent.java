@@ -73,7 +73,7 @@ public class DataGridSortEvent extends GwtEvent<IDataGridEventHandler> {
      * 
      * @return The ascending data
      */
-    public Object isAscending() {
+    public boolean isAscending() {
         return this.ascending;
     }
 
