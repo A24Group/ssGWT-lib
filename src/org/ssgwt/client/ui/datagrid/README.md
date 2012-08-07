@@ -57,8 +57,13 @@ This will add a column to the data grid but will not use the FilterSortHeader an
     table.addColumn(nameColumn, "Name");
 ```
 
-Add a column with a FilterSortHeader can be done in 2 different ways
+Add a column with a FilterSortHeader can be done in 2 different ways.
+Filter will need to be class variables because they are required in the filter change event handler. This is because all
+filter will not have the same functions available to retrieve filter criteria as it is not the work of the data 
+grid to handle this. Check the Filter change event section.
 ```
+    TextFilter nameColumnFilter = new TextFilter();
+    
     TextColumn<Contact> nameColumn = new TextColumn<Contact>() {
         @Override
         public String getValue(Contact object) {
@@ -67,11 +72,13 @@ Add a column with a FilterSortHeader can be done in 2 different ways
     };
     
     // When the one of the filters have been completed the example will be updated to create the FilterSortHeader using a filter object and not null
-    FilterSortHeader headerNameTest = new FilterSortHeader( "Name", null ); 
+    FilterSortHeader headerNameTest = new FilterSortHeader("Name", nameColumnFilter); 
     table.addColumn(nameColumn, headerNameTest);
 ```
 __OR__
 ```
+    TextFilter nameColumnFilter = new TextFilter();
+    
     TextColumn<Contact> nameColumn = new TextColumn<Contact>() {
         @Override
         public String getValue(Contact object) {
@@ -80,15 +87,102 @@ __OR__
     };
     
     // When the one of the filters have been completed the example will be updated to create the FilterSortHeader using a filter object and not null
-    table.addFilterColumn(nameColumn, "Name", null);
+    table.addFilterColumn(nameColumn, "Name", nameColumnFilter);
 ```
 
+### Adding widgets to the action bar
+```
+    addContactButton = new Button("Add Contact");
+    addContactButton.addClickHandler( new ClickHandler() {
+        
+        /**
+         * Event handler for when the "Add Contact" button is clicked.
+         * 
+         * @param event - The event of the ClickEvent
+         */
+        @Override
+        public void onClick(ClickEvent event) {
+            // Navigate to your Add Contact page
+        }
+    });
+
+    table.setActionBarWidget(addContactButton);
+```
+
+### How to handle the event of the SSDataGrid
+Sort events
+```
+    table.addDataGridSortEvent(new IDataGridEventHandler() {
+    
+        /**
+         * The event that fired on sorting.
+         */
+        @Override
+        public void onDataEvent(DataGridSortEvent event) {
+            if (event.getColumn().equals(nameColumn)) {
+                if (event.isAscending()) {
+                    //Sort ascending
+                } else {
+                    //Sort descending
+                }
+            } else {
+                // Do stuff for other columns
+            }getView().getOrganisationDataGrid()
+            
+        }
+    });
+```
+
+Range change events / Paging events
+```
+    table.addRangeChangeHandler(new RangeChangeEvent.Handler() {
+        
+       /**
+        * The event that fire once the range change on the datagrid.
+        */
+        @Override
+        public void onRangeChange(RangeChangeEvent event) {
+            // Retrieve data for the current range and set the data using the setRowData function
+        }
+    });
+```
+
+Filter change events
+```
+    table.addFilterChangeHandler(new FilterChangeEvent.FilterChangeHandler() {
+        
+        /**
+         * The event that fired on filter change.
+         */
+        @Override
+        public void onFilterChange(FilterChangeEvent event) {
+            if (getView().getNameFieldFilter().isFilterActive()) {
+                // Filter your data
+            } else {
+                // Remove Filter from your data
+            }
+        }
+    });
+```
+
+Selection change events
+```
+    table.addDataGridRowSelectionChangedHandler(
+            new DataGridRowSelectionChangedEvent.DataGridRowSelectionChangedHandler(){
+
+                @Override
+                public void onDataGridRowSelectionChanged(DataGridRowSelectionChangedEvent event) {
+                	// Get the data that was selected or unselected
+                    event.getChangedRows();
+                }
+                
+            }
+    );
+```
+
+
 ### TODO These still require some work before we can write a help section for them
- * Explain how to listen to sort events and range change events
  * Update the column add section once one of the filters are done
- * Explain how to handle filter change events
- * Explain how to handle selection change events
- * Explain how to add a widget to the action bar
 
 ### Current issue we are still working on
  * Internet Explorer 8 seems to move the data in the column to the side when you click on it. Other browsers don't seem to have this problem
