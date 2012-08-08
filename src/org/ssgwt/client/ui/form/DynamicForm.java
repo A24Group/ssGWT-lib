@@ -401,9 +401,9 @@ public class DynamicForm<T> extends Composite {
     }
     
     /**
-     * Set the a fields visibility
+     * Set a fields visibility
      * 
-     * @param inputField - The inputField field
+     * @param inputField - The input field
      * @param visible - True to disply the field|false to hide a field
      */
     public void setFieldVisible(InputField<T, ?> inputField, boolean visible) {
