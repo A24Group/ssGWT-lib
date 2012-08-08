@@ -399,4 +399,16 @@ public class DynamicForm<T> extends Composite {
     public boolean isFieldsReadOnly() {
         return this.readOnly;
     }
+    
+    /**
+     * Set a fields visibility
+     * 
+     * @param inputField - The input field
+     * @param visible - True to disply the field|false to hide a field
+     */
+    public void setFieldVisible(InputField<T, ?> inputField, boolean visible) {
+        if (fields.containsKey(inputField)) {
+            fields.get(inputField).setVisible(visible);
+        }
+    }
 }
