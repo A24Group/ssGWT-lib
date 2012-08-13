@@ -109,6 +109,20 @@ public class AdvancedDateBox extends DateBox implements AdvancedInputField<Date>
     }
     
     /**
+     * Class constructor
+     * 
+     * @param minimum - The minimum date that can be chosen on this date picker.
+     * @param maximum - The maximum date that can be chosen on this date picker.
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 13 Aug 2012
+     */
+    public AdvancedDateBox(Date minimum, Date maximum) {
+        super(new SSDatePicker(minimum, maximum), null, SSDateBox.DEFAULT_FORMAT, false);
+        addHandlers(handler);
+    }
+    
+    /**
      * Sets the place holder text to be displayed when no value is given in the
      * text input.
      * 
