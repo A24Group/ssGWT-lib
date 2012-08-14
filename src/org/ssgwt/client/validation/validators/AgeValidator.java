@@ -42,6 +42,11 @@ public class AgeValidator extends AbstractValidator implements ValidatorInterfac
     public static final String CONFIG_MIN_AGE = "minAge";
     
     /**
+     * The maximum age to validate for
+     */
+    public static final String CONFIG_MAX_AGE = "maxAge";
+    
+    /**
      * Validates the value passed in.
      * 
      * @param value The value to validate
@@ -67,6 +72,23 @@ public class AgeValidator extends AbstractValidator implements ValidatorInterfac
             //check if the date passed in is after the 
             //minimun date back into the past that is allowed
             if (value.after(minAgeDate)) {
+                return false;
+            }
+        }
+        
+        if (this.configuration.containsKey(AgeValidator.CONFIG_MAX_AGE)) {
+            //get the current date and subtract the maximum age to get
+            //the maximum date back into the past that is allowed
+            Date maxAgeDate = new Date();
+            int year = maxAgeDate.getYear();
+            maxAgeDate.setYear(year-(Integer)configuration.get(AgeValidator.CONFIG_MAX_AGE)-1);
+            maxAgeDate.setHours(0);
+            maxAgeDate.setMinutes(0);
+            maxAgeDate.setSeconds(1);
+            
+            //check if the date passed in is before the 
+            //maximum date back into the past that is allowed
+            if (value.before(maxAgeDate)) {
                 return false;
             }
         }
