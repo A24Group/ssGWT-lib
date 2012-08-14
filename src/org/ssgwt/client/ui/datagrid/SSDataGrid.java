@@ -517,7 +517,10 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
                 for (int i = 0; i < numRecordsDisplayed; i++) {
                     ((T)dataGrid.getVisibleItem(i)).setSelected(!allSelected);
                 }
-                DataGridRowSelectionChangedEvent.fire(SSDataGrid.this, dataGrid.getVisibleItems());
+                DataGridRowSelectionChangedEvent<T> eventX = new DataGridRowSelectionChangedEvent<T>(
+                        dataGrid.getVisibleItems());
+                
+                SSDataGrid.this.fireEvent(eventX);
                 refresh();
             }
         });
@@ -536,9 +539,10 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
             public void update(int index, T object, Boolean value) {
                 object.setSelected(value);
                 refresh();
-                List<AbstractMultiSelectObject> selectedRowList = new ArrayList<AbstractMultiSelectObject>();
+                List<T> selectedRowList = new ArrayList<T>();
                 selectedRowList.add(object);
-                DataGridRowSelectionChangedEvent.fire(SSDataGrid.this, selectedRowList);
+                DataGridRowSelectionChangedEvent<T> eventX = new DataGridRowSelectionChangedEvent<T>(selectedRowList);
+                SSDataGrid.this.fireEvent(eventX);
             }
         });
     }
