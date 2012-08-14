@@ -87,15 +87,4 @@ public class DataGridRowSelectionChangedEvent<T> extends GwtEvent<DataGridRowSel
     public static Type<DataGridRowSelectionChangedHandler> getType() {
         return TYPE;
     }
-
-//    This could be implemented at a later stage but for now this can not be used
-//    /**
-//     * Helper function to make it easier to dispatch an FilterChangeEvent
-//     * 
-//     * @param source - The object that is dispatching the event
-//     * @param rowsData - The data for the rows that was selected or deselected
-//     */
-//    public static void fire(HasHandlers source, List<?> changedRows) {
-//        source.fireEvent(new DataGridRowSelectionChangedEvent(changedRows));
-//    }
 }
