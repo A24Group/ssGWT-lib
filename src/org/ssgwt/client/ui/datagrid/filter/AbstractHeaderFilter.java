@@ -83,7 +83,7 @@ public abstract class AbstractHeaderFilter extends PopupPanel {
      * @author Johannes Gryffenberg
      * @since 5 July 2012
      */
-    class Criteria {
+    abstract static class Criteria {
         
     }
     

@@ -77,7 +77,7 @@ public class TextFilter extends AbstractHeaderFilter {
      */
     @UiField
     CheckBox checkBox;
-    
+
     /**
      * The label of the check box
      */
@@ -252,7 +252,7 @@ public class TextFilter extends AbstractHeaderFilter {
      * @author Johannes Gryffenberg
      * @since 5 July 2012
      */
-    public class TextFilterCriteria extends Criteria {
+    public static class TextFilterCriteria extends Criteria {
         
         /**
          * The criteria the user entered on the text filter
@@ -326,9 +326,17 @@ public class TextFilter extends AbstractHeaderFilter {
         addCheckBoxEventHandlers();
     }
     
+    /**
+     * Adds event handlers to the checkbox on the TextFilter
+     */
     private void addCheckBoxEventHandlers() {
         this.checkBox.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
             
+            /**
+             * The function that will be called if the value on the check box changes
+             * 
+             * @param event The event that should be handled
+             */
             @Override
             public void onValueChange(ValueChangeEvent<Boolean> event) {
                 if (event.getValue()) {
@@ -533,6 +541,7 @@ public class TextFilter extends AbstractHeaderFilter {
     /**
      * Clear all the ui fields to their default states
      */
+    @Override
     protected void clearFields() {
         checkBox.setValue(false);
         textBox.setValue("");
@@ -541,5 +550,35 @@ public class TextFilter extends AbstractHeaderFilter {
         } else {
             textBox.setEnabled(true);
         }
+    }
+    
+    /**
+     * Retrieves the check box that is displayed on the TextFilter.
+     * This function is protected as it is only used by test cases.
+     * 
+     * @return instance of the check box that is displayed on the TextFilter
+     */
+    protected CheckBox getCheckBox() {
+        return checkBox;
+    }
+
+    /**
+     * Retrieves the text box that is displayed on the TextFilter.
+     * This function is protected as it is only used by test cases.
+     * 
+     * @return instance of the text box that is displayed on the TextFilter
+     */
+    protected TextBox getTextBox() {
+        return textBox;
+    }
+    
+    /**
+     * Retrieves the title label that is displayed on the TextFilter.
+     * This function is protected as it is only used by test cases.
+     * 
+     * @return instance of the title label that is displayed on the TextFilter
+     */
+    protected Label getTitleLabel() {
+        return titleLabel;
     }
 }

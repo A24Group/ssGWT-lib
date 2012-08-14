@@ -1,42 +1,131 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="ssgwtlib" basedir="." default="compile-project-to-jar">
-	<property name="src.dir" value="./src/" />
-	<property name="classes.dir" value="./classes" />
-	<property name="dist.dir" value="./dist" />
+    <property name="src.dir" value="./src/" />
+    <property name="classes.dir" value="./classes" />
+    <property name="dist.dir" value="./dist" />
 
-	<path id="project.class.path">
-		<pathelement location="/opt/gwt/gwt-user.jar"/>
-		<fileset dir="war/WEB-INF/lib" includes="*.jar"/>
-		<fileset dir="/opt/gwt" includes="gwt-dev*.jar"/>
-	</path>
+    <path id="project.class.path">
+        <pathelement location="war/WEB-INF/classes"/>
+        <pathelement location="/opt/gwt/gwt-user.jar"/>
+        <fileset dir="/opt/gwt" includes="gwt-dev*.jar"/>
+        <!-- Add any additional non-server libs (such as JUnit) -->
+        <fileset dir="war/WEB-INF/lib" includes="**/*.jar"/>
+    </path>
 
-	<target name="clean-project" description="Delete all generated files">
-		<echo level="info" message="Deleting compiled class files (${classes.dir})..." />
-		<delete dir="${classes.dir}" failonerror="false" />
+    <target name="clean-project" description="Delete all generated files">
+        <echo level="info" message="Deleting compiled class files (${classes.dir})..." />
+        <delete dir="${classes.dir}" failonerror="false" />
 
-		<echo level="info" message="Deleting compiled jar file (${ant.project.name}.jar)..." />
-		<delete file="${ant.project.name}.jar" />
-	</target>
+        <echo level="info" message="Deleting compiled jar file (${ant.project.name}.jar)..." />
+        <delete file="${ant.project.name}.jar" />
+    </target>
 
-	<target name="compile-project-classes" description="Compiles the java files to class files" depends="clean-project">
-		<echo level="info" message="Creating ${classes.dir} directory..." />
-		<mkdir dir="${classes.dir}" />
+    <target name="compile-project-classes" description="Compiles the java files to class files" depends="clean-project">
+        <echo level="info" message="Creating ${classes.dir} directory..." />
+        <mkdir dir="${classes.dir}" />
 
-		<echo level="info" message="Compiling class files into ${classes.dir}..." />
-		<javac srcdir="${src.dir}" destdir="${classes.dir}" >
-			<classpath refid="project.class.path"/>
-		</javac>
-	</target>
+        <echo level="info" message="Compiling class files into ${classes.dir}..." />
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" >
+            <classpath refid="project.class.path"/>
+        </javac>
+    </target>
 
-	<target name="compile-project-to-jar" description="Compiles a jar  file for the project" depends="compile-project-classes">
-		<echo level="info" message="Creating distribution dir at ${dist.dir}..." />
-		<mkdir dir="${dist.dir}"/>
+    <target name="compile-project-to-jar" description="Compiles a jar  file for the project" depends="compile-project-classes">
+        <echo level="info" message="Creating distribution dir at ${dist.dir}..." />
+        <mkdir dir="${dist.dir}"/>
 
-		<echo level="info" message="Compiling jar file at ${ant.project.name}.jar..." />
-		<jar destfile="dist/${ant.project.name}.jar">
-			<fileset dir="${classes.dir}" includes="**/*.class"/>
-			<fileset dir="${src.dir}" includes="**/*"/>
-		</jar>
-	</target>
+        <echo level="info" message="Compiling jar file at ${ant.project.name}.jar..." />
+        <jar destfile="dist/${ant.project.name}.jar">
+            <fileset dir="${classes.dir}" includes="**/*.class"/>
+            <fileset dir="${src.dir}" includes="**/*"/>
+        </jar>
+    </target>
 
+    <target name="libs" description="Copy libs to WEB-INF/lib">
+        <mkdir dir="war/WEB-INF/lib" />
+        <copy todir="war/WEB-INF/lib" file="/opt/gwt/gwt-servlet.jar" />
+        <copy todir="war/WEB-INF/lib" file="/opt/gwt/gwt-servlet-deps.jar" />
+        <!-- Add any additional server libs that need to be copied -->
+    </target>
+
+    <target name="javac" depends="libs" description="Compile java source to bytecode">
+        <mkdir dir="war/WEB-INF/classes"/>
+        <javac srcdir="src" includes="**" encoding="utf-8"
+                destdir="war/WEB-INF/classes"
+                source="1.5" target="1.5" nowarn="true"
+                debug="true" debuglevel="lines,vars,source" includeantruntime="false">
+            <classpath refid="project.class.path"/>
+        </javac>
+        <copy todir="war/WEB-INF/classes">
+            <fileset dir="src" excludes="**/*.java"/>
+        </copy>
+    </target>
+
+    <target name="javac.tests" depends="javac" description="Compiles test code">
+        <javac srcdir="test" includes="**" encoding="utf-8"
+            source="1.5" target="1.5" nowarn="true"
+            destdir="war/WEB-INF/classes"
+            debug="true" debuglevel="lines,vars,source" includeantruntime="false">
+            <classpath location="lib/junit.jar"/>
+            <classpath refid="project.class.path"/>
+        </javac>
+    </target>
+
+    <target name="test.dev" depends="javac.tests" description="Run development mode tests">
+        <mkdir dir="reports/htmlunit.dev" />
+        <junit fork="yes" printsummary="yes" haltonfailure="no">
+            <jvmarg line="-Xmx256m" />
+            <sysproperty key="gwt.args" value="-standardsMode -logLevel WARN" />
+            <sysproperty key="java.awt.headless" value="true" />
+            <classpath>
+                <pathelement location="src" />
+                <pathelement location="test" />
+                <path refid="project.class.path" />
+                <pathelement location="/opt/gwt/validation-api-1.0.0.GA.jar" />
+                <pathelement location="/opt/gwt/validation-api-1.0.0.GA-sources.jar" />
+                <pathelement location="lib/junit.jar" />
+            </classpath>
+            <batchtest todir="reports/htmlunit.dev" >
+                <fileset dir="test" >
+                    <include name="**/*Test.java" />
+                </fileset>
+            </batchtest>
+            <formatter type="plain" />
+            <formatter type="xml" />
+        </junit>
+    </target>
+
+    <target name="test.prod" depends="javac.tests" description="Run production mode tests">
+        <mkdir dir="reports/htmlunit.prod" />
+        <junit fork="yes" printsummary="yes" haltonfailure="no">
+            <jvmarg line="-Xmx256m" />
+            <sysproperty key="gwt.args" value="-prod -standardsMode -logLevel WARN -standardsMode -out www-test" />
+            <sysproperty key="java.awt.headless" value="true" />
+            <classpath>
+                <pathelement location="src" />
+                <pathelement location="test" />
+                <path refid="project.class.path" />
+                <pathelement location="/opt/gwt/validation-api-1.0.0.GA.jar" />
+                <pathelement location="/opt/gwt/validation-api-1.0.0.GA-sources.jar" />
+                <pathelement location="lib/junit.jar" />
+            </classpath>
+            <batchtest todir="reports/htmlunit.prod" >
+                <fileset dir="test" >
+                    <include name="**/*Test.java" />
+                </fileset>
+            </batchtest>
+            <formatter type="plain" />
+            <formatter type="xml" />
+        </junit>
+    </target>
+
+    <target name="test" depends="clean" description="Run development and production mode tests">
+        <antcall target="test.dev" />
+        <antcall target="test.prod" />
+    </target>
+
+    <target name="clean" description="Cleans this project">
+        <delete dir="war/WEB-INF/classes" failonerror="false" />
+        <delete dir="war/gwtlib" failonerror="false" />
+    </target>
 </project>
