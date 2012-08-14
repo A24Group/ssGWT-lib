@@ -13,11 +13,10 @@
  */
 package org.ssgwt.client.ui.datagrid.filter;
 
-import org.ssgwt.client.ui.datagrid.FilterSortCell.Resources;
 import org.ssgwt.client.ui.datagrid.filter.AbstractHeaderFilter.Criteria;
+import org.ssgwt.client.ui.datagrid.filter.AbstractHeaderFilter.Resources;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dev.resource.Resource;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -28,29 +27,18 @@ import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.resources.client.ClientBundle.Source;
-import com.google.gwt.resources.client.TextResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-/**
- * The text filter that can be used on the SSDataGrid with a FilterSortHeader
- * 
- * @author Johannes Gryffenberg
- * @since 5 July 2012
- */
-public class TextFilter extends AbstractHeaderFilter {
-    
+public class DateFilter extends AbstractHeaderFilter {
+
     /**
      * Instance of the UiBinder
      */
@@ -59,12 +47,12 @@ public class TextFilter extends AbstractHeaderFilter {
     /**
      * Holds an instance of the default resources
      */
-    private static TextFilterResources DEFAULT_RESOURCES;
+    private static DateFilterResources DEFAULT_RESOURCES;
     
     /**
      * Holds an instance of resources
      */
-    private TextFilterResources resources;
+    private DateFilterResources resources;
     
     /**
      * The title label
@@ -77,24 +65,6 @@ public class TextFilter extends AbstractHeaderFilter {
      */
     @UiField
     CheckBox checkBox;
-
-    /**
-     * The label of the check box
-     */
-    @UiField
-    Label checkBoxLabel;
-    
-    /**
-     * The label of the text box
-     */
-    @UiField
-    Label textBoxLabel;
-    
-    /**
-     * The text box
-     */
-    @UiField
-    TextBox textBox;
     
     /**
      * The icon that clears a the filter criteria
@@ -109,17 +79,12 @@ public class TextFilter extends AbstractHeaderFilter {
     Button applyButton;
     
     /**
-     * Holds the text that was previously entered in the text box
-     */
-    String previousText;
-    
-    /**
      * UiBinder interface for the composite
      * 
      * @author Johannes Gryffenberg
      * @since 5 July 2012
      */
-    interface Binder extends UiBinder<Widget, TextFilter> {
+    interface Binder extends UiBinder<Widget, DateFilter> {
     }
     
     /**
@@ -128,14 +93,14 @@ public class TextFilter extends AbstractHeaderFilter {
      * @author Johannes Gryffenberg
      * @since 5 July 2012
      */
-    public interface TextFilterResources extends Resources {
+    public interface DateFilterResources extends Resources {
         
         /**
          * Retrieves an implementation of the Style interface generated using the specified css file
          * 
          * @return An implementation of the Style interface
          */
-        @Source("TextFilter.css")
+        @Source("DateFilter.css")
         Style textFilterStyle();
     }
     
@@ -252,12 +217,7 @@ public class TextFilter extends AbstractHeaderFilter {
      * @author Johannes Gryffenberg
      * @since 5 July 2012
      */
-    public static class TextFilterCriteria extends Criteria {
-        
-        /**
-         * The criteria the user entered on the text filter
-         */
-        private String criteria;
+    public static class DateFilterCriteria extends Criteria {
         
         /**
          * Flag to indicate if the user is looking for empty entries only
@@ -281,31 +241,13 @@ public class TextFilter extends AbstractHeaderFilter {
         public void setFindEmptyEntriesOnly(boolean findEmptyEntriesOnly) {
             this.findEmptyEntriesOnly = findEmptyEntriesOnly;
         }
-
-        /**
-         * Retrieves the criteria the user entered on the text filter
-         * 
-         * @return The criteria the user entered on the text filter
-         */
-        public String getCriteria() {
-            return criteria;
-        }
-
-        /**
-         * Sets the criteria the user entered on the text filter
-         * 
-         * @param criteria - The criteria the user entered on the text filter
-         */
-        public void setCriteria(String criteria) {
-            this.criteria = criteria;
-        }
-
+        
     }
     
     /**
      * The default class constructor
      */
-    public TextFilter() {
+    public DateFilter() {
         this(getDefaultResources());
     }
     
@@ -314,13 +256,13 @@ public class TextFilter extends AbstractHeaderFilter {
      * 
      * @param resources - The resources the text filter should use
      */
-    public TextFilter(TextFilterResources resources) {
+    public DateFilter(DateFilterResources resources) {
         super(true);
         this.resources = resources;
         this.resources.textFilterStyle().ensureInjected();
         this.setStyleName("");
         this.setWidget(uiBinder.createAndBindUi(this));
-        setCriteria(new TextFilterCriteria());
+        setCriteria(new DateFilterCriteria());
         addRemoveIconEventHandlers();
         addApplyButtonEventHandlers();
         addCheckBoxEventHandlers();
@@ -339,14 +281,7 @@ public class TextFilter extends AbstractHeaderFilter {
              */
             @Override
             public void onValueChange(ValueChangeEvent<Boolean> event) {
-                if (event.getValue()) {
-                    textBox.setEnabled(false);
-                    previousText = textBox.getValue();
-                    textBox.setValue("");
-                } else {
-                    textBox.setEnabled(true);
-                    textBox.setValue(previousText);
-                }
+                //TODO: Handle logic for the search empty fields check box
             }
         });
     }
@@ -453,7 +388,7 @@ public class TextFilter extends AbstractHeaderFilter {
             }
         });
     }
-
+    
     /**
      * Create an instance on the default resources object if it the
      * DEFAULT_RESOURCES variable is null if not it just return the object in
@@ -461,93 +396,66 @@ public class TextFilter extends AbstractHeaderFilter {
      * 
      * @return the default resource object
      */
-    private static TextFilterResources getDefaultResources() {
+    private static DateFilterResources getDefaultResources() {
         if (DEFAULT_RESOURCES == null) {
-            DEFAULT_RESOURCES = GWT.create(TextFilterResources.class);
+            DEFAULT_RESOURCES = GWT.create(DateFilterResources.class);
         }
         return DEFAULT_RESOURCES;
     }
     
-    /**
-     * Sets the title of the Filter popup
-     * 
-     * @param title - The title that should be displayed on the popup
-     */
     @Override
     public void setTitle(String title) {
-        titleLabel.setText(title);
+        this.titleLabel.setText(title);
     }
-    
+
     /**
      * Getter for the resources instance
      * 
      * @return The resources
      */
-    public TextFilterResources getResources() {
+    public DateFilterResources getResources() {
         return this.resources;
     }
     
-    /**
-     * Retrieves the criteria of the filter
-     * 
-     * @return The criteria of the obejct
-     */
-    public TextFilterCriteria getCriteria() {
-        return (TextFilterCriteria)this.filterCirteria;
+    @Override
+    public DateFilterCriteria getCriteria() {
+        return (DateFilterCriteria)this.filterCirteria;
     }
-    
-    /**
-     * Function that check if the filter is active by checking the value on the criteria object
-     * 
-     * @return Flag to indicate if the filter should be active based on the data in the criteria object
-     */
+
     @Override
     protected boolean checkFilterActive() {
         if (getCriteria().isFindEmptyEntriesOnly()) {
             return true;
-        } else if (getCriteria().getCriteria() != null && !getCriteria().getCriteria().trim().equals("")) {
-            return true;
         }
+        // TODO: Add Logic for from and to field
         return false;
     }
 
-    /**
-     * Function to update the criteria with data in the fields
-     */
     @Override
     protected void updateCriteriaObject() {
         getCriteria().setFindEmptyEntriesOnly(checkBox.getValue());
-        getCriteria().setCriteria(textBox.getValue());
+        // TODO: Add Logic for from and to field
     }
 
-    /**
-     * Function that sets the criteria object to a state where the filter will be inactive
-     */
     @Override
     protected void setCriteriaObjectEmpty() {
         getCriteria().setFindEmptyEntriesOnly(false);
-        getCriteria().setCriteria("");
+        // TODO: Add Logic for from and to field
+        
     }
 
-    /**
-     * Function used to update the input fields
-     */
     @Override
     protected void updateFieldData() {
         checkBox.setValue(getCriteria().isFindEmptyEntriesOnly());
-        textBox.setValue(getCriteria().getCriteria());
+        // TODO: Add Logic for from and to field
     }
-    
-    /**
-     * Clear all the ui fields to their default states
-     */
+
     @Override
     protected void clearFields() {
         checkBox.setValue(false);
-        textBox.setValue("");
-        textBox.setEnabled(true);
+        // TODO: Add Logic for from and to field
     }
-    
+
     /**
      * Retrieves the check box that is displayed on the TextFilter.
      * This function is protected as it is only used by test cases.
@@ -556,16 +464,6 @@ public class TextFilter extends AbstractHeaderFilter {
      */
     protected CheckBox getCheckBox() {
         return checkBox;
-    }
-
-    /**
-     * Retrieves the text box that is displayed on the TextFilter.
-     * This function is protected as it is only used by test cases.
-     * 
-     * @return instance of the text box that is displayed on the TextFilter
-     */
-    protected TextBox getTextBox() {
-        return textBox;
     }
     
     /**
