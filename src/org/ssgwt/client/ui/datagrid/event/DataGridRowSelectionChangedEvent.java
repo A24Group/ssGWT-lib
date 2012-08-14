@@ -88,6 +88,7 @@ public class DataGridRowSelectionChangedEvent<T> extends GwtEvent<DataGridRowSel
         return TYPE;
     }
 
+//    This could be implemented at a later stage but for now this can not be used
 //    /**
 //     * Helper function to make it easier to dispatch an FilterChangeEvent
 //     * 
