@@ -13,7 +13,7 @@ import com.google.gwt.event.shared.HasHandlers;
  * @author Johannes Gryffenberg<johannes.gryffenberg@gmail.com>
  * @since 9 July 2012
  */
-public class DataGridRowSelectionChangedEvent extends GwtEvent<DataGridRowSelectionChangedEvent.DataGridRowSelectionChangedHandler> {
+public class DataGridRowSelectionChangedEvent<T> extends GwtEvent<DataGridRowSelectionChangedEvent.DataGridRowSelectionChangedHandler> {
 
     /**
      * The handler type for the event
@@ -23,7 +23,7 @@ public class DataGridRowSelectionChangedEvent extends GwtEvent<DataGridRowSelect
     /**
      * The data for the rows that was selected or deselected
      */
-    private List<AbstractMultiSelectObject> changedRows;
+    private List<T> changedRows;
 
     /**
      * The event handler interface for the event
@@ -46,7 +46,7 @@ public class DataGridRowSelectionChangedEvent extends GwtEvent<DataGridRowSelect
      * 
      * @param changedRows - The data for the rows that was selected or deselected
      */
-    public DataGridRowSelectionChangedEvent(List<AbstractMultiSelectObject> changedRows) {
+    public DataGridRowSelectionChangedEvent(List<T> changedRows) {
         this.changedRows = changedRows;
     }
 
@@ -55,7 +55,7 @@ public class DataGridRowSelectionChangedEvent extends GwtEvent<DataGridRowSelect
      * 
      * @return The data of the rows that was selected or deselected
      */
-    public List<AbstractMultiSelectObject> getChangedRows() {
+    public List<T> getChangedRows() {
         return changedRows;
     }
 
@@ -88,13 +88,13 @@ public class DataGridRowSelectionChangedEvent extends GwtEvent<DataGridRowSelect
         return TYPE;
     }
 
-    /**
-     * Helper function to make it easier to dispatch an FilterChangeEvent
-     * 
-     * @param source - The object that is dispatching the event
-     * @param rowsData - The data for the rows that was selected or deselected
-     */
-    public static void fire(HasHandlers source, List<AbstractMultiSelectObject> changedRows) {
-        source.fireEvent(new DataGridRowSelectionChangedEvent(changedRows));
-    }
+//    /**
+//     * Helper function to make it easier to dispatch an FilterChangeEvent
+//     * 
+//     * @param source - The object that is dispatching the event
+//     * @param rowsData - The data for the rows that was selected or deselected
+//     */
+//    public static void fire(HasHandlers source, List<?> changedRows) {
+//        source.fireEvent(new DataGridRowSelectionChangedEvent(changedRows));
+//    }
 }
