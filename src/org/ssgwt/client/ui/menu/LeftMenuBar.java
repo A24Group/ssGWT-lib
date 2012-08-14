@@ -153,6 +153,7 @@ public class LeftMenuBar extends Composite {
      * @since 09 July 2012
      */
     public void setLeftMenuBar(List<MenuItem> menuItems) {
+        leftMenuBarContainer.clear();
         if (menuItems != null) {
             List<MenuItem> sorted = new ArrayList<MenuItem>();
             int max = 0;
