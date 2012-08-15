@@ -13,10 +13,15 @@
  */
 package org.ssgwt.client.ui.datagrid.filter;
 
-import org.ssgwt.client.ui.datagrid.filter.AbstractHeaderFilter.Criteria;
-import org.ssgwt.client.ui.datagrid.filter.AbstractHeaderFilter.Resources;
+import java.util.Date;
+
+import org.ssgwt.client.ui.datepicker.DateBox;
+import org.ssgwt.client.ui.datepicker.SSDateBox;
+import org.ssgwt.client.ui.datepicker.SSDatePicker;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -27,14 +32,16 @@ import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.i18n.client.LocaleInfo;
+import com.google.gwt.i18n.client.constants.DateTimeConstants;
 import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 
 public class DateFilter extends AbstractHeaderFilter {
@@ -55,6 +62,39 @@ public class DateFilter extends AbstractHeaderFilter {
     private DateFilterResources resources;
     
     /**
+     * Holds a list of filters that will be used to populate the filter listbox
+     */
+    private String[] filters = {
+        "Customised date range",
+        "Today",
+        "Yesterday",
+        "This week (Mon-Today)",
+        "Last 7 days",
+        "Last week (Mon-Sun)",
+        "Last working week (Mon-Fri)",
+        "Last 14 days",
+        "This month",
+        "Last 30 days",
+        "Last month"
+    };
+    
+    /**
+     * Holds the index of the filter listbox that will be used to remember the index
+     * when the listbox gets disabled
+     */
+    private int filterIndex;
+    
+    /**
+     * Used to remember the from date when the datebox gets disabled
+     */
+    private Date previousFromDate;
+    
+    /**
+     * Used to remember the to date when the datebox gets disabled
+     */
+    private Date previousToDate;
+    
+    /**
      * The title label
      */
     @UiField
@@ -71,6 +111,36 @@ public class DateFilter extends AbstractHeaderFilter {
      */
     @UiField
     Image removeFilterIcon;
+    
+    /**
+     * The listbox that holds the list of preset filters
+     */
+    @UiField
+    ListBox filterList;
+    
+    /**
+     * The from label
+     */
+    @UiField
+    Label fromLabel;
+    
+    /**
+     * The to label
+     */
+    @UiField
+    Label toLabel;
+    
+    /**
+     * The datebox that will hold the from date
+     */
+    @UiField (provided = true )
+    DateBox fromDateBox;
+    
+    /**
+     * The datebox that will hold the to date
+     */
+    @UiField (provided = true )
+    DateBox toDateBox;
     
     /**
      * The apply button
@@ -209,6 +279,41 @@ public class DateFilter extends AbstractHeaderFilter {
          * @return The name of the compiled style
          */
         String applyButtonDown();
+        
+        /**
+         * The style for the date filter drop down list
+         * 
+         * @return The name of the compiled style
+         */
+        String filterListStyle();
+        
+        /**
+         * Style for the date labels
+         * 
+         * @return The name of the compiled style
+         */
+        String dateLabelStyle();
+        
+        /**
+         * Style for the date boxes
+         * 
+         * @return The name of the compiled style
+         */
+        String dateBoxStyle();
+        
+        /**
+         * Style for the panels containing the to and from date boxes and labels
+         * 
+         * @return The name of the compiled style
+         */
+        String floatLeft();
+        
+        /**
+         * Style for the flow panel containing the parents of the to and from date boxes and labels
+         * 
+         * @return The name of the compiled style
+         */
+        String dateBoxStyleContainer();
     }
     
     /**
@@ -218,6 +323,52 @@ public class DateFilter extends AbstractHeaderFilter {
      * @since 5 July 2012
      */
     public static class DateFilterCriteria extends Criteria {
+        
+        /**
+         * Date holding the to date of the DateFilter
+         */
+        private Date toDate;
+        
+        /**
+         * Retrieve the to date that indicates the end of the search range
+         * 
+         * @return The to date that indicates the end of the search range
+         */
+        public Date getToDate() {
+            return toDate;
+        }
+        
+        /**
+         * Sets the to date that indicates the end of the search range
+         * 
+         * @param toDate - The new value for the to date
+         */
+        public void setToDate(Date toDate) {
+            this.toDate = toDate;
+        }
+        
+        /**
+         * Date holding the from date of the DateFilter
+         */
+        private Date fromDate;
+        
+        /**
+         * Retrieve the from date that indicates the start of the search range
+         * 
+         * @return The from date that indicates the start of the search range
+         */
+        public Date getFromDate() {
+            return fromDate;
+        }
+        
+        /**
+         * Sets the from date that indicates the start of the search range
+         * 
+         * @param fromDate - The new value for the from date
+         */
+        public void setFromDate(Date fromDate) {
+            this.fromDate = fromDate;
+        }
         
         /**
          * Flag to indicate if the user is looking for empty entries only
@@ -246,26 +397,215 @@ public class DateFilter extends AbstractHeaderFilter {
     
     /**
      * The default class constructor
+     * 
+     * @param datePickerStyle - The style to apply to the datepickers
      */
-    public DateFilter() {
-        this(getDefaultResources());
+    public DateFilter(String datePickerStyle) {
+        this(datePickerStyle, getDefaultResources());
     }
     
     /**
      * Class constructor that takes a custom resources class
      * 
+     * @param datePickerStyle - The style to apply to the datepickers
      * @param resources - The resources the text filter should use
      */
-    public DateFilter(DateFilterResources resources) {
+    public DateFilter(String datePickerStyle, DateFilterResources resources) {
         super(true);
         this.resources = resources;
         this.resources.textFilterStyle().ensureInjected();
         this.setStyleName("");
+        // Create datepickers, set their styles, and insert them into the dateboxes
+        // To date
+        SSDatePicker toDatePicker = new SSDatePicker();
+        toDatePicker.setStyleName(datePickerStyle);
+        toDateBox = new DateBox(toDatePicker, null, SSDateBox.DEFAULT_FORMAT);
+        // From date
+        SSDatePicker fromDatePicker = new SSDatePicker();
+        fromDatePicker.setStyleName(datePickerStyle);
+        fromDateBox = new DateBox(fromDatePicker, null, SSDateBox.DEFAULT_FORMAT);
+        
         this.setWidget(uiBinder.createAndBindUi(this));
         setCriteria(new DateFilterCriteria());
         addRemoveIconEventHandlers();
         addApplyButtonEventHandlers();
         addCheckBoxEventHandlers();
+        populateListBox();
+        addListBoxEventHandlers();
+        addDateBoxListeners();
+    }
+    
+    /**
+     * This function will set the date boxes to certain dates, depending on what option was selected
+     * from the filter list.
+     * 
+     * @param currentDate Date object containing the current date
+     * @param range String describing what date range should be set
+     * 
+     * @author Lodewyk Duminy <lodewyk.duminy@a24group.com>
+     * @since  15 Aug 2012
+     * 
+     * @return void
+     */
+    @SuppressWarnings("deprecation")
+    private void setDates(Date currentDate, String range) {
+        Date fromDate = (Date) currentDate.clone();
+        Date toDate = (Date) currentDate.clone();
+        if (range.equals("Customised date range")) {
+            toDateBox.setValue(null);
+            fromDateBox.setValue(null);
+            
+        } else if (range.equals("Today")) {
+            toDateBox.setValue(currentDate);
+            fromDateBox.setValue(currentDate);
+            
+        } else if (range.equals("Yesterday")) {
+            Date date = currentDate;
+            date.setDate(date.getDate() - 1);
+            
+            toDateBox.setValue(date);
+            fromDateBox.setValue(date);
+            
+        } else if (range.equals("This week (Mon-Today)")) {
+            DateTimeConstants constants = LocaleInfo.getCurrentLocale().getDateTimeConstants();
+            
+            // THIS GETS -1 BECAUSE firstDayOfTheWeek() ADDS A DAY FOR SOME REASON.
+            int firstDay = Integer.parseInt(constants.firstDayOfTheWeek()) -1;
+            // Get the offset that will be used to calculate what date the Monday is on.
+            int offset = firstDay - fromDate.getDay();
+            fromDate.setDate(fromDate.getDate() + offset);
+            
+            fromDateBox.setValue(fromDate);
+            toDateBox.setValue(currentDate);
+            
+        } else if (range.equals("Last 7 days")) {
+            fromDate.setDate(fromDate.getDate() - 7);
+            
+            toDateBox.setValue(toDate);
+            fromDateBox.setValue(fromDate);
+            
+        } else if (range.equals("Last week (Mon-Sun)")) {
+            DateTimeConstants constants = LocaleInfo.getCurrentLocale().getDateTimeConstants();
+            // THIS GETS -1 BECAUSE firstDayOfTheWeek() ADDS A DAY FOR SOME REASON.
+            int firstDay = Integer.parseInt(constants.firstDayOfTheWeek()) -1;
+            // Get the offset that will be used to calculate what date the Monday is on.
+            int offset = (firstDay - fromDate.getDay()) - 7;
+            fromDate.setDate(fromDate.getDate() + offset);
+            
+            toDate.setDate(fromDate.getDate() + 6);
+            
+            toDateBox.setValue(toDate);
+            fromDateBox.setValue(fromDate);
+            
+        } else if (range.equals("Last working week (Mon-Fri)")) {
+            DateTimeConstants constants = LocaleInfo.getCurrentLocale().getDateTimeConstants();
+            // THIS GETS -1 BECAUSE firstDayOfTheWeek() ADDS A DAY FOR SOME REASON.
+            int firstDay = Integer.parseInt(constants.firstDayOfTheWeek()) -1;
+            // Get the offset that will be used to calculate what date the Monday is on.
+            int offset = (firstDay - fromDate.getDay()) - 7;
+            fromDate.setDate(fromDate.getDate() + offset);
+            
+            toDate.setDate(fromDate.getDate() + 4);
+            
+            toDateBox.setValue(toDate);
+            fromDateBox.setValue(fromDate);
+            
+        } else if (range.equals("Last 14 days")) {
+            fromDate.setDate(fromDate.getDate() - 14);
+            
+            toDateBox.setValue(toDate);
+            fromDateBox.setValue(fromDate);
+            
+        } else if (range.equals("This month")) {
+            int offset = fromDate.getDate() - 1;
+            fromDate.setDate(fromDate.getDate() - offset);
+            
+            toDateBox.setValue(currentDate);
+            fromDateBox.setValue(fromDate);
+            
+        } else if (range.equals("Last 30 days")) {
+            fromDate.setDate(fromDate.getDate() - 30);
+            
+            toDateBox.setValue(toDate);
+            fromDateBox.setValue(fromDate);
+            
+        } else if (range.equals("Last month")) {
+            int year = toDate.getYear();
+            int month = toDate.getMonth() - 1;
+            
+            // If the current month is january, this will make sure we get december of the previous year's info.
+            if (month < 0) {
+                --year;
+                month = 12;
+            }
+            
+            toDate.setDate(toDate.getDate() - toDate.getDate());
+            
+            fromDate = new Date(year, month, 1);
+            
+            toDateBox.setValue(toDate);
+            fromDateBox.setValue(fromDate);
+        }
+    }
+    
+    /**
+     * Sets the listbox to have it's first index item selected
+     */
+    private void resetListBox() {
+        filterList.setSelectedIndex(0);
+    }
+    
+    /**
+     * Adds eventhandlers to the DateBoxes on the DateFilter 
+     */
+    private void addDateBoxListeners() {
+        toDateBox.addValueChangeHandler(new ValueChangeHandler<Date>() {
+
+            /**
+             * The function that will be called if the user changes the date in the to box
+             * 
+             * @param even The vent that should be handled.
+             */
+            @Override
+            public void onValueChange(ValueChangeEvent<Date> event) {
+                resetListBox();
+            }
+        });
+        
+        fromDateBox.addValueChangeHandler(new ValueChangeHandler<Date>() {
+
+            /**
+             * The function that will be called if the user changes the date in the from box
+             * 
+             * @param even The vent that should be handled.
+             */
+            @Override
+            public void onValueChange(ValueChangeEvent<Date> event) {
+                resetListBox();
+            }
+        });
+    }
+    
+    /**
+     * Adds eventhandlers to the listbox on the DateFilter
+     */
+    private void addListBoxEventHandlers() {
+        filterList.addChangeHandler(new ChangeHandler() {
+            
+            /**
+             * The function that will be called if the selected value on the listbox
+             * changes
+             * 
+             * @param even The vent that should be handled.
+             */
+            @Override
+            public void onChange(ChangeEvent event) {
+                String range = filterList.getItemText(filterList.getSelectedIndex());
+                Date currentDate = new Date();
+                
+                setDates(currentDate, range);
+            }
+        });
     }
     
     /**
@@ -281,9 +621,41 @@ public class DateFilter extends AbstractHeaderFilter {
              */
             @Override
             public void onValueChange(ValueChangeEvent<Boolean> event) {
-                //TODO: Handle logic for the search empty fields check box
+                if (event.getValue()) {
+                    
+                    previousFromDate = fromDateBox.getValue();
+                    previousToDate = toDateBox.getValue();
+                    filterIndex = filterList.getSelectedIndex();
+                    
+                    fromDateBox.setEnabled(false);
+                    toDateBox.setEnabled(false);
+                    filterList.setEnabled(false);
+                    
+                    fromDateBox.setValue(null);
+                    toDateBox.setValue(null);
+                    filterList.setSelectedIndex(0);
+                } else {
+                    fromDateBox.setEnabled(true);
+                    toDateBox.setEnabled(true);
+                    filterList.setEnabled(true);
+                    
+                    fromDateBox.setValue(previousFromDate);
+                    toDateBox.setValue(previousToDate);
+                    filterList.setSelectedIndex(filterIndex);
+                }
             }
         });
+    }
+    
+    /**
+     * Populates the listbox.
+     */
+    private void populateListBox() {
+        filterList.clear();
+        // Populate the list box
+        for (int i = 0; i < filters.length; i++) {
+            filterList.addItem(filters[i]);
+        }
     }
 
     /**
@@ -403,6 +775,9 @@ public class DateFilter extends AbstractHeaderFilter {
         return DEFAULT_RESOURCES;
     }
     
+    /**
+     * Sets the filter's title
+     */
     @Override
     public void setTitle(String title) {
         this.titleLabel.setText(title);
@@ -417,50 +792,60 @@ public class DateFilter extends AbstractHeaderFilter {
         return this.resources;
     }
     
+    /**
+     * Returns the criteria object
+     * 
+     * @return DateFilterCriteria The criteria object
+     */
     @Override
     public DateFilterCriteria getCriteria() {
         return (DateFilterCriteria)this.filterCirteria;
     }
 
+    /**
+     * Check if the filter has been activated
+     * 
+     * @return boolean Whether or not the filter is active
+     */
     @Override
     protected boolean checkFilterActive() {
         if (getCriteria().isFindEmptyEntriesOnly()) {
             return true;
         }
-        // TODO: Add Logic for from and to field
+        if (getCriteria().getFromDate() != null) {
+            return true;
+        }
+        if (getCriteria().getToDate() != null) {
+            return true;
+        }
+        
         return false;
     }
 
+    /**
+     * Updates the info in the criteria object to match the info on the filter
+     */
     @Override
     protected void updateCriteriaObject() {
         getCriteria().setFindEmptyEntriesOnly(checkBox.getValue());
-        // TODO: Add Logic for from and to field
-    }
-
-    @Override
-    protected void setCriteriaObjectEmpty() {
-        getCriteria().setFindEmptyEntriesOnly(false);
-        // TODO: Add Logic for from and to field
-        
-    }
-
-    @Override
-    protected void updateFieldData() {
-        checkBox.setValue(getCriteria().isFindEmptyEntriesOnly());
-        // TODO: Add Logic for from and to field
-    }
-
-    @Override
-    protected void clearFields() {
-        checkBox.setValue(false);
-        // TODO: Add Logic for from and to field
+        getCriteria().setFromDate(fromDateBox.getValue());
+        getCriteria().setToDate(toDateBox.getValue());
     }
 
     /**
+     * Clears all the data in the criteria object
+     */
+    @Override
+    protected void setCriteriaObjectEmpty() {
+        getCriteria().setFindEmptyEntriesOnly(false);
+        getCriteria().setFromDate(null);
+        getCriteria().setToDate(null);
+        
+    }/**
      * Retrieves the check box that is displayed on the TextFilter.
      * This function is protected as it is only used by test cases.
      * 
-     * @return instance of the check box that is displayed on the TextFilter
+     * @return instance of the check box that is displayed on the DateFilter
      */
     protected CheckBox getCheckBox() {
         return checkBox;
@@ -470,9 +855,60 @@ public class DateFilter extends AbstractHeaderFilter {
      * Retrieves the title label that is displayed on the TextFilter.
      * This function is protected as it is only used by test cases.
      * 
-     * @return instance of the title label that is displayed on the TextFilter
+     * @return instance of the title label that is displayed on the DateFilter
      */
     protected Label getTitleLabel() {
         return titleLabel;
+    }
+    
+    /**
+     * Retrieves the filter listbox that is displayed on the DateFilter.
+     * This function is protected as it is only used by test cases.
+     * 
+     * @return instance of the filter listbox that is displayed on the DateFilter
+     */
+    protected ListBox getFilterList() {
+        return filterList;
+    }
+    
+    /**
+     * Retrieves the from date box that is displayed on the DateFilter.
+     * This function is protected as it is only used by test cases.
+     * 
+     * @return instance of the from date box that is displayed on the DateFilter
+     */
+    protected DateBox getFromDateBox() {
+        return fromDateBox;
+    }
+    
+    /**
+     * Retrieves the to date box that is displayed on the DateFilter.
+     * This function is protected as it is only used by test cases.
+     * 
+     * @return instance of the to date box that is displayed on the DateFilter
+     */
+    protected DateBox getToDateBox() {
+        return toDateBox;
+    }
+
+    /**
+     * Sets the values on the filter to the values in the criteria object
+     */
+    @Override
+    protected void updateFieldData() {
+        checkBox.setValue(getCriteria().isFindEmptyEntriesOnly());
+        fromDateBox.setValue(getCriteria().getFromDate());
+        toDateBox.setValue(getCriteria().getToDate());
+    }
+    
+    /**
+     * Clears all the fields on the filter
+     */
+    @Override
+    protected void clearFields() {
+        checkBox.setValue(false);
+        fromDateBox.setValue(null);
+        toDateBox.setValue(null);
+        filterList.setSelectedIndex(0);
     }
 }
