@@ -44,6 +44,12 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 
+/**
+ * The date filter that can be used on the SSDataGrid with a FilterSortHeader
+ * 
+ * @author Lodewyk Duminy <lodewyk.duminy@a24group.com>
+ * @since  16 August 2012
+ */
 public class DateFilter extends AbstractHeaderFilter {
 
     /**
