@@ -425,7 +425,7 @@ public class DateFilter extends AbstractHeaderFilter {
         SSDatePicker fromDatePicker = new SSDatePicker();
         fromDatePicker.setStyleName(datePickerStyle);
         fromDateBox = new DateBox(fromDatePicker, null, SSDateBox.DEFAULT_FORMAT);
-        fromDateBox.getTextBox().setStyleName(getResources().textFilterStyle().dateBoxStyle());
+        fromDateBox.setStyleName(getResources().textFilterStyle().dateBoxStyle());
         
         this.setWidget(uiBinder.createAndBindUi(this));
         setCriteria(new DateFilterCriteria());
@@ -917,5 +917,7 @@ public class DateFilter extends AbstractHeaderFilter {
         fromDateBox.setValue(null);
         toDateBox.setValue(null);
         filterList.setSelectedIndex(0);
+        fromDateBox.setEnabled(true);
+        toDateBox.setEnabled(true);
     }
 }
