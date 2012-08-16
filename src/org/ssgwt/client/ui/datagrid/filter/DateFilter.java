@@ -420,10 +420,12 @@ public class DateFilter extends AbstractHeaderFilter {
         SSDatePicker toDatePicker = new SSDatePicker();
         toDatePicker.setStyleName(datePickerStyle);
         toDateBox = new DateBox(toDatePicker, null, SSDateBox.DEFAULT_FORMAT);
+        toDateBox.setStyleName(getResources().textFilterStyle().dateBoxStyle());
         // From date
         SSDatePicker fromDatePicker = new SSDatePicker();
         fromDatePicker.setStyleName(datePickerStyle);
         fromDateBox = new DateBox(fromDatePicker, null, SSDateBox.DEFAULT_FORMAT);
+        fromDateBox.getTextBox().setStyleName(getResources().textFilterStyle().dateBoxStyle());
         
         this.setWidget(uiBinder.createAndBindUi(this));
         setCriteria(new DateFilterCriteria());
