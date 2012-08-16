@@ -139,13 +139,13 @@ public class DateFilter extends AbstractHeaderFilter {
     /**
      * The datebox that will hold the from date
      */
-    @UiField (provided = true )
+    @UiField (provided = true)
     DateBox fromDateBox;
     
     /**
      * The datebox that will hold the to date
      */
-    @UiField (provided = true )
+    @UiField (provided = true)
     DateBox toDateBox;
     
     /**
