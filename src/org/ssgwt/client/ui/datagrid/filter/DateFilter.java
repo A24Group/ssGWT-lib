@@ -448,7 +448,7 @@ public class DateFilter extends AbstractHeaderFilter {
      * @return void
      */
     @SuppressWarnings("deprecation")
-    private void setDates(Date currentDate, String range) {
+    protected void setDates(Date currentDate, String range) {
         Date fromDate = (Date) currentDate.clone();
         Date toDate = (Date) currentDate.clone();
         if (range.equals("Customised date range")) {
@@ -526,6 +526,8 @@ public class DateFilter extends AbstractHeaderFilter {
         } else if (range.equals("Last 30 days")) {
             fromDate.setDate(fromDate.getDate() - 30);
             
+            System.out.println(fromDate);
+            
             toDateBox.setValue(toDate);
             fromDateBox.setValue(fromDate);
             
@@ -536,7 +538,7 @@ public class DateFilter extends AbstractHeaderFilter {
             // If the current month is january, this will make sure we get december of the previous year's info.
             if (month < 0) {
                 --year;
-                month = 12;
+                month = 11;
             }
             
             toDate.setDate(toDate.getDate() - toDate.getDate());
@@ -602,6 +604,9 @@ public class DateFilter extends AbstractHeaderFilter {
             public void onChange(ChangeEvent event) {
                 String range = filterList.getItemText(filterList.getSelectedIndex());
                 Date currentDate = new Date();
+                currentDate.setHours(0);
+                currentDate.setMinutes(0);
+                currentDate.setSeconds(0);
                 
                 setDates(currentDate, range);
             }
