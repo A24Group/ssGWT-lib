@@ -503,9 +503,9 @@ public class TextFilter extends AbstractHeaderFilter {
      */
     @Override
     protected boolean checkFilterActive() {
-        if (((TextFilterCriteria)this.filterCirteria).isFindEmptyEntriesOnly()) {
+        if (getCriteria().isFindEmptyEntriesOnly()) {
             return true;
-        } else if (((TextFilterCriteria)this.filterCirteria).getCriteria() != null && !((TextFilterCriteria)this.filterCirteria).getCriteria().trim().equals("")) {
+        } else if (getCriteria().getCriteria() != null && !getCriteria().getCriteria().trim().equals("")) {
             return true;
         }
         return false;
@@ -516,8 +516,8 @@ public class TextFilter extends AbstractHeaderFilter {
      */
     @Override
     protected void updateCriteriaObject() {
-        ((TextFilterCriteria)this.filterCirteria).setFindEmptyEntriesOnly(checkBox.getValue());
-        ((TextFilterCriteria)this.filterCirteria).setCriteria(textBox.getValue());
+        getCriteria().setFindEmptyEntriesOnly(checkBox.getValue());
+        getCriteria().setCriteria(textBox.getValue());
     }
 
     /**
@@ -525,8 +525,8 @@ public class TextFilter extends AbstractHeaderFilter {
      */
     @Override
     protected void setCriteriaObjectEmpty() {
-        ((TextFilterCriteria)this.filterCirteria).setFindEmptyEntriesOnly(false);
-        ((TextFilterCriteria)this.filterCirteria).setCriteria("");
+        getCriteria().setFindEmptyEntriesOnly(false);
+        getCriteria().setCriteria("");
     }
 
     /**
@@ -534,8 +534,8 @@ public class TextFilter extends AbstractHeaderFilter {
      */
     @Override
     protected void updateFieldData() {
-        checkBox.setValue(((TextFilterCriteria)this.filterCirteria).isFindEmptyEntriesOnly());
-        textBox.setValue(((TextFilterCriteria)this.filterCirteria).getCriteria());
+        checkBox.setValue(getCriteria().isFindEmptyEntriesOnly());
+        textBox.setValue(getCriteria().getCriteria());
     }
     
     /**
@@ -545,11 +545,7 @@ public class TextFilter extends AbstractHeaderFilter {
     protected void clearFields() {
         checkBox.setValue(false);
         textBox.setValue("");
-        if (checkBox.getValue()) {
-            textBox.setEnabled(false);
-        } else {
-            textBox.setEnabled(true);
-        }
+        textBox.setEnabled(true);
     }
     
     /**
