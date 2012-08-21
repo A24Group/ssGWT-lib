@@ -1,0 +1,41 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" 
+    xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:d="urn:import:org.ssgwt.client.ui.datepicker">
+    
+    <ui:with field='resources' type='org.ssgwt.client.ui.datagrid.filter.DateFilter.DateFilterResources'/>
+    <g:FlowPanel styleName="{resources.textFilterStyle.textFilterStyle}" >
+        <g:SimplePanel styleName="{resources.textFilterStyle.arrowBorderStyle}" />
+        <g:SimplePanel styleName="{resources.textFilterStyle.arrowStyle}" />
+        <g:FlowPanel width="100%" >
+            <g:Label ui:field="titleLabel" styleName="{resources.textFilterStyle.titleStyle}" />
+            <g:Image ui:field="removeFilterIcon" resource="{resources.removeFilterIconUp}" styleName="{resources.textFilterStyle.removeFilterIconStyle}" />
+        </g:FlowPanel>
+        
+        <g:FlowPanel styleName="{resources.textFilterStyle.checkBoxContainerStyle}" width="100%">
+            <g:CheckBox ui:field="checkBox" styleName="{resources.textFilterStyle.checkBoxStyle}"/>
+            <g:Label ui:field="checkBoxLabel" text="Find Empty Entries Only" styleName="{resources.textFilterStyle.checkBoxLabelStyle}"/>
+        </g:FlowPanel>
+        
+        <g:FlowPanel width="100%" styleName="{resources.textFilterStyle.textBoxStyleContainer}">
+            <g:ListBox ui:field="filterList" styleName="{resources.textFilterStyle.filterListStyle}"/>
+        </g:FlowPanel>
+        
+        <g:FlowPanel width="100%" styleName="{resources.textFilterStyle.dateBoxStyleContainer}">
+        
+	        <g:FlowPanel width="50%" styleName="{resources.textFilterStyle.floatLeft}">
+	            <g:Label ui:field="fromLabel" text="From:" styleName="{resources.textFilterStyle.dateLabelStyle}"/>
+	            <d:DateBox ui:field="fromDateBox" styleName="{resources.textFilterStyle.dateBoxStyle}"></d:DateBox>
+	        </g:FlowPanel>
+	        
+	        <g:FlowPanel width="50%" styleName="{resources.textFilterStyle.floatLeft}">
+	            <g:Label ui:field="toLabel" text="To:" styleName="{resources.textFilterStyle.dateLabelStyle}"/>
+	            <d:DateBox ui:field="toDateBox" styleName="{resources.textFilterStyle.dateBoxStyle}"></d:DateBox>
+	        </g:FlowPanel>
+	        
+        </g:FlowPanel>
+        
+        <g:FlowPanel styleName="{resources.textFilterStyle.applyButtonContainer}" width="100%">
+            <g:Button ui:field="applyButton" text="Apply" styleName="{resources.textFilterStyle.applyButton}" />
+        </g:FlowPanel>
+    </g:FlowPanel>
+</ui:UiBinder>
