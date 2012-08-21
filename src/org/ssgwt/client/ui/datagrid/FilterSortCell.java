@@ -20,6 +20,7 @@ import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.dom.client.NativeEvent;
@@ -180,6 +181,7 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> implements HasHa
     @Override
     public void render(Context context, HeaderDetails value, SafeHtmlBuilder sb) {
         this.headerDetails = value;
+        this.filterActive = headerDetails.filterWidget.isFilterActive();
         if (filterActive) {
             filterImage = new Image(resources.filterIconActive());
         } else {
@@ -277,15 +279,27 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> implements HasHa
      */
     public void setFilterActive(boolean filterActive) {
         this.filterActive = filterActive;
-        
-        Element filterImageElement = getImageElement(parent);
-        Element filterImageParentElement = filterImageElement.getParentElement();
-        if (filterActive) {
-            replaceImageElement(resources.filterIconActive(), filterImageElement, filterImageParentElement);
+        if (parent != null) {
+            Element filterImageElement = getImageElement(parent);
+            Element filterImageParentElement = filterImageElement.getParentElement();
+            if (filterActive) {
+                replaceImageElement(resources.filterIconActive(), filterImageElement, filterImageParentElement);
+            } else {
+                replaceImageElement(resources.filterIconInactive(), filterImageElement, filterImageParentElement);
+            }
+            FilterChangeEvent.fire(this);
         } else {
-            replaceImageElement(resources.filterIconInactive(), filterImageElement, filterImageParentElement);
+            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                
+                /**
+                 * Execute the schedule event
+                 */
+                @Override
+                public void execute() {
+                    setFilterActive(FilterSortCell.this.filterActive);
+                }
+            });
         }
-        FilterChangeEvent.fire(this);
     }
 
     /**

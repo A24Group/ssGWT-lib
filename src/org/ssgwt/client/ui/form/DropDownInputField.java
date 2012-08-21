@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @since 17 Aug 2012
  *
  * @param <T> The object type the Dynamic form uses to get values from updates the value of the fields on
- * @param <T> The object type that display in the list
+ * @param <ListItemType> The object type that display in the list
  */
 public abstract class DropDownInputField<T, ListItemType> extends ListBox implements HasValue<String>, InputField<T, String> {
 
@@ -93,8 +93,6 @@ public abstract class DropDownInputField<T, ListItemType> extends ListBox implem
     /**
      * Set the prompt of the box
      * 
-     * @param String - The object in the list
-     * 
      * @return The items id
      */
     public abstract void setPrompt();
@@ -108,7 +106,7 @@ public abstract class DropDownInputField<T, ListItemType> extends ListBox implem
          this.data = data;
          this.clear();
          this.addItem(prompt, "");
-         for ( ListItemType listItem : this.data ) {
+         for (ListItemType listItem : this.data) {
             this.addItem(getListLabel(listItem), getListId(listItem));
          }
     }
@@ -142,7 +140,6 @@ public abstract class DropDownInputField<T, ListItemType> extends ListBox implem
     public boolean isReadOnly() {
         return !super.isEnabled();
     }
-
 
     /**
      * Sets the flag that indicates whether the input field is required or not
