@@ -536,6 +536,7 @@ public class TextFilter extends AbstractHeaderFilter {
     protected void updateFieldData() {
         checkBox.setValue(getCriteria().isFindEmptyEntriesOnly());
         textBox.setValue(getCriteria().getCriteria());
+        textBox.setEnabled(!checkBox.getValue());
     }
     
     /**
