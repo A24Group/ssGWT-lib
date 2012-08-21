@@ -92,8 +92,6 @@ public abstract class DropDownInputField<T, ListItemType> extends ListBox implem
     
     /**
      * Set the prompt of the box
-     * 
-     * @return The items id
      */
     public abstract void setPrompt();
     
