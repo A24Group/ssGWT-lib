@@ -912,6 +912,9 @@ public class DateFilter extends AbstractHeaderFilter {
         checkBox.setValue(getCriteria().isFindEmptyEntriesOnly());
         fromDateBox.setValue(getCriteria().getFromDate());
         toDateBox.setValue(getCriteria().getToDate());
+        fromDateBox.setEnabled(!checkBox.getValue());
+        toDateBox.setEnabled(!checkBox.getValue());
+        filterList.setEnabled(!checkBox.getValue());
     }
     
     /**
@@ -925,5 +928,6 @@ public class DateFilter extends AbstractHeaderFilter {
         filterList.setSelectedIndex(0);
         fromDateBox.setEnabled(true);
         toDateBox.setEnabled(true);
+        filterList.setEnabled(true);
     }
 }
