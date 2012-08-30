@@ -13,6 +13,8 @@
  */
 package org.ssgwt.client.ui.datagrid;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 /**
  * The object type to be used when the multi select state wants to be used
  * 
@@ -24,6 +26,7 @@ public abstract class AbstractMultiSelectObject {
     /**
      * Whether or not the object is selected
      */
+	@JsonIgnore
     private boolean selected;
     
     /**
@@ -31,6 +34,7 @@ public abstract class AbstractMultiSelectObject {
      * 
      * @param selected - whether the object is selected
      */
+	@JsonIgnore
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
@@ -40,6 +44,7 @@ public abstract class AbstractMultiSelectObject {
      * 
      * @return whether the object is selected
      */
+    @JsonIgnore
     public boolean isSelected() {
         return this.selected;
     }
