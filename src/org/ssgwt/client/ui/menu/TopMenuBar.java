@@ -155,12 +155,22 @@ public class TopMenuBar extends Composite {
         this.setTopMenuBar(menuItems);
     }
     
-	/**
+    /**
      * Setter for the menu Items
      * 
      * @param menuItems - The list of menu items that needs to be added to the menu bar
      */
     public void setTopMenuBar(List<MenuItem> menuItems) {
+        setTopMenuBar(menuItems, false);
+    }
+    
+    /**
+     * Setter for the menu Items
+     * 
+     * @param menuItems - The list of menu items that needs to be added to the menu bar
+     * @param runExecuteForDefault - Indicates that the command for the default selected item should be run
+     */
+    public void setTopMenuBar(List<MenuItem> menuItems, boolean runExecuteForDefault) {
         topMenu.clear();
         if (menuItems != null) {
             List<MenuItem> sorted = new ArrayList<MenuItem>();
@@ -209,12 +219,16 @@ public class TopMenuBar extends Composite {
                     selectedItem = button;
                     button.setStyleName(resources.topMenuStyle().buttonSelectedStyle() + " " + TopMenuBar.this.resources.topMenuStyle().bottomPadding());
                     containsDefault = true;
-                    currentMenuItem.getCommand().execute();
+                    if (runExecuteForDefault) {
+                        currentMenuItem.getCommand().execute();
+                    }
                 } else {
                     if (menuItem.isDefaultSelected()) {
                         selectedItem = button;
                         button.setStyleName(resources.topMenuStyle().buttonSelectedStyle() + " " + TopMenuBar.this.resources.topMenuStyle().bottomPadding());
-                        menuItem.getCommand().execute();
+                        if (runExecuteForDefault) {
+                            currentMenuItem.getCommand().execute();
+                        }
                     } else {
                         button.setStyleName(resources.topMenuStyle().buttonStyle() + " " + TopMenuBar.this.resources.topMenuStyle().bottomPadding());
                     }
