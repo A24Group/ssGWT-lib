@@ -102,6 +102,12 @@ public class MenuItem {
     private int notificationCount;
     
     /**
+     * Name places that will also cause this left menu item to be selected
+     */
+    private List<String> referencedNamePlaces;
+    
+
+    /**
      * The class constructor
      */
     public MenuItem() {
@@ -410,5 +416,23 @@ public class MenuItem {
      */
     public void setNotificationCount(int notificationCount) {
         this.notificationCount = notificationCount;
+    }
+    
+    /**
+     * Retrieves the name places that will also cause this left menu item to be selected
+     * 
+     * @returnthe name places that will also cause this left menu item to be selected
+     */
+    public List<String> getReferencedNamePlaces() {
+        return referencedNamePlaces;
+    }
+    
+    /**
+     * Sets the name places that will also cause this left menu item to be selected
+     * 
+     * @param referencedNamePlaces the name places that will also cause this left menu item to be selected
+     */
+    public void setReferencedNamePlaces(List<String> referencedNamePlaces) {
+        this.referencedNamePlaces = referencedNamePlaces;
     }
 }
