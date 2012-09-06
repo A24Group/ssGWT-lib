@@ -59,7 +59,7 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
     Button button;
     
     /**
-     * The from to submit on
+     * The form to submit on
      */
     FormPanel form;
     
@@ -111,7 +111,8 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
                     /**
                      * Timer to delay
                      */
-                    Timer timer = new Timer(){
+                    Timer timer = new Timer() {
+                    	
                         /**
                          * This method will be called when a timer fires.
                          */
@@ -125,7 +126,7 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
                                     if (x == -1) {
                                         setError();
                                     } else {
-                                        String extension = getFileName().substring(x);
+                                        String extension = getFileName().substring(x + 1);
                                         if (allowedFiles.contains(extension)) {
                                             form.submit();
                                         } else {
@@ -158,7 +159,7 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
     /**
      * Set the style on the component
      * 
-     * @param style The stile name
+     * @param style The style name
      */
     public void setStyleName(String style) {
         button.setStyleName(style);
