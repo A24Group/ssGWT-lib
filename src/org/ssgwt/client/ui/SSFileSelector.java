@@ -64,12 +64,12 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
     FormPanel form;
     
     /**
-     * Flag for when there is a from to submit on, if the button is clicked
+     * Flag for when there is a form to submit on, if the button is clicked
      */
     boolean isForm = false;
     
     /**
-     * Flag for when there is a from to submit on, if the button is clicked
+     * Flag for when there is a form to submit on, if the button is clicked
      */
     boolean isValidation = false;
     
