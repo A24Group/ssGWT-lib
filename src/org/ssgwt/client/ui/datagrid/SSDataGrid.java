@@ -415,7 +415,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
         actionBar.setVisible(visible);
         int actionBarHeight = 0;
         if ( visible ) {
-        	actionBarHeight = 32;
+            actionBarHeight = 32;
         }
         mainContainer.setWidgetBottomHeight(actionBar, 0, Unit.PX, actionBarHeight, Unit.PX);
     	mainContainer.setWidgetTopBottom(dataGrid, actionBarHeight, Unit.PX, 0, Unit.PX);
