@@ -36,7 +36,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.view.client.HasRows;
 import com.google.gwt.view.client.Range;
-import com.sun.java.swing.plaf.windows.resources.windows;
 
 /**
  * A pager for controlling a {@link HasRows} that only supports simple page
