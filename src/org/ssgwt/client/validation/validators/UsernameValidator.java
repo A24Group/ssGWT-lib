@@ -34,7 +34,7 @@ public class UsernameValidator extends AbstractValidator implements ValidatorInt
     /**
      * The regular expression patterns string to be used to validate the value.
      */
-    private static final String USERNAME_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*";
+    private static final String USERNAME_PATTERN = "^[A-Za-z0-9]+(\\.|[_A-Za-z0-9-]+)*";
     
     /**
      * Default error message to use for validation
