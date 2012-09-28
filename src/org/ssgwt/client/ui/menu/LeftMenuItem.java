@@ -70,7 +70,7 @@ public class LeftMenuItem extends Composite {
     /**
      * The menu item that is currently being used
      */
-    private MenuItem menuItem;
+    private MenuItemInterface menuItem;
     
     /**
      * Boolean to determine whether the menu item
@@ -320,7 +320,7 @@ public class LeftMenuItem extends Composite {
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 09 July 2012
      */
-    public LeftMenuItem(MenuItem menuItem) {
+    public LeftMenuItem(MenuItemInterface menuItem) {
         this(menuItem, getDefaultResources());
     }
     
@@ -333,7 +333,7 @@ public class LeftMenuItem extends Composite {
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 09 July 2012
      */
-    public LeftMenuItem(MenuItem menuItem, LeftMenuItemResources resources) {
+    public LeftMenuItem(MenuItemInterface menuItem, LeftMenuItemResources resources) {
         this.resources = resources;
         this.resources.leftMenuItemStyle().ensureInjected();
         handlerManager = new HandlerManager(this);
