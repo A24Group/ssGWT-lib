@@ -120,7 +120,7 @@ public class LeftMenuBar extends Composite {
      * @author Lodewyk Duminy
      * @since 09 July 2012
      */
-    public LeftMenuBar(List<MenuItem> menuItems) {
+    public LeftMenuBar(List<MenuItemInterface> menuItems) {
         this(menuItems, getDefaultResources());
     }
     
@@ -133,7 +133,7 @@ public class LeftMenuBar extends Composite {
      * @author Lodewyk Duminy
      * @since 09 July 2012
      */
-    public LeftMenuBar(List<MenuItem> menuItems, LeftMenuBarResources resources) {
+    public LeftMenuBar(List<MenuItemInterface> menuItems, LeftMenuBarResources resources) {
         this.resources = resources;
         this.resources.leftMenuBarStyle().ensureInjected();
         initWidget(uiBinder.createAndBindUi(this));
@@ -152,10 +152,10 @@ public class LeftMenuBar extends Composite {
      * @author Lodewyk Duminy
      * @since 09 July 2012
      */
-    public void setLeftMenuBar(List<MenuItem> menuItems) {
+    public void setLeftMenuBar(List<MenuItemInterface> menuItems) {
         leftMenuBarContainer.clear();
         if (menuItems != null) {
-            List<MenuItem> sorted = new ArrayList<MenuItem>();
+            List<MenuItemInterface> sorted = new ArrayList<MenuItemInterface>();
             int max = 0;
             for (int x = 0; x  < menuItems.size(); x++) {
                 int current = menuItems.get(x).getOrder();
@@ -164,7 +164,7 @@ public class LeftMenuBar extends Composite {
                 }
             }
             for (int x = 0; x <= max; x++) {
-                for (MenuItem menuItem : menuItems) {
+                for (MenuItemInterface menuItem : menuItems) {
                     int current = menuItem.getOrder();
                     if (current == x) {
                         sorted.add(menuItem);
@@ -173,10 +173,10 @@ public class LeftMenuBar extends Composite {
             }
             menuItems = sorted;
             boolean containsDefault = false;
-            for (MenuItem menuItem : sorted) {
+            for (MenuItemInterface menuItem : sorted) {
                 containsDefault = containsDefault || menuItem.isDefaultSelected();
             }
-            for (MenuItem menuItem : menuItems) {
+            for (MenuItemInterface menuItem : menuItems) {
                 final LeftMenuItem item = new LeftMenuItem(menuItem);
                 
                 if (!(menuItem.getReferenceName() == null) && !menuItem.getReferenceName().trim().equals("")) {
