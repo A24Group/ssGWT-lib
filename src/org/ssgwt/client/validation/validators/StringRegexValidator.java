@@ -56,6 +56,10 @@ public class StringRegexValidator extends AbstractValidator implements
      */
     public static final String REGEX_NAME_PATTERN_NUMBERS = "^[0-9A-Za-zàáâäãåèéêëìíîïòóôöõøùúûüÿýñçčšžÀÁÂÄÃÅÈÉÊËÌÍÎÏÒÓÔÖÕØÙÚÛÜŸÝÑßÇŒÆČŠŽ∂ð&]+([0-9A-Z a-zàáâäãåèéêëìíîïòóôöõøùúûüÿýñçčšžÀÁÂÄÃÅÈÉÊËÌÍÎÏÒÓÔÖÕØÙÚÛÜŸÝÑßÇŒÆČŠŽ∂ð\\'-]*[0-9A-Za-zàáâäãåèéêëìíîïòóôöõøùúûüÿýñçčšžÀÁÂÄÃÅÈÉÊËÌÍÎÏÒÓÔÖÕØÙÚÛÜŸÝÑßÇŒÆČŠŽ∂ð&]){0,}$";
    
+    /**
+     * The regular expression patterns string to be used to validate an email address.
+     */
+    public static final String REGEX_EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     
     /**
      * Validates the value passed in with the set regular expression.
