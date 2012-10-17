@@ -25,7 +25,7 @@
         <mkdir dir="${classes.dir}" />
 
         <echo level="info" message="Compiling class files into ${classes.dir}..." />
-        <javac srcdir="${src.dir}" destdir="${classes.dir}" >
+        <javac srcdir="${src.dir}" encoding="utf-8" destdir="${classes.dir}" >
             <classpath refid="project.class.path"/>
         </javac>
     </target>
