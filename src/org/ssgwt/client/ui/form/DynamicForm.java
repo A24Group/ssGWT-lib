@@ -416,9 +416,9 @@ public class DynamicForm<T> extends Composite {
     }
     
     /**
-     * Set global dynamic form keybord keypress handler on each field
+     * Set global dynamic form keyboard keypress handler on each field.
      * 
-     * @param handler - The handler tp apply to the fields 
+     * @param handler - The handler type apply to the fields 
      */
     public void setKeyPressFieldsHandler(KeyPressHandler handler) {
         for (InputField inputField : fields.keySet()) {
