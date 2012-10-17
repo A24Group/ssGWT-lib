@@ -3,10 +3,13 @@ package org.ssgwt.client.ui.form;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.ssgwt.client.validation.FormValidator;
 
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasValue;
@@ -410,5 +413,17 @@ public class DynamicForm<T> extends Composite {
         if (fields.containsKey(inputField)) {
             fields.get(inputField).setVisible(visible);
         }
+    }
+    
+    /**
+     * Set global dynamic form keyboard keypress handler on each field.
+     * 
+     * @param handler - The handler type apply to the fields 
+     */
+    public void setKeyPressFieldsHandler(KeyPressHandler handler) {
+        for (InputField inputField : fields.keySet()) {
+            inputField.getInputFieldWidget().addDomHandler(handler, KeyPressEvent.getType());
+        }
+        
     }
 }
