@@ -422,7 +422,7 @@ public class DynamicForm<T> extends Composite {
      * 
      * @param handler - The handler type apply to the fields 
      */
-    public void setKeyDwonFieldsHandler(KeyDownHandler handler) {
+    public void setKeyDownFieldsHandler(KeyDownHandler handler) {
         for (InputField inputField : fields.keySet()) {
             inputField.getInputFieldWidget().addDomHandler(handler, KeyDownEvent.getType());
         }
