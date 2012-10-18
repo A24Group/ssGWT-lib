@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.ssgwt.client.validation.FormValidator;
 
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.Composite;
@@ -416,13 +418,13 @@ public class DynamicForm<T> extends Composite {
     }
     
     /**
-     * Set global dynamic form keyboard keypress handler on each field.
+     * Set global dynamic form keyboard keydown handler on each field.
      * 
      * @param handler - The handler type apply to the fields 
      */
-    public void setKeyPressFieldsHandler(KeyPressHandler handler) {
+    public void setKeyDwonFieldsHandler(KeyDownHandler handler) {
         for (InputField inputField : fields.keySet()) {
-            inputField.getInputFieldWidget().addDomHandler(handler, KeyPressEvent.getType());
+            inputField.getInputFieldWidget().addDomHandler(handler, KeyDownEvent.getType());
         }
         
     }
