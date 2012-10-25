@@ -158,6 +158,10 @@ public class AdvancedPasswordBox extends Composite implements HasValue<String>, 
     @Override
     public void setValue(String value) {
         passwordBox.setValue(value);
+        if (value == null || value.equals("")) {
+            passwordBox.setVisible(false);
+            placeholder.setVisible(true);
+        }
     }
 
     /**
