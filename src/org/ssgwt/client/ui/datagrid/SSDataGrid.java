@@ -103,6 +103,9 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
         @ClassName("actionBarStyle")
         String actionBarStyle();
         
+        @ClassName("noContentLabelStyle")
+        String noContentLabelStyle();
+        
     }
     
     /**
@@ -131,6 +134,12 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      */
     @UiField
     protected LayoutPanel actionBar;
+    
+    /**
+     * The no content label.
+     */
+    @UiField
+    protected Label noContentLabel;
 
     /**
      * The flow panel that will contain the action bar
@@ -232,18 +241,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
         this.initWidget(uiBinder.createAndBindUi(this));
         Resources.INSTANCE.dataGridStyle().ensureInjected();
         actionBar.setStyleName(Resources.INSTANCE.dataGridStyle().actionBarStyle());
-//        dataGrid.addRangeChangeHandler(new RangeChangeEvent.Handler() {
-//            
-//            /**
-//             * Event that is called when the pager navigation buttons are clicked
-//             * 
-//             * @param event - The event that is triggered
-//             */
-//            @Override
-//            public void onRangeChange(RangeChangeEvent event) {
-//                refresh();
-//            }
-//        });
+        noContentLabel.setStyleName(Resources.INSTANCE.dataGridStyle().noContentLabelStyle());
     }
 
     /**
@@ -255,8 +253,13 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * @since 29 June 2012
      */
     public void setRowData(List<T> data) {
-        dataGrid.setRowData(data);
-        refresh();
+        if (data != null) {
+            noContentLabel.setVisible(false);
+            dataGrid.setRowData(data);
+            refresh();
+        } else {
+            noContentLabel.setVisible(true);
+        }
     }
 
     /**
@@ -269,8 +272,13 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * @since 29 June 2012
      */
     public void setRowData(int startRow, List<T> data) {
-        dataGrid.setRowData(startRow, data);
-        refresh();
+        if (data != null) {
+            noContentLabel.setVisible(false);
+            dataGrid.setRowData(startRow, data);
+            refresh();
+        } else {
+            noContentLabel.setVisible(true);
+        }
     }
 
     /**

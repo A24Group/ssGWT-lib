@@ -20,3 +20,7 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
+.noContentLabelStyle {
+	text-align: center;
+}
