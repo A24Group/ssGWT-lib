@@ -22,6 +22,9 @@
                     </g:layer>
                 </g:LayoutPanel>
             </g:layer>
+            <g:layer left="0px" right="0px" top="40px" bottom="32px" >
+                <g:Label ui:field="noContentLabel" text="There is currently no data available" width="90%"></g:Label>
+            </g:layer>
         </g:LayoutPanel>
     </g:FlowPanel>
 </ui:UiBinder>
