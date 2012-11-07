@@ -504,7 +504,6 @@ public class LeftMenuItem extends Composite {
             leftMenuItem.setWidgetRightWidth(selectedPanel, 0, Unit.PX, 0, Unit.PX);
             leftMenuItem.setWidgetLeftWidth(notSelectedFlowPanel, 0, Unit.PX, 100, Unit.PCT);
             leftMenuItem.animate(600);
-            
             Timer timer = new Timer() {
                 public void run() {
                     isClickable = true;
