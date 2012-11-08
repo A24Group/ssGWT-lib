@@ -103,6 +103,9 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
         @ClassName("actionBarStyle")
         String actionBarStyle();
         
+        /**
+         * Applied to the "No Content" label displayed.
+         */
         @ClassName("noContentLabelStyle")
         String noContentLabelStyle();
         
