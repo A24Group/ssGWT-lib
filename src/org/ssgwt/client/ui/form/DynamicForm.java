@@ -62,6 +62,30 @@ public class DynamicForm<T> extends Composite {
          * @param label - The label that should be displayed above the input field
          */
         public Field(InputField inputField, String label) {
+            this(inputField, label, false);
+        }
+        
+        /**
+         * Class constructor
+         * 
+         * @param inputField - The input field that should be displayed on the dynamic form
+         * @param label - The label that should be displayed above the input field
+         * @param embeded - Whether the component is an embeded object or not
+         */
+        public Field(InputField inputField, String label, boolean embeded) {
+            this(inputField, label, embeded, 1);
+        }
+        
+        /**
+         * Class constructor
+         * 
+         * @param inputField - The input field that should be displayed on the dynamic form
+         * @param label - The label that should be displayed above the input field
+         * @param embeded - Whether the component is an embeded object or not
+         * @param layout - The layout of the field
+         */
+        public Field(InputField inputField, String label, boolean embeded, int layout) {
+            
             initWidget(container);
             this.container.setWidth("100%");
             this.inputField = inputField;
@@ -71,10 +95,27 @@ public class DynamicForm<T> extends Composite {
             this.inputFieldContainer.add(this.inputField.getInputFieldWidget());
             this.inputFieldContainer.add(this.requiredStar);
             this.requiredStar.setVisible(this.inputField.isRequired());
-            this.fieldLabel.setStyleName(labelStyleName);
-            this.inputField.getInputFieldWidget().setStyleName(inputFieldStyleName);
-            this.requiredStar.setStyleName(requiredIndicatorStyle);
-            this.inputField.setReadOnly(readOnly);
+            if (embeded){
+                //Remove padding and border
+                switch (layout) {
+                case DynamicForm.LAYOUT_HORIZONTAL:
+                    //Add style to make components align horizontally
+                    break;
+                case DynamicForm.LAYOUT_VERTICAL:
+                default:
+                    
+                    this.fieldLabel.setStyleName(labelStyleName);
+                    this.inputField.getInputFieldWidget().setStyleName(inputFieldStyleName);
+                    this.requiredStar.setStyleName(requiredIndicatorStyle);
+                    this.inputField.setReadOnly(readOnly);
+                    break;
+            }
+            } else {
+                this.fieldLabel.setStyleName(labelStyleName);
+                this.inputField.getInputFieldWidget().setStyleName(inputFieldStyleName);
+                this.requiredStar.setStyleName(requiredIndicatorStyle);
+                this.inputField.setReadOnly(readOnly);
+            }
         }
     }
     
@@ -114,6 +155,16 @@ public class DynamicForm<T> extends Composite {
     public static final String DEFAULT_REQUIRED_INDICATOR_STYLE = "ssGwt-RequiredIndicator";
     
     /**
+     * Another layout on the dynamic form
+     */
+    public static final int LAYOUT_HORIZONTAL = 0;
+    
+    /**
+     * The default layout on the dynamic form
+     */
+    public static final int LAYOUT_VERTICAL = 1;
+    
+    /**
      * The default width of the input fields
      */
     public static final String DEFAULT_FIELD_WIDTH = "300px";
@@ -144,10 +195,15 @@ public class DynamicForm<T> extends Composite {
     private String fieldWidth;
     
     /**
+     * Used to store the value of the layout
+     */
+    private int layout;
+    
+    /**
      * Class constructor
      */
     public DynamicForm() {
-        this(DEFAULT_LABEL_STYLE, DEFAULT_INPUT_FIELD_STYLE, DEFAULT_REQUIRED_INDICATOR_STYLE, DEFAULT_FIELD_WIDTH);
+        this(DEFAULT_LABEL_STYLE, DEFAULT_INPUT_FIELD_STYLE, DEFAULT_REQUIRED_INDICATOR_STYLE, DEFAULT_FIELD_WIDTH, LAYOUT_VERTICAL);
     }
     
     /**
@@ -156,7 +212,7 @@ public class DynamicForm<T> extends Composite {
      * @param fieldWidth - The width of the input fields
      */
     public DynamicForm(String fieldWidth) {
-        this(DEFAULT_LABEL_STYLE, DEFAULT_INPUT_FIELD_STYLE, DEFAULT_REQUIRED_INDICATOR_STYLE, fieldWidth);
+        this(DEFAULT_LABEL_STYLE, DEFAULT_INPUT_FIELD_STYLE, DEFAULT_REQUIRED_INDICATOR_STYLE, fieldWidth, LAYOUT_VERTICAL);
     }
     
     /**
@@ -167,7 +223,7 @@ public class DynamicForm<T> extends Composite {
      * @param requiredIndicatorStyle - The style name for the required indicator on the dynamic form
      */
     public DynamicForm(String labelStyleName, String inputFieldStyleName, String requiredIndicatorStyle) {
-        this(labelStyleName, inputFieldStyleName, requiredIndicatorStyle, DEFAULT_FIELD_WIDTH);
+        this(labelStyleName, inputFieldStyleName, requiredIndicatorStyle, DEFAULT_FIELD_WIDTH, LAYOUT_VERTICAL);
     }
     
     /**
@@ -178,12 +234,13 @@ public class DynamicForm<T> extends Composite {
      * @param requiredIndicatorStyle - The style name for the required indicator on the dynamic form
      * @param fieldWidth - The width of the input fields
      */
-    public DynamicForm(String labelStyleName, String inputFieldStyleName, String requiredIndicatorStyle, String fieldWidth) {
+    public DynamicForm(String labelStyleName, String inputFieldStyleName, String requiredIndicatorStyle, String fieldWidth, int layout) {
         initWidget(mainConatiner);
         this.labelStyleName = labelStyleName;
         this.inputFieldStyleName = inputFieldStyleName;
         this.requiredIndicatorStyle = requiredIndicatorStyle;
         this.fieldWidth = fieldWidth;
+        this.layout = layout;
     }
     
     /**
@@ -239,7 +296,18 @@ public class DynamicForm<T> extends Composite {
      * @param label - The label that should be display above the field
      */
     public void addField(InputField<T, ?> inputField, String label) {
-        drawField(inputField, label);
+        addField(inputField, label, false);
+    }
+    
+    /**
+     * Adds a input field to the Dynamic form
+     * 
+     * @param inputField - The input field that should be added to the form
+     * @param label - The label that should be display above the field
+     * @param embeded - Whether the component is an embeded object or not
+     */
+    public void addField(InputField<T, ?> inputField, String label, boolean embeded) {
+        drawField(inputField, label, embeded);
     }
     
     /**
@@ -268,6 +336,17 @@ public class DynamicForm<T> extends Composite {
      * @param label - The label that should be display above the field
      */
     private void drawField(InputField<T, ?> inputField, String label) {
+        drawField(inputField, label, false);
+    }
+    
+    /**
+     * Draws the field on the form
+     * 
+     * @param inputField - The input field that should be added to the form
+     * @param label - The label that should be display above the field
+     * @param embeded - Whether the component is an embeded object or not
+     */
+    private void drawField(InputField<T, ?> inputField, String label, boolean embeded) {
         Field fieldInfo = new Field(inputField, label);
         inputField.getInputFieldWidget().setWidth(fieldWidth);
         mainConatiner.add(fieldInfo);
