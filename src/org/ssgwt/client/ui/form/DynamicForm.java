@@ -2,9 +2,7 @@ package org.ssgwt.client.ui.form;
 
 import java.util.Date;
 import java.util.HashMap;
-
 import org.ssgwt.client.validation.FormValidator;
-
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.ui.Composite;
@@ -88,6 +86,7 @@ public class DynamicForm<T> extends Composite {
             
             initWidget(container);
             this.container.setWidth("100%");
+            
             this.inputField = inputField;
             this.fieldLabel.setText(label);
             this.container.add(this.fieldLabel);
@@ -95,24 +94,34 @@ public class DynamicForm<T> extends Composite {
             this.inputFieldContainer.add(this.inputField.getInputFieldWidget());
             this.inputFieldContainer.add(this.requiredStar);
             this.requiredStar.setVisible(this.inputField.isRequired());
-            if (embeded){
-                //Remove padding and border
-                switch (layout) {
+            this.inputField.getInputFieldWidget().setStyleName(inputFieldStyleName);
+
+            switch (layout) {
                 case DynamicForm.LAYOUT_HORIZONTAL:
                     //Add style to make components align horizontally
                     break;
                 case DynamicForm.LAYOUT_VERTICAL:
                 default:
-                    
-                    this.fieldLabel.setStyleName(labelStyleName);
-                    this.inputField.getInputFieldWidget().setStyleName(inputFieldStyleName);
-                    this.requiredStar.setStyleName(requiredIndicatorStyle);
-                    this.inputField.setReadOnly(readOnly);
+//                    this.fieldLabel.setStyleName(labelStyleName);
+//                    this.requiredStar.setStyleName(requiredIndicatorStyle);
+//                    this.inputField.setReadOnly(readOnly);
                     break;
             }
+
+            if (embeded){
+                //Remove padding and border
+//                this.fieldLabel.setStyleName(labelStyleName);
+
+//                this.requiredStar.setStyleName(requiredIndicatorStyle);
+//                this.inputField.setReadOnly(readOnly);
+                this.container.setStyleName(containerEmbeddedStyleName);
+                this.inputField.getInputFieldWidget().addStyleName(inputFieldAdditionalEmbeddedStyleName);
+                
             } else {
+                this.inputField.getInputFieldWidget().addStyleName(inputFieldAdditionalNormalStyleName);
+                this.container.setStyleName(containerDefaultStyleName);
+
                 this.fieldLabel.setStyleName(labelStyleName);
-                this.inputField.getInputFieldWidget().setStyleName(inputFieldStyleName);
                 this.requiredStar.setStyleName(requiredIndicatorStyle);
                 this.inputField.setReadOnly(readOnly);
             }
@@ -155,6 +164,26 @@ public class DynamicForm<T> extends Composite {
     public static final String DEFAULT_REQUIRED_INDICATOR_STYLE = "ssGwt-RequiredIndicator";
     
     /**
+     * The default style name for the default container on the dynamic form
+     */
+    public static final String DEFAULT_CONTAINER_STYLE = "ssGwt-DefaultContainer";
+    
+    /**
+     * The default style name for the Embedded container on the dynamic form
+     */
+    public static final String DEFAULT_CONTAINER_EMBEDDED_STYLE = "ssGwt-EmbeddedContainer";
+
+    /**
+     * The default style name for the normal input fields on the dynamic form
+     */
+    public static final String DEFAULT_ADDITIONAL_NORMAL_INPUT_FIELD_STYLE = "ssGwt-InputExtraNormal";
+
+    /**
+     * The default style name for the embedded input fields on the dynamic form
+     */
+    public static final String DEFAULT_ADDITIONAL_EMBEDDED_INPUT_FIELD_STYLE = "ssGwt-InputExtraEmbedded";
+
+    /**
      * Another layout on the dynamic form
      */
     public static final int LAYOUT_HORIZONTAL = 0;
@@ -175,9 +204,29 @@ public class DynamicForm<T> extends Composite {
     private String labelStyleName;
 
     /**
+     * The style name for the embedded container of the dynamic form
+     */
+    private String containerEmbeddedStyleName;
+
+    /**
+     * The style name for the default container of the dynamic form
+     */
+    private String containerDefaultStyleName;
+
+    /**
      * The style name for the input fields on the dynamic form
      */
     private String inputFieldStyleName;
+    
+    /**
+     * Additional style name for non-embedded field
+     */
+    private String inputFieldAdditionalNormalStyleName;
+
+    /**
+     * Additional style name for embedded field
+     */
+    private String inputFieldAdditionalEmbeddedStyleName;
     
     /**
      * The style name for the required indicator on the dynamic form
@@ -241,6 +290,12 @@ public class DynamicForm<T> extends Composite {
         this.requiredIndicatorStyle = requiredIndicatorStyle;
         this.fieldWidth = fieldWidth;
         this.layout = layout;
+        
+        //set defaults for additional styles
+        this.containerDefaultStyleName = DEFAULT_CONTAINER_STYLE;
+        this.containerEmbeddedStyleName = DEFAULT_CONTAINER_EMBEDDED_STYLE;
+        this.inputFieldAdditionalEmbeddedStyleName = DEFAULT_ADDITIONAL_EMBEDDED_INPUT_FIELD_STYLE;
+        this.inputFieldAdditionalNormalStyleName = DEFAULT_ADDITIONAL_NORMAL_INPUT_FIELD_STYLE;
     }
     
     /**
@@ -419,6 +474,85 @@ public class DynamicForm<T> extends Composite {
     public void setLabelStyleName(String labelStyleName) {
         this.labelStyleName = labelStyleName;
         redraw();
+    }
+
+    /**
+     * Sets the default container style name.
+     * This is non-emebed style for the container. that contains the fields
+     * 
+     * @param defaultContainerStyleName - the default container style name
+     */
+    public void setDefaultContainerStyleName(String defaultContainerStyleName) {
+        this.containerDefaultStyleName = defaultContainerStyleName;
+        redraw();
+    }
+    
+    /**
+     * Retrieves the default container style name
+     * 
+     * @return the default container style name
+     */
+    public String getDefaultContainerStyleName() {
+        return containerDefaultStyleName;
+    }
+    
+    /**
+     * Sets the embedded container style name that contains the fields
+     * 
+     * @param embeddedContainerStyleName - the embedded container style name that contains the fields
+     */
+    public void setEmbeddedContainerStyleName(String embeddedContainerStyleName) {
+        this.containerEmbeddedStyleName = embeddedContainerStyleName;
+        redraw();
+    }
+
+    /**
+     * Retrieves the embedded container style name
+     * 
+     * @return the embedded container style name
+     */
+    public String getEmbeddedContainerStyleName() {
+        return containerEmbeddedStyleName;
+    }
+    
+    /**
+     * Sets the style name for the embedded input fields on the dynamic form
+     * 
+     * @param inputFieldAdditionalEmbeddedStyleName - the additional style name for the embedded input fields on the dynamic form
+     */
+    public void setInputFieldAdditionalEmbeddedStyleName(
+            String inputFieldAdditionalEmbeddedStyleName) {
+        this.inputFieldAdditionalEmbeddedStyleName = inputFieldAdditionalEmbeddedStyleName;
+        redraw();
+    }
+
+    /**
+     * Retrieves the style name for the input fields on the dynamic form
+     * 
+     * @return The style name for the input fields on the dynamic form
+     */
+    public String getInputFieldAdditionalEmbeddedStyleName() {
+        return inputFieldAdditionalEmbeddedStyleName;
+    }
+
+    /**
+     * Sets the style name for the input fields on the dynamic form
+     * 
+     * @param inputFieldAdditionalNormalStyleName - the additional style name for the input fields on the dynamic form
+     */
+    public void setInputFieldAdditionalNormalStyleName(
+            String inputFieldAdditionalNormalStyleName) {
+        this.inputFieldAdditionalNormalStyleName = inputFieldAdditionalNormalStyleName;
+        redraw();
+    }
+
+    /**
+     * Retrieves the style name for the input fields on the dynamic form
+     * 
+     * @return The style name for the input fields on the dynamic form
+     */
+    public String getInputFieldAdditionalNormalStyleName() {
+        return inputFieldAdditionalNormalStyleName;
     }
     
     /**
