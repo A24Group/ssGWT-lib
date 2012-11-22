@@ -144,6 +144,29 @@ Add the following to your style sheet
     border: 1px solid #FF0000 !Important;
 }
 
+/* Style for the non-embedded container */
+.form .ssGwt-DefaultContainer {
+	margin-left: 30px;
+}
+
+/* Style for the embedded container */
+.form .ssGwt-EmbeddedContainer {
+	margin-left: 0px;
+}
+
+/* Additional Style for the non-embedded container */
+.form .ssGwt-InputExtraNormal {
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #CCCCCC;
+}
+
+/* Additional Style for the embedded container */
+.form .ssGwt-InputExtraEmbedded {
+	border:none;	
+}
+
+
 /* The style for the labels of the input fields */
 .form .ssGwt-Label {
     font-family: sans-serif;
