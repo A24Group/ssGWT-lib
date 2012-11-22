@@ -2,6 +2,7 @@ package org.ssgwt.client.ui.form;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import org.ssgwt.client.validation.FormValidator;
 
@@ -215,6 +216,8 @@ public class DynamicForm<T> extends Composite {
                 ((InputField<T, String>)field).setValue(dataObject, ((HasValue<String>)field).getValue());
             } else if (Date.class.equals(field.getReturnType())) {
                 ((InputField<T, Date>)field).setValue(dataObject, ((HasValue<Date>)field).getValue());
+            } else if (List.class.equals(field.getReturnType())) {
+            	((InputField<T, List>)field).setValue(dataObject, ((HasValue<List>)field).getValue());
             }
         }
     }
@@ -228,6 +231,8 @@ public class DynamicForm<T> extends Composite {
                 ((HasValue<String>)field).setValue(((InputField<T, String>)field).getValue(dataObject));
             } else if (Date.class.equals(field.getReturnType())) {
                 ((HasValue<Date>)field).setValue(((InputField<T, Date>)field).getValue(dataObject));
+            } else if (List.class.equals(field.getReturnType())) {
+            	((HasValue<List>)field).setValue(((InputField<T, List>)field).getValue(dataObject));
             }
         }
     }
