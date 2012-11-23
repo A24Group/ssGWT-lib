@@ -166,7 +166,6 @@ Add the following to your style sheet
 	border:none;	
 }
 
-
 /* The style for the labels of the input fields */
 .form .ssGwt-Label {
     font-family: sans-serif;
@@ -202,6 +201,12 @@ Add the following to your style sheet
     padding-left: 4px;
     color: #DC8726;
 }
+
+/* Used to apply horizontal styling */
+.form .ssGwt-HorizontalDisplay {
+    display: inline-block !Important;
+}
+
 ```
 
 ### Available Input Fields that work with the DynamicForm

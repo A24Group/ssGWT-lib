@@ -71,7 +71,7 @@ public class DynamicForm<T> extends Composite {
          * @param embeded - Whether the component is an embeded object or not
          */
         public Field(InputField inputField, String label, boolean embeded) {
-            this(inputField, label, embeded, 1);
+            this(inputField, label, embeded, DynamicForm.LAYOUT_VERTICAL);
         }
         
         /**
@@ -96,18 +96,6 @@ public class DynamicForm<T> extends Composite {
             this.requiredStar.setVisible(this.inputField.isRequired());
             this.inputField.getInputFieldWidget().setStyleName(inputFieldStyleName);
 
-            switch (layout) {
-                case DynamicForm.LAYOUT_HORIZONTAL:
-                    //Add style to make components align horizontally
-                    break;
-                case DynamicForm.LAYOUT_VERTICAL:
-                default:
-//                    this.fieldLabel.setStyleName(labelStyleName);
-//                    this.requiredStar.setStyleName(requiredIndicatorStyle);
-//                    this.inputField.setReadOnly(readOnly);
-                    break;
-            }
-
             if (embeded){
                 //Remove padding and border
 //                this.fieldLabel.setStyleName(labelStyleName);
@@ -124,6 +112,21 @@ public class DynamicForm<T> extends Composite {
                 this.fieldLabel.setStyleName(labelStyleName);
                 this.requiredStar.setStyleName(requiredIndicatorStyle);
                 this.inputField.setReadOnly(readOnly);
+            }
+
+            switch (layout) {
+            case DynamicForm.LAYOUT_HORIZONTAL:
+                //Add style to make components align horizontally
+                this.container.setStyleName(horizontalDefaultStyleName);
+                this.container.setWidth("");
+                this.inputField.getInputFieldWidget().setWidth("");
+                break;
+            case DynamicForm.LAYOUT_VERTICAL:
+            default:
+//                    this.fieldLabel.setStyleName(labelStyleName);
+//                    this.requiredStar.setStyleName(requiredIndicatorStyle);
+//                    this.inputField.setReadOnly(readOnly);
+                break;
             }
         }
     }
@@ -162,6 +165,11 @@ public class DynamicForm<T> extends Composite {
      * The default style name for the required indicator on the dynamic form
      */
     public static final String DEFAULT_REQUIRED_INDICATOR_STYLE = "ssGwt-RequiredIndicator";
+    
+    /**
+     * The default style name for the required indicator on the dynamic form
+     */
+    public static final String DEFAULT_HORIZONTAL_CONTAINER_STYLE = "ssGwt-HorizontalDisplay";
     
     /**
      * The default style name for the default container on the dynamic form
@@ -227,6 +235,11 @@ public class DynamicForm<T> extends Composite {
      * Additional style name for embedded field
      */
     private String inputFieldAdditionalEmbeddedStyleName;
+    
+    /**
+     * Additional style name for horizontal fields
+     */
+    private String horizontalDefaultStyleName;
     
     /**
      * The style name for the required indicator on the dynamic form
@@ -296,6 +309,7 @@ public class DynamicForm<T> extends Composite {
         this.containerEmbeddedStyleName = DEFAULT_CONTAINER_EMBEDDED_STYLE;
         this.inputFieldAdditionalEmbeddedStyleName = DEFAULT_ADDITIONAL_EMBEDDED_INPUT_FIELD_STYLE;
         this.inputFieldAdditionalNormalStyleName = DEFAULT_ADDITIONAL_NORMAL_INPUT_FIELD_STYLE;
+        this.horizontalDefaultStyleName = DEFAULT_HORIZONTAL_CONTAINER_STYLE;
     }
     
     /**
