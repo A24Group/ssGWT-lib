@@ -2,8 +2,6 @@ package org.ssgwt.client.ui.form;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -302,7 +300,10 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
     }
     
     /**
-     * TODO
+     * Function that create a field and inject the an object
+     * 
+     * @author Alec Erasmus<alec.erasmus@a24group.com>
+     * @since  22 November 2012
      */
     public TheField createField() {
         TheField addField = GWT.create(ClassLiteral);
