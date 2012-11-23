@@ -1,8 +1,5 @@
 package org.ssgwt.client.ui.form;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -13,7 +10,6 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-
 
 import org.ssgwt.client.ui.form.event.ComplexInputFormRemoveEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormAddEvent;
@@ -32,8 +28,7 @@ public abstract class ComplexInput<T> extends Composite
         HasValue<T>, 
         InputField<T, T>, 
         ComplexInputFormRemoveEvent.ComplexInputFormRemoveHasHandlers, 
-        ComplexInputFormAddEvent.ComplexInputFormAddHasHandlers 
-    {
+        ComplexInputFormAddEvent.ComplexInputFormAddHasHandlers {
     
     /**
      * This is the main panel.
@@ -114,6 +109,12 @@ public abstract class ComplexInput<T> extends Composite
         initWidget(mainPanel);
     }
     
+    /**
+     * Function to construct all the components and add it to the main panel
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  22 November 2012
+     */
     public void constructor() {
         dynamicFormPanel.add(getDynamicForm());
         dynamicFormPanel.setStyleName("displayInlineBlockMiddel");
@@ -257,7 +258,7 @@ public abstract class ComplexInput<T> extends Composite
      * 
      * @return the ui as a Widget
      */
-    public abstract Widget getUiBinder( );
+    public abstract Widget getUiBinder();
     
     /**
      * Abstract function for the get of the DynamicForm
@@ -267,7 +268,7 @@ public abstract class ComplexInput<T> extends Composite
      * 
      * @return the DynamicForm
      */
-    public abstract DynamicForm<T> getDynamicForm( );
+    public abstract DynamicForm<T> getDynamicForm();
     
     /**
      * Abstract function to set the field in a view state
@@ -428,9 +429,12 @@ public abstract class ComplexInput<T> extends Composite
     }
     
     /**
-     * TODO
+     * A setter for an inject object
      * 
-     * @param object
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  22 November 2012
+     * 
+     * @param object - The object to inject
      */
     public void setInjectedObject(Object object) {
         this.injectedObject = object;
@@ -499,7 +503,6 @@ public abstract class ComplexInput<T> extends Composite
      */
     @Override
     public void setValue(T object, T value) {
-    	System.out.println("setValue");
     }
     
 }

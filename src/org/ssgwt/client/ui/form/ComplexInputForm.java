@@ -113,7 +113,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
      */
     @Override
     public Widget getInputFieldWidget() {
-        return this.asWidget( );
+        return this.asWidget();
     }
 
     /**
