@@ -138,15 +138,16 @@ public abstract class ComplexInput<T> extends Composite
         
         
         editButtons.add(saveButton);
-        saveButton.setStyleName("displayInlineBlockMiddel");
-        saveButton.setStyleName("complexSaveButton", true);
+        saveButton.setStyleName("complexSaveButton");
         editButtons.add(undoButton);
         undoButton.setStyleName("displayInlineBlockMiddel");
+        undoButton.setStyleName("complexUndoButton", true);
         editButtons.setStyleName("displayInlineBlockMiddel");
         
-        addButton.setStyleName("complexAddButton", true);
+        addButton.setStyleName("complexAddButton");
         actionPanel.add(addButton);
         actionPanel.setStyleName("displayInlineBlockMiddel");
+        actionPanel.setStyleName("complexActionContainer", true);
         
         mainPanel.add(dataPanel);
         mainPanel.add(actionPanel);
