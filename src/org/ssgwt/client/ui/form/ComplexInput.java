@@ -1,5 +1,8 @@
 package org.ssgwt.client.ui.form;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -94,7 +97,12 @@ public abstract class ComplexInput<T> extends Composite
     /**
      * The remove label
      */
-    protected Label removeLabel = new Label(" Remove");
+    protected Label removeLabel = new Label("Remove");
+    
+    /**
+     * Injected Object
+     */
+    protected Object injectedObject;
     
     /**
      * Class constructor
@@ -104,34 +112,41 @@ public abstract class ComplexInput<T> extends Composite
      */
     public ComplexInput() {
         initWidget(mainPanel);
-        
+    }
+    
+    public void constructor() {
         dynamicFormPanel.add(getDynamicForm());
-        dynamicFormPanel.setStyleName("displayInlineMiddle");
+        dynamicFormPanel.setStyleName("displayInlineBlockMiddel");
         
         viewPanel.add(getUiBinder());
-        viewPanel.setStyleName("displayInlineMiddle");
+        viewPanel.setStyleName("displayInlineBlockMiddel");
         viewPanel.setVisible(false);
         
         dataPanel.add(dynamicFormPanel);
         dataPanel.add(viewPanel);
-        dataPanel.setStyleName("displayInlineMiddle");
+        dataPanel.setStyleName("displayInlineBlockMiddel");
         
         viewButtons.add(editLabel);
-        editLabel.setStyleName("displayInlineMiddle");
-        editLabel.setStyleName("languageInputClickLabels");
+        editLabel.setStyleName("displayInlineBlockMiddel", true);
+        editLabel.setStyleName("languageInputClickLabels", true);
+        editLabel.setStyleName("complexLabelButton", true);
         viewButtons.add(removeLabel);
-        removeLabel.setStyleName("displayInlineMiddle");
-        removeLabel.setStyleName("languageInputClickLabels");
-        viewButtons.setStyleName("displayInlineMiddle");
+        removeLabel.setStyleName("displayInlineBlockMiddel", true);
+        removeLabel.setStyleName("languageInputClickLabels", true);
+        removeLabel.setStyleName("complexLabelButton", true);
+        viewButtons.setStyleName("displayInlineBlockMiddel", true);
+        
         
         editButtons.add(saveButton);
-        saveButton.setStyleName("displayInlineMiddle");
+        saveButton.setStyleName("displayInlineBlockMiddel");
+        saveButton.setStyleName("complexSaveButton", true);
         editButtons.add(undoButton);
-        undoButton.setStyleName("displayInlineMiddle");
-        editButtons.setStyleName("displayInlineMiddle");
+        undoButton.setStyleName("displayInlineBlockMiddel");
+        editButtons.setStyleName("displayInlineBlockMiddel");
         
+        addButton.setStyleName("complexAddButton", true);
         actionPanel.add(addButton);
-        actionPanel.setStyleName("displayInlineMiddle");
+        actionPanel.setStyleName("displayInlineBlockMiddel");
         
         mainPanel.add(dataPanel);
         mainPanel.add(actionPanel);
@@ -230,6 +245,7 @@ public abstract class ComplexInput<T> extends Composite
                 setViewState();
             }
         });
+        
     }
     
     /**
@@ -409,6 +425,15 @@ public abstract class ComplexInput<T> extends Composite
     protected void setEditButtons() {
         setActionPanel(editButtons);
     }
+    
+    /**
+     * TODO
+     * 
+     * @param object
+     */
+    public void setInjectedObject(Object object) {
+        this.injectedObject = object;
+    }
 
     /**
      * Return the field as a widget
@@ -472,15 +497,8 @@ public abstract class ComplexInput<T> extends Composite
      * Unimplemented function
      */
     @Override
-    public T getValue(T object) {
-        return null;
-    }
-
-    /**
-     * Unimplemented function
-     */
-    @Override
     public void setValue(T object, T value) {
+    	System.out.println("setValue");
     }
     
 }

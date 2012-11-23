@@ -2,6 +2,8 @@ package org.ssgwt.client.ui.form;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -27,7 +29,7 @@ import org.ssgwt.client.ui.form.event.ComplexInputFormAddEvent;
  * @param <TheField> The type of input field.
  */
 public abstract class ComplexInputForm<OutterVO, InnerVO, TheField 
-    extends ComplexInput<InnerVO>> extends Composite 
+    extends ComplexInput<InnerVO>, T> extends Composite 
     implements HasValue<List<InnerVO>>, 
     InputField<OutterVO, List>, 
     ComplexInputFormAddEvent.ComplexInputFormAddHandler,
@@ -36,7 +38,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
     /**
      * Contain the list of the embedded Vos
      */
-    private List<InnerVO> innerVOs;
+    private List<InnerVO> innerVOs = new ArrayList<InnerVO>();
     
     /**
      * Array list contains the fields
@@ -52,6 +54,11 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
      * The class Literal of the type of field on the form
      */
     private Class<?> ClassLiteral;
+    
+    /**
+     * Injectioned object
+     */
+    private T object;
     
     /**
      * Flag for if the field is required
@@ -71,12 +78,16 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
      * 
-     * @param classLiteral - lass Literal of the type of field on the form
+     * @param classLiteral - Class Literal of the type of field on the form
      */
     public ComplexInputForm(Class<?> classLiteral) {
         initWidget(complexInputForm);
         this.ClassLiteral = classLiteral;
-        render();
+        
+    }
+    
+    public void setEmbeddedObject(T object) {
+        this.object = object;
     }
     
     /**
@@ -142,11 +153,14 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
     public void addField() {
         // Add the value in the current field at index 0 to the list of VO's
         // Index 0 is always the add field and the is the only field that can be in add state.
+        if (innerVOs == null) {
+            innerVOs = new ArrayList<InnerVO>();
+        }
         innerVOs.add(fields.get(0).getValue());
         // After the values in the field is added to the array innerVO set the field to view state
         fields.get(0).setViewState();
         // Create a new add field
-        TheField field = GWT.create(ClassLiteral);
+        TheField field = createField();
         // Add the required handlers 
         addComplexInputFormHandlers(field);
         // Add the new add field at index 0.
@@ -228,7 +242,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
      */
     private void generateField(InnerVO value) {
         // Create the field based on the class literal 
-        TheField field = GWT.create(ClassLiteral);
+        TheField field = createField();
         // Set the value on the field
         field.setValue(value);
         // Add the handlers
@@ -250,7 +264,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
          // Clear all the fields on the form
         complexInputForm.clear();
         // Create the add field and add it at index 0.
-        TheField addField = GWT.create(ClassLiteral);
+        TheField addField = createField();
         addComplexInputFormHandlers(addField);
         fields.add(0, addField);
         // Loop through the field list and add to the form
@@ -285,6 +299,16 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
     public void onComplexInputFormAdd(ComplexInputFormAddEvent event) {
         // Add a new field
         addField();
+    }
+    
+    /**
+     * TODO
+     */
+    public TheField createField() {
+        TheField addField = GWT.create(ClassLiteral);
+        addField.setInjectedObject(object);
+        addField.constructor();
+        return addField;
     }
     
     /**
