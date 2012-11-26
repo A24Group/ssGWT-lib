@@ -144,18 +144,33 @@ public abstract class ComplexInput<T> extends Composite
     private String displayInline = "ssGWT-displayInlineBlockMiddel";
     
     /**
-     * TODO
+     * language Input Click Labels style
      */
     private String languageInputClickLabels = "ssGWT-languageInputClickLabels";
     
+    /**
+     * Save Button style
+     */
     private String complexSaveButton = "ssGWT-complexSaveButton";
     
+    /**
+     * Label Button style
+     */
     private String complexLabelButton = "ssGWT-complexLabelButton";
     
+    /**
+     * Undo Button style
+     */
     private String complexUndoButton = "ssGWT-complexUndoButton";
     
+    /**
+     * Add Button style
+     */
     private String complexAddButton = "ssGWT-complexAddButton";
     
+    /**
+     * Action Container style
+     */
     private String complexActionContainer = "ssGWT-complexActionContainer";
     
     /**
