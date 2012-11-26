@@ -51,7 +51,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
     /**
      * The class Literal of the type of field on the form
      */
-    private Class<?> ClassLiteral;
+    private Class<?> classLiteral;
     
     /**
      * Injectioned object
@@ -67,6 +67,11 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
      * Flag for if the field is ReadOnly
      */
     private boolean isReadOnly = false;
+
+    /**
+     * Creator used to create the InputFields
+     */
+    private InputFieldCreator inputFieldCreator;
     
     /**
      * Class constructor
@@ -76,11 +81,13 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
      * 
+     * @param inputFieldCreator - input Field Creator
      * @param classLiteral - Class Literal of the type of field on the form
      */
-    public ComplexInputForm(Class<?> classLiteral) {
+    public ComplexInputForm(InputFieldCreator inputFieldCreator, Class<?> classLiteral) {
         initWidget(complexInputForm);
-        this.ClassLiteral = classLiteral;
+        this.classLiteral = classLiteral;
+        this.inputFieldCreator = inputFieldCreator;
         
     }
     
@@ -313,7 +320,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
      * @since  22 November 2012
      */
     public TheField createField() {
-        TheField addField = GWT.create(ClassLiteral);
+        TheField addField = (TheField) inputFieldCreator.createItem(classLiteral);
         addField.setInjectedObject(object);
         addField.constructor();
         return addField;
