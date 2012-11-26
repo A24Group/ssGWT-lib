@@ -33,7 +33,7 @@ public abstract class DropDownInputField<T, ListItemType> extends ListBox implem
     /**
      * The value displayed if no value is selected
      */
-    public String prompt = "--pleace select an item--";
+    public String prompt = "--please select an item--";
     
     /**
      * Class Constructor

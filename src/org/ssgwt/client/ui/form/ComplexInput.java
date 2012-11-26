@@ -139,6 +139,26 @@ public abstract class ComplexInput<T> extends Composite
     }
     
     /**
+     * Style to display elements inline
+     */
+    private String displayInline = "ssGWT-displayInlineBlockMiddel";
+    
+    /**
+     * TODO
+     */
+    private String languageInputClickLabels = "ssGWT-languageInputClickLabels";
+    
+    private String complexSaveButton = "ssGWT-complexSaveButton";
+    
+    private String complexLabelButton = "ssGWT-complexLabelButton";
+    
+    private String complexUndoButton = "ssGWT-complexUndoButton";
+    
+    private String complexAddButton = "ssGWT-complexAddButton";
+    
+    private String complexActionContainer = "ssGWT-complexActionContainer";
+    
+    /**
      * Function to construct all the components and add it to the main panel
      * 
      * @author Alec Erasmus <alec.erasmus@a24group.com>
@@ -157,38 +177,38 @@ public abstract class ComplexInput<T> extends Composite
         mainPanel.add(messagePanel);
     	
         dynamicFormPanel.add(getDynamicForm());
-        dynamicFormPanel.setStyleName("displayInlineBlockMiddel");
+        dynamicFormPanel.setStyleName(displayInline);
         
         viewPanel.add(getUiBinder());
-        viewPanel.setStyleName("displayInlineBlockMiddel");
+        viewPanel.setStyleName(displayInline);
         viewPanel.setVisible(false);
         
         dataPanel.add(dynamicFormPanel);
         dataPanel.add(viewPanel);
-        dataPanel.setStyleName("displayInlineBlockMiddel");
+        dataPanel.setStyleName(displayInline);
         
         viewButtons.add(editLabel);
-        editLabel.setStyleName("displayInlineBlockMiddel", true);
-        editLabel.setStyleName("languageInputClickLabels", true);
-        editLabel.setStyleName("complexLabelButton", true);
+        editLabel.setStyleName(displayInline, true);
+        editLabel.setStyleName(languageInputClickLabels, true);
+        editLabel.setStyleName(complexLabelButton, true);
         viewButtons.add(removeLabel);
-        removeLabel.setStyleName("displayInlineBlockMiddel", true);
-        removeLabel.setStyleName("languageInputClickLabels", true);
-        removeLabel.setStyleName("complexLabelButton", true);
-        viewButtons.setStyleName("displayInlineBlockMiddel", true);
+        removeLabel.setStyleName(displayInline, true);
+        removeLabel.setStyleName(languageInputClickLabels, true);
+        removeLabel.setStyleName(complexLabelButton, true);
+        viewButtons.setStyleName(displayInline, true);
         
         
         editButtons.add(saveButton);
-        saveButton.setStyleName("complexSaveButton");
+        saveButton.setStyleName(complexSaveButton);
         editButtons.add(undoButton);
-        undoButton.setStyleName("displayInlineBlockMiddel");
-        undoButton.setStyleName("complexUndoButton", true);
-        editButtons.setStyleName("displayInlineBlockMiddel");
+        undoButton.setStyleName(displayInline);
+        undoButton.setStyleName(complexUndoButton, true);
+        editButtons.setStyleName(displayInline);
         
-        addButton.setStyleName("complexAddButton");
+        addButton.setStyleName(complexAddButton);
         actionPanel.add(addButton);
-        actionPanel.setStyleName("displayInlineBlockMiddel");
-        actionPanel.setStyleName("complexActionContainer", true);
+        actionPanel.setStyleName(displayInline);
+        actionPanel.setStyleName(complexActionContainer, true);
         
         mainPanel.add(dataPanel);
         mainPanel.add(actionPanel);
@@ -510,7 +530,7 @@ public abstract class ComplexInput<T> extends Composite
         messageCell.setStyleName("messageErrorCell");
         messageRow.setStyleName("messageRow");
         messageTable.setStyleName("messageTable");
-        messagePanel.setStyleName("complexMessagePanel");
+        messagePanel.setStyleName("ssGWT-complexMessagePanel");
         
         messageRow.add(messageCell);
         messageTable.add(messageRow);
@@ -536,7 +556,7 @@ public abstract class ComplexInput<T> extends Composite
         messageCell.setStyleName("messageInfoCell");
         messageRow.setStyleName("messageRow");
         messageTable.setStyleName("messageTable");
-        messagePanel.setStyleName("complexMessagePanel");
+        messagePanel.setStyleName("ssGWT-complexMessagePanel");
         
         messageRow.add(messageCell);
         messageTable.add(messageRow);
