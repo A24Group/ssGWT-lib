@@ -95,6 +95,35 @@ public abstract class ComplexInput<T> extends Composite
     protected Label removeLabel = new Label("Remove");
     
     /**
+     * The panel that will be used to display either the info message
+     * or the validation error
+     */
+    private FlowPanel messagePanel;
+
+    /**
+     * The table-panel that will be used to display either the info message
+     * or the validation error
+     */
+    private FlowPanel messageTable;
+
+    /**
+     * The row-panel that will be used to display either the info message
+     * or the validation error
+     */
+    private FlowPanel messageRow;
+    
+    /**
+     * The cell-label that will hold either the info message or the
+     * validation error
+     */
+    private Label messageCell;
+    
+    /**
+     * Flowpanel to hold the message panel
+     */
+    private FlowPanel messageContainer;
+    
+    /**
      * Injected Object
      */
     protected Object injectedObject;
@@ -116,6 +145,17 @@ public abstract class ComplexInput<T> extends Composite
      * @since  22 November 2012
      */
     public void constructor() {
+    	//create view components
+        messagePanel = new FlowPanel();
+        messageTable = new FlowPanel();
+        messageRow = new FlowPanel();
+        messageCell = new Label();
+        messageContainer = new FlowPanel();
+        
+        messageContainer.add(messagePanel);
+        messagePanel.setVisible(false);
+        mainPanel.add(messagePanel);
+    	
         dynamicFormPanel.add(getDynamicForm());
         dynamicFormPanel.setStyleName("displayInlineBlockMiddel");
         
@@ -454,6 +494,71 @@ public abstract class ComplexInput<T> extends Composite
     }
     
     /**
+     * Set the message panel to visible and sets an error message
+     * on it. Also applies the error style.
+     * 
+     * @param message String to display as message
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  26 November 2012
+     */
+    public void displayValidationError(String message) {
+        this.clearMessage();
+        
+        messageCell.setText(message);
+        
+        messageCell.setStyleName("messageErrorCell");
+        messageRow.setStyleName("messageRow");
+        messageTable.setStyleName("messageTable");
+        messagePanel.setStyleName("complexMessagePanel");
+        
+        messageRow.add(messageCell);
+        messageTable.add(messageRow);
+        messagePanel.add(messageTable);
+        
+        messagePanel.setVisible(true);
+    }
+    
+    /**
+     * Set the message panel to visible and sets an info message
+     * on it. Also applies the info style.
+     * 
+     * @param message String to display as message
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  26 November 2012
+     */
+    public void displayInfoMessage(String message) {
+        this.clearMessage();
+        
+        messageCell.setText(message);
+        
+        messageCell.setStyleName("messageInfoCell");
+        messageRow.setStyleName("messageRow");
+        messageTable.setStyleName("messageTable");
+        messagePanel.setStyleName("complexMessagePanel");
+        
+        messageRow.add(messageCell);
+        messageTable.add(messageRow);
+        messagePanel.add(messageTable);
+        
+        messagePanel.setVisible(true);
+    }
+    
+    /**
+     * Clear the message panel of messages and sets it's
+     * visibility to false.
+     * 
+     * @author Ashwin Arendse <ashwin.arendse@a24group.com>
+     * @since  12 November 2012
+     */
+    public void clearMessage() {
+        messagePanel.setVisible(false);
+        messageCell.setText("");
+        messagePanel.clear();
+    }
+    
+    /**
      * Unimplemented function
      */
     @Override
@@ -504,5 +609,12 @@ public abstract class ComplexInput<T> extends Composite
     @Override
     public void setValue(T object, T value) {
     }
-    
+
+    /**
+     * Unimplemented function
+     */
+    @Override
+    public T getValue(T object) {
+        return null;
+    }
 }
