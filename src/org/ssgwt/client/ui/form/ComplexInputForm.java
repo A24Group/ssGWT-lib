@@ -51,7 +51,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
     /**
      * The class Literal of the type of field on the form
      */
-    private Class<?> ClassLiteral;
+    private Class<?> ClassLiteral = this.ClassLiteral;
     
     /**
      * Injectioned object
