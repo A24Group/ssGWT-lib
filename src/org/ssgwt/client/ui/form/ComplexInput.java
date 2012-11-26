@@ -318,6 +318,7 @@ public abstract class ComplexInput<T> extends Composite
              */
             @Override
             public void onClick(ClickEvent event) {
+                clearMessage();
                 setViewState();
             }
         });
