@@ -84,7 +84,7 @@ public class DynamicForm<T> extends Composite {
          * @param embeded - Whether the component is an embeded object or not
          */
         public Field(InputField inputField, String label, boolean embeded) {
-            this(inputField, label, embeded, DynamicForm.LAYOUT_VERTICAL, "");
+            this(inputField, label, embeded, layout, "");
         }
         
         /**
@@ -96,7 +96,7 @@ public class DynamicForm<T> extends Composite {
          * @param customStyleName - The custom style to apply to the field
          */
         public Field(InputField inputField, String label, boolean embeded, String customStyleName) {
-            this(inputField, label, embeded, DynamicForm.LAYOUT_VERTICAL, customStyleName);
+            this(inputField, label, embeded, layout, customStyleName);
         }
         
         /**
@@ -121,7 +121,6 @@ public class DynamicForm<T> extends Composite {
          * @param customStyleName - The custom style to apply to the field
          */
         public Field(InputField inputField, String label, boolean embeded, int layout, String customStyleName) {
-            
             initWidget(container);
             this.container.setWidth("100%");
 
@@ -136,7 +135,6 @@ public class DynamicForm<T> extends Composite {
             if (!customStyleName.equals("")) {
                 this.inputField.getInputFieldWidget().addStyleName(customStyleName);
             }
-
             if (embeded) {
                 this.container.setStyleName(containerEmbeddedStyleName);
                 this.inputField.getInputFieldWidget().addStyleName(inputFieldAdditionalEmbeddedStyleName);
@@ -149,7 +147,6 @@ public class DynamicForm<T> extends Composite {
                 this.requiredStar.setStyleName(requiredIndicatorStyle);
                 this.inputField.setReadOnly(readOnly);
             }
-            
             switch (layout) {
                 case DynamicForm.LAYOUT_HORIZONTAL:
                     //Add style to make components align horizontally
@@ -158,7 +155,9 @@ public class DynamicForm<T> extends Composite {
                     break;
                 case DynamicForm.LAYOUT_VERTICAL:
                 default:
-                    this.inputField.getInputFieldWidget().setWidth(fieldWidth);
+                    if (customStyleName.equals("")) {
+                        this.inputField.getInputFieldWidget().setWidth(fieldWidth);
+                    }
                     break;
             }
         }
@@ -302,6 +301,13 @@ public class DynamicForm<T> extends Composite {
     }
     
     /**
+     * Class constructor for just the layout
+     */
+    public DynamicForm(int layout) {
+        this(DEFAULT_LABEL_STYLE, DEFAULT_INPUT_FIELD_STYLE, DEFAULT_REQUIRED_INDICATOR_STYLE, DEFAULT_FIELD_WIDTH, layout);
+    }
+    
+    /**
      * Class constructor
      * 
      * @param fieldWidth - The width of the input fields
@@ -376,7 +382,7 @@ public class DynamicForm<T> extends Composite {
             } else if (Date.class.equals(field.getReturnType())) {
                 ((InputField<T, Date>)field).setValue(dataObject, ((HasValue<Date>)field).getValue());
             } else if (List.class.equals(field.getReturnType())) {
-            	((InputField<T, List>)field).setValue(dataObject, ((HasValue<List>)field).getValue());
+                ((InputField<T, List>)field).setValue(dataObject, ((HasValue<List>)field).getValue());
             }
         }
     }
@@ -391,7 +397,7 @@ public class DynamicForm<T> extends Composite {
             } else if (Date.class.equals(field.getReturnType())) {
                 ((HasValue<Date>)field).setValue(((InputField<T, Date>)field).getValue(dataObject));
             } else if (List.class.equals(field.getReturnType())) {
-            	((HasValue<List>)field).setValue(((InputField<T, List>)field).getValue(dataObject));
+                ((HasValue<List>)field).setValue(((InputField<T, List>)field).getValue(dataObject));
             }
         }
     }
@@ -500,7 +506,7 @@ public class DynamicForm<T> extends Composite {
      * @param customStyleName - The custom style to apply to the field
      */
     private void drawField(InputField<T, ?> inputField, String label, boolean embeded, String customStyleName) {
-        Field fieldInfo = new Field(inputField, label, customStyleName);
+        Field fieldInfo = new Field(inputField, label, embeded, customStyleName);
         mainConatiner.add(fieldInfo);
         fields.put(inputField, fieldInfo);
     }
