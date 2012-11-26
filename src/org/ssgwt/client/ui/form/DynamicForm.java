@@ -106,7 +106,7 @@ public class DynamicForm<T> extends Composite {
          * @param layout - The layout of the field
          */
         public Field(InputField inputField, String label, boolean embeded, int layout) {
-            this(inputField, label, embeded, DynamicForm.LAYOUT_VERTICAL, "");
+            this(inputField, label, embeded, layout, "");
         }
         
         /**
@@ -115,7 +115,7 @@ public class DynamicForm<T> extends Composite {
          * @param inputField - The input field that should be displayed on the dynamic form
          * @param label - The label that should be displayed above the input field
          * @param embeded - Whether the component is an embeded object or not
-         * @param layout - The layout of the field
+         * @param layout - The layout of the field. If an incorrect value is passed, it will default to vertical
          * @param customStyleName - The custom style to apply to the field
          */
         public Field(InputField inputField, String label, boolean embeded, int layout, String customStyleName) {
@@ -131,11 +131,11 @@ public class DynamicForm<T> extends Composite {
             this.inputFieldContainer.add(this.requiredStar);
             this.requiredStar.setVisible(this.inputField.isRequired());
             this.inputField.getInputFieldWidget().setStyleName(inputFieldStyleName);
-            if (!customStyleName.equals("")){
+            if (!customStyleName.equals("")) {
                 this.inputField.getInputFieldWidget().addStyleName(customStyleName);
             }
 
-            if (embeded){
+            if (embeded) {
                 this.container.setStyleName(containerEmbeddedStyleName);
                 this.inputField.getInputFieldWidget().addStyleName(inputFieldAdditionalEmbeddedStyleName);
                 
@@ -149,15 +149,15 @@ public class DynamicForm<T> extends Composite {
             }
             
             switch (layout) {
-            case DynamicForm.LAYOUT_HORIZONTAL:
-                //Add style to make components align horizontally
-                this.container.setStyleName(horizontalDefaultStyleName);
-                this.container.setWidth("");
-                break;
-            case DynamicForm.LAYOUT_VERTICAL:
-            default:
-                this.inputField.getInputFieldWidget().setWidth(fieldWidth);
-                break;
+                case DynamicForm.LAYOUT_HORIZONTAL:
+                    //Add style to make components align horizontally
+                    this.container.setStyleName(horizontalDefaultStyleName);
+                    this.container.setWidth("");
+                    break;
+                case DynamicForm.LAYOUT_VERTICAL:
+                default:
+                    this.inputField.getInputFieldWidget().setWidth(fieldWidth);
+                    break;
             }
         }
     }
@@ -198,7 +198,7 @@ public class DynamicForm<T> extends Composite {
     public static final String DEFAULT_REQUIRED_INDICATOR_STYLE = "ssGwt-RequiredIndicator";
     
     /**
-     * The default style name for the required indicator on the dynamic form
+     * The default style name for the horizontal display style for the dynamic form
      */
     public static final String DEFAULT_HORIZONTAL_CONTAINER_STYLE = "ssGwt-HorizontalDisplay";
     
@@ -326,6 +326,7 @@ public class DynamicForm<T> extends Composite {
      * @param inputFieldStyleName - The style name for the input fields on the dynamic form
      * @param requiredIndicatorStyle - The style name for the required indicator on the dynamic form
      * @param fieldWidth - The width of the input fields
+     * @param layout - The layout of the field
      */
     public DynamicForm(String labelStyleName, String inputFieldStyleName, String requiredIndicatorStyle, String fieldWidth, int layout) {
         initWidget(mainConatiner);
