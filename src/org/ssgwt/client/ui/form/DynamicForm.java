@@ -68,10 +68,33 @@ public class DynamicForm<T> extends Composite {
          * 
          * @param inputField - The input field that should be displayed on the dynamic form
          * @param label - The label that should be displayed above the input field
+         * @param customStyleName - The custom style to apply to the field
+         */
+        public Field(InputField inputField, String label, String customStyleName) {
+            this(inputField, label, false, customStyleName);
+        }
+        
+        /**
+         * Class constructor
+         * 
+         * @param inputField - The input field that should be displayed on the dynamic form
+         * @param label - The label that should be displayed above the input field
          * @param embeded - Whether the component is an embeded object or not
          */
         public Field(InputField inputField, String label, boolean embeded) {
-            this(inputField, label, embeded, DynamicForm.LAYOUT_VERTICAL);
+            this(inputField, label, embeded, DynamicForm.LAYOUT_VERTICAL, "");
+        }
+        
+        /**
+         * Class constructor
+         * 
+         * @param inputField - The input field that should be displayed on the dynamic form
+         * @param label - The label that should be displayed above the input field
+         * @param embeded - Whether the component is an embeded object or not
+         * @param customStyleName - The custom style to apply to the field
+         */
+        public Field(InputField inputField, String label, boolean embeded, String customStyleName) {
+            this(inputField, label, embeded, DynamicForm.LAYOUT_VERTICAL, customStyleName);
         }
         
         /**
@@ -83,10 +106,23 @@ public class DynamicForm<T> extends Composite {
          * @param layout - The layout of the field
          */
         public Field(InputField inputField, String label, boolean embeded, int layout) {
+            this(inputField, label, embeded, DynamicForm.LAYOUT_VERTICAL, "");
+        }
+        
+        /**
+         * Class constructor
+         * 
+         * @param inputField - The input field that should be displayed on the dynamic form
+         * @param label - The label that should be displayed above the input field
+         * @param embeded - Whether the component is an embeded object or not
+         * @param layout - The layout of the field
+         * @param customStyleName - The custom style to apply to the field
+         */
+        public Field(InputField inputField, String label, boolean embeded, int layout, String customStyleName) {
             
             initWidget(container);
             this.container.setWidth("100%");
-            
+
             this.inputField = inputField;
             this.fieldLabel.setText(label);
             this.container.add(this.fieldLabel);
@@ -95,13 +131,11 @@ public class DynamicForm<T> extends Composite {
             this.inputFieldContainer.add(this.requiredStar);
             this.requiredStar.setVisible(this.inputField.isRequired());
             this.inputField.getInputFieldWidget().setStyleName(inputFieldStyleName);
+            if (!customStyleName.equals("")){
+                this.inputField.getInputFieldWidget().addStyleName(customStyleName);
+            }
 
             if (embeded){
-                //Remove padding and border
-//                this.fieldLabel.setStyleName(labelStyleName);
-
-//                this.requiredStar.setStyleName(requiredIndicatorStyle);
-//                this.inputField.setReadOnly(readOnly);
                 this.container.setStyleName(containerEmbeddedStyleName);
                 this.inputField.getInputFieldWidget().addStyleName(inputFieldAdditionalEmbeddedStyleName);
                 
@@ -113,19 +147,16 @@ public class DynamicForm<T> extends Composite {
                 this.requiredStar.setStyleName(requiredIndicatorStyle);
                 this.inputField.setReadOnly(readOnly);
             }
-
+            
             switch (layout) {
             case DynamicForm.LAYOUT_HORIZONTAL:
                 //Add style to make components align horizontally
                 this.container.setStyleName(horizontalDefaultStyleName);
                 this.container.setWidth("");
-                this.inputField.getInputFieldWidget().setWidth("");
                 break;
             case DynamicForm.LAYOUT_VERTICAL:
             default:
-//                    this.fieldLabel.setStyleName(labelStyleName);
-//                    this.requiredStar.setStyleName(requiredIndicatorStyle);
-//                    this.inputField.setReadOnly(readOnly);
+                this.inputField.getInputFieldWidget().setWidth(fieldWidth);
                 break;
             }
         }
@@ -365,7 +396,18 @@ public class DynamicForm<T> extends Composite {
      * @param label - The label that should be display above the field
      */
     public void addField(InputField<T, ?> inputField, String label) {
-        addField(inputField, label, false);
+        addField(inputField, label, false, "");
+    }
+    
+    /**
+     * Adds a input field to the Dynamic form
+     * 
+     * @param inputField - The input field that should be added to the form
+     * @param label - The label that should be display above the field
+     * @param customStyleName - The custom style to apply to the field
+     */
+    public void addField(InputField<T, ?> inputField, String label, String customStyleName) {
+        addField(inputField, label, false, customStyleName);
     }
     
     /**
@@ -376,7 +418,19 @@ public class DynamicForm<T> extends Composite {
      * @param embeded - Whether the component is an embeded object or not
      */
     public void addField(InputField<T, ?> inputField, String label, boolean embeded) {
-        drawField(inputField, label, embeded);
+        addField(inputField, label, embeded, "");
+    }
+    
+    /**
+     * Adds a input field to the Dynamic form
+     * 
+     * @param inputField - The input field that should be added to the form
+     * @param label - The label that should be display above the field
+     * @param embeded - Whether the component is an embeded object or not
+     * @param customStyleName - The custom style to apply to the field
+     */
+    public void addField(InputField<T, ?> inputField, String label, boolean embeded, String customStyleName) {
+        drawField(inputField, label, embeded, customStyleName);
     }
     
     /**
@@ -405,7 +459,18 @@ public class DynamicForm<T> extends Composite {
      * @param label - The label that should be display above the field
      */
     private void drawField(InputField<T, ?> inputField, String label) {
-        drawField(inputField, label, false);
+        drawField(inputField, label, false, "");
+    }
+    
+    /**
+     * Draws the field on the form
+     * 
+     * @param inputField - The input field that should be added to the form
+     * @param label - The label that should be display above the field
+     * @param customStyleName - The custom style to apply to the field
+     */
+    private void drawField(InputField<T, ?> inputField, String label, String customStyleName) {
+        drawField(inputField, label, false, customStyleName);
     }
     
     /**
@@ -416,8 +481,19 @@ public class DynamicForm<T> extends Composite {
      * @param embeded - Whether the component is an embeded object or not
      */
     private void drawField(InputField<T, ?> inputField, String label, boolean embeded) {
-        Field fieldInfo = new Field(inputField, label);
-        inputField.getInputFieldWidget().setWidth(fieldWidth);
+        drawField(inputField, label, embeded, "");
+    }
+    
+    /**
+     * Draws the field on the form
+     * 
+     * @param inputField - The input field that should be added to the form
+     * @param label - The label that should be display above the field
+     * @param embeded - Whether the component is an embeded object or not
+     * @param customStyleName - The custom style to apply to the field
+     */
+    private void drawField(InputField<T, ?> inputField, String label, boolean embeded, String customStyleName) {
+        Field fieldInfo = new Field(inputField, label, customStyleName);
         mainConatiner.add(fieldInfo);
         fields.put(inputField, fieldInfo);
     }
