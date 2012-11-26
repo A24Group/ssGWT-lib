@@ -302,6 +302,8 @@ public class DynamicForm<T> extends Composite {
     
     /**
      * Class constructor for just the layout
+     * 
+     * @param layout - The layout to use
      */
     public DynamicForm(int layout) {
         this(DEFAULT_LABEL_STYLE, DEFAULT_INPUT_FIELD_STYLE, DEFAULT_REQUIRED_INDICATOR_STYLE, DEFAULT_FIELD_WIDTH, layout);

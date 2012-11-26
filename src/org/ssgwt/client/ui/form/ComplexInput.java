@@ -180,7 +180,7 @@ public abstract class ComplexInput<T> extends Composite
      * @since  22 November 2012
      */
     public void constructor() {
-    	//create view components
+        //create view components
         messagePanel = new FlowPanel();
         messageTable = new FlowPanel();
         messageRow = new FlowPanel();
@@ -211,7 +211,6 @@ public abstract class ComplexInput<T> extends Composite
         removeLabel.setStyleName(languageInputClickLabels, true);
         removeLabel.setStyleName(complexLabelButton, true);
         viewButtons.setStyleName(displayInline, true);
-        
         
         editButtons.add(saveButton);
         saveButton.setStyleName(complexSaveButton);
@@ -393,9 +392,13 @@ public abstract class ComplexInput<T> extends Composite
      */
     public abstract void removeField();
     
-
     /**
      * If the need arise for the field to have ValueChangeHandler added to it
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  22 November 2012
+     * 
+     * @param handler - The Value Change Handler
      */
     @Override
     public HandlerRegistration addValueChangeHandler(ValueChangeHandler<T> handler) {
@@ -594,61 +597,69 @@ public abstract class ComplexInput<T> extends Composite
     }
     
     /**
-     * Unimplemented function
+     * Function force implementation due to class inheritance 
      */
     @Override
+    @Deprecated
     public Class<T> getReturnType() {
         return null;
     }
 
     /**
-     * Unimplemented function
+     * Function force implementation due to class inheritance 
      */
+    @Deprecated
     @Override
     public boolean isRequired() {
         return false;
     }
 
     /**
-     * Unimplemented function
+     * Function force implementation due to class inheritance 
      */
     @Override
+    @Deprecated
     public void setRequired(boolean required) {
     }
 
     /**
-     * Unimplemented function
+     * Function force implementation due to class inheritance 
      */
     @Override
+    @Deprecated
     public void setReadOnly(boolean readOnly) {
     }
 
     /**
-     * Unimplemented function
+     * Function force implementation due to class inheritance 
      */
     @Override
+    @Deprecated
     public boolean isReadOnly() {
         return false;
     }
 
     /**
-     * Unimplemented function
+     * Function force implementation due to class inheritance 
      */
     @Override
+    @Deprecated
     public void setValue(T value, boolean fireEvents) {
     }
 
     /**
-     * Unimplemented function
+     * Function force implementation due to class inheritance 
      */
     @Override
+    @Deprecated
     public void setValue(T object, T value) {
     }
 
     /**
-     * Unimplemented function
+     * Function force implementation due to class inheritance
      */
     @Override
+    @Deprecated
     public T getValue(T object) {
         return null;
     }

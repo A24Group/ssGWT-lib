@@ -138,7 +138,6 @@ public class ComplexInputFormRemoveEvent extends
     public static Type<ComplexInputFormRemoveHandler> getType() {
         return TYPE;
     }
-
     
     /**
      * Convenience method used to easily dispatch events of this type.

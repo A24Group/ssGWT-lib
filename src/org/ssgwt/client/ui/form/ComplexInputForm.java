@@ -84,12 +84,20 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
         
     }
     
+    /**
+     * Set an embedded Object on the the fields created
+     * 
+     * @author Alec Erasmus<alec.erasmus@a24group.com>
+     * @since  22 November 2012
+     * 
+     * @param object - The object to set
+     */
     public void setEmbeddedObject(T object) {
         this.object = object;
     }
     
     /**
-     * Return the type of return type by the input field
+     * Return the type of the return type by the input field
      * 
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
@@ -164,11 +172,10 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
         // Add the new add field at index 0.
         // The field at index 0 is always the add field
         fields.add(0, field);
-        // The field need to re-added to the main panel because the add field 
-        // need to be at the top and can't add a field on a panel at index 0.
-        // Because the index of the in the field array the fields can be 
-        // re-added to the main panel in the correct order but first need to 
-        // clear the main panel.
+        // The field needs to be re-added to the main panel because the added 
+        // field needs to be at the top and cannot be added on a panel at index 0.
+        // The index of the field in the array can be re-added to the main panel 
+        // in the correct order but it first needs to be cleared from the main panel.
         complexInputForm.clear();
         for (TheField inputField : fields) {
             complexInputForm.add(inputField);
@@ -230,7 +237,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
     }
     
     /**
-     * Generate the a field based on the VO passed 
+     * Generate the field based on the VO passed 
      * and set the data on the field.
      * 
      * @author Alec Erasmus<alec.erasmus@a24group.com>
