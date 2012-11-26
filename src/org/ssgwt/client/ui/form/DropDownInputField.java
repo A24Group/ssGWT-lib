@@ -33,13 +33,14 @@ public abstract class DropDownInputField<T, ListItemType> extends ListBox implem
     /**
      * The value displayed if no value is selected
      */
-    public String prompt = "";
+    public String prompt = "--please select an item--";
     
     /**
      * Class Constructor
      */
     public DropDownInputField() {
         super();
+        setPrompt();
     }
     
     /**
@@ -197,9 +198,13 @@ public abstract class DropDownInputField<T, ListItemType> extends ListBox implem
      * @param value the object's new value
      */
     public void setValue(String value) {
-        for (int i = 0; i < getItemCount(); i++) {
-            if (value.equals(getValue(i))) {
-                setSelectedIndex(i);
+        if (value == null) {
+            setSelectedIndex(0);
+        } else {
+            for (int i = 0; i < getItemCount(); i++) {
+                if (value.equals(getValue(i))) {
+                    setSelectedIndex(i);
+                }
             }
         }
     }
