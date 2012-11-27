@@ -242,7 +242,7 @@ public abstract class ComplexInput<T> extends Composite
              */
             @Override
             public void onClick(ClickEvent event) {
-                setEditDtate();
+                setEditState();
             }
         });
         
@@ -359,7 +359,7 @@ public abstract class ComplexInput<T> extends Composite
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
      */
-    public abstract void setEditDtate();
+    public abstract void setEditState();
     
     /**
      * Abstract function to set the field in a add state
