@@ -142,7 +142,9 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
     @Override
     public List<InnerVO> getValue() {
         int counter = 0;
-        innerVOs.clear();
+        if (innerVOs != null) {
+            innerVOs.clear();
+        }
         for (TheField field : fields) {
             if (counter == 0) {
                 counter++;
