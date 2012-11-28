@@ -81,6 +81,20 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
      * 
+     * @param classLiteral - Class Literal of the type of field on the form
+     */
+    public ComplexInputForm(Class<?> classLiteral) {
+        this((InputFieldCreator)GWT.create(InputFieldCreator.class), classLiteral);
+    }
+    
+    /**
+     * Class constructor
+     * 
+     * Build the form and fields based on the field class literal
+     * 
+     * @author Alec Erasmus<alec.erasmus@a24group.com>
+     * @since  22 November 2012
+     * 
      * @param inputFieldCreator - input Field Creator
      * @param classLiteral - Class Literal of the type of field on the form
      */
