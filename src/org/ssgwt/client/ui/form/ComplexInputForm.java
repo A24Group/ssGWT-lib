@@ -211,7 +211,10 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
         // in the correct order but it first needs to be cleared from the main panel.
         complexInputForm.clear();
         for (TheField inputField : fields) {
-            inputField.addStyleName(STYLE_GRAY_ROW);
+            if (!inputField.dynamicFormPanel.isVisible()) {
+                inputField.addStyleName(STYLE_GRAY_ROW);
+            }
+            inputField.removeStyleName(STYLE_FIRST_ROW);
             complexInputForm.add(inputField);
         }
         field.removeStyleName(STYLE_GRAY_ROW);
