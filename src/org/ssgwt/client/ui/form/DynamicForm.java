@@ -126,12 +126,15 @@ public class DynamicForm<T> extends Composite {
 
             this.inputField = inputField;
             this.fieldLabel.setText(label);
-            this.container.add(this.fieldLabel);
+            if (!this.fieldLabel.getText().equals("")) {
+                this.container.add(this.fieldLabel);
+            }
+            this.fieldLabel.addStyleName(labelStyleName);
             this.container.add(this.inputFieldContainer);
             this.inputFieldContainer.add(this.inputField.getInputFieldWidget());
             this.inputFieldContainer.add(this.requiredStar);
             this.requiredStar.setVisible(this.inputField.isRequired());
-            this.inputField.getInputFieldWidget().setStyleName(inputFieldStyleName);
+            this.inputField.getInputFieldWidget().addStyleName(inputFieldStyleName);
             if (!customStyleName.equals("")) {
                 this.inputField.getInputFieldWidget().addStyleName(customStyleName);
             }
@@ -141,16 +144,14 @@ public class DynamicForm<T> extends Composite {
                 
             } else {
                 this.inputField.getInputFieldWidget().addStyleName(inputFieldAdditionalNormalStyleName);
-                this.container.setStyleName(containerDefaultStyleName);
-
-                this.fieldLabel.setStyleName(labelStyleName);
-                this.requiredStar.setStyleName(requiredIndicatorStyle);
+                this.container.addStyleName(containerDefaultStyleName);
+                this.requiredStar.addStyleName(requiredIndicatorStyle);
                 this.inputField.setReadOnly(readOnly);
             }
             switch (layout) {
                 case DynamicForm.LAYOUT_HORIZONTAL:
                     //Add style to make components align horizontally
-                    this.container.setStyleName(horizontalDefaultStyleName);
+                    this.container.addStyleName(horizontalDefaultStyleName);
                     this.container.setWidth("");
                     break;
                 case DynamicForm.LAYOUT_VERTICAL:
