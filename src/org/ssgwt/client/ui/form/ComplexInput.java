@@ -197,7 +197,7 @@ public abstract class ComplexInput<T> extends Composite
         mainPanel.add(messagePanel);
     	
         dynamicFormPanel.add(getDynamicForm());
-        dynamicFormPanel.setStyleName(displayInline);
+        dynamicFormPanel.addStyleName(displayInline);
         
         viewPanel.add(getUiBinder());
         viewPanel.setStyleName(displayInline);
