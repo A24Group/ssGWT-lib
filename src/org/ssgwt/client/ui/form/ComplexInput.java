@@ -57,7 +57,7 @@ public abstract class ComplexInput<T> extends Composite
     /**
      * Panel that holds the action buttons
      */
-    private FlowPanel actionPanel = new FlowPanel();
+    protected FlowPanel actionPanel = new FlowPanel();
     
     /**
      * The Panel that holds the view buttons
@@ -77,7 +77,7 @@ public abstract class ComplexInput<T> extends Composite
     /**
      * The undo button
      */
-    protected Button undoButton = new Button("Undo");
+    protected Button undoButton = new Button("Cancel");
     
     /**
      * The add buttons
@@ -92,7 +92,7 @@ public abstract class ComplexInput<T> extends Composite
     /**
      * The remove label
      */
-    protected Label removeLabel = new Label("Remove");
+    protected Label removeLabel = new Label(" Remove");
     
     /**
      * The panel that will be used to display either the info message
@@ -169,6 +169,11 @@ public abstract class ComplexInput<T> extends Composite
     private String complexAddButton = "ssGWT-complexAddButton";
     
     /**
+     * Gray row styling
+     */
+    private String grayRowStyling = "ssGWT-displayGrayRow";
+    
+    /**
      * Action Container style
      */
     private String complexActionContainer = "ssGWT-complexActionContainer";
@@ -192,7 +197,7 @@ public abstract class ComplexInput<T> extends Composite
         mainPanel.add(messagePanel);
     	
         dynamicFormPanel.add(getDynamicForm());
-        dynamicFormPanel.setStyleName(displayInline);
+        dynamicFormPanel.addStyleName(displayInline);
         
         viewPanel.add(getUiBinder());
         viewPanel.setStyleName(displayInline);
@@ -221,8 +226,8 @@ public abstract class ComplexInput<T> extends Composite
         
         addButton.setStyleName(complexAddButton);
         actionPanel.add(addButton);
-        actionPanel.setStyleName(displayInline);
-        actionPanel.setStyleName(complexActionContainer, true);
+        actionPanel.addStyleName(displayInline);
+        actionPanel.addStyleName(complexActionContainer);
         
         mainPanel.add(dataPanel);
         mainPanel.add(actionPanel);
@@ -243,6 +248,7 @@ public abstract class ComplexInput<T> extends Composite
             @Override
             public void onClick(ClickEvent event) {
                 setEditState();
+                mainPanel.removeStyleName(grayRowStyling);
             }
         });
         
@@ -300,6 +306,7 @@ public abstract class ComplexInput<T> extends Composite
             @Override
             public void onClick(ClickEvent event) {
                 saveField();
+                mainPanel.addStyleName(grayRowStyling);
             }
         });
         
@@ -320,6 +327,7 @@ public abstract class ComplexInput<T> extends Composite
             public void onClick(ClickEvent event) {
                 clearMessage();
                 setViewState();
+                mainPanel.addStyleName(grayRowStyling);
             }
         });
         
@@ -595,6 +603,10 @@ public abstract class ComplexInput<T> extends Composite
         messagePanel.setVisible(false);
         messageCell.setText("");
         messagePanel.clear();
+    }
+    
+    public void addActionPanelStyle(String style) {
+        actionPanel.addStyleName(style);
     }
     
     /**

@@ -44,6 +44,16 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
     private ArrayList<TheField> fields = new ArrayList<TheField>();
     
     /**
+     * Used to apply the gray row style
+     */
+    private static String STYLE_GRAY_ROW = "ssGWT-displayGrayRow";
+    
+    /**
+     * Used to apply the first row style
+     */
+    private static String STYLE_FIRST_ROW = "ssGWT-DynamicInputFirstRow";
+    
+    /**
      * Main panel
      */
     private FlowPanel complexInputForm = new FlowPanel();
@@ -201,8 +211,14 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
         // in the correct order but it first needs to be cleared from the main panel.
         complexInputForm.clear();
         for (TheField inputField : fields) {
+            if (!inputField.dynamicFormPanel.isVisible()) {
+                inputField.addStyleName(STYLE_GRAY_ROW);
+            }
+            inputField.removeStyleName(STYLE_FIRST_ROW);
             complexInputForm.add(inputField);
         }
+        field.removeStyleName(STYLE_GRAY_ROW);
+        field.addStyleName(STYLE_FIRST_ROW);
     }
     
     /**
@@ -297,8 +313,11 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
         fields.add(0, addField);
         // Loop through the field list and add to the form
         for (TheField field : fields) {
+            field.addStyleName(STYLE_GRAY_ROW);
             complexInputForm.add(field);
         }
+        addField.removeStyleName(STYLE_GRAY_ROW);
+        addField.addStyleName(STYLE_FIRST_ROW);
     }
     
     /**

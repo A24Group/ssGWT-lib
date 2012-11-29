@@ -60,6 +60,11 @@ public class StringRegexValidator extends AbstractValidator implements
      * The regular expression patterns string to be used to validate an email address.
      */
     public static final String REGEX_EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+    /**
+     * The regular expression patterns string to be used to validate an Telephopne numbers.
+     */
+    public static final String REGEX_TELEPHONE_NUMBER_PATTERN = "(^[\\+][0-9]{0,15}$)|(^0{1}[0-9]{0,14}$)";
     
     /**
      * Validates the value passed in with the set regular expression.
