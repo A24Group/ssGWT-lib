@@ -77,7 +77,7 @@ public abstract class ComplexInput<T> extends Composite
     /**
      * The undo button
      */
-    protected Button undoButton = new Button("Undo");
+    protected Button undoButton = new Button("Cancel");
     
     /**
      * The add buttons
@@ -92,7 +92,7 @@ public abstract class ComplexInput<T> extends Composite
     /**
      * The remove label
      */
-    protected Label removeLabel = new Label("Remove");
+    protected Label removeLabel = new Label(" Remove");
     
     /**
      * The panel that will be used to display either the info message
