@@ -169,6 +169,11 @@ public abstract class ComplexInput<T> extends Composite
     private String complexAddButton = "ssGWT-complexAddButton";
     
     /**
+     * Gray row styling
+     */
+    private String grayRowStyling = "ssGWT-displayGrayRow";
+    
+    /**
      * Action Container style
      */
     private String complexActionContainer = "ssGWT-complexActionContainer";
@@ -243,6 +248,7 @@ public abstract class ComplexInput<T> extends Composite
             @Override
             public void onClick(ClickEvent event) {
                 setEditState();
+                mainPanel.removeStyleName(grayRowStyling);
             }
         });
         
@@ -300,6 +306,7 @@ public abstract class ComplexInput<T> extends Composite
             @Override
             public void onClick(ClickEvent event) {
                 saveField();
+                mainPanel.addStyleName(grayRowStyling);
             }
         });
         
@@ -320,6 +327,7 @@ public abstract class ComplexInput<T> extends Composite
             public void onClick(ClickEvent event) {
                 clearMessage();
                 setViewState();
+                mainPanel.addStyleName(grayRowStyling);
             }
         });
         
