@@ -4,6 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -11,8 +12,11 @@ import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
+import org.ssgwt.client.ui.form.event.ComplexInputFormCancelEvent;
+import org.ssgwt.client.ui.form.event.ComplexInputFormConfirmationEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormRemoveEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormAddEvent;
+import org.ssgwt.client.ui.form.event.ComplexInputFormConfirmationEvent.ComplexInputFormConfirmationHandler;
 
 /**
  * Abstract Complex Input is an input field that contains a dynamic form and a 
@@ -28,7 +32,8 @@ public abstract class ComplexInput<T> extends Composite
         HasValue<T>, 
         InputField<T, T>, 
         ComplexInputFormRemoveEvent.ComplexInputFormRemoveHasHandlers, 
-        ComplexInputFormAddEvent.ComplexInputFormAddHasHandlers {
+        ComplexInputFormAddEvent.ComplexInputFormAddHasHandlers,
+        ComplexInputFormCancelEvent.ComplexInputFormCancelHasHandlers {
     
     /**
      * This is the main panel.
@@ -325,13 +330,19 @@ public abstract class ComplexInput<T> extends Composite
              */
             @Override
             public void onClick(ClickEvent event) {
-                clearMessage();
-                setViewState();
-                mainPanel.addStyleName(grayRowStyling);
+                addUndo();
             }
         });
         
     }
+    
+    /**
+     * This function will be responsible for the canceling of data
+     * 
+     * @author Ashwin Arendse <ashwin.arendse@a24group.com>
+     * @since  03 December 2012
+     */
+    public abstract void addUndo();
     
     /**
      * Abstract function for the get of the ui view
