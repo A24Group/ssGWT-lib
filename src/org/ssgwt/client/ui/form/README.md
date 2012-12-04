@@ -1,5 +1,5 @@
 ### Example of how to use the DynamicForm
-```
+```java
 public class DynamicFormExample implements EntryPoint {
     
     /**
@@ -132,7 +132,7 @@ public class DynamicFormExample implements EntryPoint {
 ### How to style your Dynamic Form using the default style names
 
 Add the following to your style sheet
-```
+```css
 
 /* The container that holds all your input fields */
 .form {
@@ -146,12 +146,12 @@ Add the following to your style sheet
 
 /* Style for the non-embedded container */
 .form .ssGwt-DefaultContainer {
-	margin-left: 30px;
+    margin-left: 30px;
 }
 
 /* Style for the embedded container */
 .form .ssGwt-EmbeddedContainer {
-	margin-left: 0px;
+    margin-left: 0px;
 }
 
 /* Additional Style for the non-embedded container */
@@ -163,7 +163,7 @@ Add the following to your style sheet
 
 /* Additional Style for the embedded container */
 .form .ssGwt-InputExtraEmbedded {
-	border:none;	
+    border:none;    
 }
 
 /* The style for the labels of the input fields */
@@ -212,7 +212,7 @@ Add the following to your style sheet
 ### Available Input Fields that work with the DynamicForm
 
 #### TextInputField
-```
+```java
     TextInputField<Contact> nameInputField = new TextInputField<Contact>(true) {
 
         @Override
@@ -230,7 +230,7 @@ Add the following to your style sheet
 ```
 
 #### DateInputField
-```
+```java
     SSDatePicker datePicker = new SSDatePicker();
     datePicker.setStyleName( "dtPickerSize" );
     DateInputField<Contact> testDateField = new DateInputField<Contact>(datePicker, null, SSDateBox.DEFAULT_FORMAT, true) {
@@ -247,4 +247,46 @@ Add the following to your style sheet
     };
     
     form.addField(testDateField, "Test Date Field:");
+```
+
+#### RadioBoxField
+```java
+    //The Date passed in here can be of any tipe that you want the radio button field to return
+    RadioBoxField radioButtonField = new RadioBoxField<OrganisationVO, Date>() {
+
+        @Override
+        public Class<Date> getReturnType() {
+            return Date.class;
+        }
+
+        @Override
+        public Date getValue(OrganisationVO object) {
+            return object.value;
+        }
+
+        @Override
+        public void setValue(OrganisationVO object, Date value) {
+            object.value = value;
+        }
+    };
+    
+    //Create any InputField to add to the RadioBoxField or some of the special
+    //InputField's for the RadioBoxField like the one below.
+    //This is a label that implements InputField and will return a date.
+    //The use of this is for n radio button component with different option
+    //fiels but to have then all return the same tipe. Thus the DateLabel
+    //can be used with a DateInputField and both will return a date.
+    DateLabel dateLabel = new DateLabel() {
+            
+        @Override
+        public Date getValue() {
+            return new Date();
+        }
+    };
+    dateLabel.setText("Label that will return the current date");
+    
+    //add dateLabel option to the RadioBoxField
+    radio.addOption(dateLabel);
+    
+    form.addField(radioButtonField, "Test Radio Button Field:");
 ```
