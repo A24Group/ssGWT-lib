@@ -22,7 +22,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * This class is to be used simply for the adding of a label to a 
+ * This class is to be used simply for the adding of a label to a
  * radio button on the RadioBoxComponent to return a set date.
  * 
  * @author Ruan Naude <ruan.naude@a24group.com>
@@ -46,16 +46,17 @@ public abstract class DateLabel extends Label implements InputField<Object, Date
     /**
      * Set the value on the DateLabel
      * 
-     * @param value - The value to set
+     * @param value - The date to set
      * 
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 03 Dec 2012
      */
     @Override
-    public void setValue(Date value) {}
+    public void setValue(Date value) {
+    }
 
     /**
-     * Set the value on the DateLabel
+     * Set the value on the DateLabel and whether it has events to fire
      * 
      * @param value - The value to set
      * @param fireEvents - Whether the value set has event to fire
@@ -132,7 +133,7 @@ public abstract class DateLabel extends Label implements InputField<Object, Date
     }
 
     /**
-     * Getter for the input field
+     * Getter for the input field widget
      * 
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 03 Dec 2012
@@ -159,14 +160,13 @@ public abstract class DateLabel extends Label implements InputField<Object, Date
     /**
      * Whether the label is read only
      * 
-     * @param Whether the DateLabel is read only
-     * 
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 03 Dec 2012
+     * 
+     * @return Whether the DateLabel is read only
      */
     @Override
     public boolean isReadOnly() {
-        return true;
+        return false;
     }
-
 }
