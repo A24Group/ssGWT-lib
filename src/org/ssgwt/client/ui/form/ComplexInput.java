@@ -92,12 +92,12 @@ public abstract class ComplexInput<T> extends Composite
     /**
      * The edit label
      */
-    protected Label editLabel = new Label("Edit /");
+    protected Label editLabel = new Label("Edit |");
     
     /**
      * The remove label
      */
-    protected Label removeLabel = new Label(" Remove");
+    protected Label removeLabel = new Label("Remove");
     
     /**
      * The panel that will be used to display either the info message
@@ -413,6 +413,15 @@ public abstract class ComplexInput<T> extends Composite
     public abstract void removeField();
     
     /**
+     * Gets the save button
+     * 
+     * @return the save button
+     */
+    public Button getSaveButton() {
+        return saveButton;
+    }
+    
+    /**
      * If the need arise for the field to have ValueChangeHandler added to it
      * 
      * @author Alec Erasmus <alec.erasmus@a24group.com>
@@ -504,6 +513,15 @@ public abstract class ComplexInput<T> extends Composite
      */
     protected void setAddButton() {
         setActionPanel(addButton);
+    }
+    
+    /**
+     * Used to set the text for the add button
+     * 
+     * @param text The text used for the add button
+     */
+    protected void setAddButtonText(String text) {
+        addButton.setText(text);
     }
     
     /**
