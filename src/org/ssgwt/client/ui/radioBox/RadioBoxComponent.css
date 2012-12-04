@@ -17,3 +17,7 @@
 	border: none !important;
 }
 
+/* The style for a radio button option */
+.radioButtonOption {
+	display: inline-block;
+}
