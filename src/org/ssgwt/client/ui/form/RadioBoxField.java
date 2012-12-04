@@ -2,6 +2,7 @@ package org.ssgwt.client.ui.form;
 
 import org.ssgwt.client.ui.radioBox.RadioBoxComponent;
 import com.google.gwt.user.client.ui.HasValue;
+import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -16,6 +17,7 @@ public abstract class RadioBoxField<T, F> extends RadioBoxComponent<T, F> implem
      * The value from the object that should the displayed on the input field
      */
     private boolean required = false;
+    private boolean isReadOnly;
     
     /**
      * Add an option to the list of radio button options
@@ -122,5 +124,19 @@ public abstract class RadioBoxField<T, F> extends RadioBoxComponent<T, F> implem
     @Override
     public Widget getInputFieldWidget() {
         return this;
+    }
+    
+    @Override
+    public void setReadOnly(boolean readOnly) {
+        this.isReadOnly = readOnly;
+        for (RadioButton radioButton : radioButtonOptions.keySet()) {
+            radioButton.setEnabled(!readOnly);
+            radioButtonOptions.get(radioButton).setReadOnly(readOnly);
+        }
+    }
+
+    @Override
+    public boolean isReadOnly() {
+        return this.isReadOnly;
     }
 }

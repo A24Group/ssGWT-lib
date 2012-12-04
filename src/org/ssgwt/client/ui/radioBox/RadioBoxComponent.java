@@ -14,13 +14,12 @@
 package org.ssgwt.client.ui.radioBox;
 
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.ssgwt.client.ui.form.InputField;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dev.util.collect.HashMap;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -51,7 +50,11 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F> {
     /**
      * The default group radio buttons will belong to
      */
-    private static String DEFAULT_GROUP;
+    private static String DEFAULT_GROUP = "default";
+    
+    private static int currentNumberOfGroups = 0;
+    
+    private int thisGroupId;
     
     /**
      * The default resource to use for the RadioBoxComponent class
@@ -66,7 +69,7 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F> {
     /**
      * The list of radio button values
      */
-    private HashMap<RadioButton, InputField<T,F>> radioButtonOptions = new HashMap<RadioButton, InputField<T,F>>();
+    protected HashMap<RadioButton, InputField<T,F>> radioButtonOptions;
     
     /**
      * The container for the whole radio box field item
@@ -133,10 +136,14 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F> {
      * @since 03 Dec 2012
      */
     public RadioBoxComponent(RadioBoxComponentResources resources) {
+        this.thisGroupId = currentNumberOfGroups;
+        currentNumberOfGroups++;
+        
         this.resources = resources;
         this.resources.radioBoxComponentStyle().ensureInjected();
         this.initWidget(uiBinder.createAndBindUi(this));
         radioBoxComponent.addStyleName(resources.radioBoxComponentStyle().radioBoxComponent());
+        radioButtonOptions = new HashMap<RadioButton, InputField<T,F>>();
     }
     
     /**
@@ -150,7 +157,8 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F> {
     public void addOption(InputField<T, F> option) {
         //Create layout panel to hold radio button and value
         LayoutPanel radioButtonLayout = new LayoutPanel();
-        RadioButton radioButton = new RadioButton(DEFAULT_GROUP);
+        RadioButton radioButton = new RadioButton(DEFAULT_GROUP + this.thisGroupId, "x");
+//        radioButton.getElement().setAttribute( "name", DEFAULT_GROUP );
         FlowPanel radioButtonValue = new FlowPanel();
         radioButtonValue.add(option.getInputFieldWidget());
         
@@ -219,15 +227,7 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F> {
     public F getValue() {
         for (RadioButton radioButton : radioButtonOptions.keySet()) {
             if(radioButton.getValue()){
-                if (radioButtonOptions.get(radioButton).getReturnType().equals(Date.class)) {
-                    return (F)((HasValue<Date>)radioButtonOptions.get(radioButton)).getValue();
-                } else if (radioButtonOptions.get(radioButton).getReturnType().equals(String.class)) {
-                    return (F)((HasValue<String>)radioButtonOptions.get(radioButton)).getValue();
-                } else if (radioButtonOptions.get(radioButton).getReturnType().equals(Boolean.class)) {
-                    return (F)((HasValue<Boolean>)radioButtonOptions.get(radioButton)).getValue();
-                } else if (radioButtonOptions.get(radioButton).getReturnType().equals(List.class)) {
-                    return (F)((HasValue<List>)radioButtonOptions.get(radioButton)).getValue();
-                }
+                return ((HasValue<F>)radioButtonOptions.get(radioButton)).getValue();
             }
         }
         return null;
@@ -243,37 +243,28 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F> {
      */
     @Override
     public void setValue(F value) {
-        if (value.equals(Date.class)) {
-            Boolean found = false;
-            for (Map.Entry<RadioButton, InputField<T,F>> entry : radioButtonOptions.entrySet()) {
-                if ((F)((HasValue<Date>)entry.getValue()).getValue() == value) {
-                    entry.getKey().setValue(true);
+        if ( value != null ) {
+            if (value.equals(Date.class)) {
+                Boolean found = false;
+                for (Map.Entry<RadioButton, InputField<T,F>> entry : radioButtonOptions.entrySet()) {
+                    if (((HasValue<F>)entry.getValue()).getValue() == value) {
+                        entry.getKey().setValue(true);
+                        found = true;
+                    }
                 }
-            }
-            if (!found) {
-                //TODO find the Datepicker and set date and radio selected.
-            }
-        } else if (value.equals(String.class)) {
-            for (Map.Entry<RadioButton, InputField<T,F>> entry : radioButtonOptions.entrySet()) {
-                if ((F)((HasValue<String>)entry.getValue()).getValue() == value) {
-                    entry.getKey().setValue(true);
+                if (!found) {
+                    //TODO find the Datepicker and set date and radio selected.
                 }
-            }
-        } else if (value.equals(List.class)) {
-            for (Map.Entry<RadioButton, InputField<T,F>> entry : radioButtonOptions.entrySet()) {
-                if ((F)((HasValue<List>)entry.getValue()).getValue() == value) {
-                    entry.getKey().setValue(true);
-                }
-            }
-        } else if (value.equals(Boolean.class)) {
-            for (Map.Entry<RadioButton, InputField<T,F>> entry : radioButtonOptions.entrySet()) {
-                if ((F)((HasValue<Boolean>)entry.getValue()).getValue() == value) {
-                    entry.getKey().setValue(true);
+            } else {
+                for (Map.Entry<RadioButton, InputField<T,F>> entry : radioButtonOptions.entrySet()) {
+                    if (((HasValue<F>)entry.getValue()).getValue() == value) {
+                        entry.getKey().setValue(true);
+                    }
                 }
             }
         }
     }
-
+    
     /**
      * Sets the selected radio button on the radio box component
      * and whether it has n event to fire

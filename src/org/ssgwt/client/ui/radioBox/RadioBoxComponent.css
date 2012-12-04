@@ -14,5 +14,6 @@
 
 /* The style for the main container of the radio box component*/
 .radioBoxComponent {
-	
+	border: none !important;
 }
+
