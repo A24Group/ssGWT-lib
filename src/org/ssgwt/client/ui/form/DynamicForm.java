@@ -136,7 +136,7 @@ public class DynamicForm<T> extends Composite {
             this.requiredStar.setVisible(this.inputField.isRequired());
             this.inputField.getInputFieldWidget().addStyleName(inputFieldStyleName);
             if (!customStyleName.equals("")) {
-                this.inputField.getInputFieldWidget().addStyleName(customStyleName);
+                this.addStyleName(customStyleName);
             }
             if (embeded) {
                 this.container.setStyleName(containerEmbeddedStyleName);
@@ -237,7 +237,7 @@ public class DynamicForm<T> extends Composite {
     /**
      * The default width of the input fields
      */
-    public static final String DEFAULT_FIELD_WIDTH = "300px";
+    public static final String DEFAULT_FIELD_WIDTH = "230px";
     
     /**
      * The style name for the labels of the dynamic form

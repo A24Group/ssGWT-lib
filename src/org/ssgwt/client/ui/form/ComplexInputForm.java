@@ -6,13 +6,18 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Widget;
 
+import org.ssgwt.client.ui.form.event.ComplexInputFormCancelEvent.ComplexInputFormCancelHasHandlers;
+import org.ssgwt.client.ui.form.event.ComplexInputFormConfirmationEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormRemoveEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormAddEvent;
+import org.ssgwt.client.ui.form.event.ComplexInputFormConfirmationEvent.ComplexInputFormConfirmationHandler;
+import org.ssgwt.client.ui.form.event.ComplexInputFormCancelEvent;
 
 /**
  * Complex input form that allows more complex fields to be added like an array of DynamicForm
@@ -31,7 +36,9 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
     implements HasValue<List<InnerVO>>, 
     InputField<OutterVO, List>, 
     ComplexInputFormAddEvent.ComplexInputFormAddHandler,
-    ComplexInputFormRemoveEvent.ComplexInputFormRemoveHandler {
+    ComplexInputFormRemoveEvent.ComplexInputFormRemoveHandler, 
+    ComplexInputFormConfirmationEvent.ComplexInputFormConfirmationHasHandlers,
+    ComplexInputFormCancelEvent.ComplexInputFormCancelHandler {
 
     /**
      * Contain the list of the embedded Vos
@@ -82,6 +89,11 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
      * Creator used to create the InputFields
      */
     private InputFieldCreator inputFieldCreator;
+    
+    /**
+     * Complex Input Form Remove Event
+     */
+    private ComplexInputFormRemoveEvent complexInputFormRemoveEvent;
     
     /**
      * Class constructor
@@ -235,6 +247,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
     public void addComplexInputFormHandlers(TheField field) {
         field.addComplexInputFormRemoveHandler(this);
         field.addComplexInputFormAddHandler(this);
+        field.addComplexInputFormCancelHandler(this);
     }
     
     /**
@@ -330,10 +343,66 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
      */
     @Override
     public void onComplexInputFormRemove(ComplexInputFormRemoveEvent event) {
-        // Remove a field
-        removeField((InnerVO) event.getRemoveObjectVO(), (TheField) event.getRemoveObjectField());
+        complexInputFormRemoveEvent = event;
+        ComplexInputFormConfirmationEvent.fire(true, this, new AsyncCallback<T>() {
+            
+            /**
+             * The onfailure method that will not do anything
+             * 
+             * @author Ashwin Arendse <ashwin.arendse@a24group.com>
+             * @since  03 December 2012
+             * 
+             * @param caught - The exception that were caught
+             */
+            @Override
+            public void onFailure(Throwable caught) {
+            }
+            
+            /**
+             * The on success if a user discards his changes
+             * 
+             * @author Ashwin Arendse <ashwin.arendse@a24group.com>
+             * @since  03 December 2012
+             * 
+             * @param result - the result of tpe T
+             */
+            @Override
+            public void onSuccess(T result) {
+             // Remove a field
+             removeField(
+                 (InnerVO) complexInputFormRemoveEvent.getRemoveObjectVO(), 
+                 (TheField) complexInputFormRemoveEvent.getRemoveObjectField()
+             );
+            }
+        });
     }
-
+    
+    /**
+     * Function for when a ComplexInputFormConfirmationHandler needed to be added
+     * 
+     * @author Ashwin Arendse <ashwin.arendse@a24group.com>
+     * @since  03 December 2012
+     * 
+     * @param handler - The handler that can re added
+     */
+    @Override
+    public HandlerRegistration addComplexInputFormConfirmationHandler(ComplexInputFormConfirmationHandler handler) {
+        return this.addHandler(handler, ComplexInputFormConfirmationEvent.TYPE);
+    }
+    
+    /**
+     * Handler for the ComplexInputFormRemove that is catch from the the event fired on the remove button
+     * 
+     * @author Alec Erasmus<alec.erasmus@a24group.com>
+     * @since  22 November 2012
+     * 
+     * @param event - The event object that was fired
+     */
+    @Override
+    public void onComplexInputFormCancel(ComplexInputFormCancelEvent event) {
+        ComplexInputFormConfirmationEvent.fire(false, this, event.getCallback());
+    }
+    
     /**
      * Handler for the ComplexInputFormAdd that is catch from the the event fired on the add button
      * 
