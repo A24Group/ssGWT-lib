@@ -344,7 +344,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
     @Override
     public void onComplexInputFormRemove(ComplexInputFormRemoveEvent event) {
         complexInputFormRemoveEvent = event;
-        ComplexInputFormConfirmationEvent.fire(this, new AsyncCallback<T>() {
+        ComplexInputFormConfirmationEvent.fire(true, this, new AsyncCallback<T>() {
             
             /**
              * The onfailure method that will not do anything
@@ -400,7 +400,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
      */
     @Override
     public void onComplexInputFormCancel(ComplexInputFormCancelEvent event) {
-        ComplexInputFormConfirmationEvent.fire(this, event.getCallback());
+        ComplexInputFormConfirmationEvent.fire(false, this, event.getCallback());
     }
     
     /**
