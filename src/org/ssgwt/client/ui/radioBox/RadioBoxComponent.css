@@ -14,10 +14,10 @@
 
 /* The style for the main container of the radio box component*/
 .radioBoxComponent {
-	border: none !important;
+    border: none !important;
 }
 
 /* The style for a radio button option */
 .radioButtonOption {
-	display: inline-block;
+    display: inline-block;
 }

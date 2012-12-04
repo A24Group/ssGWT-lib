@@ -154,11 +154,10 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
      */
     public RadioBoxComponent(RadioBoxComponentResources resources) {
         this.thisGroupId = currentNumberOfGroups;
-        currentNumberOfGroups++;
-        
         this.resources = resources;
         this.resources.radioBoxComponentStyle().ensureInjected();
         this.initWidget(uiBinder.createAndBindUi(this));
+        currentNumberOfGroups++;
         radioBoxComponent.addStyleName(resources.radioBoxComponentStyle().radioBoxComponent());
         radioButtonOptions = new HashMap<RadioButton, InputField<T,F>>();
     }
@@ -309,6 +308,14 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
         }
     }
 
+    /**
+     * Handles what happens when the selected radio button changes
+     * 
+     * @param event The value change event
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 03 Dec 2012
+     */
     @Override
     public void onValueChange(ValueChangeEvent<Boolean> event) {
         ValueChangeEvent.fire(this, getValue());
