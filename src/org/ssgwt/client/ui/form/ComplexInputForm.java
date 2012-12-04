@@ -345,11 +345,27 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
     public void onComplexInputFormRemove(ComplexInputFormRemoveEvent event) {
         complexInputFormRemoveEvent = event;
         ComplexInputFormConfirmationEvent.fire(this, new AsyncCallback<T>() {
-
+            
+            /**
+             * The onfailure method that will not do anything
+             * 
+             * @author Ashwin Arendse <ashwin.arendse@a24group.com>
+             * @since  03 December 2012
+             * 
+             * @param caught - The exception that were caught
+             */
             @Override
             public void onFailure(Throwable caught) {
-                // TODO Auto-generated method stub
             }
+            
+            /**
+             * The on success if a user discards his changes
+             * 
+             * @author Ashwin Arendse <ashwin.arendse@a24group.com>
+             * @since  03 December 2012
+             * 
+             * @param result - the result of tpe T
+             */
             @Override
             public void onSuccess(T result) {
              // Remove a field
