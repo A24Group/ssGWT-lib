@@ -25,6 +25,11 @@ public class ComplexInputFormConfirmationEvent extends
      * class variable for the Async Callback
      */
     private AsyncCallback callback;
+    
+    /**
+     * Flag to determine text for popup 
+     */
+    private boolean bRemove;
 
     /**
      * Handler interface that should be implemented by components that wish to
@@ -65,11 +70,12 @@ public class ComplexInputFormConfirmationEvent extends
      * @author Ashwin Arendse <ashwin.arendse@a24group.com>
      * @since  03 December 2012
      * 
-     * @param removeObjectVO - The VO to be removed.
-     * @param removeObjectField - The Field to be removed.
+     * @param bRemove - Remove boolean flag for popup
+     * @param callback - The Async Call back.
      */
-    public ComplexInputFormConfirmationEvent(AsyncCallback callback) {
+    public ComplexInputFormConfirmationEvent(boolean bRemove, AsyncCallback callback) {
         this.callback = callback;
+        this.bRemove = bRemove;
     }
 
     /**
@@ -116,11 +122,12 @@ public class ComplexInputFormConfirmationEvent extends
      * @author Ashwin Arendse <ashwin.arendse@a24group.com>
      * @since  03 December 2012
      * 
+     * @param bRemove - Remove boolean flag for popup
      * @param source The component that dispatches the event.
      * @param callback - An Async Callback
      */
-    public static void fire(HasHandlers source, AsyncCallback callback) {
-        source.fireEvent(new ComplexInputFormConfirmationEvent(callback));
+    public static void fire(boolean bRemove, HasHandlers source, AsyncCallback callback) {
+        source.fireEvent(new ComplexInputFormConfirmationEvent(bRemove, callback));
     }
 
     /**
@@ -130,5 +137,14 @@ public class ComplexInputFormConfirmationEvent extends
      */
     public AsyncCallback getCallback() {
         return callback;
+    }
+    
+    /**
+     * Getter for the Remove flag
+     * 
+     * @return the remove flag
+     */
+    public boolean getRemoveFlag() {
+        return bRemove;
     }
 }
