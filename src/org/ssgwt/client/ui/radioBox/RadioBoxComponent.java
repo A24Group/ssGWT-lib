@@ -17,10 +17,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ssgwt.client.ui.form.DateInputField;
 import org.ssgwt.client.ui.form.InputField;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.resources.client.ClientBundle;
@@ -40,7 +42,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Ruan Naude <ruan.naude@a24group.com>
  * @since 03 Dec 2012
  */
-public class RadioBoxComponent<T, F> extends Composite implements HasValue<F> {
+public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, ValueChangeHandler<Boolean> {
     
     /**
      * Instance of the UiBinder
@@ -52,8 +54,14 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F> {
      */
     private static String DEFAULT_GROUP = "default";
     
+    /**
+     * The current number of radio button groups on the form
+     */
     private static int currentNumberOfGroups = 0;
     
+    /**
+     * The current radio button group number
+     */
     private int thisGroupId;
     
     /**
@@ -72,6 +80,11 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F> {
     protected HashMap<RadioButton, InputField<T,F>> radioButtonOptions;
     
     /**
+     * Indicator for when an option is the first
+     */
+    private boolean firstOption = true;
+    
+    /**
      * The container for the whole radio box field item
      */
     @UiField
@@ -85,7 +98,6 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F> {
      */
     @SuppressWarnings("rawtypes")
     interface Binder extends UiBinder<Widget, RadioBoxComponent> {
-        // TODO make sure @SuppressWarnings("rawtypes") is best way to go about this
     }
 
     /**
@@ -115,6 +127,11 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F> {
          * The style for the main container of the radio box component
          */
         String radioBoxComponent();
+        
+        /**
+         * The style for a radio button option
+         */
+        String radioButtonOption();
     }
     
     /**
@@ -157,8 +174,8 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F> {
     public void addOption(InputField<T, F> option) {
         //Create layout panel to hold radio button and value
         LayoutPanel radioButtonLayout = new LayoutPanel();
-        RadioButton radioButton = new RadioButton(DEFAULT_GROUP + this.thisGroupId, "x");
-//        radioButton.getElement().setAttribute( "name", DEFAULT_GROUP );
+        RadioButton radioButton = new RadioButton(DEFAULT_GROUP + this.thisGroupId);
+        radioButton.addValueChangeHandler(this);
         FlowPanel radioButtonValue = new FlowPanel();
         radioButtonValue.add(option.getInputFieldWidget());
         
@@ -175,6 +192,12 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F> {
         //set default style on radio option
         radioButtonLayout.setHeight("20px");
         radioButtonLayout.setWidth("50%");
+        radioButtonLayout.addStyleName(resources.radioBoxComponentStyle().radioButtonOption());
+        
+        if (firstOption) {
+            firstOption = false;
+            radioButton.setValue(true);
+        }
         
         //add the radio button and its value to the radioButtonOptions array to retrieve selected value later
         radioButtonOptions.put(radioButton, option);
@@ -208,10 +231,8 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F> {
      * @since 03 Dec 2012
      */
     @Override
-    public HandlerRegistration addValueChangeHandler(
-            ValueChangeHandler<F> handler) {
-        // TODO Auto-generated method stub
-        return null;
+    public HandlerRegistration addValueChangeHandler(ValueChangeHandler<F> handler) {
+        return this.addHandler(handler, ValueChangeEvent.getType());
     }
 
     /**
@@ -243,17 +264,22 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F> {
      */
     @Override
     public void setValue(F value) {
-        if ( value != null ) {
-            if (value.equals(Date.class)) {
+        if (value != null) {
+            if (value instanceof Date) {
                 Boolean found = false;
+                Map.Entry<RadioButton, InputField<T,F>> dateInputField = null;
                 for (Map.Entry<RadioButton, InputField<T,F>> entry : radioButtonOptions.entrySet()) {
-                    if (((HasValue<F>)entry.getValue()).getValue() == value) {
+                    if (value.equals(((HasValue<F>)entry.getValue()).getValue())) {
                         entry.getKey().setValue(true);
                         found = true;
                     }
+                    if (entry.getValue() instanceof DateInputField) {
+                        dateInputField = entry;
+                    }
                 }
                 if (!found) {
-                    //TODO find the Datepicker and set date and radio selected.
+                    ((HasValue<F>)dateInputField.getValue()).setValue(value);
+                    dateInputField.getKey().setValue(true);
                 }
             } else {
                 for (Map.Entry<RadioButton, InputField<T,F>> entry : radioButtonOptions.entrySet()) {
@@ -277,6 +303,14 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F> {
      */
     @Override
     public void setValue(F value, boolean fireEvents) {
-        // TODO Auto-generated method stub
+        setValue(value);
+        if (fireEvents) {
+            ValueChangeEvent.fire(this, getValue());
+        }
+    }
+
+    @Override
+    public void onValueChange(ValueChangeEvent<Boolean> event) {
+        ValueChangeEvent.fire(this, getValue());
     }
 }
