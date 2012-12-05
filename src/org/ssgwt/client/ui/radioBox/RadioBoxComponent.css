@@ -21,3 +21,7 @@
 .radioButtonOption {
     display: inline-block;
 }
+
+.radioButtonMargin {
+    margin-top: 5px;
+}
