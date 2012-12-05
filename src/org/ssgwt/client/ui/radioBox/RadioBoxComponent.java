@@ -13,6 +13,7 @@
  */
 package org.ssgwt.client.ui.radioBox;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -89,6 +90,11 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
      */
     @UiField
     FlowPanel radioBoxComponent;
+
+    /**
+     * Track the index of each radio button added
+     */
+    protected ArrayList<RadioButton> indexedOptions = new ArrayList<RadioButton>();
     
     /**
      * UiBinder interface for the composite
@@ -208,8 +214,24 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
         //add the radio button and its value to the radioButtonOptions array to retrieve selected value later
         radioButtonOptions.put(radioButton, option);
         
+        indexedOptions.add(radioButton);
+        
         //add layout to the main radio box flow panel
         radioBoxComponent.add(radioButtonLayout);
+    }
+    
+    /**
+     * Allows you to get an input field so that you can set a value directly on the object
+     * 
+     * @author Neil Nienaber <neil.nienaber@a24group.com>
+     * @since  05 December 2012
+     * 
+     * @param field The input field which has been added to the redio group
+     * 
+     * @return
+     */
+    protected HasValue<F> getFieldAsHasValue(InputField<T, F> field) {
+        return (HasValue<F>)field;
     }
     
     /**
