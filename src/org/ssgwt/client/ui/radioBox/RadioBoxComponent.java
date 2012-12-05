@@ -132,6 +132,11 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
          * The style for a radio button option
          */
         String radioButtonOption();
+        
+        /**
+         * The style for a radio margin
+         */
+        String radioButtonMargin();
     }
     
     /**
@@ -174,7 +179,9 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
         //Create layout panel to hold radio button and value
         LayoutPanel radioButtonLayout = new LayoutPanel();
         RadioButton radioButton = new RadioButton(DEFAULT_GROUP + this.thisGroupId);
+        ((HasValue)option).addValueChangeHandler(this);
         radioButton.addValueChangeHandler(this);
+        radioButton.addStyleName(resources.radioBoxComponentStyle().radioButtonMargin());
         FlowPanel radioButtonValue = new FlowPanel();
         radioButtonValue.add(option.getInputFieldWidget());
         
@@ -189,7 +196,7 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
         radioButtonLayout.setWidgetTopBottom(radioButtonValue, 0, Unit.PX, 0, Unit.PX);
         
         //set default style on radio option
-        radioButtonLayout.setHeight("20px");
+        radioButtonLayout.setHeight("28px");
         radioButtonLayout.setWidth("50%");
         radioButtonLayout.addStyleName(resources.radioBoxComponentStyle().radioButtonOption());
         
@@ -317,7 +324,7 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
      * @since 03 Dec 2012
      */
     @Override
-    public void onValueChange(ValueChangeEvent<Boolean> event) {
+    public void onValueChange(ValueChangeEvent event) {
         ValueChangeEvent.fire(this, getValue());
     }
 }
