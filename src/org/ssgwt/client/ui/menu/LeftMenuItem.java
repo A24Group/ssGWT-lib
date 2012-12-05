@@ -70,7 +70,7 @@ public class LeftMenuItem extends Composite {
     /**
      * The menu item that is currently being used
      */
-    private MenuItem menuItem;
+    private MenuItemInterface menuItem;
     
     /**
      * Boolean to determine whether the menu item
@@ -320,7 +320,7 @@ public class LeftMenuItem extends Composite {
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 09 July 2012
      */
-    public LeftMenuItem(MenuItem menuItem) {
+    public LeftMenuItem(MenuItemInterface menuItem) {
         this(menuItem, getDefaultResources());
     }
     
@@ -333,7 +333,7 @@ public class LeftMenuItem extends Composite {
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 09 July 2012
      */
-    public LeftMenuItem(MenuItem menuItem, LeftMenuItemResources resources) {
+    public LeftMenuItem(MenuItemInterface menuItem, LeftMenuItemResources resources) {
         this.resources = resources;
         this.resources.leftMenuItemStyle().ensureInjected();
         handlerManager = new HandlerManager(this);
@@ -364,7 +364,7 @@ public class LeftMenuItem extends Composite {
                     notSelectedPanel.setStyleName(LeftMenuItem.this.resources.leftMenuItemStyle().notSelectedPanelUpState());
                     if (isClickable) {
                         isClickable = false;
-                        setSelected();
+                        setSelected(true);
                         fireEvent(new LeftMenuItemSelectEvent());
                     }
                 }
@@ -453,17 +453,27 @@ public class LeftMenuItem extends Composite {
      * @since 09 July 2012
      */
     public void setSelected() {
+        setSelected(false);
+    }
+    
+    /**
+     * This function will set the state of the left menu item
+     * to the selected state
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 09 July 2012
+     * 
+     * @param executeTopMenuDefault Indicates whether the top menu's command should be executed
+     */
+    public void setSelected(boolean executeTopMenuDefault) {
         //will create the slide animation from right to left
         if (!isAnimating) {
+            ((LeftMenuCommand)LeftMenuItem.this.menuItem.getCommand()).setExecuteTopMenuCommand(executeTopMenuDefault);
             LeftMenuItem.this.menuItem.getCommand().execute();
             isAnimating = true;
             leftMenuItem.setWidgetLeftRight(selectedPanel, 0, Unit.PX, 0, Unit.PX);
             leftMenuItem.setWidgetLeftWidth(notSelectedFlowPanel, -100, Unit.PCT, 100, Unit.PCT);
-            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand () {
-                public void execute () {
-                    leftMenuItem.animate(600);
-                }
-            });
+            leftMenuItem.animate(600);
             
             Timer timer = new Timer() {
                 public void run() {

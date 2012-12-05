@@ -66,7 +66,7 @@ public class TopMenuBar extends Composite {
     /**
      * A list of the menu item
      */
-    private List<MenuItem> menuItems;
+    private List<MenuItemInterface> menuItems;
     
     /**
      * The flow panel used for the menu item list
@@ -138,7 +138,7 @@ public class TopMenuBar extends Composite {
      * 
      * @param topMenuList - The list of menu items that needs to be added to the menu bar
      */
-    public TopMenuBar(List<MenuItem> topMenuList) {
+    public TopMenuBar(List<MenuItemInterface> topMenuList) {
         this(topMenuList, getDefaultResources());
     }
 
@@ -148,22 +148,32 @@ public class TopMenuBar extends Composite {
      * @param menuItems - The list of menu items that needs to be added to the menu bar
      * @param resources - The resources that needs to be used on the menu bar
      */
-    public TopMenuBar(List<MenuItem> menuItems, TopMenuResources resources) {
+    public TopMenuBar(List<MenuItemInterface> menuItems, TopMenuResources resources) {
         this.resources = resources;
         this.resources.topMenuStyle().ensureInjected();
         this.initWidget(uiBinder.createAndBindUi(this));
         this.setTopMenuBar(menuItems);
     }
     
-	/**
+    /**
      * Setter for the menu Items
      * 
      * @param menuItems - The list of menu items that needs to be added to the menu bar
      */
-    public void setTopMenuBar(List<MenuItem> menuItems) {
+    public void setTopMenuBar(List<MenuItemInterface> menuItems) {
+        setTopMenuBar(menuItems, false);
+    }
+    
+    /**
+     * Setter for the menu Items
+     * 
+     * @param menuItems - The list of menu items that needs to be added to the menu bar
+     * @param runExecuteForDefault - Indicates that the command for the default selected item should be run
+     */
+    public void setTopMenuBar(List<MenuItemInterface> menuItems, boolean runExecuteForDefault) {
         topMenu.clear();
         if (menuItems != null) {
-            List<MenuItem> sorted = new ArrayList<MenuItem>();
+            List<MenuItemInterface> sorted = new ArrayList<MenuItemInterface>();
             int max = 0;
             for (int x = 0; x  < menuItems.size(); x++) {
                 int current = menuItems.get(x).getOrder();
@@ -172,7 +182,7 @@ public class TopMenuBar extends Composite {
                 }
             }
             for(int x = 0; x <= max; x++) {
-                for (MenuItem menuItem : menuItems) {
+                for (MenuItemInterface menuItem : menuItems) {
                     int current = menuItem.getOrder();
                     if (current == x) {
                         sorted.add(menuItem);
@@ -181,12 +191,12 @@ public class TopMenuBar extends Composite {
             }
             menuItems = sorted;
             boolean containsDefault = false;
-            for (MenuItem menuItem : sorted) {
+            for (MenuItemInterface menuItem : sorted) {
                 containsDefault = containsDefault || menuItem.isDefaultSelected();
             }
-            for (MenuItem menuItem : menuItems) {
+            for (MenuItemInterface menuItem : menuItems) {
                 final Button button = new Button();
-                final MenuItem currentMenuItem = menuItem;
+                final MenuItemInterface currentMenuItem = menuItem;
                 button.setText(currentMenuItem.getLabel());
 
                 button.addMouseUpHandler(new MouseUpHandler() {
@@ -209,12 +219,16 @@ public class TopMenuBar extends Composite {
                     selectedItem = button;
                     button.setStyleName(resources.topMenuStyle().buttonSelectedStyle() + " " + TopMenuBar.this.resources.topMenuStyle().bottomPadding());
                     containsDefault = true;
-                    currentMenuItem.getCommand().execute();
+                    if (runExecuteForDefault) {
+                        currentMenuItem.getCommand().execute();
+                    }
                 } else {
                     if (menuItem.isDefaultSelected()) {
                         selectedItem = button;
                         button.setStyleName(resources.topMenuStyle().buttonSelectedStyle() + " " + TopMenuBar.this.resources.topMenuStyle().bottomPadding());
-                        menuItem.getCommand().execute();
+                        if (runExecuteForDefault) {
+                            currentMenuItem.getCommand().execute();
+                        }
                     } else {
                         button.setStyleName(resources.topMenuStyle().buttonStyle() + " " + TopMenuBar.this.resources.topMenuStyle().bottomPadding());
                     }

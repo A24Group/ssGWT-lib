@@ -191,8 +191,8 @@ public class AdvancedTextbox extends TextBox implements AdvancedInputField<Strin
     public void hidePlaceholder() {
         if (super.getText().equals(this.getPlaceholderText())) {
             super.setText("");
-            super.removeStyleName(this.getPlaceholderStyleName());
         }
+        super.removeStyleName(this.getPlaceholderStyleName());
     }
 
     /**

@@ -136,7 +136,9 @@ public abstract class AbstractHeaderFilter extends PopupPanel {
      */
     protected void setFilterActive(boolean filterActive) {
         this.filterActive = filterActive;
-        this.parentHeader.setFilterActive(filterActive);
+        if (this.parentHeader != null) {
+            this.parentHeader.setFilterActive(filterActive);
+        }
     }
     
     /**
@@ -187,6 +189,7 @@ public abstract class AbstractHeaderFilter extends PopupPanel {
     public void setCriteria(Criteria filterCirteria) {
         this.filterCirteria = filterCirteria;
         updateFieldData();
+        setFilterActive(checkFilterActive());
     }
     
     /**

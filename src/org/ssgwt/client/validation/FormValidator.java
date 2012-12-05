@@ -125,7 +125,7 @@ public class FormValidator {
             try {
                 Class<?> type = ((AdvancedInputField)fields.get(i).uiField).getReturnType();
                 if (String.class.equals(type)) {
-                    valid = ((ValidatorInterface<String>)validator).isValid(((HasValue<String>)fields.get(i).uiField).getValue());
+                    valid = ((ValidatorInterface<String>)validator).isValid(((HasValue<String>)fields.get(i).uiField).getValue().trim());
                 } else if (Date.class.equals(type)) {
                     valid = ((ValidatorInterface<Date>)validator).isValid(((HasValue<Date>)fields.get(i).uiField).getValue());
                 }
