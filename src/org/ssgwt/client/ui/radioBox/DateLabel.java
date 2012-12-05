@@ -28,8 +28,16 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Ruan Naude <ruan.naude@a24group.com>
  * @since 03 Dec 2012
  */
-public abstract class DateLabel extends Label implements InputField<Object, Date>, HasValue<Date> {
-
+public abstract class DateLabel<T> extends Label implements InputField<T, Date>, HasValue<Date> {
+	
+	public DateLabel() {
+		super();
+	}
+	
+	public DateLabel(String text) {
+		super(text);
+	}
+	
     /**
      * Adds change handlers to the DateLabel
      * 
@@ -90,7 +98,7 @@ public abstract class DateLabel extends Label implements InputField<Object, Date
      * @return The value of DateLabel
      */
     @Override
-    public Date getValue(Object object) {
+    public Date getValue(T object) {
         return null;
     }
 
@@ -104,7 +112,7 @@ public abstract class DateLabel extends Label implements InputField<Object, Date
      * @since 03 Dec 2012
      */
     @Override
-    public void setValue(Object object, Date value) {
+    public void setValue(T object, Date value) {
     }
 
     /**
