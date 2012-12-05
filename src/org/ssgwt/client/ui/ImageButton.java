@@ -205,7 +205,7 @@ public class ImageButton extends FocusPanel {
         }
         String definedStyles = image.getElement().getAttribute("style");
         imageElement = image.getElement();
-        imageElement.setAttribute("style", definedStyles + "; vertical-align:middle;");
+        imageElement.getStyle().setProperty("vertical-align", "middle");
         
         if (POSITION_LEFT.equals(imagePosition)) {
             DOM.insertBefore(getInnerElement(), image.getElement(), textElement);
@@ -229,7 +229,9 @@ public class ImageButton extends FocusPanel {
         this.label = label;
         textElement = DOM.createElement("span");
         textElement.setInnerText(label);
-        textElement.setAttribute("style", "padding-left:3px; padding-right:3px; vertical-align:middle;");
+        textElement.getStyle().setProperty("padding-left", "3px");
+        textElement.getStyle().setProperty("padding-right", "3px");
+        textElement.getStyle().setProperty("vertical-align", "middle");
         
         if (DOM.getChildCount(getInnerElement()) == 0) {
             DOM.appendChild(getInnerElement(), textElement);
