@@ -227,7 +227,7 @@ public class ImageButton extends Button {
         textElement.setInnerText(label);
         textElement.setAttribute("style", "padding-left:3px; padding-right:3px; vertical-align:middle;");
         
-        if ( DOM.getChildCount(getInnerElement()) == 0 ) {
+        if (DOM.getChildCount(getInnerElement()) == 0) {
             DOM.appendChild(getInnerElement(), textElement);
         } else {
             if (POSITION_RIGHT.equals(imagePosition)) {
