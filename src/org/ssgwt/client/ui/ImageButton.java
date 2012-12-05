@@ -17,7 +17,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -30,7 +30,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Johannes Gryffenberg
  * @since 05 December 2012
  */
-public class ImageButton extends Button {
+public class ImageButton extends FocusPanel {
     
     /**
      * The label text of the button
@@ -217,7 +217,6 @@ public class ImageButton extends Button {
      * @author Johannes Gryffenberg
      * @since 05 December 2012
      */
-    @Override
     public void setText(String label) {
         if (textElement != null) {
             DOM.removeChild(getInnerElement(), textElement);
@@ -246,7 +245,6 @@ public class ImageButton extends Button {
      * 
      * @return the label that is currently being displayed on the button
      */
-    @Override
     public String getText() {
         return label;
     }
