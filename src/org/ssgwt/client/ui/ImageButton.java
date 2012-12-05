@@ -173,7 +173,7 @@ public class ImageButton extends FocusPanel {
      */
     private void createInnerDiv() {
         getElement().setAttribute("style", "padding: 0px;");
-        Element innerElement = DOM.createElement("div");
+        innerElement = DOM.createElement("div");
         innerElement.setAttribute("style", "width: 100%; height: 100%; border-width: 1px; border-color: #FFF;");
         innerElement.setAttribute("class", "innerDiv");
         DOM.appendChild(getElement(), innerElement);
