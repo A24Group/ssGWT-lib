@@ -63,6 +63,11 @@ public class ImageButton extends FocusPanel {
     private Element imageElement;
     
     /**
+     * The inner div that holds the image and the label
+     */
+    private Element innerElement;
+    
+    /**
      * Class constructor creates a button with the image on the left side
      * 
      * @param label - The label of the button
@@ -183,7 +188,7 @@ public class ImageButton extends FocusPanel {
      * @return the div inside the button
      */
     public Element getInnerElement() {
-        return DOM.getFirstChild(getElement());
+        return innerElement;
     }
     
     /**
