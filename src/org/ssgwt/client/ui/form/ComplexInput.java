@@ -78,7 +78,7 @@ public abstract class ComplexInput<T> extends Composite
     /**
      * The save buttons.
      */
-    protected ImageButton saveButton = new ImageButton("Save");
+    protected ImageButton saveButton = new ImageButton("Done");
     
     /**
      * The undo button
