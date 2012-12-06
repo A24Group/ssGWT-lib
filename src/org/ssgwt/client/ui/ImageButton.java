@@ -172,10 +172,14 @@ public class ImageButton extends FocusPanel {
      * @since 05 December 2012
      */
     private void createInnerDiv() {
-        getElement().setAttribute("style", "padding: 0px;");
         innerElement = DOM.createElement("div");
-        innerElement.setAttribute("style", "width: 100%; height: 100%; border-width: 1px; border-color: #FFF;");
-        innerElement.setAttribute("class", "innerDiv");
+        innerElement.getStyle().setProperty("width", "100%");
+        innerElement.getStyle().setProperty("height", "100%");
+        innerElement.getStyle().setProperty("borderWidth", "1px");
+        innerElement.getStyle().setProperty("borderColor", "#FFF");
+        innerElement.getStyle().setProperty("cursor", "hand" );
+        innerElement.getStyle().setProperty("cursor", "pointer" );
+        innerElement.addClassName("innerDiv");
         DOM.appendChild(getElement(), innerElement);
     }
     
@@ -203,15 +207,15 @@ public class ImageButton extends FocusPanel {
         if (imageElement != null) {
             DOM.removeChild(getInnerElement(), imageElement);
         }
-        String definedStyles = image.getElement().getAttribute("style");
         imageElement = image.getElement();
-        imageElement.getStyle().setProperty("vertical-align", "middle");
+        imageElement.getStyle().setProperty("verticalAlign", "middle");
         
         if (POSITION_LEFT.equals(imagePosition)) {
             DOM.insertBefore(getInnerElement(), image.getElement(), textElement);
         } else if (POSITION_RIGHT.equals(imagePosition)) {
             DOM.appendChild(getInnerElement(), image.getElement());
         }
+        redraw();
     }
     
     /**
@@ -229,9 +233,9 @@ public class ImageButton extends FocusPanel {
         this.label = label;
         textElement = DOM.createElement("span");
         textElement.setInnerText(label);
-        textElement.getStyle().setProperty("padding-left", "3px");
-        textElement.getStyle().setProperty("padding-right", "3px");
-        textElement.getStyle().setProperty("vertical-align", "middle");
+        textElement.getStyle().setProperty("paddingLeft", "3px");
+        textElement.getStyle().setProperty("paddingRight", "3px");
+        textElement.getStyle().setProperty("verticalAlign", "middle");
         
         if (DOM.getChildCount(getInnerElement()) == 0) {
             DOM.appendChild(getInnerElement(), textElement);
@@ -242,6 +246,7 @@ public class ImageButton extends FocusPanel {
                 DOM.appendChild(getInnerElement(), textElement);
             }
         }
+        redraw();
     }
     
     /**
@@ -254,5 +259,13 @@ public class ImageButton extends FocusPanel {
      */
     public String getText() {
         return label;
+    }
+    
+    /**
+     * Forces a IE to correctly redraw the styles on the button
+     */
+    public void redraw() {
+        getElement().removeChild(innerElement);
+        getElement().appendChild(innerElement);
     }
 }
