@@ -122,7 +122,6 @@ public class DynamicForm<T> extends Composite {
          */
         public Field(InputField inputField, String label, boolean embeded, int layout, String customStyleName) {
             initWidget(container);
-            this.container.setWidth("100%");
 
             this.inputField = inputField;
             this.fieldLabel.setText(label);

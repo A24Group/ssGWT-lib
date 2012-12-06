@@ -17,7 +17,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -30,7 +30,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Johannes Gryffenberg
  * @since 05 December 2012
  */
-public class ImageButton extends Button {
+public class ImageButton extends FocusPanel {
     
     /**
      * The label text of the button
@@ -61,6 +61,11 @@ public class ImageButton extends Button {
      * The element that displayed the image on the button
      */
     private Element imageElement;
+    
+    /**
+     * The inner div that holds the image and the label
+     */
+    private Element innerElement;
     
     /**
      * Class constructor creates a button with the image on the left side
@@ -167,10 +172,14 @@ public class ImageButton extends Button {
      * @since 05 December 2012
      */
     private void createInnerDiv() {
-        getElement().setAttribute("style", "padding: 0px;");
-        Element innerElement = DOM.createElement("div");
-        innerElement.setAttribute("style", "width: 100%; height: 100%; border-width: 1px; border-color: #FFF;");
-        innerElement.setAttribute("class", "innerDiv");
+        innerElement = DOM.createElement("div");
+        innerElement.getStyle().setProperty("width", "100%");
+        innerElement.getStyle().setProperty("height", "100%");
+        innerElement.getStyle().setProperty("borderWidth", "1px");
+        innerElement.getStyle().setProperty("borderColor", "#FFF");
+        innerElement.getStyle().setProperty("cursor", "hand" );
+        innerElement.getStyle().setProperty("cursor", "pointer" );
+        innerElement.addClassName("innerDiv");
         DOM.appendChild(getElement(), innerElement);
     }
     
@@ -183,7 +192,7 @@ public class ImageButton extends Button {
      * @return the div inside the button
      */
     public Element getInnerElement() {
-        return DOM.getFirstChild(getElement());
+        return innerElement;
     }
     
     /**
@@ -198,15 +207,15 @@ public class ImageButton extends Button {
         if (imageElement != null) {
             DOM.removeChild(getInnerElement(), imageElement);
         }
-        String definedStyles = image.getElement().getAttribute("style");
         imageElement = image.getElement();
-        imageElement.setAttribute("style", definedStyles + "; vertical-align:middle;");
+        imageElement.getStyle().setProperty("verticalAlign", "middle");
         
         if (POSITION_LEFT.equals(imagePosition)) {
             DOM.insertBefore(getInnerElement(), image.getElement(), textElement);
         } else if (POSITION_RIGHT.equals(imagePosition)) {
             DOM.appendChild(getInnerElement(), image.getElement());
         }
+        redraw();
     }
     
     /**
@@ -217,7 +226,6 @@ public class ImageButton extends Button {
      * @author Johannes Gryffenberg
      * @since 05 December 2012
      */
-    @Override
     public void setText(String label) {
         if (textElement != null) {
             DOM.removeChild(getInnerElement(), textElement);
@@ -225,7 +233,9 @@ public class ImageButton extends Button {
         this.label = label;
         textElement = DOM.createElement("span");
         textElement.setInnerText(label);
-        textElement.setAttribute("style", "padding-left:3px; padding-right:3px; vertical-align:middle;");
+        textElement.getStyle().setProperty("paddingLeft", "3px");
+        textElement.getStyle().setProperty("paddingRight", "3px");
+        textElement.getStyle().setProperty("verticalAlign", "middle");
         
         if (DOM.getChildCount(getInnerElement()) == 0) {
             DOM.appendChild(getInnerElement(), textElement);
@@ -236,6 +246,7 @@ public class ImageButton extends Button {
                 DOM.appendChild(getInnerElement(), textElement);
             }
         }
+        redraw();
     }
     
     /**
@@ -246,8 +257,15 @@ public class ImageButton extends Button {
      * 
      * @return the label that is currently being displayed on the button
      */
-    @Override
     public String getText() {
         return label;
+    }
+    
+    /**
+     * Forces a IE to correctly redraw the styles on the button
+     */
+    public void redraw() {
+        getElement().removeChild(innerElement);
+        getElement().appendChild(innerElement);
     }
 }

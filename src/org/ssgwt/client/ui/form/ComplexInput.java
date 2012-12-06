@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
+import org.ssgwt.client.ui.ImageButton;
 import org.ssgwt.client.ui.form.event.ComplexInputFormCancelEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormConfirmationEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormRemoveEvent;
@@ -77,17 +78,17 @@ public abstract class ComplexInput<T> extends Composite
     /**
      * The save buttons.
      */
-    protected Button saveButton = new Button("Save");
+    protected ImageButton saveButton = new ImageButton("Save");
     
     /**
      * The undo button
      */
-    protected Button undoButton = new Button("Cancel");
+    protected ImageButton undoButton = new ImageButton("Cancel");
     
     /**
      * The add buttons
      */
-    protected Button addButton = new Button("Add");
+    protected ImageButton addButton = new ImageButton("Add");
     
     /**
      * The edit label
@@ -146,32 +147,32 @@ public abstract class ComplexInput<T> extends Composite
     /**
      * Style to display elements inline
      */
-    private String displayInline = "ssGWT-displayInlineBlockMiddel";
+    private String displayInlineStyle = "ssGWT-displayInlineBlockMiddel";
     
     /**
      * language Input Click Labels style
      */
-    private String languageInputClickLabels = "ssGWT-languageInputClickLabels";
+    private String inputClickLabelsStyle = "ssGWT-languageInputClickLabels";
     
     /**
      * Save Button style
      */
-    private String complexSaveButton = "ssGWT-complexSaveButton";
+    private String complexSaveButtonStyle = "ssGWT-complexSaveButton";
     
     /**
      * Label Button style
      */
-    private String complexLabelButton = "ssGWT-complexLabelButton";
+    private String complexLabelButtonStyle = "ssGWT-complexLabelButton";
     
     /**
      * Undo Button style
      */
-    private String complexUndoButton = "ssGWT-complexUndoButton";
+    private String complexUndoButtonStyle = "ssGWT-complexUndoButton";
     
     /**
      * Add Button style
      */
-    private String complexAddButton = "ssGWT-complexAddButton";
+    private String complexAddButtonStyle = "ssGWT-complexAddButton";
     
     /**
      * Gray row styling
@@ -181,7 +182,7 @@ public abstract class ComplexInput<T> extends Composite
     /**
      * Action Container style
      */
-    private String complexActionContainer = "ssGWT-complexActionContainer";
+    private String complexActionContainerStyle = "ssGWT-complexActionContainer";
     
     /**
      * Function to construct all the components and add it to the main panel
@@ -200,39 +201,39 @@ public abstract class ComplexInput<T> extends Composite
         messageContainer.add(messagePanel);
         messagePanel.setVisible(false);
         mainPanel.add(messagePanel);
-    	
+        
         dynamicFormPanel.add(getDynamicForm());
-        dynamicFormPanel.addStyleName(displayInline);
+        dynamicFormPanel.addStyleName(displayInlineStyle);
         
         viewPanel.add(getUiBinder());
-        viewPanel.setStyleName(displayInline);
+        viewPanel.setStyleName(displayInlineStyle);
         viewPanel.setVisible(false);
         
         dataPanel.add(dynamicFormPanel);
         dataPanel.add(viewPanel);
-        dataPanel.setStyleName(displayInline);
+        dataPanel.setStyleName(displayInlineStyle);
         
         viewButtons.add(editLabel);
-        editLabel.setStyleName(displayInline, true);
-        editLabel.setStyleName(languageInputClickLabels, true);
-        editLabel.setStyleName(complexLabelButton, true);
+        editLabel.setStyleName(displayInlineStyle, true);
+        editLabel.setStyleName(inputClickLabelsStyle, true);
+        editLabel.setStyleName(complexLabelButtonStyle, true);
         viewButtons.add(removeLabel);
-        removeLabel.setStyleName(displayInline, true);
-        removeLabel.setStyleName(languageInputClickLabels, true);
-        removeLabel.setStyleName(complexLabelButton, true);
-        viewButtons.setStyleName(displayInline, true);
+        removeLabel.setStyleName(displayInlineStyle, true);
+        removeLabel.setStyleName(inputClickLabelsStyle, true);
+        removeLabel.setStyleName(complexLabelButtonStyle, true);
+        viewButtons.setStyleName(displayInlineStyle, true);
         
         editButtons.add(saveButton);
-        saveButton.setStyleName(complexSaveButton);
+        saveButton.addStyleName(complexSaveButtonStyle);
         editButtons.add(undoButton);
-        undoButton.setStyleName(displayInline);
-        undoButton.setStyleName(complexUndoButton, true);
-        editButtons.setStyleName(displayInline);
+//        undoButton.setStyleName(displayInlineStyle);
+        undoButton.setStyleName(complexUndoButtonStyle, true);
+        editButtons.setStyleName(displayInlineStyle);
         
-        addButton.setStyleName(complexAddButton);
+        addButton.setStyleName(complexAddButtonStyle);
         actionPanel.add(addButton);
-        actionPanel.addStyleName(displayInline);
-        actionPanel.addStyleName(complexActionContainer);
+        actionPanel.addStyleName(displayInlineStyle);
+        actionPanel.addStyleName(complexActionContainerStyle);
         
         mainPanel.add(dataPanel);
         mainPanel.add(actionPanel);
@@ -416,7 +417,7 @@ public abstract class ComplexInput<T> extends Composite
      * 
      * @return the save button
      */
-    public Button getSaveButton() {
+    public ImageButton getSaveButton() {
         return saveButton;
     }
     
@@ -703,5 +704,32 @@ public abstract class ComplexInput<T> extends Composite
     @Deprecated
     public T getValue(T object) {
         return null;
+    }
+    
+    /**
+     * Sets the style that will be used by the save button
+     * 
+     * @param complexSaveButtonStyle The style that will be used by the save button
+     */
+    public void setComplexSaveButtonStyle(String complexSaveButtonStyle) {
+        this.complexSaveButtonStyle = complexSaveButtonStyle;
+    }
+    
+    /**
+     * Sets the style that will be used by the undo button
+     * 
+     * @param complexUndoButtonStyle The style that will be used by the undo button
+     */
+    public void setComplexUndoButtonStyle(String complexUndoButtonStyle) {
+        this.complexUndoButtonStyle = complexUndoButtonStyle;
+    }
+    
+    /**
+     * Sets the style that will be used by the add button
+     * 
+     * @param complexAddButtonStyle The style that will be used by the add button
+     */
+    public void setComplexAddButtonStyle(String complexAddButtonStyle) {
+        this.complexAddButtonStyle = complexAddButtonStyle;
     }
 }
