@@ -99,7 +99,7 @@ public class StringValidator extends AbstractValidator implements ValidatorInter
                     StringValidator.OPTION_MIN_LENGTH).toString();
             int minlength = Integer.parseInt(minlengthConfiguration);
 
-            if (value.length() < minlength) {
+            if (value == null || value.length() < minlength) {
                 return false;
             }
         }

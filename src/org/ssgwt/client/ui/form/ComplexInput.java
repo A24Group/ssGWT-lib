@@ -223,10 +223,10 @@ public abstract class ComplexInput<T> extends Composite
         viewButtons.setStyleName(displayInline, true);
         
         editButtons.add(saveButton);
-        saveButton.setStyleName(complexSaveButton);
+        saveButton.addStyleName(complexSaveButton);
         editButtons.add(undoButton);
-        undoButton.setStyleName(displayInline);
-        undoButton.setStyleName(complexUndoButton, true);
+        undoButton.addStyleName(displayInline);
+        undoButton.addStyleName(complexUndoButton);
         editButtons.setStyleName(displayInline);
         
         addButton.setStyleName(complexAddButton);
@@ -311,7 +311,6 @@ public abstract class ComplexInput<T> extends Composite
             @Override
             public void onClick(ClickEvent event) {
                 saveField();
-                mainPanel.addStyleName(grayRowStyling);
             }
         });
         
