@@ -405,6 +405,14 @@ public abstract class ComplexInput<T> extends Composite
     public abstract void addField();
     
     /**
+     * This function will determine whether there is unsaved data on a complex input
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since  10 Dec 2012
+     */
+    public abstract boolean hasUnsavedData();
+    
+    /**
      * Abstract function that will be called on click of the remove button is clicked
      * 
      * @author Alec Erasmus <alec.erasmus@a24group.com>

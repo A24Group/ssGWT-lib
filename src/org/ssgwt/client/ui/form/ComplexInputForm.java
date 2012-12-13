@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -515,5 +516,20 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
     @Override
     public boolean isReadOnly() {
         return this.isReadOnly;
+    }
+    
+    /**
+     * This function will determine whether there is unsaved data on a complex input
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since  10 Dec 2012
+     */
+    public boolean hasUnsavedData() {
+        for (TheField field : fields) {
+            if (field.hasUnsavedData()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
