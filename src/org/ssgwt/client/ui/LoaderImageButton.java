@@ -1,25 +1,22 @@
 package org.ssgwt.client.ui;
 
 import org.ssgwt.client.ui.event.LoaderButtonClickEvent;
-import org.ssgwt.client.ui.event.LoaderButtonClickEvent.LoaderButtonClickHandler;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.LayoutPanel;
 
 /**
  * New image button that used generic components and doesn't use elements
  * It auto disables once clicked but has a constructor that allows this to be disabled
  * It also has a function to enable the button again
  * 
- * @author Johannes Gryffenberg
+ * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
  * @since 14 December 2012
  */
 public class LoaderImageButton extends FocusPanel implements ClickHandler {
@@ -98,6 +95,11 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * The label that displays the loading text
      */
 	private Label loadingTextLabel = new Label();
+	
+	/**
+	 * The style to apply to the button's label
+	 */
+	private String loadingTextStyle;
 
 	/**
 	 * The style that will be added to the button when it is disabled
@@ -110,7 +112,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * @param label - The label of the button
      * @param imageResource - The image resource of the image the will be displayed on the button
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     public LoaderImageButton(String label, ImageResource imageResource) {
@@ -123,7 +125,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * @param label - The label of the button
      * @param imageUrl - The URL of the image the will be displayed on the button
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     public LoaderImageButton(String label, String imageUrl) {
@@ -136,7 +138,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * @param label - The label of the button
      * @param image - The image that should be displayed on the button
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     public LoaderImageButton(String label, Image image) {
@@ -150,7 +152,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * @param image - The image that should be displayed on the button
      * @param autoDisable - Flag to indicate if the button should auto disabled when clicked
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     public LoaderImageButton(String label, Image image, boolean autoDisable) {
@@ -164,7 +166,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * @param imageResource - The image resource of the image the will be displayed on the button
      * @param imagePosition - The position where the image should display
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     public LoaderImageButton(String label, ImageResource imageResource, String imagePosition) {
@@ -178,7 +180,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * @param imageUrl - The URL of the image the will be displayed on the button
      * @param imagePosition - The position where the image should display
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     public LoaderImageButton(String label, String imageUrl, String imagePosition) {
@@ -190,7 +192,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * 
      * @param label - The label of the button
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     public LoaderImageButton(String label) {
@@ -203,7 +205,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * @param label - The label of the button
      * @param autoDisable - Flag to indicate if the button should auto disabled when clicked
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     public LoaderImageButton(String label, boolean autoDisable) {
@@ -217,7 +219,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * @param image - The image that should be displayed on the button
      * @param imagePosition - The position where the image should display
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     public LoaderImageButton(String label, Image image, String imagePosition) {
@@ -232,7 +234,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * @param imagePosition - The position where the image should display
      * @param autoDisable - Flag to indicate if the button should auto disabled when clicked
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     public LoaderImageButton(String label, Image image, String imagePosition, boolean autoDisable) {
@@ -262,7 +264,6 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
             setImage(image);
         }
         updateButtonState();
-        System.out.println("active state change: " + active);
         if (autoDisable) {
             onClickHandler = this.addClickHandler(this);
         }
@@ -271,7 +272,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
     /**
      * Updates that buttons display state to match the state of the active property
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     private void updateButtonState() {
@@ -280,14 +281,11 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
         }
         innerContainer.clear();
         if (active) {
-            System.out.println("Draw active state");
-            
             if (this.disabledStyle != null) {
                 this.removeStyleName(this.disabledStyle);
             }
             innerContainer.add(activeStateContainer);
         } else {
-            System.out.println("Draw inactive state");
             if (this.disabledStyle != null) {
                 this.addStyleName(this.disabledStyle);
             }
@@ -299,7 +297,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
     /**
      * Adds the image and the label of the active state to the active state container
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     private void addActiveStateImageAndLabel() {
@@ -320,13 +318,16 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
     /**
      * Adds the image and the label of the disabled state to the disabled state container
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com> <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     private void addDisabledStateImageAndLabel() {
         disabledStateContainer.clear();
         if (loadingText != null) {
             loadingTextLabel.setText(loadingText);
+            if (loadingTextStyle != null && loadingTextStyle.length() > 0) {
+                loadingTextLabel.addStyleName(loadingTextStyle);
+            }
             disabledStateContainer.add(loadingTextLabel);
         }
         if (loadingImage != null) {
@@ -339,7 +340,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * 
      * @param image- The image the should be placed on the button
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     public void setImage(Image image) {
@@ -353,7 +354,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * 
      * @param label - The label that should be displayed on the button
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     public void setText(String label) {
@@ -364,7 +365,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
     /**
      * Retrieve the label that is currently being displayed on the button
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      * 
      * @return the label that is currently being displayed on the button
@@ -376,13 +377,12 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
     /**
      * Handles the click events on the button to disabled the button when clicked
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     @Override
     public void onClick(ClickEvent event) {
         if (active) {
-            System.out.println("active state change: " + active);
             active = !active;
             updateButtonState();
             if(!active) {
@@ -396,7 +396,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * 
      * @param loadingImage - The image the will be used in the disabled state
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     public void setLoadingImage(Image loadingImage) {
@@ -408,7 +408,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * 
      * @param loadingText - the text that will be used in the disabled state of the button
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     public void setLoadingText(String loadingText) {
@@ -416,11 +416,23 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
     }
     
     /**
+     * Sets the style of the loading text
+     * 
+     * @param loadingTextStyle - the style that will used on the loading text
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since 18 December 2012
+     */
+    public void setLoadingTextStyle(String loadingTextStyle) {
+        this.loadingTextStyle = loadingTextStyle;
+    }
+    
+    /**
      * Sets the style that will be used when the button is disabled
      * 
      * @param disabledStyle - the style that will be used when the button is disabled
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     public void setDisabledStyle(String disabledStyle) {
@@ -432,7 +444,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * 
      * @param enabled - Flag to indicate if the button should be disabled
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      */
     public void setEnabled(boolean enabled) {
@@ -446,7 +458,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * 
      * @param handler - the event handler to handle the event
      * 
-     * @author Johannes Gryffenberg
+     * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
      * 
      * @return - The event registration object
