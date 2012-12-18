@@ -94,17 +94,17 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
     /**
      * The label that displays the loading text
      */
-	private Label loadingTextLabel = new Label();
-	
-	/**
-	 * The style to apply to the button's label
-	 */
-	private String loadingTextStyle;
+    private Label loadingTextLabel = new Label();
+    
+    /**
+     * The style to apply to the button's label
+     */
+    private String loadingTextStyle;
 
-	/**
-	 * The style that will be added to the button when it is disabled
-	 */
-	private String disabledStyle;
+    /**
+     * The style that will be added to the button when it is disabled
+     */
+    private String disabledStyle;
     
     /**
      * Class constructor creates a button with the image on the left side
@@ -331,7 +331,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
             disabledStateContainer.add(loadingTextLabel);
         }
         if (loadingImage != null) {
-        	disabledStateContainer.insert(loadingImage, 0);
+            disabledStateContainer.insert(loadingImage, 0);
         }
     }
     
@@ -376,6 +376,8 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
     
     /**
      * Handles the click events on the button to disabled the button when clicked
+     * 
+     * @param event - The click event
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@a24group.com>
      * @since 14 December 2012
@@ -449,7 +451,6 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      */
     public void setEnabled(boolean enabled) {
         this.active = enabled;
-        System.out.println("active state change: " + active);
         updateButtonState();
     }
     
