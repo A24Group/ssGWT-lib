@@ -107,6 +107,12 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
     private String disabledStyle;
     
     /**
+     * Style used to turn the cursor into a hand when the cursor is over
+     * the component
+     */
+    private String handPointerStyle = "handPointer";
+    
+    /**
      * Class constructor creates a button with the image on the left side
      * 
      * @param label - The label of the button
@@ -243,6 +249,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
         this.getElement().getStyle().setProperty("display", "inline-block");
         this.getElement().getStyle().setProperty("textAlign", "center");
         this.add(innerContainer);
+        innerContainer.addStyleName(handPointerStyle);
         innerContainer.getElement().getStyle().setProperty("display", "table");
         innerContainer.setSize("100%", "100%");
         activeStateContainer.getElement().getStyle().setProperty("display", "table-cell");
