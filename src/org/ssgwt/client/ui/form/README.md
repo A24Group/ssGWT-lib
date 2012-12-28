@@ -290,3 +290,24 @@ Add the following to your style sheet
     
     form.addField(radioButtonField, "Test Radio Button Field:");
 ```
+
+#### MonthDateInputField
+```java
+    dateStartedField = new MonthDateInputField<OrganisationVO>() {
+
+        @Override
+        public Date getValue(OrganisationVO object) {
+            return TriageDate.restFormatStringToDate(object.dStartDate);
+        }
+
+        @Override
+        public void setValue(OrganisationVO object, Date value) {
+            object.dStartDate = TriageDate.dateToRestFormat(value);
+        }
+    };
+    dateStartedField.setDateFormat("MMMM yyyy"); //Default to "MMMM yyyy"
+    dateStartedField.setMaxDate(maxDate); //Default to current year
+    dateStartedField.setMinDate(minDate); //Default to 1930 
+    
+    form.addField(testDateField, "Test Month Date Field:");
+```
