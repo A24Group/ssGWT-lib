@@ -62,14 +62,11 @@ public abstract class MonthDateInputField <T> extends MonthDateBox implements In
 
 	@Override
 	public void setReadOnly(boolean readOnly) {
-		// TODO Auto-generated method stub
-		
+	    super.getTextBox().setReadOnly(readOnly);
 	}
 
 	@Override
 	public boolean isReadOnly() {
-		// TODO Auto-generated method stub
-		return false;
+	    return super.getTextBox().isReadOnly();
 	}
-
 }
