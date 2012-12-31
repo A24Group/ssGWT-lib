@@ -1,0 +1,96 @@
+/**
+ * Copyright 2012 A24Group
+ *  
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License. 
+ */
+
+/* The style for each month block */
+.monthBlock {
+    text-align: center;
+    width: 24%;
+    height: 45px;
+    margin: 1px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border: 1px solid #C7C7C7;
+    display: inline-block;
+    padding-top: 12px;
+    color: #485E87;
+    background-color: white;
+}
+
+/* The style for the year block */
+.yearBlock {
+    width: 100%;
+    margin-bottom: 20px;
+    height: 30px;
+    background-color: #EBBC3E;
+    border: 1px solid #E5A700;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    text-align: center;
+    padding-top: 2px;
+}
+
+/* The style for the year drop down box */
+.yearBlock select {
+    border: 1px solid #E5A700;
+    background: white;
+    color: #666666;
+    font-size: 13px;
+}
+
+/* The style for each month label */
+.monthLabel {
+    display: inline-block;
+    font-size: 9px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* The style for the container with all the months */
+.monthPicker {
+    moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-left: 3px;
+    margin-bottom: 3px;
+}
+
+/* The style for main month date picker panel */
+.mainPanel {
+    border: 1px solid #BBBDBF;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    background-color: #F2F2F2;
+    padding: 2px;
+    width: 204px;
+}
+
+/* The style to use for a enabled month */
+.monthEnabled {
+    cursor: pointer;
+}
+
+/* The style to use for a disabled month */
+.monthDisabled {
+    cursor: default;
+    color: #C1C1C1;
+}
+
+/* The style to use for a selected month */
+.monthSelected {
+    cursor: pointer;
+    border: 1px solid #9DA2BC;
+    background: #D0D0EE
+}
