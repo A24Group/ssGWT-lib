@@ -243,6 +243,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
         this.getElement().getStyle().setProperty("display", "inline-block");
         this.getElement().getStyle().setProperty("textAlign", "center");
         this.add(innerContainer);
+        innerContainer.getElement().getStyle().setProperty("cursor", "pointer");
         innerContainer.getElement().getStyle().setProperty("display", "table");
         innerContainer.setSize("100%", "100%");
         activeStateContainer.getElement().getStyle().setProperty("display", "table-cell");
