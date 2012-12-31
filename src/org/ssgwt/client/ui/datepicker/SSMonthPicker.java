@@ -305,7 +305,7 @@ public class SSMonthPicker extends Composite {
             
             //loop for the min year to max year adding each year
             while(counter <= max) {
-                yearListBox.addItem(""+counter);
+                yearListBox.addItem("" + counter);
                 if (counter == currentYear) {
                     yearListBox.setSelectedIndex(index);
                 }
@@ -403,8 +403,8 @@ public class SSMonthPicker extends Composite {
         //remove all enabled, disabled or selected styles from the months
         for (final Map.Entry<Integer, FocusPanel> entry : monthList.entrySet()) {
             entry.getValue().removeStyleName(resources.monthDatePickerStyle().monthDisabled());
-            entry.getValue().removeStyleName(resources.monthDatePickerStyle().monthEnabled());
             entry.getValue().removeStyleName(resources.monthDatePickerStyle().monthSelected());
+            entry.getValue().removeStyleName(resources.monthDatePickerStyle().monthEnabled());
         }
         
         //check if the year selected is the max or min year and apply styles and click handlers accordingly
@@ -517,5 +517,18 @@ public class SSMonthPicker extends Composite {
      */
     public Date getValue() {
         return selectedDate;
+    }
+    
+    /**
+     * Remove the selected style from the month box
+     * 
+     * @author Ryno Hartzer <ryno.hartzer@a24group.com>
+     * @since  31 December 2012
+     */
+    public void removeStateStyles() {
+        //remove selected styles from the months
+        for (final Map.Entry<Integer, FocusPanel> entry : monthList.entrySet()) {
+            entry.getValue().removeStyleName(resources.monthDatePickerStyle().monthSelected());
+        }
     }
 }

@@ -292,6 +292,8 @@ Add the following to your style sheet
 ```
 
 #### MonthDateInputField
+The montDateInputField can typically be used where the actual day of the month is not important for example when
+giving your education details. The day you started/ended is not really relevant.
 ```java
     dateStartedField = new MonthDateInputField<OrganisationVO>() {
 

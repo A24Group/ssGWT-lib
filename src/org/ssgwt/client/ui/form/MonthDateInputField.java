@@ -17,11 +17,11 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public abstract class MonthDateInputField <T> extends MonthDateBox implements InputField<T, Date>{
 
-	/**
+    /**
      * Whether the field is rewuired or not
      */
     private boolean required = false;
-	
+
     /**
      * Retrieve the class type the input field returns
      * 
@@ -45,10 +45,10 @@ public abstract class MonthDateInputField <T> extends MonthDateBox implements In
      * 
      * @return The value that should be displayed ob the field
      */
-	@Override
-	public abstract Date getValue(T object);
+    @Override
+    public abstract Date getValue(T object);
 
-	/**
+    /**
      * Sets the value from the input field on the object
      * 
      * @param object - The object the value was retrieved from
@@ -57,8 +57,8 @@ public abstract class MonthDateInputField <T> extends MonthDateBox implements In
      * @author Ruan Naude<ruan.naude@gmail.com>
      * @since 28 Dec 2012
      */
-	@Override
-	public abstract void setValue(T object, Date value);
+    @Override
+    public abstract void setValue(T object, Date value);
 
     /**
      * Retrieve the flag that indicates whether the input field is required or not
@@ -107,12 +107,12 @@ public abstract class MonthDateInputField <T> extends MonthDateBox implements In
      * @author Ruan Naude<ruan.naude@gmail.com>
      * @since 28 Dec 2012
      */
-	@Override
-	public void setReadOnly(boolean readOnly) {
-	    super.getTextBox().setReadOnly(readOnly);
-	}
-
-	/**
+    @Override
+    public void setReadOnly(boolean readOnly) {
+        super.getTextBox().setReadOnly(readOnly);
+    }
+    
+    /**
      * Retrieve the flag that indicates whether the field is read only
      * 
      * @author Ruan Naude<ruan.naude@gmail.com>
@@ -120,8 +120,22 @@ public abstract class MonthDateInputField <T> extends MonthDateBox implements In
      * 
      * @return The flag that indicates whether the field is read only
      */
-	@Override
-	public boolean isReadOnly() {
-	    return super.getTextBox().isReadOnly();
-	}
+    @Override
+    public boolean isReadOnly() {
+        return super.getTextBox().isReadOnly();
+    }
+    
+    /**
+     * Enable or disable the text box used and clear
+     * the month text box.
+     * 
+     * @author Ryno Hartzer <ryno.hartzer@a24group.com>
+     * @since  28 December 2012
+     */
+    public void setEnabledAndClearTextBox(boolean enabled) {
+        super.getTextBox().setEnabled(enabled);
+        if (!enabled) {
+            super.getTextBox().setText("");
+        }
+    }
 }

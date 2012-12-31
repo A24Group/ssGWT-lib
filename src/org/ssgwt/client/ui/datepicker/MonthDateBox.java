@@ -140,8 +140,7 @@ public class MonthDateBox extends Composite implements HasValue<Date> {
      * @return the registration for the event
      */
     @Override
-    public HandlerRegistration addValueChangeHandler(
-            ValueChangeHandler<Date> handler) {
+    public HandlerRegistration addValueChangeHandler(ValueChangeHandler<Date> handler) {
         return null;
     }
 
@@ -194,8 +193,8 @@ public class MonthDateBox extends Composite implements HasValue<Date> {
      * @since 27 Dec 2012
      */
     protected class MonthDateBoxHandler implements ValueChangeHandler<Date>,
-            FocusHandler, BlurHandler, ClickHandler, KeyDownHandler,
-            CloseHandler<PopupPanel> {
+        FocusHandler, BlurHandler, ClickHandler, KeyDownHandler,
+        CloseHandler<PopupPanel> {
 
         /**
          * This will handle what happens on blur for the month date box
@@ -344,13 +343,21 @@ public class MonthDateBox extends Composite implements HasValue<Date> {
     }
     
     /**
-     * Shows the date picker.
+     * Shows the month picker.
      * 
      * @author Ruan Naude <nauderuan777@gmail.com>
      * @since 27 Dec 2012
      */
     public void showMonthPicker() {
-        monthPicker.setValue(monthPicker.getValue());
+        // We need to remove the selected style
+        // from the previously selected month box.
+        if (box.getText().equals("")) {
+            this.removeSelectedStyle();
+            // Set the value to null or the style will be applied again
+            monthPicker.setValue(null);
+        } else {
+            monthPicker.setValue(monthPicker.getValue());
+        }
         popup.showRelativeTo(this);
     }
     
@@ -405,5 +412,15 @@ public class MonthDateBox extends Composite implements HasValue<Date> {
      */
     public TextBox getTextBox() {
         return this.box;
+    }
+    
+    /**
+     * Remove the selected style from the month box
+     * 
+     * @author Ryno Hartzer <ryno.hartzer@a24group.com>
+     * @since  31 December 2012
+     */
+    public void removeSelectedStyle() {
+        monthPicker.removeStateStyles();
     }
 }
