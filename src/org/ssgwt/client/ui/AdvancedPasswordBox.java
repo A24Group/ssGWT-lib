@@ -330,4 +330,17 @@ public class AdvancedPasswordBox extends Composite implements HasValue<String>, 
     public Class<String> getReturnType() {
         return String.class;
     }
+
+    /**
+     * Display's the placeholder text if the password value is empty
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 02 January 2013
+     */
+    public void displayPlaceholder() {
+        if (passwordBox.getText() == null || passwordBox.getText().equals("")) {
+            placeholder.setVisible(true);
+            passwordBox.setVisible(false);
+        }
+    }
 }
