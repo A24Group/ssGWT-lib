@@ -372,8 +372,8 @@ public class SSMonthPicker extends Composite {
             public void onClick(ClickEvent event) {
                 Date dateSelected = new Date(
                     Integer.parseInt(yearListBox.getItemText(yearListBox.getSelectedIndex())) - 1900,
-                    monthNumber,
-                    0
+                    monthNumber - 1,
+                    1
                 );
                 selectedDate = dateSelected;
                 if (popupPanel != null) {
