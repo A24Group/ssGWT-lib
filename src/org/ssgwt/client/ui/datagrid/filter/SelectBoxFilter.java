@@ -13,11 +13,7 @@
  */
 package org.ssgwt.client.ui.datagrid.filter;
 
-import org.ssgwt.client.ui.datagrid.filter.AbstractHeaderFilter.Criteria;
-import org.ssgwt.client.ui.datagrid.filter.TextFilter.Style;
 import org.ssgwt.client.ui.datagrid.filter.TextFilter.TextFilterCriteria;
-import org.ssgwt.client.ui.datagrid.filter.TextFilter.TextFilterResources;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
@@ -263,7 +259,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         /**
          * The criteria the user entered on the text filter
          */
-        private String criteria;
+        private int criteria;
         
         /**
          * Flag to indicate if the user is looking for empty entries only
@@ -293,7 +289,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
          * 
          * @return The criteria the user entered on the text filter
          */
-        public String getCriteria() {
+        public int getCriteria() {
             return criteria;
         }
 
@@ -302,7 +298,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
          * 
          * @param criteria - The criteria the user entered on the text filter
          */
-        public void setCriteria(String criteria) {
+        public void setCriteria(int criteria) {
             this.criteria = criteria;
         }
 
@@ -323,7 +319,10 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     }
 
     /**
-     * @TODO
+     * Class constructor that uses the default resources class
+     * 
+     * @author Michael Barnard <michael.barnard>
+     * @since  11 January 2012
      */
     public SelectBoxFilter() {
         this(getDefaultResources());
@@ -331,6 +330,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     
     /**
      * Class constructor that takes a custom resources class
+     * 
+     * @author Michael Barnard <michael.barnard>
+     * @since  11 January 2012
      * 
      * @param resources - The resources the text filter should use
      */
@@ -347,66 +349,74 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     }
     
     /**
-     * @TODO
+     * Sets the title of the Filter popup
+     * 
+     * @param title - The title that should be displayed on the popup
      */
     @Override
     public void setTitle(String title) {
-        // TODO Auto-generated method stub
-        
+        titleLabel.setText(title);
     }
 
     /**
-     * @TODO
+     * Retrieves the criteria of the filter
+     * 
+     * @return The criteria of the obejct
      */
     @Override
-    public Criteria getCriteria() {
-        // TODO Auto-generated method stub
-        return null;
+    public SelectBoxFilterCriteria getCriteria() {
+        return (SelectBoxFilterCriteria)this.filterCirteria;
     }
 
     /**
-     * @TODO
+     * Function that check if the filter is active by checking the value on the criteria object
+     * 
+     * @return Flag to indicate if the filter should be active based on the data in the criteria object
      */
     @Override
     protected boolean checkFilterActive() {
-        // TODO Auto-generated method stub
+        if (getCriteria().isFindEmptyEntriesOnly()) {
+            return true;
+        }
         return false;
     }
 
     /**
-     * @TODO
+     * Function to update the criteria with data in the fields
      */
     @Override
     protected void updateCriteriaObject() {
-        // TODO Auto-generated method stub
-        
+        getCriteria().setFindEmptyEntriesOnly(checkBox.getValue());
+        getCriteria().setCriteria(listBox.getSelectedIndex());
     }
 
     /**
-     * @TODO
+     * Function that sets the criteria object to a state where the filter will be inactive
      */
     @Override
     protected void setCriteriaObjectEmpty() {
-        // TODO Auto-generated method stub
-        
+        getCriteria().setFindEmptyEntriesOnly(false);
+        getCriteria().setCriteria(0);
     }
 
     /**
-     * @TODO
+     * Function used to update the input fields
      */
     @Override
     protected void updateFieldData() {
-        // TODO Auto-generated method stub
-        
+        checkBox.setValue(getCriteria().isFindEmptyEntriesOnly());
+        listBox.setSelectedIndex(getCriteria().getCriteria());
+        listBox.setEnabled(!checkBox.getValue());
     }
 
     /**
-     * @TODO
+     * Clear all the ui fields to their default states
      */
     @Override
     protected void clearFields() {
-        // TODO Auto-generated method stub
-        
+        checkBox.setValue(false);
+        listBox.setSelectedIndex(0);
+        listBox.setEnabled(true);
     }
     
     /**
@@ -580,5 +590,35 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      */
     public void setIncludeEmptyToggle(boolean includeEmptyValue) {
         this.includeEmptyValue = includeEmptyValue;
+    }
+    
+    /**
+     * Retrieves the check box that is displayed on the TextFilter.
+     * This function is protected as it is only used by test cases.
+     * 
+     * @return instance of the check box that is displayed on the TextFilter
+     */
+    protected CheckBox getCheckBox() {
+        return checkBox;
+    }
+
+    /**
+     * Retrieves the text box that is displayed on the TextFilter.
+     * This function is protected as it is only used by test cases.
+     * 
+     * @return instance of the text box that is displayed on the TextFilter
+     */
+    protected ListBox getListBox() {
+        return listBox;
+    }
+    
+    /**
+     * Retrieves the title label that is displayed on the TextFilter.
+     * This function is protected as it is only used by test cases.
+     * 
+     * @return instance of the title label that is displayed on the TextFilter
+     */
+    protected Label getTitleLabel() {
+        return titleLabel;
     }
 }
