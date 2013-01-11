@@ -4,7 +4,7 @@
     <g:FlowPanel styleName="{resources.textFilterStyle.textFilterStyle}" >
         <g:SimplePanel styleName="{resources.textFilterStyle.arrowBorderStyle}" />
         <g:SimplePanel styleName="{resources.textFilterStyle.arrowStyle}" />
-        <!-- g:FlowPanel width="100%" >
+        <g:FlowPanel width="100%" >
             <g:Label ui:field="titleLabel" styleName="{resources.textFilterStyle.titleStyle}" />
             <g:Image ui:field="removeFilterIcon" resource="{resources.removeFilterIconUp}" styleName="{resources.textFilterStyle.removeFilterIconStyle}" />
         </g:FlowPanel>
@@ -14,10 +14,10 @@
         </g:FlowPanel>
         <g:Label ui:field="textBoxLabel" text="Text to filter:" styleName="{resources.textFilterStyle.textBoxLabelStyle}" width="100%"/>
         <g:FlowPanel styleName="{resources.textFilterStyle.textBoxStyleContainer}" width="100%">
-            <g:TextBox ui:field="textBox" styleName="{resources.textFilterStyle.textBoxStyle}" width="100%"/>
+            <g:ListBox ui:field="listBox" styleName="{resources.textFilterStyle.textBoxStyle}" width="100%"/>
         </g:FlowPanel>
         <g:FlowPanel styleName="{resources.textFilterStyle.applyButtonContainer}" width="100%">
             <g:Button ui:field="applyButton" text="Apply" styleName="{resources.textFilterStyle.applyButton}" />
-        </g:FlowPanel> -->
+        </g:FlowPanel>
     </g:FlowPanel>
 </ui:UiBinder>
