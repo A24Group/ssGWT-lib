@@ -56,6 +56,11 @@ public class DynamicForm<T> extends Composite {
         private FlowPanel inputFieldContainer = new FlowPanel();
         
         /**
+         * Flag to indicate if the field is embedded
+         */
+        private boolean embeded = false;
+        
+        /**
          * Class constructor
          * 
          * @param inputField - The input field that should be displayed on the dynamic form
@@ -123,6 +128,7 @@ public class DynamicForm<T> extends Composite {
         public Field(InputField inputField, String label, boolean embeded, int layout, String customStyleName) {
             initWidget(container);
 
+            this.embeded = embeded;
             this.inputField = inputField;
             this.fieldLabel.setText(label);
             if (!this.fieldLabel.getText().equals("")) {
@@ -137,7 +143,7 @@ public class DynamicForm<T> extends Composite {
             if (!customStyleName.equals("")) {
                 this.addStyleName(customStyleName);
             }
-            if (embeded) {
+            if (this.embeded) {
                 this.container.setStyleName(containerEmbeddedStyleName);
                 this.inputField.getInputFieldWidget().addStyleName(inputFieldAdditionalEmbeddedStyleName);
                 
@@ -522,9 +528,9 @@ public class DynamicForm<T> extends Composite {
      */
     public void redraw() {
         for (Field field : fields.values()) {
-            field.fieldLabel.setStyleName(labelStyleName);
-            field.inputField.getInputFieldWidget().setStyleName(inputFieldStyleName);
-            field.requiredStar.setStyleName(requiredIndicatorStyle);
+            field.fieldLabel.addStyleName(labelStyleName);
+            field.inputField.getInputFieldWidget().addStyleName(inputFieldStyleName);
+            field.requiredStar.addStyleName(requiredIndicatorStyle);
             field.requiredStar.setVisible(field.inputField.isRequired());
             field.inputField.setReadOnly(this.readOnly);
         }
