@@ -167,8 +167,8 @@ public class MonthDateBox extends Composite implements HasValue<Date> {
      */
     @Override
     public void setValue(Date date) {
+        monthPicker.setValue(date);
         if (date != null) {
-            monthPicker.setValue(date);
             updateDateTextBox();
         }
     }
