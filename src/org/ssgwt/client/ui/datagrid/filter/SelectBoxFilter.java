@@ -260,7 +260,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         /**
          * The criteria the user entered on the text filter
          */
-        private int criteria;
+        private String criteria;
 
         /**
          * Flag to indicate if the user is looking for empty entries only
@@ -290,7 +290,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
          * 
          * @return The criteria the user entered on the text filter
          */
-        public int getCriteria() {
+        public String getCriteria() {
             return criteria;
         }
 
@@ -299,7 +299,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
          * 
          * @param criteria - The criteria the user entered on the text filter
          */
-        public void setCriteria(int criteria) {
+        public void setCriteria(String criteria) {
             this.criteria = criteria;
         }
     }
@@ -342,7 +342,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         this.resources.selectBoxFilterStyle().ensureInjected();
         this.setStyleName("");
         this.setWidget(uiBinder.createAndBindUi(this));
-        setCriteria(new TextFilterCriteria());
+        setCriteria(new SelectBoxFilterCriteria());
         addRemoveIconEventHandlers();
         addApplyButtonEventHandlers();
         addCheckBoxEventHandlers();
@@ -377,6 +377,8 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     protected boolean checkFilterActive() {
         if (getCriteria().isFindEmptyEntriesOnly()) {
             return true;
+        } else if (getCriteria().getCriteria() != null && !getCriteria().getCriteria().trim().equals("")) {
+            return true;
         }
         return false;
     }
@@ -387,7 +389,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     @Override
     protected void updateCriteriaObject() {
         getCriteria().setFindEmptyEntriesOnly(checkBox.getValue());
-        getCriteria().setCriteria(listBox.getSelectedIndex());
+        getCriteria().setCriteria(values[listBox.getSelectedIndex()]);
     }
 
     /**
@@ -396,7 +398,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     @Override
     protected void setCriteriaObjectEmpty() {
         getCriteria().setFindEmptyEntriesOnly(false);
-        getCriteria().setCriteria(0);
+        getCriteria().setCriteria("");
     }
 
     /**
@@ -405,7 +407,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     @Override
     protected void updateFieldData() {
         checkBox.setValue(getCriteria().isFindEmptyEntriesOnly());
-        listBox.setSelectedIndex(getCriteria().getCriteria());
+        listBox.setSelectedIndex(findIndexOf(getCriteria().getCriteria()));
         listBox.setEnabled(!checkBox.getValue());
     }
 
@@ -620,5 +622,30 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      */
     protected Label getTitleLabel() {
         return titleLabel;
+    }
+    
+    /**
+     * Sets the text for the listBoxLabel
+     *
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  14 January 2012
+     * 
+     * @param labelText - The string to set on the listbox label
+     */
+    public void setListBoxLabelText(String labelText){
+        this.listBoxLabel.setText(labelText);
+    }
+    
+    public String getSelectBoxItemText(){
+        return this.values[previousIndex];
+    }
+    
+    public int findIndexOf(String item) {
+        for (int x =0; x < values.length; x++) {
+            if (item.equals(values[x])) {
+                return x;
+            }
+        }
+        return -1;
     }
 }
