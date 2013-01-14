@@ -13,7 +13,7 @@
  */
 
 /* The style for the panel that contains all the elements on the text filter */
-.textFilterStyle {
+.listBoxFilterStyle {
     border: 1px solid #666666;
     background-color: #FFFFFF;
     padding: 0px;
@@ -93,8 +93,8 @@
 }
 
 /* The style for the text box label */
-.textBoxLabelStyle {
-	padding-top: 20px;
+.listBoxLabelStyle {
+    padding-top: 20px;
     padding-left: 8px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -105,8 +105,8 @@
 }
 
 /* The style for the container that holds the text box */
-.textBoxStyleContainer {
-	padding-top: 12px;
+.listBoxStyleContainer {
+    padding-top: 12px;
     padding-left: 6px;
     padding-right: 6px;
     -webkit-box-sizing: border-box;
@@ -115,8 +115,8 @@
 }
 
 /* The style for the text box */
-.textBoxStyle {
-	height: 20px;
+.listBoxStyle {
+    height: 20px;
     border: solid 1px #666666;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

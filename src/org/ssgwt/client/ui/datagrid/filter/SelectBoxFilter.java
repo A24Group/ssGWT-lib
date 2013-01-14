@@ -36,34 +36,34 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * The text filter that can be used on the SSDataGrid with a FilterSortHeader
+ * The drop down list filter that can be used on the SSDataGrid with a FilterSortHeader
  * 
- * @author Michael Barnard <michael.barnard>
+ * @author Michael Barnard <michael.barnard@a24group.com>
  * @since  11 January 2012
  */
 public class SelectBoxFilter extends AbstractHeaderFilter {
 
-	/**
+    /**
      * Instance of the UiBinder
      */
     private static Binder uiBinder = GWT.create(Binder.class);
-    
+
     /**
      * Holds an instance of the default resources
      */
     private static SelectBoxFilterResources DEFAULT_RESOURCES;
-    
+
     /**
      * Holds an instance of resources
      */
     private SelectBoxFilterResources resources;
-    
+
     /**
      * The title label
      */
     @UiField
     Label titleLabel;
-    
+
     /**
      * The check box on the filter popup
      */
@@ -75,172 +75,172 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      */
     @UiField
     Label checkBoxLabel;
-    
+
     /**
-     * The label of the text box
+     * The label of the drop down list box
      */
     @UiField
-    Label textBoxLabel;
-    
+    Label listBoxLabel;
+
     /**
-     * The text box
+     * The drop down list box
      */
     @UiField
     ListBox listBox;
-    
+
     /**
      * The icon that clears a the filter criteria
      */
     @UiField
     Image removeFilterIcon;
-    
+
     /**
      * The apply button
      */
     @UiField
     Button applyButton;
-    
+
     /**
      * Holds the text that was previously entered in the text box
      */
     int previousIndex;
-    
+
     /**
      * Whether the list values should include an empty value
      */
     boolean includeEmptyValue = true;
-    
+
     /**
      * Stores the values that will be used in the drop down list
      * One empty value will always be present if includeEmptyValue is true
      */
     String[] values = new String[]{""};
-    
+
     /**
      * UiBinder interface for the composite
      * 
-     * @author Michael Barnard <michael.barnard>
+     * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 January 2012
      */
     interface Binder extends UiBinder<Widget, SelectBoxFilter> {
     }
-    
+
     /**
      * The resources interface for the text filter
      * 
-     * @author Michael Barnard <michael.barnard>
+     * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 January 2012
      */
     public interface SelectBoxFilterResources extends Resources {
-        
+
         /**
          * Retrieves an implementation of the Style interface generated using the specified css file
          * 
          * @return An implementation of the Style interface
          */
         @Source("SelectBoxFilter.css")
-        Style textFilterStyle();
+        Style selectBoxFilterStyle();
     }
-    
+
     /**
      * The css resource for the text filter
      * 
-     * @author Michael Barnard <michael.barnard>
+     * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 January 2012
      */
     public interface Style extends CssResource {
-        
+
         /**
          * The style for the panel that contains all the elements on the text filter
          * 
          * @return The name of the compiled style
          */
-        String textFilterStyle();
-        
+        String listBoxFilterStyle();
+
         /**
          * The style for the speech bubble arrow border
          * 
          * @return The name of the compiled style
          */
         String arrowBorderStyle();
-        
+
         /**
          * The style for the speech bubble arrow
          * 
          * @return The name of the compiled style
          */
         String arrowStyle();
-        
+
         /**
          * The style for the title
          * 
          * @return The name of the compiled style
          */
         String titleStyle();
-        
+
         /**
          * The style the sets the position of the remove filter icon
          * 
          * @return The name of the compiled style
          */
         String removeFilterIconStyle();
-        
+
         /**
          * The style for the container that holds the checkbox
          * 
          * @return The name of the compiled style
          */
         String checkBoxContainerStyle();
-        
+
         /**
          * The style for the checkbox
          * 
          * @return The name of the compiled style
          */
         String checkBoxStyle();
-        
+
         /**
          * The style for the label of the checkbox
          * 
          * @return The name of the compiled style
          */
         String checkBoxLabelStyle();
-        
+
         /**
          * The style for the text box label
          * 
          * @return The name of the compiled style
          */
-        String textBoxLabelStyle();
-        
+        String listBoxLabelStyle();
+
         /**
          * The style for the container that holds the text box
          * 
          * @return The name of the compiled style
          */
         String listBoxStyleContainer();
-        
+
         /**
          * The style for the text box
          * 
          * @return The name of the compiled style
          */
         String listBoxStyle();
-        
+
         /**
          * The style for the container that holds the apply button
          * 
          * @return The name of the compiled style
          */
         String applyButtonContainer();
-        
+
         /**
          * The style for the apply button
          * 
          * @return The name of the compiled style
          */
         String applyButton();
-        
+
         /**
          * The style for the apply button when it is selected
          * 
@@ -248,24 +248,25 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
          */
         String applyButtonDown();
     }
+
     /**
      * The criteria object that will be used to represent the data enter by the user on the text filter
      * 
-     * @author Michael Barnard <michael.barnard>
+     * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 January 2012
      */
     public static class SelectBoxFilterCriteria extends Criteria {
-        
+
         /**
          * The criteria the user entered on the text filter
          */
         private int criteria;
-        
+
         /**
          * Flag to indicate if the user is looking for empty entries only
          */
         private boolean findEmptyEntriesOnly;
-        
+
         /**
          * Retrieve the flag that indicates if the user is looking for empty entries only
          * 
@@ -301,9 +302,8 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         public void setCriteria(int criteria) {
             this.criteria = criteria;
         }
-
     }
-    
+
     /**
      * Create an instance on the default resources object if it the
      * DEFAULT_RESOURCES variable is null if not it just return the object in
@@ -321,17 +321,17 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     /**
      * Class constructor that uses the default resources class
      * 
-     * @author Michael Barnard <michael.barnard>
+     * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 January 2012
      */
     public SelectBoxFilter() {
         this(getDefaultResources());
     }
-    
+
     /**
      * Class constructor that takes a custom resources class
      * 
-     * @author Michael Barnard <michael.barnard>
+     * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 January 2012
      * 
      * @param resources - The resources the text filter should use
@@ -339,7 +339,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     public SelectBoxFilter(SelectBoxFilterResources resources) {
         super(true);
         this.resources = resources;
-        this.resources.textFilterStyle().ensureInjected();
+        this.resources.selectBoxFilterStyle().ensureInjected();
         this.setStyleName("");
         this.setWidget(uiBinder.createAndBindUi(this));
         setCriteria(new TextFilterCriteria());
@@ -347,7 +347,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         addApplyButtonEventHandlers();
         addCheckBoxEventHandlers();
     }
-    
+
     /**
      * Sets the title of the Filter popup
      * 
@@ -418,7 +418,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         listBox.setSelectedIndex(0);
         listBox.setEnabled(true);
     }
-    
+
     /**
      * Adds event handlers to the checkbox on the TextFilter
      */
@@ -457,7 +457,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
              */
             @Override
             public void onMouseDown(MouseDownEvent event) {
-                applyButton.addStyleName(resources.textFilterStyle().applyButtonDown());
+                applyButton.addStyleName(resources.selectBoxFilterStyle().applyButtonDown());
             }
         });
         
@@ -470,7 +470,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
              */
             @Override
             public void onMouseUp(MouseUpEvent event) {
-                applyButton.removeStyleName(resources.textFilterStyle().applyButtonDown());
+                applyButton.removeStyleName(resources.selectBoxFilterStyle().applyButtonDown());
                 closeFilterPopup(false);
             }
         });
@@ -484,7 +484,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
              */
             @Override
             public void onMouseOut(MouseOutEvent event) {
-                applyButton.removeStyleName(resources.textFilterStyle().applyButtonDown());
+                applyButton.removeStyleName(resources.selectBoxFilterStyle().applyButtonDown());
             }
         });
     }
@@ -546,7 +546,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
             }
         });
     }
-    
+
     /**
      * Used to set the list in the filter drop down list
      * Will add an empty item 
@@ -573,7 +573,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
             listBox.addItem(this.values[x]);
         }
     }
-    
+
     /**
      * Gets the value from the dropdown list in the filter item
      * 
@@ -582,7 +582,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     public String[] getListBoxData() {
         return this.values;
     }
-    
+
     /**
      * Sets the toggle for including an empty field for the filter
      * 
@@ -591,7 +591,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     public void setIncludeEmptyToggle(boolean includeEmptyValue) {
         this.includeEmptyValue = includeEmptyValue;
     }
-    
+
     /**
      * Retrieves the check box that is displayed on the TextFilter.
      * This function is protected as it is only used by test cases.
@@ -611,7 +611,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     protected ListBox getListBox() {
         return listBox;
     }
-    
+
     /**
      * Retrieves the title label that is displayed on the TextFilter.
      * This function is protected as it is only used by test cases.
