@@ -13,7 +13,6 @@
  */
 package org.ssgwt.client.ui.datagrid.filter;
 
-import org.ssgwt.client.ui.datagrid.filter.TextFilter.TextFilterCriteria;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
@@ -101,7 +100,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     Button applyButton;
 
     /**
-     * Holds the text that was previously entered in the text box
+     * Holds the index that was previously selected in the list box
      */
     int previousIndex;
 
@@ -126,7 +125,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     }
 
     /**
-     * The resources interface for the text filter
+     * The resources interface for the select box filter
      * 
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 January 2012
@@ -143,7 +142,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     }
 
     /**
-     * The css resource for the text filter
+     * The css resource for the select box filter
      * 
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 January 2012
@@ -151,7 +150,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     public interface Style extends CssResource {
 
         /**
-         * The style for the panel that contains all the elements on the text filter
+         * The style for the panel that contains all the elements on the select box filter
          * 
          * @return The name of the compiled style
          */
@@ -207,21 +206,21 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         String checkBoxLabelStyle();
 
         /**
-         * The style for the text box label
+         * The style for the select box label
          * 
          * @return The name of the compiled style
          */
         String listBoxLabelStyle();
 
         /**
-         * The style for the container that holds the text box
+         * The style for the container that holds the select box
          * 
          * @return The name of the compiled style
          */
         String listBoxStyleContainer();
 
         /**
-         * The style for the text box
+         * The style for the select box
          * 
          * @return The name of the compiled style
          */
@@ -250,7 +249,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     }
 
     /**
-     * The criteria object that will be used to represent the data enter by the user on the text filter
+     * The criteria object that will be used to represent the data enter by the user on the select filter
      * 
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 January 2012
@@ -334,7 +333,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 January 2012
      * 
-     * @param resources - The resources the text filter should use
+     * @param resources - The resources the select box filter should use
      */
     public SelectBoxFilter(SelectBoxFilterResources resources) {
         super(true);
@@ -623,7 +622,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     protected Label getTitleLabel() {
         return titleLabel;
     }
-    
+
     /**
      * Sets the text for the listBoxLabel
      *
@@ -635,11 +634,23 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     public void setListBoxLabelText(String labelText){
         this.listBoxLabel.setText(labelText);
     }
-    
+
+    /**
+     * Gets the text currently selected in the dropdown list
+     * 
+     * @return A string of the current selectbox value
+     */
     public String getSelectBoxItemText(){
-        return this.values[previousIndex];
+        return this.values[listBox.getSelectedIndex()];
     }
-    
+
+    /**
+     * Gets the index of the string that is passed in. Returns -1 if string is not found
+     * 
+     * @param item The item to search for in the list
+     * 
+     * @return the index of the current item passed in
+     */
     public int findIndexOf(String item) {
         for (int x =0; x < values.length; x++) {
             if (item.equals(values[x])) {
