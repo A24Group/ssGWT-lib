@@ -180,6 +180,30 @@ Selection change events
     );
 ```
 
+For the SelectBoxFilter, you will need to call one additional method.
+```
+    SelectBoxFilter nameColumnFilter = new SelectBoxFilter();
+    
+    TextColumn<Contact> nameColumn = new TextColumn<Contact>() {
+        @Override
+        public String getValue(Contact object) {
+            return object.name;
+        }
+    };
+
+    String[] listItems = new String[]{"optionOne", "optionTwo", "optionThree"};
+    nameColumnFilter.setListBoxData(listItems);
+    
+    // When the one of the filters have been completed the example will be updated to create the FilterSortHeader using a filter object and not null
+    table.addFilterColumn(nameColumn, "Name", nameColumnFilter);
+
+```
+The listItems variable is a String array of items to include in the dropdown list.
+If you do not want an empty entry you can turn it off by using
+```
+    public void setIncludeEmptyToggle(boolean includeEmptyValue);
+```
+on the filter component
 
 ### TODO These still require some work before we can write a help section for them
  * Update the column add section once one of the filters are done
