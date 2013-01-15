@@ -135,6 +135,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         /**
          * Retrieves an implementation of the Style interface generated using the specified css file
          * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
+         * 
          * @return An implementation of the Style interface
          */
         @Source("SelectBoxFilter.css")
@@ -152,12 +155,18 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         /**
          * The style for the panel that contains all the elements on the select box filter
          * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
+         * 
          * @return The name of the compiled style
          */
         String listBoxFilterStyle();
 
         /**
          * The style for the speech bubble arrow border
+         * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
          * 
          * @return The name of the compiled style
          */
@@ -166,12 +175,18 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         /**
          * The style for the speech bubble arrow
          * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
+         * 
          * @return The name of the compiled style
          */
         String arrowStyle();
 
         /**
          * The style for the title
+         * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
          * 
          * @return The name of the compiled style
          */
@@ -180,12 +195,18 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         /**
          * The style the sets the position of the remove filter icon
          * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
+         * 
          * @return The name of the compiled style
          */
         String removeFilterIconStyle();
 
         /**
          * The style for the container that holds the checkbox
+         * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
          * 
          * @return The name of the compiled style
          */
@@ -194,12 +215,18 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         /**
          * The style for the checkbox
          * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
+         * 
          * @return The name of the compiled style
          */
         String checkBoxStyle();
 
         /**
          * The style for the label of the checkbox
+         * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
          * 
          * @return The name of the compiled style
          */
@@ -208,12 +235,18 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         /**
          * The style for the select box label
          * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
+         * 
          * @return The name of the compiled style
          */
         String listBoxLabelStyle();
 
         /**
          * The style for the container that holds the select box
+         * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
          * 
          * @return The name of the compiled style
          */
@@ -222,12 +255,18 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         /**
          * The style for the select box
          * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
+         * 
          * @return The name of the compiled style
          */
         String listBoxStyle();
 
         /**
          * The style for the container that holds the apply button
+         * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
          * 
          * @return The name of the compiled style
          */
@@ -236,12 +275,18 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         /**
          * The style for the apply button
          * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012 
+         * 
          * @return The name of the compiled style
          */
         String applyButton();
 
         /**
          * The style for the apply button when it is selected
+         * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
          * 
          * @return The name of the compiled style
          */
@@ -258,16 +303,25 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
 
         /**
          * The criteria the user entered on the text filter
+         * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
          */
         private String criteria;
 
         /**
          * Flag to indicate if the user is looking for empty entries only
+         * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
          */
         private boolean findEmptyEntriesOnly;
 
         /**
          * Retrieve the flag that indicates if the user is looking for empty entries only
+         * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
          * 
          * @return The flag that indicates if the user is looking for empty entries only
          */
@@ -278,6 +332,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         /**
          * Sets the flag that the user is looking for empty entries only or not
          * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
+         * 
          * @param findEmptyEntriesOnly - The new value for the flag value
          */
         public void setFindEmptyEntriesOnly(boolean findEmptyEntriesOnly) {
@@ -287,6 +344,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         /**
          * Retrieves the criteria the user entered on the text filter
          * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
+         * 
          * @return The criteria the user entered on the text filter
          */
         public String getCriteria() {
@@ -295,6 +355,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
 
         /**
          * Sets the criteria the user entered on the text filter
+         * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  11 January 2012
          * 
          * @param criteria - The criteria the user entered on the text filter
          */
@@ -307,6 +370,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * Create an instance on the default resources object if it the
      * DEFAULT_RESOURCES variable is null if not it just return the object in
      * the DEFAULT_RESOURCES variable
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
      * 
      * @return the default resource object
      */
@@ -350,6 +416,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     /**
      * Sets the title of the Filter popup
      * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
+     * 
      * @param title - The title that should be displayed on the popup
      */
     @Override
@@ -360,6 +429,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     /**
      * Retrieves the criteria of the filter
      * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
+     * 
      * @return The criteria of the obejct
      */
     @Override
@@ -369,6 +441,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
 
     /**
      * Function that check if the filter is active by checking the value on the criteria object
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
      * 
      * @return Flag to indicate if the filter should be active based on the data in the criteria object
      */
@@ -384,6 +459,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
 
     /**
      * Function to update the criteria with data in the fields
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
      */
     @Override
     protected void updateCriteriaObject() {
@@ -393,6 +471,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
 
     /**
      * Function that sets the criteria object to a state where the filter will be inactive
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
      */
     @Override
     protected void setCriteriaObjectEmpty() {
@@ -402,6 +483,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
 
     /**
      * Function used to update the input fields
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
      */
     @Override
     protected void updateFieldData() {
@@ -412,6 +496,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
 
     /**
      * Clear all the ui fields to their default states
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
      */
     @Override
     protected void clearFields() {
@@ -422,12 +509,18 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
 
     /**
      * Adds event handlers to the checkbox on the TextFilter
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
      */
     private void addCheckBoxEventHandlers() {
         this.checkBox.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
             
             /**
              * The function that will be called if the value on the check box changes
+             * 
+             * @author Michael Barnard <michael.barnard@a24group.com>
+             * @since  11 January 2012
              * 
              * @param event The event that should be handled
              */
@@ -447,12 +540,18 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
 
     /**
      * Function that adds the required events handlers to the apply button
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
      */
     private void addApplyButtonEventHandlers() {
         this.applyButton.addMouseDownHandler(new MouseDownHandler() {
             
             /**
              * The event that is call if the apply button fires a mouse down event
+             * 
+             * @author Michael Barnard <michael.barnard@a24group.com>
+             * @since  11 January 2012
              * 
              * @param event - The mouse down event that should be handled
              */
@@ -466,6 +565,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
             
             /**
              * The event that is call if the apply button fires a mouse up event
+             * 
+             * @author Michael Barnard <michael.barnard@a24group.com>
+             * @since  11 January 2012
              * 
              * @param event - The mouse up event that should be handled
              */
@@ -481,6 +583,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
             /**
              * The event that is call if the apply button fires a mouse out event
              * 
+             * @author Michael Barnard <michael.barnard@a24group.com>
+             * @since  11 January 2012
+             * 
              * @param event - The mouse out event that should be handled
              */
             @Override
@@ -492,12 +597,18 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
 
     /**
      * Adds the required events handlers to the remove filter icon
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
      */
     private void addRemoveIconEventHandlers() {
         this.removeFilterIcon.addMouseOverHandler(new MouseOverHandler() {
             
             /**
              * The event that is call if the remove criteria icon fires a mouse over event
+             * 
+             * @author Michael Barnard <michael.barnard@a24group.com>
+             * @since  11 January 2012
              * 
              * @param event - The mouse over event that should be handled
              */
@@ -512,6 +623,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
             /**
              * The event that is call if the remove criteria icon fires a mouse out event
              * 
+             * @author Michael Barnard <michael.barnard@a24group.com>
+             * @since  11 January 2012
+             * 
              * @param event - The mouse out event that should be handled
              */
             @Override
@@ -524,6 +638,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
             
             /**
              * The event that is call if the remove criteria icon fires a mouse down event
+             * 
+             * @author Michael Barnard <michael.barnard@a24group.com>
+             * @since  11 January 2012
              * 
              * @param event - The mouse down event that should be handled
              */
@@ -538,6 +655,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
             /**
              * The event that is call if the remove criteria icon fires a mouse up event
              * 
+             * @author Michael Barnard <michael.barnard@a24group.com>
+             * @since  11 January 2012
+             * 
              * @param event - The mouse up event that should be handled
              */
             @Override
@@ -551,6 +671,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     /**
      * Used to set the list in the filter drop down list
      * Will add an empty item 
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
      * 
      * @param listItems an array of items to set as the list
      */
@@ -578,6 +701,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     /**
      * Gets the value from the dropdown list in the filter item
      * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
+     * 
      * @return an array of the values in the dropdown list
      */
     public String[] getListBoxData() {
@@ -586,6 +712,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
 
     /**
      * Sets the toggle for including an empty field for the filter
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
      * 
      * @param includeEmptyValue Whether to include
      */
@@ -597,6 +726,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * Retrieves the check box that is displayed on the TextFilter.
      * This function is protected as it is only used by test cases.
      * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
+     * 
      * @return instance of the check box that is displayed on the TextFilter
      */
     protected CheckBox getCheckBox() {
@@ -607,6 +739,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * Retrieves the text box that is displayed on the TextFilter.
      * This function is protected as it is only used by test cases.
      * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
+     * 
      * @return instance of the text box that is displayed on the TextFilter
      */
     protected ListBox getListBox() {
@@ -616,6 +751,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     /**
      * Retrieves the title label that is displayed on the TextFilter.
      * This function is protected as it is only used by test cases.
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
      * 
      * @return instance of the title label that is displayed on the TextFilter
      */
@@ -638,6 +776,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     /**
      * Gets the text currently selected in the dropdown list
      * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
+     * 
      * @return A string of the current selectbox value
      */
     public String getSelectBoxItemText(){
@@ -648,6 +789,9 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * Gets the index of the string that is passed in. Returns -1 if string is not found
      * 
      * @param item The item to search for in the list
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
      * 
      * @return the index of the current item passed in
      */

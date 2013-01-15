@@ -192,7 +192,7 @@ For the SelectBoxFilter, you will need to call one additional method.
     };
 
     String[] listItems = new String[]{"optionOne", "optionTwo", "optionThree"};
-    nameColumnFilter.setListBoxData();
+    nameColumnFilter.setListBoxData(listItems);
     
     // When the one of the filters have been completed the example will be updated to create the FilterSortHeader using a filter object and not null
     table.addFilterColumn(nameColumn, "Name", nameColumnFilter);
