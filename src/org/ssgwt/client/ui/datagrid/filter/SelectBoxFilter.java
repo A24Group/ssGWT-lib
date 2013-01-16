@@ -490,7 +490,12 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     @Override
     protected void updateFieldData() {
         checkBox.setValue(getCriteria().isFindEmptyEntriesOnly());
-        listBox.setSelectedIndex(findIndexOf(getCriteria().getCriteria()));
+        int index = findIndexOf(getCriteria().getCriteria());
+        if (index != -1) {
+            listBox.setSelectedIndex(index);
+        } else {
+            listBox.setSelectedIndex(0);
+        }
         listBox.setEnabled(!checkBox.getValue());
     }
 
@@ -696,6 +701,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         for (int x = 0; x < this.values.length; x++) {
             listBox.addItem(this.values[x]);
         }
+        updateFieldData();
     }
 
     /**
@@ -796,6 +802,11 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * @return the index of the current item passed in
      */
     public int findIndexOf(String item) {
+        if (item == null)
+        {
+            getCriteria().setCriteria("");
+            item = "";
+        }
         for (int x =0; x < values.length; x++) {
             if (item.equals(values[x])) {
                 return x;
