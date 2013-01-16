@@ -121,6 +121,11 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     String[] values = new String[]{""};
     
     /**
+     * Stores the key used for empty items
+     */
+    String sEmptyKey = "";
+    
+    /**
      * Stores the values that will be used in the drop down list
      * One empty value will always be present if includeEmptyValue is true
      * This is a key value pair for referencing by id
@@ -468,7 +473,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     protected boolean checkFilterActive() {
         if (getCriteria().isFindEmptyEntriesOnly()) {
             return true;
-        } else if (getCriteria().getCriteria() != null && !getCriteria().getCriteria().trim().equals("")) {
+        } else if (getCriteria().getCriteria() != null && !getCriteria().getCriteria().trim().equals(sEmptyKey)) {
             return true;
         }
         return false;
@@ -484,6 +489,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     protected void updateCriteriaObject() {
         getCriteria().setFindEmptyEntriesOnly(checkBox.getValue());
         if (bIsAdvancedMap){
+            System.out.println("advanced map");
             getCriteria().setCriteria(getKeyFromValueMap(listBox.getItemText(listBox.getSelectedIndex())));
         } else {
             getCriteria().setCriteria(values[listBox.getSelectedIndex()]);
@@ -511,7 +517,12 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     @Override
     protected void updateFieldData() {
         checkBox.setValue(getCriteria().isFindEmptyEntriesOnly());
-        int index = findIndexOf(getCriteria().getCriteria());
+        int index = 0;
+        if (bIsAdvancedMap) {
+            index = findAdvancedIndexValue(getCriteria().getCriteria());
+        } else {
+            index = findIndexOf(getCriteria().getCriteria());
+        }
         if (index != -1) {
             listBox.setSelectedIndex(index);
         } else {
@@ -718,22 +729,30 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * @param listItems a hashmap of items to set as the list
      */
     public void setListBoxData(HashMap<String, String> listItems) {
+        boolean emptyInclude = false;
         if (listItems.size() == 0){
-            valueMap.put("*", "");
+            valueMap.put(sEmptyKey, "");
         } else {
             if (includeEmptyValue) {
-                valueMap.put("*", "");
                 valueMap.putAll(listItems);
+                emptyInclude = true;
             } else {
                 valueMap.putAll(listItems);
+                emptyInclude = false;
             }
         }
         previousIndex = 0;
+        if (emptyInclude) {
+            listBox.addItem("");
+        }
         Map<String, String> map = valueMap;
         Iterator<Map.Entry<String, String>> entries = map.entrySet().iterator();
         while (entries.hasNext()) {
             Map.Entry<String, String> entry = entries.next();
             listBox.addItem(entry.getValue(), entry.getKey());
+        }
+        if (emptyInclude) {
+            valueMap.put(sEmptyKey, "");
         }
         bIsAdvancedMap = true;
         updateFieldData();
@@ -869,14 +888,33 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * @return the index of the current item passed in
      */
     public int findIndexOf(String item) {
-        if (item == null)
-        {
-            getCriteria().setCriteria("");
+        if (item == null) {
+            getCriteria().setCriteria(sEmptyKey);
             item = "";
         }
-        for (int x =0; x < values.length; x++) {
+        for (int x = 0; x < values.length; x++) {
             if (item.equals(values[x])) {
                 return x;
+            }
+        }
+        return -1;
+    }
+    
+    /**
+     * Returns the index of the value for the advanced list key
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  16 January 2013
+     * 
+     * @return the index of the current item's key passed in
+     */
+    public int findAdvancedIndexValue(String item) {
+        Map<String, String> map = valueMap;
+        Iterator<Map.Entry<String, String>> entries = map.entrySet().iterator();
+        while (entries.hasNext()) {
+            Map.Entry<String, String> entry = entries.next();
+            if (item.equals((entry.getKey()))) {
+                return findIndexOf("" + entry.getValue());
             }
         }
         return -1;
@@ -893,14 +931,31 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * @return the key of the value passed in 
      */
     public String getKeyFromValueMap(String value) {
+        if (includeEmptyValue && value.equals("")) {
+            return sEmptyKey;
+        }
         Map<String, String> map = valueMap;
         Iterator<Map.Entry<String, String>> entries = map.entrySet().iterator();
         while (entries.hasNext()) {
             Map.Entry<String, String> entry = entries.next();
             if (value.equals((entry.getValue()))) {
+                System.out.println("entry.getKey(): " + entry.getKey());
                 return "" + entry.getKey();
+                
             }
         }
-        return "*";
+        return "";
+    }
+    
+    /**
+     * Sets the empty option key for the select box
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 16 January
+     * 
+     * @param sEmptyKey The value to be used with the empty key
+     */
+    public void setEmptyKeyReturn(String sEmptyKey) {
+        this.sEmptyKey = sEmptyKey;
     }
 }
