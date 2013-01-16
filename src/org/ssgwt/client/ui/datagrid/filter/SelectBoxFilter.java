@@ -14,7 +14,6 @@
 package org.ssgwt.client.ui.datagrid.filter;
 
 import java.util.List;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
