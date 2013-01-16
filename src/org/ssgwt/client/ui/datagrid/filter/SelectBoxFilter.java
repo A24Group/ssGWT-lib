@@ -905,6 +905,8 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  16 January 2013
      * 
+     * @param item The key of the item to search for in the list
+     * 
      * @return the index of the current item's key passed in
      */
     public int findAdvancedIndexValue(String item) {
