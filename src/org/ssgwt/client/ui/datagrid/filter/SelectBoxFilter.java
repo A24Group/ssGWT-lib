@@ -13,6 +13,7 @@
  */
 package org.ssgwt.client.ui.datagrid.filter;
 
+import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
@@ -490,7 +491,12 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     @Override
     protected void updateFieldData() {
         checkBox.setValue(getCriteria().isFindEmptyEntriesOnly());
-        listBox.setSelectedIndex(findIndexOf(getCriteria().getCriteria()));
+        int index = findIndexOf(getCriteria().getCriteria());
+        if (index != -1) {
+            listBox.setSelectedIndex(index);
+        } else {
+            listBox.setSelectedIndex(0);
+        }
         listBox.setEnabled(!checkBox.getValue());
     }
 
@@ -667,10 +673,24 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
             }
         });
     }
+    
+    /**
+     * Used to set the list in the filter drop down list
+     * Will add an empty item if specified
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
+     * 
+     * @param listItems a list of items to set as the list
+     */
+    public void setListBoxData(List<String> listItems) {
+        String[] items = new String[0];
+        setListBoxData(listItems.toArray(items));
+    }
 
     /**
      * Used to set the list in the filter drop down list
-     * Will add an empty item 
+     * Will add an empty item if specified
      * 
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 January 2012
@@ -696,6 +716,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         for (int x = 0; x < this.values.length; x++) {
             listBox.addItem(this.values[x]);
         }
+        updateFieldData();
     }
 
     /**
@@ -796,6 +817,11 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * @return the index of the current item passed in
      */
     public int findIndexOf(String item) {
+        if (item == null)
+        {
+            getCriteria().setCriteria("");
+            item = "";
+        }
         for (int x =0; x < values.length; x++) {
             if (item.equals(values[x])) {
                 return x;
