@@ -978,8 +978,8 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      */
     public void emptyListBox() {
         int listCount = listBox.getItemCount();
-        for (int x = 0; x < listCount; x++) {
-            listBox.removeItem(x);
+        for (int x = listCount; x > 0; x--) {
+            listBox.removeItem(x-1);
         }
     }
 }
