@@ -489,7 +489,6 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     protected void updateCriteriaObject() {
         getCriteria().setFindEmptyEntriesOnly(checkBox.getValue());
         if (bIsAdvancedMap){
-            System.out.println("advanced map");
             getCriteria().setCriteria(getKeyFromValueMap(listBox.getItemText(listBox.getSelectedIndex())));
         } else {
             getCriteria().setCriteria(values[listBox.getSelectedIndex()]);
@@ -914,7 +913,15 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         while (entries.hasNext()) {
             Map.Entry<String, String> entry = entries.next();
             if (item.equals((entry.getKey()))) {
-                return findIndexOf("" + entry.getValue());
+                item = entry.getValue();
+                int listCount = listBox.getItemCount();
+                for (int x = 0; x < listCount; x++) {
+                    if (item.equals(listBox.getItemText(x))) {
+                        return x;
+                    }
+                }
+                
+                return -1;
             }
         }
         return -1;
