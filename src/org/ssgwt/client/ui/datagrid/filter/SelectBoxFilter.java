@@ -13,6 +13,8 @@
  */
 package org.ssgwt.client.ui.datagrid.filter;
 
+import java.util.List;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
@@ -672,10 +674,24 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
             }
         });
     }
+    
+    /**
+     * Used to set the list in the filter drop down list
+     * Will add an empty item if specified
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
+     * 
+     * @param listItems a list of items to set as the list
+     */
+    public void setListBoxData(List<String> listItems) {
+        String[] items = new String[0];
+        setListBoxData(listItems.toArray(items));
+    }
 
     /**
      * Used to set the list in the filter drop down list
-     * Will add an empty item 
+     * Will add an empty item if specified
      * 
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 January 2012
