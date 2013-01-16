@@ -13,7 +13,11 @@
  */
 package org.ssgwt.client.ui.datagrid.filter;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
@@ -115,6 +119,18 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * One empty value will always be present if includeEmptyValue is true
      */
     String[] values = new String[]{""};
+    
+    /**
+     * Stores the values that will be used in the drop down list
+     * One empty value will always be present if includeEmptyValue is true
+     * This is a key value pair for referencing by id
+     */
+    HashMap<String, String> valueMap = new HashMap<String, String>();
+
+    /**
+     * Flag to indicate whether or not a advanced list will be used
+     */
+    private boolean bIsAdvancedMap = false;
 
     /**
      * UiBinder interface for the composite
@@ -467,7 +483,11 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     @Override
     protected void updateCriteriaObject() {
         getCriteria().setFindEmptyEntriesOnly(checkBox.getValue());
-        getCriteria().setCriteria(values[listBox.getSelectedIndex()]);
+        if (bIsAdvancedMap){
+            getCriteria().setCriteria(getKeyFromValueMap(listBox.getItemText(listBox.getSelectedIndex())));
+        } else {
+            getCriteria().setCriteria(values[listBox.getSelectedIndex()]);
+        }
     }
 
     /**
@@ -695,6 +715,37 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 January 2012
      * 
+     * @param listItems a hashmap of items to set as the list
+     */
+    public void setListBoxData(HashMap<String, String> listItems) {
+        if (listItems.size() == 0){
+            valueMap.put("*", "");
+        } else {
+            if (includeEmptyValue) {
+                valueMap.put("*", "");
+                valueMap.putAll(listItems);
+            } else {
+                valueMap.putAll(listItems);
+            }
+        }
+        previousIndex = 0;
+        Map<String, String> map = valueMap;
+        Iterator<Map.Entry<String, String>> entries = map.entrySet().iterator();
+        while (entries.hasNext()) {
+            Map.Entry<String, String> entry = entries.next();
+            listBox.addItem(entry.getValue(), entry.getKey());
+        }
+        bIsAdvancedMap = true;
+        updateFieldData();
+    }
+    
+    /**
+     * Used to set the list in the filter drop down list
+     * Will add an empty item if specified
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 January 2012
+     * 
      * @param listItems an array of items to set as the list
      */
     public void setListBoxData(String[] listItems) {
@@ -716,6 +767,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         for (int x = 0; x < this.values.length; x++) {
             listBox.addItem(this.values[x]);
         }
+        bIsAdvancedMap = false;
         updateFieldData();
     }
 
@@ -828,5 +880,27 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
             }
         }
         return -1;
+    }
+    
+    /**
+     * Get the key of the value for the advanced value map
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 16 January
+     * 
+     * @param The value linked to the required key
+     * 
+     * @return the key of the value passed in 
+     */
+    public String getKeyFromValueMap(String value) {
+        Map<String, String> map = valueMap;
+        Iterator<Map.Entry<String, String>> entries = map.entrySet().iterator();
+        while (entries.hasNext()) {
+            Map.Entry<String, String> entry = entries.next();
+            if (value.equals((entry.getValue()))) {
+                return "" + entry.getKey();
+            }
+        }
+        return "*";
     }
 }
