@@ -728,6 +728,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * @param listItems a hashmap of items to set as the list
      */
     public void setListBoxData(HashMap<String, String> listItems) {
+        emptyListBox();
         boolean emptyInclude = false;
         if (listItems.size() == 0){
             valueMap.put(sEmptyKey, "");
@@ -767,6 +768,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * @param listItems an array of items to set as the list
      */
     public void setListBoxData(String[] listItems) {
+        emptyListBox();
         if (listItems.length == 0){
             values = new String[]{""};
         } else {
@@ -966,5 +968,18 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      */
     public void setEmptyKeyReturn(String sEmptyKey) {
         this.sEmptyKey = sEmptyKey;
+    }
+    
+    /**
+     * This function will clear the listbox items
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  16 January 2013
+     */
+    public void emptyListBox() {
+        int listCount = listBox.getItemCount();
+        for (int x = 0; x < listCount; x++) {
+            listBox.removeItem(x);
+        }
     }
 }
