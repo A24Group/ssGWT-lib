@@ -743,7 +743,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         }
         previousIndex = 0;
         if (emptyInclude) {
-            listBox.addItem("");
+            listBox.addItem("", sEmptyKey);
         }
         Map<String, String> map = valueMap;
         Iterator<Map.Entry<String, String>> entries = map.entrySet().iterator();
@@ -976,9 +976,8 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * @since  16 January 2013
      */
     public void emptyListBox() {
-        int listCount = listBox.getItemCount();
-        for (int x = listCount; x > 0; x--) {
-            listBox.removeItem(x-1);
-        }
+        listBox.clear();
+        valueMap.clear();
+        values = new String[]{""};
     }
 }
