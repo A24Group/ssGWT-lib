@@ -950,7 +950,6 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         while (entries.hasNext()) {
             Map.Entry<String, String> entry = entries.next();
             if (value.equals((entry.getValue()))) {
-                System.out.println("entry.getKey(): " + entry.getKey());
                 return "" + entry.getKey();
                 
             }
