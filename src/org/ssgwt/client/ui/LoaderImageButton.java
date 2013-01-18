@@ -468,4 +468,17 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
     public HandlerRegistration addLoaderButtonClickHandler(LoaderButtonClickEvent.LoaderButtonClickHandler handler) {
         return this.addHandler(handler, LoaderButtonClickEvent.TYPE);
     }
+    
+    /**
+     * Change the visibility of the button
+     * 
+     * @param boolean visible - Flag to indicate if the button should be visible or not
+     */
+    public void setVisible(boolean visible) {
+        if (visible) {
+            this.getElement().getStyle().setProperty("display", "inline-block");
+        } else {
+            this.getElement().getStyle().setProperty("display", "none");
+        }
+    }
 }
