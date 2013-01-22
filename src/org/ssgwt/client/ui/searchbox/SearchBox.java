@@ -1,6 +1,7 @@
 package org.ssgwt.client.ui.searchbox;
 
 import org.ssgwt.client.ui.ImageButton;
+import org.ssgwt.client.ui.searchbox.recorddisplays.SearchBoxRecordWidget;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -56,6 +57,11 @@ public abstract class SearchBox<T> extends Composite {
      * Holds an instance of resources
      */
     private SearchBoxResources resources;
+
+    /**
+     * The selected display item
+     */
+    private SearchBoxRecordWidget<T> selectedDisplayItem;
     
     /**
      * UiBinder interface for the composite
@@ -69,6 +75,9 @@ public abstract class SearchBox<T> extends Composite {
      * Class constructor
      * 
      * @param submitButtonLabel - The label that will be displayed on the button
+     * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  22 January 2013
      */
     public SearchBox(String submitButtonLabel) {
         this(submitButtonLabel, getDefaultResources());
@@ -79,6 +88,9 @@ public abstract class SearchBox<T> extends Composite {
      * 
      * @param submitButtonLabel - The label that will be displayed on the button
      * @param resources - The resources the search box will use
+     * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  22 January 2013
      */
     public SearchBox(String submitButtonLabel, SearchBoxResources resources) {
         this.resources = resources;
@@ -147,6 +159,9 @@ public abstract class SearchBox<T> extends Composite {
      * The function that will contain action of the submit
      * 
      * @param selectedObject - The object the user selected
+     * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  22 January 2013
      */
     public abstract void onSubmit(T selectedObject);
     
@@ -154,6 +169,9 @@ public abstract class SearchBox<T> extends Composite {
      * Create an instance on the default resources object if it the
      * DEFAULT_RESOURCES variable is null if not it just return the object in
      * the DEFAULT_RESOURCES variable
+     * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  22 January 2013
      * 
      * @return the default resource object
      */
@@ -167,9 +185,25 @@ public abstract class SearchBox<T> extends Composite {
     /**
      * Getter for the resources instance
      * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  22 January 2013
+     * 
      * @return The resources
      */
     public SearchBoxResources getResources() {
         return this.resources;
     }
+    
+    /**
+     * Set the select display item
+     * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  22 January 2013
+     * 
+     * @param selectedDisplayItem - The display item the user clicked on in the drop down
+     */
+    public void setSelectedDisplayItem(SearchBoxRecordWidget<T> selectedDisplayItem) {
+        this.selectedDisplayItem = selectedDisplayItem;
+    }
+    
 }
