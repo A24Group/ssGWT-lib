@@ -27,6 +27,11 @@ import com.google.gwt.user.client.ui.Widget;
 public abstract class SearchBox<T> extends Composite {
     
     /**
+     * The minimum characters required for search service call to be made
+     */
+    private int minCharCount = 3;
+    
+    /**
      * The text box the user will type his search in
      */
     @UiField
@@ -206,4 +211,12 @@ public abstract class SearchBox<T> extends Composite {
         this.selectedDisplayItem = selectedDisplayItem;
     }
     
+    /**
+     * Sets minimum characters required for search service call to be made
+     * 
+     * @param minCharCount The minimum characters required for search service call to be made
+     */
+    public void setMinCharRequiredForSearch(int minCharCount) {
+        this.minCharCount = minCharCount;
+    }
 }
