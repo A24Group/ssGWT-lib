@@ -1,0 +1,48 @@
+/* Button styles */
+.submitButton {
+    float: left;
+    box-shadow: 0px 1px 0px #D9D9D9;
+    border: 1px solid #A67C52;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    text-shadow: 1px 1px #4D4D4D;
+    font-family: "Pt Sans", sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    color: white;
+    background: #FBB03B;
+    height: 26px;
+    margin-left: 20px;
+}
+
+.submitButton:hover {
+    background: #FFCC4E;
+}
+
+.submitButton:active {
+    background: #E6A236;
+}
+
+@external .innerDiv;
+.submitButton .innerDiv {
+    padding: 2px 6px;
+    box-sizing: border-box;
+    border-top-style: solid;
+    border-bottom-style: none;
+}
+
+@external .innerDiv;
+.submitButton .innerDiv:active {
+    border-top-style: none;
+    border-bottom-style: solid;
+}
+
+.textBox {
+    float: left;
+    padding: 5px 5px;
+    border: 1px solid #ccc;
+    border-top: 1px solid #999;
+    font-size: small;
+    margin: 0px;
+}
