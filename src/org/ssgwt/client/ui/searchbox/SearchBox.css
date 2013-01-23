@@ -46,3 +46,19 @@
     font-size: small;
     margin: 0px;
 }
+
+.dropDown {
+    border-radius: 8px;
+    padding: 5px;
+    border: solid 1px #ccc;
+    box-sizing: border-box;
+}
+
+.infoText {
+    color: #999;
+}
+
+.noResultText {
+    text-align: center;
+    color: #999;
+}
