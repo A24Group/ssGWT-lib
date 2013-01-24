@@ -225,14 +225,21 @@ public class SearchBoxDropDown<T> extends PopupPanel {
                     recordsSplitter.setHeight("1px");
                     recordsSplitter.setStyleName("itemSplitter");
                     mainPanel.add(recordsSplitter);
-                    System.out.println("Hello");
                 }
                 mainPanel.add(displayItem);
                 final int itemId = count;
                 displayItem.addMouseOverHandler(new MouseOverHandler() {
                     
+                    /**
+                     * The event that fire on mouse over
+                     * 
+                     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+                     * @since  22 January 2013
+                     * 
+                     * @param event - Mouse Over Event
+                     */
                     @Override
-                    public void onMouseOver(MouseOverEvent arg0) {
+                    public void onMouseOver(MouseOverEvent event) {
                         if (selectedIndex >= 0) {
                             SearchBoxDropDown.this.resultDisplayItems.get(selectedIndex).setSelectedState(false);
                         }
@@ -242,8 +249,16 @@ public class SearchBoxDropDown<T> extends PopupPanel {
                 });
                 displayItem.addMouseOutHandler(new MouseOutHandler() {
                     
+                    /**
+                     * The event that fire on mouse out
+                     * 
+                     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+                     * @since  22 January 2013
+                     * 
+                     * @param event - Mouse out Event
+                     */
                     @Override
-                    public void onMouseOut(MouseOutEvent arg0) {
+                    public void onMouseOut(MouseOutEvent event) {
                         displayItem.setSelectedState(false);
                     }
                 });
