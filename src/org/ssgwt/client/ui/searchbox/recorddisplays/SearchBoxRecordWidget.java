@@ -52,8 +52,6 @@ public abstract class SearchBoxRecordWidget<T> extends FocusPanel {
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  22 January 2013
-     * 
-     * @param itemVO - vo holding the data the display object is displaying
      */
     public abstract T getItemVO();
     
