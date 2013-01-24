@@ -71,7 +71,7 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
     /**
      * The object that was selected by the user
      */
-    T selectedObject = null;
+    private T selectedObject = null;
     
     /**
      * Instance of the UiBinder
@@ -116,7 +116,7 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
     /**
      * The number of milliseconds a call will be delayed after a key up event in order to prevent extra service calls
      */
-    private int requestDelayTime = 100;
+    private int requestDelayTime = 200;
     
     /**
      * The drop down popup that will display the results
@@ -190,7 +190,7 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
     public interface Style extends CssResource {
         
         /**
-         * The style for the panel that contains all the elements on the text filter
+         * The style for the submit button
          * 
          * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
          * @since  22 January 2013
@@ -200,7 +200,7 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
         String submitButton();
         
         /**
-         * The style for the panel that contains all the elements on the text filter
+         * The style for the text box
          * 
          * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
          * @since  22 January 2013
@@ -209,11 +209,36 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
          */
         String textBox();
         
+        /**
+         * The style drop down element
+         * 
+         * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+         * @since  22 January 2013
+         * 
+         * @return The name of the compiled style
+         */
         String dropDown();
         
+        /**
+         * The style for the info text that is displayed on the drop down before data is loaded
+         * 
+         * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+         * @since  22 January 2013
+         * 
+         * @return The name of the compiled style
+         */
         String infoText();
         
+        /**
+         * The style for the info text that is displayed on the drop down if there is no results
+         * 
+         * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+         * @since  22 January 2013
+         * 
+         * @return The name of the compiled style
+         */
         String noResultText();
+        
     }
     
     /**
@@ -256,7 +281,7 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
     }
     
     /**
-     * Set the select display item
+     * Sets the selected display item
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  22 January 2013
@@ -265,7 +290,7 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
      */
     public void setSelectedDisplayItem(SearchBoxRecordWidget<T> selectedDisplayItem) {
         if (selectedDisplayItem != null) {
-        	this.selectedDisplayItem = selectedDisplayItem;
+            this.selectedDisplayItem = selectedDisplayItem;
             this.selectedObject = this.selectedDisplayItem.getItemVO();
             textBox.setText(this.selectedDisplayItem.getItemSelectionText());
             destroyDropDownPopup();
@@ -294,31 +319,31 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
      */
     @Override
     public void onKeyUp(KeyUpEvent event){
-    	if (event.isLeftArrow() && event.isRightArrow()) {
-    		// DO nothing
-    	} else if (event.isDownArrow()) {
-    		if (dropDownPopup != null) {
-    			String itemText = dropDownPopup.selectNextItem();
-    			if (itemText != null) {
-    				textBox.setText(itemText);
-    			}
-    		}
-    	} else if (event.isUpArrow()) {
-    		if (dropDownPopup != null) {
-    			String itemText = dropDownPopup.selectPreviousItem();
-    			if (itemText != null) {
-    				textBox.setText(itemText);
-    			} else {
-    				textBox.setText(previousSearchString);
-    			}
-    		}
-    	} else if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ENTER) {
-    		if (dropDownPopup != null) {
-    			setSelectedDisplayItem(dropDownPopup.getSelectedItem());
-    		}
-    		onSubmit(selectedObject);
-    	} else if (textBox.getText().length() >= 3 && !textBox.getText().equals(previousSearchString)) {
-        	selectedObject = null;
+        if (event.isLeftArrow() && event.isRightArrow()) {
+            // DO nothing
+        } else if (event.isDownArrow()) {
+            if (dropDownPopup != null) {
+                String itemText = dropDownPopup.selectNextItem();
+                if (itemText != null) {
+                    textBox.setText(itemText);
+                }
+            }
+        } else if (event.isUpArrow()) {
+            if (dropDownPopup != null) {
+                String itemText = dropDownPopup.selectPreviousItem();
+                if (itemText != null) {
+                    textBox.setText(itemText);
+                } else {
+                    textBox.setText(previousSearchString);
+                }
+            }
+        } else if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ENTER) {
+            if (dropDownPopup != null) {
+                setSelectedDisplayItem(dropDownPopup.getSelectedItem());
+            }
+            onSubmit(selectedObject);
+        } else if (textBox.getText().length() >= 3 && !textBox.getText().equals(previousSearchString)) {
+            selectedObject = null;
             previousSearchString = textBox.getText();
             createDropDownPopup();
             dropDownPopup.setCurrentSearchString(textBox.getText());
@@ -331,19 +356,24 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
                 @Override
                 public void run() {
                     requestId++;
-                    System.out.println("Making request: " + textBox.getText() + " :: " +requestId);
                     retrieveResult(textBox.getText(), requestId);
                     delayedRequest = null;
                 }
             };
             delayedRequest.schedule(requestDelayTime);
         } else if (textBox.getText().length() < 3) {
-        	selectedObject = null;
+            selectedObject = null;
             previousSearchString = textBox.getText();
             destroyDropDownPopup();
         }
     }
     
+    /**
+     * Creates the drop down that displays the search results
+     * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  22 January 2013
+     */
     private void createDropDownPopup() {
         if (dropDownPopup == null) {
             dropDownPopup = new SearchBoxDropDown(resources);
@@ -351,15 +381,21 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
             dropDownPopup.setWidth(this.getOffsetWidth() + "px");
             dropDownPopup.show();
             dropDownPopup.addCloseHandler(new CloseHandler<PopupPanel>() {
-				
-				@Override
-				public void onClose(CloseEvent<PopupPanel> arg0) {
-					dropDownPopup = null;
-				}
-			});
+                
+                @Override
+                public void onClose(CloseEvent<PopupPanel> arg0) {
+                    dropDownPopup = null;
+                }
+            });
         }
     }
     
+    /**
+     * Destroys the drop down that displays the search results
+     * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  22 January 2013
+     */
     private void destroyDropDownPopup() {
         if (dropDownPopup != null) {
             dropDownPopup.hide();
@@ -378,6 +414,14 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
      */
     public abstract void retrieveResult(String searchString, final int requestId);
     
+    /**
+     * Sets the delay time before a request is made after a user has released a button
+     * 
+     * @param millisecondsDelay - The delay time in milliseconds
+     * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  22 January 2013
+     */
     public void setRequestDelayTime(int millisecondsDelay) {
         requestDelayTime = millisecondsDelay;
     }
@@ -387,11 +431,12 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
      * 
      * @param searchResults - The search results
      * @param requestId - The id of the request
+     * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  22 January 2013
      */
     public void setData(List<T> searchResults, int requestId) {
-        System.out.println("Set data check: " + requestId + " == " + this.requestId);
         if (requestId == this.requestId) {
-            System.out.println("Set data for request: " + requestId);
             currentDisplayItems.clear();
             for (T resultItem : searchResults) {
                 SearchBoxRecordWidget<T> tempDisplayItem = createDisplayWidgetInstance();
@@ -408,12 +453,18 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
     /**
      * Creates an instance of the widget that will be used to display records on the drop down
      * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  22 January 2013
+     * 
      * @return an instance of the widget that will be used to display records on the drop down
      */
     public abstract SearchBoxRecordWidget<T> createDisplayWidgetInstance();
     
     /**
      * Handles the click events dispatched by the submit button
+     * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  22 January 2013
      * 
      * @param event - The click event that is being handled
      */

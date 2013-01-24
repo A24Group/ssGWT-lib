@@ -225,7 +225,7 @@ public abstract class SearchBoxUserRecord<T> extends SearchBoxRecordWidget<T> {
         super();
         this.resources = resources;
         this.resources.searchBoxUserRecordStyle().ensureInjected();
-        
+        this.add(uiBinder.createAndBindUi(this));
         //create the labels and image for the user record
         nameLabel = new Label();
         usernameLabel = new Label();
@@ -242,7 +242,7 @@ public abstract class SearchBoxUserRecord<T> extends SearchBoxRecordWidget<T> {
         searchBoxUserRecord.add(nameLabel);
         searchBoxUserRecord.add(usernameLabel);
         
-        this.add(uiBinder.createAndBindUi(this));
+        
     }
 
     /**
@@ -284,7 +284,7 @@ public abstract class SearchBoxUserRecord<T> extends SearchBoxRecordWidget<T> {
      */
     @Override
     public String getItemSelectionText() {
-        return getFirstNameAndLastName(itemVO) + "- " + getUsername(itemVO);
+        return getFirstNameAndLastName(itemVO) + " - " + getUsername(itemVO);
     }
 
     /**
