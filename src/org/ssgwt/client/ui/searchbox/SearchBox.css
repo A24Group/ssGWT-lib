@@ -75,14 +75,14 @@
     padding: 5px 14px;
     border: solid 1px #A6A8AC;
     box-sizing: border-box;
-    box-shadow: 2px 2px 3px -1px #CCC;
+    box-shadow: 2px 2px 3px -1px #CCCCCC;
 }
 
 .infoText {
-    color: #999;
+    color: #999999;
 }
 
 .noResultText {
     text-align: center;
-    color: #999;
+    color: #999999;
 }

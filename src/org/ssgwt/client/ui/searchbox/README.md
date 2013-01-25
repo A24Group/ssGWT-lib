@@ -18,9 +18,10 @@ SearchBox<TestUserVo> x = new SearchBox<TestUserVo>("Assign") {
 
 	/**
 	 * The function that will hold you service call when the service call is completed the setData function should be call to 
-	 set the retrieved results. The timer here is just to simulate a real service call.
+	 * set the retrieved results. The timer here is just to simulate a real service call.
 	 * 
 	 * @param selectedObject - The object the user selected
+	 * @param requestId - The id of the request that should be passed into the setData function when data is recieved
 	 */
 	@Override
 	public void retrieveResult(String searchString, final int requestId) {
