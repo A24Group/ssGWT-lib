@@ -1,0 +1,88 @@
+/**
+ * Copyright 2012 A24Group
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License. 
+ */
+
+/* Button styles */
+.submitButton {
+    float: left;
+    box-shadow: 0px 1px 0px #D9D9D9;
+    border: 1px solid #A67C52;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    text-shadow: 1px 1px #4D4D4D;
+    font-family: "Pt Sans", sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    color: white;
+    background: #FBB03B;
+    height: 26px;
+}
+
+@external .itemSplitter;
+.itemSplitter {
+    background-color: #E6E6E5;
+    margin-top: 2px;
+    margin-bottom:  2px;
+}
+
+.submitButton:hover {
+    background: #FFCC4E;
+}
+
+.submitButton:active {
+    background: #E6A236;
+}
+
+@external .innerDiv;
+.submitButton .innerDiv {
+    padding: 2px 6px;
+    box-sizing: border-box;
+    border-top-style: solid;
+    border-bottom-style: none;
+}
+
+@external .innerDiv;
+.submitButton .innerDiv:active {
+    border-top-style: none;
+    border-bottom-style: solid;
+}
+
+.textBox {
+    color: #6685AB;
+    font-family: PT Sans, sans-serif;
+    font-size: 12px;
+    float: left;
+    padding: 5px 5px;
+    border: 1px solid #A6A8AC;
+    border-top: 1px solid #999999;
+    font-size: small;
+    margin: 0px;
+}
+
+.dropDown {
+    border-radius: 3px;
+    padding: 5px 14px;
+    border: solid 1px #A6A8AC;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 3px -1px #CCCCCC;
+}
+
+.infoText {
+    color: #999999;
+}
+
+.noResultText {
+    text-align: center;
+    color: #999999;
+}
