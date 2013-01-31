@@ -1,0 +1,16 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui" >
+
+    <ui:with field='resources' type='com.test.client.TreeNode.TreeNodeResources'/>
+    <g:FlowPanel ui:field="mainPanel" >
+        <g:FlowPanel styleName="{resources.getTreeNodeStyles.nodeSpacingStyle}">
+            <g:FlowPanel ui:field="expandCollapseButtonContainer" styleName="{resources.getTreeNodeStyles.expandCollapseImage}" >
+                <g:Image ui:field="expandCollapseButton" ></g:Image>
+            </g:FlowPanel>
+            <g:Image ui:field="selectedUnselectedImage" visible="false" styleName="{resources.getTreeNodeStyles.selectedImage}" ></g:Image>
+            <g:Label ui:field="textLabel" styleName="{resources.getTreeNodeStyles.nodeStyle} {resources.getTreeNodeStyles.nodeUnselected}" />
+        </g:FlowPanel>
+        <g:FlowPanel ui:field="subNodePanel" styleName="{resources.getTreeNodeStyles.subNodeIndent}">
+        </g:FlowPanel>
+    </g:FlowPanel>
+</ui:UiBinder>
