@@ -1,7 +1,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui" >
 
-    <ui:with field='resources' type='com.test.client.TreeNode.TreeNodeResources'/>
+    <ui:with field='resources' type='org.ssgwt.client.ui.tree.TreeNode.TreeNodeResources'/>
     <g:FlowPanel ui:field="mainPanel" >
         <g:FlowPanel styleName="{resources.getTreeNodeStyles.nodeSpacingStyle}">
             <g:FlowPanel ui:field="expandCollapseButtonContainer" styleName="{resources.getTreeNodeStyles.expandCollapseImage}" >

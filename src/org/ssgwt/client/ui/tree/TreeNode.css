@@ -13,38 +13,38 @@
  */
  
 .nodeStyle {
-	display: inline-block;
-	font-family: PT Sans, sans-serif;
-	font-size: 12px;
+    display: inline-block;
+    font-family: PT Sans, sans-serif;
+    font-size: 12px;
 }
 
 .nodeUnselected {
-	color: #9B9EA8;
+    color: #9B9EA8;
 }
 
 .nodeSelected {
-	color: #777B88;
+    color: #777B88;
 }
 
 .subNodeIndent {
-	padding-left: 30px;
+    padding-left: 30px;
 }
 
 .nodeSpacingStyle {
-	padding-bottom: 12px;
+    padding-bottom: 12px;
 }
 
 /* .viewState { */
-/* 	padding-left: 12px; */
+/*     padding-left: 12px; */
 /* } */
 
 .expandCollapseImage {
-	padding-top: 2px;
-	display: inline-block;
-	padding-right: 10px;
+    padding-top: 2px;
+    display: inline-block;
+    padding-right: 10px;
 }
 
 .selectedImage {
-	display: inline-block;
-	padding-right: 10px;
+    display: inline-block;
+    padding-right: 10px;
 }
