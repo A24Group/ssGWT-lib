@@ -7,8 +7,13 @@
             <g:FlowPanel ui:field="expandCollapseButtonContainer" styleName="{resources.getTreeNodeStyles.expandCollapseImage}" >
                 <g:Image ui:field="expandCollapseButton" ></g:Image>
             </g:FlowPanel>
-            <g:Image ui:field="selectedUnselectedImage" visible="false" styleName="{resources.getTreeNodeStyles.selectedImage}" ></g:Image>
-            <g:Label ui:field="textLabel" styleName="{resources.getTreeNodeStyles.nodeStyle} {resources.getTreeNodeStyles.nodeUnselected}" />
+            <g:FlowPanel ui:field="checkBoxContainer" styleName="{resources.getTreeNodeStyles.checkBoxContainerStyle}" visible="false" >
+                <g:CheckBox ui:field="checkBox" styleName="{resources.getTreeNodeStyles.checkBox}"></g:CheckBox>
+            </g:FlowPanel>
+            <g:FlowPanel ui:field="selectedUnselectedImageContainer" styleName="{resources.getTreeNodeStyles.selectedImage}" visible="false">
+                <g:Image ui:field="selectedUnselectedImage" ></g:Image>
+            </g:FlowPanel>
+            <g:Label ui:field="textLabel" styleName="{resources.getTreeNodeStyles.nodeTextStyle} {resources.getTreeNodeStyles.nodeUnselected}" />
         </g:FlowPanel>
         <g:FlowPanel ui:field="subNodePanel" styleName="{resources.getTreeNodeStyles.subNodeIndent}">
         </g:FlowPanel>

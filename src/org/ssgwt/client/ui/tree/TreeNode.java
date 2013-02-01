@@ -13,11 +13,14 @@
  */
 package org.ssgwt.client.ui.tree;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
@@ -25,6 +28,7 @@ import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.resources.client.ImageResource.ImageOptions;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -32,7 +36,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * This is tree node class that to draw a node node and draw it's sub nodes
+ * This is tree node class that draws a single node and draws it's sub nodes when the expand button is clicked
  * 
  * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
  * @since  31 Jan 2013
@@ -78,14 +82,44 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
     FlowPanel expandCollapseButtonContainer;
     
     /**
+     * The container that holds the check box
+     */
+    @UiField
+    FlowPanel checkBoxContainer;
+    
+    /**
+     * The check box that is displayed in edit state
+     */
+    @UiField
+    CheckBox checkBox;
+    
+    /**
+     * The image that is display next to sub nodes. This displays top level nodes if the tree 
+     * is in view state and the node is not selected
+     */
+    @UiField
+    Image selectedUnselectedImage;
+    
+    /**
+     * The container that holds the selected and unselected indicator image
+     */
+    @UiField
+    FlowPanel selectedUnselectedImageContainer;
+    
+    /**
      * Instance of the parent tree
      */
     private Tree parent;
     
     /**
-     * Flag to indicate if the node is a top level node
+     * The parent node of the current node this will be null if the current node is a top level node
      */
-    private boolean isTopLevelItem;
+    private TreeNode parentNode = null;
+    
+    /**
+     * Instances of the sub node TreeNodes that is display when the node is expanded
+     */
+    private List<TreeNode> subNodeDisplayItems = new ArrayList<TreeNode>();
     
     /**
      * Instance of the UiBinder
@@ -107,22 +141,22 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
     private static TreeNodeResources DEFAULT_RESOURCES;
     
     /**
-     * FIXME: Fix the comments
+     * Instance of the resource class the component is using to display it's images
      */
     private TreeNodeResources resources;
 
     /**
-     * FIXME: Fix the comments
+     * Flag to indicate whether the tree is in a view or edit state
      */
     private boolean viewState;
 
     /**
-     * FIXME: Fix the comments
+     * Flag to indicate whether a node is expanded or not
      */
     private boolean isExpanded = false;
 
     /**
-     * FIXME: Fix the comments
+     * Flag to indicate whether the instances for the node items has been created
      */
     private boolean isChildrenDrawn = false;
     
@@ -150,6 +184,8 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
          * 
          * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
          * @since  31 Jan 2013
+         * 
+         * @return The image resource
          */
         @Source("images/expand-icon.png")
         ImageResource expandIcon();
@@ -159,14 +195,48 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
          * 
          * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
          * @since  31 Jan 2013
+         * 
+         * @return The image resource
          */
         @Source("images/minimise-Icon.png")
         ImageResource collapseIcon();
-
+        
+        /**
+         * The image that is shown on root nodes in the view state if they are not selected
+         * 
+         * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+         * @since  01 Feb 2013
+         * 
+         * @return The image resource
+         */
+        @Source("images/No-access-Icon.png")
+        ImageResource viewStateTopNodeNotSelected();
+        
+        /**
+         * The image that is shown next to sub nodes that that are selected
+         * 
+         * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+         * @since  01 Feb 2013
+         * 
+         * @return The image resource
+         */
+        @Source("images/orange-branch.png")
+        ImageResource branchSelected();
+        
+        /**
+         * The image that is shown next to sub nodes that that are not selected
+         * 
+         * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+         * @since  01 Feb 2013
+         * 
+         * @return The image resource
+         */
+        @Source("images/grey-branch.png")
+        ImageResource branchNotSelected();
     }
     
     /**
-     * The css resource for the text filter
+     * The css resource for the TreeNode
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  31 Jan 2013
@@ -174,19 +244,17 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
     public interface Style extends CssResource {
     
         /**
-         * The styling for the node
-         * TODO: Update style comment to explain the use of the stlye
+         * The styling for the node text
          * 
          * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
          * @since  31 Jan 2013
          * 
          * @return The style compiled name
          */
-        public String nodeStyle();
+        public String nodeTextStyle();
 
         /**
-         * The styling for the node
-         * TODO: Update style comment to explain the use of the stlye
+         * The color styling for the node text when the node is selected
          * 
          * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
          * @since  31 Jan 2013
@@ -196,8 +264,7 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
         public String nodeSelected();
 
         /**
-         * The styling for the node
-         * TODO: Update style comment to explain the use of the stlye
+         * The style that applies the padding on the sub nodes of the node
          * 
          * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
          * @since  31 Jan 2013
@@ -207,8 +274,7 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
         public String subNodeIndent();
 
         /**
-         * The styling for the node
-         * TODO: Update style comment to explain the use of the stlye
+         * The style that adds the spacing the the node
          * 
          * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
          * @since  31 Jan 2013
@@ -218,8 +284,7 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
         public String nodeSpacingStyle();
 
         /**
-         * The styling for the node
-         * TODO: Update style comment to explain the use of the stlye
+         * The style that adds spacing for the expand and collapse icon
          * 
          * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
          * @since  31 Jan 2013
@@ -229,8 +294,7 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
         public String expandCollapseImage();
 
         /**
-         * The styling for the node
-         * TODO: Update style comment to explain the use of the stlye
+         * The style that adds spacing for the selected icon
          * 
          * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
          * @since  31 Jan 2013
@@ -240,8 +304,7 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
         public String selectedImage();
 
         /**
-         * The styling for the node
-         * TODO: Update style comment to explain the use of the stlye
+         * The color styling for the node text when the node is not selected
          * 
          * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
          * @since  31 Jan 2013
@@ -249,6 +312,36 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
          * @return The style compiled name
          */
         public String nodeUnselected();
+        
+        /**
+         * The extra padding that is applied to leaf node
+         * 
+         * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+         * @since  31 Jan 2013
+         * 
+         * @return The style compiled name
+         */
+        public String leafNodeStyle();
+        
+        /**
+         * The style that adds spacing for the check box in the edit state
+         * 
+         * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+         * @since  31 Jan 2013
+         * 
+         * @return The style compiled name
+         */
+        public String checkBoxContainerStyle();
+        
+        /**
+         * The style to remove the margin and the label of the checkbox
+         * 
+         * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+         * @since  31 Jan 2013
+         * 
+         * @return The style compiled name
+         */
+        public String checkBox();
     }
     
     /**
@@ -258,32 +351,18 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
      * @since  31 Jan 2013
      */
     public TreeNode() {
-        this(getDefaultResources(), false);
+        this(getDefaultResources());
     }
     
     /**
      * Class constructor
      * 
-     * @param isTopLevelItem
+     * @param resources The resources class that provides the styles and images for the TreeNode
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  31 Jan 2013
      */
-    public TreeNode(boolean isTopLevelItem) {
-        this(getDefaultResources(), isTopLevelItem);
-    }
-    
-    /**
-     * Class constructor
-     * 
-     * @param resources
-     * @param isTopLevelItem
-     * 
-     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
-     * @since  31 Jan 2013
-     */
-    public TreeNode(TreeNodeResources resources, boolean isTopLevelItem) {
-        this.isTopLevelItem = isTopLevelItem;
+    public TreeNode(TreeNodeResources resources) {
         this.resources = resources;
         this.resources.getTreeNodeStyles().ensureInjected();
         initWidget(uiBinder.createAndBindUi(this));
@@ -328,22 +407,73 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
      * @since  31 Jan 2013
      */
     public void setNodeData(NodeType nodeData, boolean viewState) {
-        this.viewState = viewState;
         this.nodeData = nodeData;
+        this.viewState = viewState;
+        /*
+         * This will only affect root nodes. This checks if a root has any children that are selected
+         * if the node is not selected. If the node has no children that are selected this root node it hidden.
+         */
         if (viewState && !isSelected() && nodeData.isNoChildrenSelected()) {
             this.setVisible(false);
             return;
         }
+        /*
+         * Update the selected image of the current node
+         */
+        updateNodeImage();
+        
+        // Adds value change handler to the check box if the Tree is in edit state and sets the check box to visible.
+        if (!this.viewState) {
+            this.checkBoxContainer.setVisible(true);
+            this.checkBox.setValue(isSelected());
+            this.checkBox.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+                
+                /**
+                 * The on value change handler function that is call when an item is selected or deselected
+                 * 
+                 * @param event The event being handled
+                 */
+                @Override
+                public void onValueChange(ValueChangeEvent<Boolean> event) {
+                    // Update the node to it's new selection state
+                    setSelected(event.getValue());
+                }
+            });
+        }
+        
+        // Updates the text style for the node
         updateSelectedState();
-        textLabel.setText(getNodeDisplayText(nodeData));
-        List<SubNodes> subNodesData = getSubNodesData(nodeData);
+        
+        // Set the text of the node
+        textLabel.setText(nodeData.getNodeDisplayText());
+        
+        // Retrieves the sub nodes of the node
+        List<NodeObject> subNodesData = getSubNodesData();
+        
+        // Check if the node has children
         if (subNodesData != null && subNodesData.size() > 0) {
-            if (!viewState && !isSelected() && !nodeData.isNoChildrenSelected()) {
+            // Node has children
+            
+            /*
+             * Expand the sub nodes if the node is not selected and node has children that is selected.
+             * 
+             * If the node is selected the or has no children that is selected the node is not expanded.
+             */
+            if (!isSelected() && !nodeData.isNoChildrenSelected()) {
                 expandNode();
             }
+            
+            // Updates the expand button to the correct state
             updateExpandCollapseButtonState();
+            
+            // Add a click handler to the expand and collapse button
             expandCollapseButton.addClickHandler(new ClickHandler() {
                 
+                /**
+                 * The on click event handler that expands and collapse the node
+                 * 
+                 * @param event The event being handled
+                 */
                 @Override
                 public void onClick(ClickEvent event) {
                     if (isExpanded) {
@@ -351,16 +481,17 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
                     } else {
                         expandNode();
                     }
-                    updateExpandCollapseButtonState();
                 }
             });
         } else {
+            // If the node doesn't have children. Remove the expand button.
             expandCollapseButtonContainer.setVisible(false);
+            mainPanel.setStyleName(resources.getTreeNodeStyles().leafNodeStyle());
         }
     }
     
     /**
-     * FIXME: Fix the comments
+     * Updates the node's expand and collapse button
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  31 Jan 2013
@@ -372,8 +503,33 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
             expandCollapseButton.setResource(resources.expandIcon());
         }
     }
+    
     /**
-     * FIXME: Fix the comments
+     * Updates the node's branch image to match the selected state
+     * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  01 Feb 2013
+     */
+    public void updateNodeImage() {
+        if (parentNode == null) {
+            if (viewState) {
+                if (!isSelected()) {
+                    selectedUnselectedImage.setResource(resources.viewStateTopNodeNotSelected());
+                    selectedUnselectedImageContainer.setVisible(true);
+                }
+            }
+        } else {
+            if (isSelected()) {
+                selectedUnselectedImage.setResource(resources.branchSelected());
+            } else {
+                selectedUnselectedImage.setResource(resources.branchNotSelected());
+            }
+            selectedUnselectedImageContainer.setVisible(true);
+        }
+    }
+    
+    /**
+     * Updates the node's text style to match the selected style
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  31 Jan 2013
@@ -389,29 +545,34 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
     }
     
     /**
-     * FIXME: Fix the comments
+     * Expands the node
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  31 Jan 2013
      */
     public void expandNode() {
-        if (!isChildrenDrawn) {
-            this.isChildrenDrawn  = true;
-            List<SubNodes> subNodesData = getSubNodesData(nodeData);
-            for (SubNodes subNodeData : subNodesData) {
-                TreeNode tempNode = createSubNode();
-                tempNode.setNodeData(subNodeData, viewState);
-                tempNode.setParentTree(parent);
-                subNodePanel.add(tempNode);
+        List<NodeObject> subNodesData = getSubNodesData();
+        if (subNodesData != null && subNodesData.size() > 0) {
+            if (!isChildrenDrawn ) {
+                this.isChildrenDrawn  = true;
+                for (NodeObject subNodeData : subNodesData) {
+                    TreeNode tempNode = createSubNode();
+                    tempNode.setNodeData(subNodeData, viewState);
+                    tempNode.setParentTree(parent);
+                    tempNode.setParentNode(this);
+                    subNodeDisplayItems.add(tempNode);
+                    subNodePanel.add(tempNode);
+                }
+            } else {
+                subNodePanel.setVisible(true);
             }
-        } else {
-            subNodePanel.setVisible(true);
+            this.isExpanded = true;
+            updateExpandCollapseButtonState();
         }
-        this.isExpanded = true;
     }
     
     /**
-     * FIXME: Fix the comments
+     * Collapses the node
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  31 Jan 2013
@@ -419,12 +580,13 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
     public void collapseNode() {
         subNodePanel.setVisible(false);
         this.isExpanded = false;
+        updateExpandCollapseButtonState();
     }
     
     /**
-     * FIXME: Fix the comments
+     * Sets the node's parent tree
      * 
-     * @param parent
+     * @param parent The parent tree
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  31 Jan 2013
@@ -434,61 +596,74 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
     }
     
     /**
-     * FIXME: Fix the comments
-     * 
-     * @param nodeData
+     * Retrieves the data for the node's children
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  31 Jan 2013
      * 
-     * @return
+     * @return The data for the children
      */
-    public abstract String getNodeDisplayText(NodeType nodeData);
+    public List<NodeObject> getSubNodesData() {
+        return nodeData.arrTreeChildren;
+    }
     
     /**
-     * FIXME: Fix the comments
-     * 
-     * @param nodeData
+     * Creates an instance of a sub node
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  31 Jan 2013
      * 
-     * @return
-     */
-    public abstract List<SubNodes> getSubNodesData(NodeType nodeData);
-    
-    /**
-     * FIXME: Fix the comments
-     * 
-     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
-     * @since  31 Jan 2013
-     * 
-     * @return
+     * @return An instance of a sub node
      */
     public abstract TreeNode<SubNodes, ?> createSubNode();
     
     /**
-     * FIXME: Fix the comments
+     * Retrieves the node's current selected state
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  31 Jan 2013
      * 
-     * @return
+     * @return The node's current selected state
      */
     public boolean isSelected() {
-        return nodeData.selected;
+        return nodeData.isSelected();
     }
     
     /**
-     * FIXME: Fix the comments
+     * Sets the node's selected state
      * 
-     * @param selected
+     * @param selected The node's selected state
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  31 Jan 2013
      */
     public void setSelected(boolean selected) {
-        nodeData.selected = selected;
+        nodeData.setSelected(selected);
+        checkBox.setValue(selected, false);
+        updateSelectedState();
+        updateNodeImage();
+        if (selected) {
+            nodeData.setAllChildrenSelectedState(selected);
+            for (TreeNode subNode: subNodeDisplayItems) {
+                subNode.setSelected(selected);
+            }
+        } else {
+            expandNode();
+            if (this.parentNode != null) {
+                this.parentNode.setSelected(selected);
+            }
+        }
     }
     
+    /**
+     * Sets the parent nodes
+     * 
+     * @param parentNode The parent nodes
+     * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  31 Jan 2013
+     */
+    public void setParentNode(TreeNode parentNode) {
+        this.parentNode = parentNode;
+    }
 }

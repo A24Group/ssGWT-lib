@@ -45,11 +45,6 @@ public abstract class Tree<NodeType extends NodeObject, SubNodes extends NodeObj
     private List<NodeType> treeData;
     
     /**
-     * This holds all the selected items
-     */
-    private List<Object> selectedItems = new ArrayList<Object>();
-    
-    /**
      * Class constructor
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
@@ -83,42 +78,6 @@ public abstract class Tree<NodeType extends NodeObject, SubNodes extends NodeObj
      */
     public List<NodeType> getData() {
         return treeData;
-    }
-    
-    /**
-     * Retrieves only the selected items
-     * 
-     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
-     * @since  31 Jan 2013
-     * 
-     * @return The selected items
-     */
-    public List<?> getSelectedItems() {
-        return treeData;
-    }
-    
-    /**
-     * Adds a selected item to the selected item list
-     * 
-     * @param selectedItem The selected that should be added to the selected item list
-     * 
-     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
-     * @since  31 Jan 2013
-     */
-    public void addSelectedItem(Object selectedItem) {
-        selectedItems.add(selectedItem);
-    }
-    
-    /**
-     * Removes a selected item from the selected item list
-     * 
-     * @param selectedItem The that should the removed from the selected item list
-     * 
-     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
-     * @since  31 Jan 2013
-     */
-    public void removeSelectedItem(Object selectedItem) {
-        selectedItems.remove(selectedItem);
     }
     
     /**

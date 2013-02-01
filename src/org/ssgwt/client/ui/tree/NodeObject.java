@@ -22,32 +22,71 @@ import java.util.List;
  * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
  * @since  31 Jan 2013
  */
-public class NodeObject {
+public abstract class NodeObject {
 
-	/**
-	 * All the sub nodes of the node
-	 */
-	public List<NodeObject> arrSubNodes = new ArrayList<NodeObject>();
-	
-	/**
-	 * Boolean indicating if the item is selected
-	 */
-	public boolean selected;
-	
-	/**
-	 * Function used to check if all the items is selected
-	 * 
-	 * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
-	 * @since  31 Jan 2013
-	 * 
-	 * @return true in no children is selected
-	 */
-	public boolean isNoChildrenSelected() {
-		for (NodeObject child : arrSubNodes) {
-			if (child.selected || !child.isNoChildrenSelected()) {
-				return false;
-			}
-		}
-		return true;
-	}
+    /**
+     * All the sub nodes of the node
+     */
+    public List<NodeObject> arrTreeChildren = new ArrayList<NodeObject>();
+    
+    /**
+     * Function used to check if all the items is selected
+     * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  31 Jan 2013
+     * 
+     * @return true in no children is selected
+     */
+    public boolean isNoChildrenSelected() {
+        for (NodeObject child : arrTreeChildren) {
+            if (child.isSelected() || !child.isNoChildrenSelected()) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    /**
+     * Retrieves the object's selected state
+     * 
+     * @return The object's selected state
+     */
+    public abstract boolean isSelected();
+    
+    /**
+     * Set the object's selected state
+     * 
+     * @param selected The new selected state
+     * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  01 Feb 2013
+     */
+    public abstract void setSelected(boolean selected);
+    
+    /**
+     * Updates the selected state of all the sub nodes
+     * 
+     * @param selected The new selected state
+     * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  01 Feb 2013
+     */
+    public void setAllChildrenSelectedState(boolean selected) {
+        if (arrTreeChildren != null) {
+            for (NodeObject child : arrTreeChildren) {
+                child.setSelected(selected);
+                child.setAllChildrenSelectedState(selected);
+            }
+        }
+    }
+    
+    /**
+     * Retrieves the text that should be displayed on the tree for the item
+     * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  01 Feb 2013
+     * 
+     * @return The text that should be displayed on the tree for the item
+     */
+    public abstract String getNodeDisplayText();
 }
