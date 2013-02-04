@@ -398,10 +398,10 @@ public class TreeNode extends Composite {
     }
     
     /**
-     * FIXME: Fix the comments
+     * Sets the data for the node and updates the state to match the data of the item
      * 
-     * @param nodeData
-     * @param viewState
+     * @param nodeData The node's data
+     * @param viewState Flag that indicates whether the tree is in view or edit state
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  31 Jan 2013
