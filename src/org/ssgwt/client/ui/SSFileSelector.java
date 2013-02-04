@@ -20,28 +20,25 @@ package org.ssgwt.client.ui;
 import java.util.ArrayList;
 
 import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasChangeHandlers;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.HasName;
 
 /**
  * SSFileSelector
  * 
- * The SSFileSelector is an object used as a FileUpload object.
- * Works the same way as what a FileUpload, upload an file but
- * is able to style the button. The File name is not displayed
- * but it is possible to get the file name.
- * 
- * //TODO This class is not done. 
+ * Custom file uploader used to upload file.
+ * The SSFileSelector needs to be added to a form to be used.
  * 
  * @author Alec Erasmus <alec.erasmus@a24group.com>
  * @since 06 Sep 2012
@@ -59,17 +56,7 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
     Button button;
     
     /**
-     * The form to submit on
-     */
-    FormPanel form;
-    
-    /**
-     * Flag for when there is a form to submit on, if the button is clicked
-     */
-    boolean isForm = false;
-    
-    /**
-     * Flag for when there is a form to submit on, if the button is clicked
+     * If validation should be done on the file uploaded
      */
     boolean isValidation = false;
     
@@ -84,80 +71,40 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
     String error = null;
     
     /**
-     * Class constructor
+     * Class constructor.
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  04 Feb 2013
      * 
      * @param label The label to display on the button
      */
     public SSFileSelector(String label) {
         FlowPanel mainContainer = new FlowPanel();
         fileUpload = new FileUpload();
-        fileUpload.setWidth("0px");
-        fileUpload.setHeight("0px");
-        mainContainer.add(fileUpload);
-        
         button = new Button(label);
-        button.addClickHandler(new ClickHandler() {
-            
-            /**
-             * The event that fires once you click on the button
-             * 
-             * @param event - The event that fires
-             */
-            @Override
-            public void onClick(ClickEvent event) {
-                SSFileSelector.clickOnInputFile(fileUpload.getElement());
-                if (isForm) {
-                    
-                    /**
-                     * Timer to delay
-                     */
-                    Timer timer = new Timer() {
-                    	
-                        /**
-                         * This method will be called when a timer fires.
-                         */
-                        public void run() { 
-                            if (!getFileSelectedComplete()) {
-                                this.schedule(500);
-                            } else {
-                                if (isValidation) {
-                                    error = null;
-                                    int x = getFileName().lastIndexOf(".");
-                                    if (x == -1) {
-                                        setError();
-                                    } else {
-                                        String extension = getFileName().substring(x + 1);
-                                        if (allowedFiles.contains(extension)) {
-                                            form.submit();
-                                        } else {
-                                            setError();
-                                        }
-                                    }
-                                } else {
-                                    form.submit();
-                                }
-                            }
-                        } 
-                    }; 
-                    timer.run();
-                }
-            }
-        });
+        mainContainer.add(fileUpload);
         mainContainer.add(button);
         initWidget(mainContainer);
     }
     
     /**
-     * Call the click function on the element provided
+     * Set the style of the fileUploader.
+     * This style will contain the opacety 0 and the set width 
+     * and height of the button you want to display.
      * 
-     * @param element The element to click on
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  04 Feb 2013
      */
-    private static native void clickOnInputFile(Element element) /*-{
-        element.click();
-    }-*/;
-    
+    public void setFileUploadStyle(String styleName) {
+        fileUpload.setStyleName(styleName);
+    }
+
     /**
-     * Set the style on the component
+     * Set the style on the component.
+     * This style the button displayed
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  04 Feb 2013
      * 
      * @param style The style name
      */
@@ -166,16 +113,22 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
     }
     
     /**
-     * Adds a change handler on the component
+     * Adds a change handler on the component.
      * 
-     * @param handler The handler to add
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  04 Feb 2013
+     * 
+     * @param Handler Registration
      */
     public HandlerRegistration addChangeHandler(ChangeHandler handler) {
         return fileUpload.addChangeHandler(handler);
     }
 
     /**
-     * Set the widget's name 
+     * Set the widget's name
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  04 Feb 2013
      * 
      * @param name The name
      */
@@ -185,7 +138,12 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
     }
 
     /**
-     * Get the widget's name 
+     * Get the widget's name.
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  04 Feb 2013
+     * 
+     * @return the name of the widget
      */
     @Override
     public String getName() {
@@ -193,8 +151,12 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
     }
     
     /**
-     * Gets the filename selected by the user. This property has no mutator, as
+     * Gets the filename selected. 
+     * This property has no mutator, as
      * browser security restrictions preclude setting it.
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  04 Feb 2013
      * 
      * @return the widget's filename
      */
@@ -203,17 +165,10 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
     }
     
     /**
-     * If the form is set on the object the submit will be called on the selection of the file
-     * 
-     * @param form The form to call submit on
-     */
-    public void setFormToSubmit(FormPanel form) {
-        this.isForm = true;
-        this.form = form;
-    }
-    
-    /**
      * This adds validation on the file extensions that's allowed
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  04 Feb 2013
      * 
      * @param allowedFiles ArrayList containing the extensions allowed
      */
@@ -223,19 +178,73 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
     }
     
     /**
-     * Set the error message for validation error
+     * Getter for the file upload
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  04 Feb 2013
+     * 
+     * @return the file File Upload
      */
-    public void setError() {
-        // TODO getter for this function
-        error = "The file does not have a valid extension";
+    public FileUpload getFileUpload() {
+        return this.fileUpload;
     }
     
     /**
-     * This function must check that the file upload is completed
-     * Need to check the last uploaded file is not the same file
+     * Do validation on a file exstenstion.
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  04 Feb 2013
+     * 
+     * @return if the form is valid or not.
      */
-    public boolean getFileSelectedComplete() {
-        // TODO
-        return false;
+    public boolean isFileValid() {
+        String fileExstenstion = fileUpload.getFilename().substring(fileUpload.getFilename().lastIndexOf(".") + 1);
+        if (isValidation && !allowedFiles.contains(fileExstenstion)) {
+        	return false;
+        }
+        return true;
     }
+    
+    /**
+     * Add the Mouse Over Handler on the file uploader
+     * 
+     * @param handler - Mouse Over Handler
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  04 Feb 2013
+     * 
+     * @return Handler Registration
+     */
+    public HandlerRegistration addMouseOverHandler(MouseOverHandler handler) {
+        return fileUpload.addDomHandler(handler, MouseOverEvent.getType());
+    }
+
+    /**
+     * Add the Mouse Down Handler on the file uploader
+     * 
+     * @param handler - Mouse Down Handler
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  04 Feb 2013
+     * 
+     * @return Handler Registration
+     */
+    public HandlerRegistration addMouseDownHandler(MouseDownHandler handler) {
+        return fileUpload.addDomHandler(handler, MouseDownEvent.getType());
+    }
+
+    /**
+     * Add the Mouse Out Handler on the file uploader
+     * 
+     * @param handler - Mouse Out Handler
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  04 Feb 2013
+     * 
+     * @return Handler Registration
+     */
+    public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {
+        return fileUpload.addDomHandler(handler, MouseOutEvent.getType());
+    }
+
 }
