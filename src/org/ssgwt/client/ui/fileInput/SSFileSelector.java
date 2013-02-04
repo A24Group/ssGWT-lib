@@ -15,7 +15,7 @@
 /**
  * Package for all input control elements and components.
  */
-package org.ssgwt.client.ui;
+package org.ssgwt.client.ui.fileInput;
 
 import java.util.ArrayList;
 
@@ -172,7 +172,7 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
      * 
      * @param allowedFiles ArrayList containing the extensions allowed
      */
-    public void setAlowdFiles(ArrayList<String> allowedFiles) {
+    public void setAllowedFiles(ArrayList<String> allowedFiles) {
         isValidation = true;
         this.allowedFiles = allowedFiles;
     }
