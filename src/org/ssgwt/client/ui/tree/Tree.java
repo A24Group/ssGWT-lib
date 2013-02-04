@@ -28,9 +28,6 @@ import com.google.gwt.user.client.ui.FlowPanel;
  * 
  * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
  * @since  31 Jan 2013
- *
- * @param <NodeType> The type of the top level nodes
- * @param <SubNodes> The type of the sub nodes that can be found on the top level nodes
  */
 public class Tree extends Composite {
     

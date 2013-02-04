@@ -1,11 +1,14 @@
 ## Tree
 
-The Tree is used to display a tree structure it has 2 states view and edit in the view state only
-items that are selected will be displayed. If a node is not selected but has children that is 
-selected, the node will display in the view state but will have an icon to indicate it is not 
-selected. In the edit state all nodes will be displayed, selected nodes will be collapsed, node
-that are not selected and has no children that is selected will also be collapsed and node that
-are not selected but have children that is selected will be expanded.
+The Tree is used to display a tree structure.  The tree has 2 states VIEW and EDIT. 
+
+In the VIEW state only items that are selected will be displayed. If a node is not selected but 
+has children that is selected, the node will be displayed in the view state. These nodes will 
+have an icon to indicate it is not selected.
+
+In the EDIT state all nodes will be displayed. Selected nodes will be collapsed. Nodes that are 
+not selected and has no children that is selected will also be collapsed. Nodes that are not 
+selected but have children that is selected will be expanded.
 
 ### Example
 
