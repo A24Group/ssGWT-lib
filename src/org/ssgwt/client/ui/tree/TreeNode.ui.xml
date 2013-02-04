@@ -1,0 +1,21 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui" >
+
+    <ui:with field='resources' type='org.ssgwt.client.ui.tree.TreeNode.TreeNodeResources'/>
+    <g:FlowPanel ui:field="mainPanel" >
+        <g:FlowPanel styleName="{resources.getTreeNodeStyles.nodeSpacingStyle}">
+            <g:FlowPanel ui:field="expandCollapseButtonContainer" styleName="{resources.getTreeNodeStyles.expandCollapseImage}" >
+                <g:Image ui:field="expandCollapseButton" ></g:Image>
+            </g:FlowPanel>
+            <g:FlowPanel ui:field="checkBoxContainer" styleName="{resources.getTreeNodeStyles.checkBoxContainerStyle}" visible="false" >
+                <g:CheckBox ui:field="checkBox" styleName="{resources.getTreeNodeStyles.checkBox}"></g:CheckBox>
+            </g:FlowPanel>
+            <g:FlowPanel ui:field="selectedUnselectedImageContainer" styleName="{resources.getTreeNodeStyles.selectedImage}" visible="false">
+                <g:Image ui:field="selectedUnselectedImage" ></g:Image>
+            </g:FlowPanel>
+            <g:Label ui:field="textLabel" styleName="{resources.getTreeNodeStyles.nodeTextStyle} {resources.getTreeNodeStyles.nodeUnselected}" />
+        </g:FlowPanel>
+        <g:FlowPanel ui:field="subNodePanel" styleName="{resources.getTreeNodeStyles.subNodeIndent}">
+        </g:FlowPanel>
+    </g:FlowPanel>
+</ui:UiBinder>
