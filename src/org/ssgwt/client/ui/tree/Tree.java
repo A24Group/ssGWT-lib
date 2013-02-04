@@ -32,7 +32,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
  * @param <NodeType> The type of the top level nodes
  * @param <SubNodes> The type of the sub nodes that can be found on the top level nodes
  */
-public abstract class Tree<NodeType extends NodeObject, SubNodes extends NodeObject> extends Composite {
+public class Tree extends Composite {
     
     /**
      * The main panel that holds all the items
@@ -42,7 +42,7 @@ public abstract class Tree<NodeType extends NodeObject, SubNodes extends NodeObj
     /**
      * The data used to create the tree
      */
-    private List<NodeType> treeData;
+    private List<NodeObject> treeData;
     
     /**
      * Class constructor
@@ -63,7 +63,7 @@ public abstract class Tree<NodeType extends NodeObject, SubNodes extends NodeObj
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  31 Jan 2013
      */
-    public void setData(List<NodeType> treeData, boolean viewState) {
+    public void setData(List<NodeObject> treeData, boolean viewState) {
         this.treeData = treeData;
         createNodes(viewState);
     }
@@ -76,7 +76,7 @@ public abstract class Tree<NodeType extends NodeObject, SubNodes extends NodeObj
      * 
      * @return The tree data set using the setData function
      */
-    public List<NodeType> getData() {
+    public List<NodeObject> getData() {
         return treeData;
     }
     
@@ -89,7 +89,7 @@ public abstract class Tree<NodeType extends NodeObject, SubNodes extends NodeObj
      * @since  31 Jan 2013
      */
     private void createNodes(boolean viewState) {
-        for (NodeType nodeData : treeData) {
+        for (NodeObject nodeData : treeData) {
             TreeNode tempNode = createNode();
             tempNode.setNodeData(nodeData, viewState);
             tempNode.setParentTree(this);
@@ -105,5 +105,7 @@ public abstract class Tree<NodeType extends NodeObject, SubNodes extends NodeObj
      * 
      * @return The new instance of the top level node
      */
-    public abstract TreeNode<NodeType, SubNodes> createNode();
+    public TreeNode createNode() {
+        return new TreeNode();
+    }
 }

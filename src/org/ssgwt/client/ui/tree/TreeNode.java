@@ -44,12 +44,12 @@ import com.google.gwt.user.client.ui.Widget;
  * @param <NodeType> The type of the current nodes
  * @param <SubNodes> The type of the sub nodes that can be found on the top level nodes
  */
-public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends NodeObject> extends Composite {
+public class TreeNode extends Composite {
     
     /**
      * The data object for the current node
      */
-    private NodeType nodeData;
+    private NodeObject nodeData;
     
     /**
      * The mail panel of the node
@@ -406,7 +406,7 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  31 Jan 2013
      */
-    public void setNodeData(NodeType nodeData, boolean viewState) {
+    public void setNodeData(NodeObject nodeData, boolean viewState) {
         this.nodeData = nodeData;
         this.viewState = viewState;
         /*
@@ -557,9 +557,9 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
                 this.isChildrenDrawn  = true;
                 for (NodeObject subNodeData : subNodesData) {
                     TreeNode tempNode = createSubNode();
+                    tempNode.setParentNode(this);
                     tempNode.setNodeData(subNodeData, viewState);
                     tempNode.setParentTree(parent);
-                    tempNode.setParentNode(this);
                     subNodeDisplayItems.add(tempNode);
                     subNodePanel.add(tempNode);
                 }
@@ -615,7 +615,9 @@ public abstract class TreeNode<NodeType extends NodeObject, SubNodes extends Nod
      * 
      * @return An instance of a sub node
      */
-    public abstract TreeNode<SubNodes, ?> createSubNode();
+    public TreeNode createSubNode() {
+    	return new TreeNode();
+    }
     
     /**
      * Retrieves the node's current selected state

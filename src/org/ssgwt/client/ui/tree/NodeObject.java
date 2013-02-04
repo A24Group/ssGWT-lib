@@ -49,6 +49,9 @@ public abstract class NodeObject {
     /**
      * Retrieves the object's selected state
      * 
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  01 Feb 2013
+     * 
      * @return The object's selected state
      */
     public abstract boolean isSelected();
