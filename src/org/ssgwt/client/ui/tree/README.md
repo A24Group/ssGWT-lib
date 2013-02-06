@@ -23,7 +23,7 @@ public class Level1 extends NodeObject {
 
 	public boolean selected;
 	
-	public boolean isReadOnly;
+	public boolean readOnly;
 	
 	/**
 	 * Retrieves the object's selected state
@@ -62,7 +62,7 @@ public class Level1 extends NodeObject {
 	 */
 	@Override
 	public boolean isReadOnly() {
-		return isReadOnly;
+		return readOnly;
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class Level1 extends NodeObject {
 	 */
 	@Override
 	public void setReadOnly(boolean readOnly) {
-		this.isReadOnly = readOnly;
+		this.readOnly = readOnly;
 	}
 	
 }
@@ -86,7 +86,7 @@ public class Level2 extends NodeObject {
 
 	public boolean selected;
 	
-	public boolean isReadOnly;
+	public boolean readOnly;
 	
 	/**
 	 * Retrieves the object's selected state
@@ -125,7 +125,7 @@ public class Level2 extends NodeObject {
 	 */
 	@Override
 	public boolean isReadOnly() {
-		return isReadOnly;
+		return readOnly;
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class Level2 extends NodeObject {
 	 */
 	@Override
 	public void setReadOnly(boolean readOnly) {
-		this.isReadOnly = readOnly;
+		this.readOnly = readOnly;
 	}
 	
 }
@@ -149,7 +149,7 @@ public class Level3 extends NodeObject {
 	
 	public boolean selected;
 	
-	public boolean isReadOnly;
+	public boolean readOnly;
 	
 	/**
 	 * Retrieves the object's selected state
@@ -188,7 +188,7 @@ public class Level3 extends NodeObject {
 	 */
 	@Override
 	public boolean isReadOnly() {
-		return isReadOnly;
+		return readOnly;
 	}
 
 	/**
@@ -198,7 +198,7 @@ public class Level3 extends NodeObject {
 	 */
 	@Override
 	public void setReadOnly(boolean readOnly) {
-		this.isReadOnly = readOnly;
+		this.readOnly = readOnly;
 	}
 	
 }
