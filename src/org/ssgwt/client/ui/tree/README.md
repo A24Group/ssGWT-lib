@@ -10,6 +10,9 @@ In the EDIT state all nodes will be displayed. Selected nodes will be collapsed.
 not selected and has no children that is selected will also be collapsed. Nodes that are not 
 selected but have children that is selected will be expanded.
 
+There is also functionality to set the node to read only to not allow a user to change the selected
+state of the node.
+
 ### Example
 
 Level 1 value object
@@ -17,9 +20,11 @@ Level 1 value object
 public class Level1 extends NodeObject {
 	
 	public String level1Name;
-	
-	public boolean selected;
 
+	public boolean selected;
+	
+	public boolean readOnly;
+	
 	/**
 	 * Retrieves the object's selected state
 	 * 
@@ -39,7 +44,7 @@ public class Level1 extends NodeObject {
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
-	
+
 	/**
 	 * Retrieves the text that should be displayed on the tree for the item
 	 * 
@@ -48,6 +53,26 @@ public class Level1 extends NodeObject {
 	@Override
 	public String getNodeDisplayText() {
 		return level1Name;
+	}
+
+	/**
+	 * Retrieves the object's read only state
+	 * 
+	 * @return The object's read only state
+	 */
+	@Override
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+
+	/**
+	 * Sets the object's read only state
+	 * 
+	 * @param readOnly The object's read only state to set
+	 */
+	@Override
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
 	}
 	
 }
@@ -58,9 +83,11 @@ Level 2 value object
 public class Level2 extends NodeObject {
 	
 	public String level2Name;
-	
-	public boolean selected;
 
+	public boolean selected;
+	
+	public boolean readOnly;
+	
 	/**
 	 * Retrieves the object's selected state
 	 * 
@@ -80,7 +107,7 @@ public class Level2 extends NodeObject {
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
-	
+
 	/**
 	 * Retrieves the text that should be displayed on the tree for the item
 	 * 
@@ -89,6 +116,26 @@ public class Level2 extends NodeObject {
 	@Override
 	public String getNodeDisplayText() {
 		return level2Name;
+	}
+
+	/**
+	 * Retrieves the object's read only state
+	 * 
+	 * @return The object's read only state
+	 */
+	@Override
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+
+	/**
+	 * Sets the object's read only state
+	 * 
+	 * @param readOnly The object's read only state to set
+	 */
+	@Override
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
 	}
 	
 }
@@ -101,7 +148,9 @@ public class Level3 extends NodeObject {
 	public String level3Name;
 	
 	public boolean selected;
-
+	
+	public boolean readOnly;
+	
 	/**
 	 * Retrieves the object's selected state
 	 * 
@@ -121,7 +170,7 @@ public class Level3 extends NodeObject {
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
-	
+
 	/**
 	 * Retrieves the text that should be displayed on the tree for the item
 	 * 
@@ -130,6 +179,26 @@ public class Level3 extends NodeObject {
 	@Override
 	public String getNodeDisplayText() {
 		return level3Name;
+	}
+
+	/**
+	 * Retrieves the object's read only state
+	 * 
+	 * @return The object's read only state
+	 */
+	@Override
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+
+	/**
+	 * Sets the object's read only state
+	 * 
+	 * @param readOnly The object's read only state to set
+	 */
+	@Override
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
 	}
 	
 }
@@ -156,6 +225,7 @@ for (int i1 = 0; i1 < numLevel1; i1++) {
 			Level3 objLevel3 = new Level3();
 			objLevel3.level3Name = "Level1 " + i1 + " Level2 " + i2 + " Level3 " + i3;
 			objLevel3.selected = (((int)(Math.random() * 2) == 1) || objLevel2.selected) ? true : false;
+			objLevel3.isReadOnly = ((int)(Math.random() * 2) == 0) ? false : true;
 			objLevel2.arrTreeChildren.add(objLevel3);
 		}
 		objLevel1.arrTreeChildren.add(objLevel2);
