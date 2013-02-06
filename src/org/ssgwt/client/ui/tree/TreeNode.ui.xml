@@ -10,6 +10,9 @@
             <g:FlowPanel ui:field="checkBoxContainer" styleName="{resources.getTreeNodeStyles.checkBoxContainerStyle}" visible="false" >
                 <g:CheckBox ui:field="checkBox" styleName="{resources.getTreeNodeStyles.checkBox}"></g:CheckBox>
             </g:FlowPanel>
+            <g:FlowPanel ui:field="readOnlyCheckBoxContainer" styleName="{resources.getTreeNodeStyles.checkBoxContainerStyle}" visible="false" >
+                <g:Image ui:field="readOnlyImage" ></g:Image>
+            </g:FlowPanel>
             <g:FlowPanel ui:field="selectedUnselectedImageContainer" styleName="{resources.getTreeNodeStyles.selectedImage}" visible="false">
                 <g:Image ui:field="selectedUnselectedImage" ></g:Image>
             </g:FlowPanel>
