@@ -94,6 +94,8 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
      * 
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  04 Feb 2013
+     * 
+     * @param styleName - Style to apply to the file uploader
      */
     public void setFileUploadStyle(String styleName) {
         fileUpload.setStyleName(styleName);
@@ -118,7 +120,9 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  04 Feb 2013
      * 
-     * @param Handler Registration
+     * @param handler - Change Handler
+     * 
+     * @return Handler Registration
      */
     public HandlerRegistration addChangeHandler(ChangeHandler handler) {
         return fileUpload.addChangeHandler(handler);
@@ -198,8 +202,8 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
      * @return if the form is valid or not.
      */
     public boolean isFileValid() {
-        String fileExstenstion = fileUpload.getFilename().substring(fileUpload.getFilename().lastIndexOf(".") + 1);
-        if (isValidation && !allowedFiles.contains(fileExstenstion)) {
+        String fileExtension = fileUpload.getFilename().substring(fileUpload.getFilename().lastIndexOf(".") + 1);
+        if (isValidation && !allowedFiles.contains(fileExtension)) {
         	return false;
         }
         return true;
