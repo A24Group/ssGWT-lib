@@ -19,9 +19,9 @@ Build in validation is also build in on the component that only allow certain fi
         // Note the styling applied on this component is very important to the success to the component
         upload.setStyleName(standardPopupButtonStyle); // The styleing applyed here is the styling applied to the button that you want to display
         
-        // Its very important that the styling applied here add the same margin and size as the button above.
+        // Its very important that the styling applied here adds the same margin and size as the button above.
         // Its important that you make the position absolute and opacity 0
-        // What's happening here is that the unstyle able component is displayed over the button created above but is completely see through
+        // What's happening here is that the not styleable component is displayed over the button created above but is completely see through
         // Additional hover and active styles can be applied on the mouse over, mouse out and mouse down events.
         upload.setFileUploadStyle(fileUploadForStandardPopupButtonStyle);
         
