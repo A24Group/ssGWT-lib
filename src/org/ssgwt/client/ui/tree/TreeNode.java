@@ -85,10 +85,22 @@ public class TreeNode extends Composite {
     FlowPanel checkBoxContainer;
     
     /**
+     * The container that holds the read only check box images
+     */
+    @UiField
+    FlowPanel readOnlyCheckBoxContainer;
+    
+    /**
      * The check box that is displayed in edit state
      */
     @UiField
     CheckBox checkBox;
+    
+    /**
+     * The read only check box image that is displayed in edit state
+     */
+    @UiField
+    Image readOnlyImage;
     
     /**
      * The image that is display next to sub nodes. This displays top level nodes if the tree 
@@ -230,6 +242,30 @@ public class TreeNode extends Composite {
          */
         @Source("images/grey-branch.png")
         ImageResource branchNotSelected();
+        
+        /**
+         * The image that is shown next to sub nodes that are selected
+         * but not editable
+         * 
+         * @author Ruan Naude <ruan.naude@gmail.com>
+         * @since  01 Feb 2013
+         * 
+         * @return The image resource
+         */
+        @Source("images/disabled_Checked.png")
+        ImageResource disabledCheckedIcon();
+        
+        /**
+         * The image that is shown next to sub nodes that are unselected
+         * and not editable
+         * 
+         * @author Ruan Naude <ruan.naude@gmail.com>
+         * @since  01 Feb 2013
+         * 
+         * @return The image resource
+         */
+        @Source("images/disabled.png")
+        ImageResource disabledUncheckedIcon();
     }
     
     /**
@@ -421,21 +457,32 @@ public class TreeNode extends Composite {
         
         // Adds value change handler to the check box if the Tree is in edit state and sets the check box to visible.
         if (!this.viewState) {
-            this.checkBoxContainer.setVisible(true);
-            this.checkBox.setValue(isSelected());
-            this.checkBox.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
-                
-                /**
-                 * The on value change handler function that is call when an item is selected or deselected
-                 * 
-                 * @param event The event being handled
-                 */
-                @Override
-                public void onValueChange(ValueChangeEvent<Boolean> event) {
-                    // Update the node to it's new selection state
-                    setSelected(event.getValue());
+            if (!isReadOnly()) {
+                this.checkBoxContainer.setVisible(true);
+                this.readOnlyCheckBoxContainer.setVisible(false);
+                this.checkBox.setValue(isSelected());
+                this.checkBox.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+                    
+                    /**
+                     * The on value change handler function that is call when an item is selected or deselected
+                     * 
+                     * @param event The event being handled
+                     */
+                    @Override
+                    public void onValueChange(ValueChangeEvent<Boolean> event) {
+                        // Update the node to it's new selection state
+                        setSelected(event.getValue());
+                    }
+                });
+            } else {
+                this.checkBoxContainer.setVisible(false);
+                this.readOnlyCheckBoxContainer.setVisible(true);
+                if (isSelected()) {
+                    this.readOnlyImage.setResource(resources.disabledCheckedIcon());
+                } else {
+                    this.readOnlyImage.setResource(resources.disabledUncheckedIcon());
                 }
-            });
+            }
         }
         
         // Updates the text style for the node
@@ -626,6 +673,18 @@ public class TreeNode extends Composite {
      */
     public boolean isSelected() {
         return nodeData.isSelected();
+    }
+    
+    /**
+     * Determine whether the object is read only
+     * 
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since  05 Feb 2013
+     * 
+     * @return Whether the object is read only
+     */
+    public boolean isReadOnly() {
+        return nodeData.isReadOnly();
     }
     
     /**

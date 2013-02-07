@@ -67,6 +67,26 @@ public abstract class NodeObject {
     public abstract void setSelected(boolean selected);
     
     /**
+     * Determine whether the object is read only
+     * 
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since  05 Feb 2013
+     * 
+     * @return Whether the object is read only
+     */
+    public abstract boolean isReadOnly();
+    
+    /**
+     * Sets whether the object is read only
+     * 
+     * @param readOnly The read only state
+     * 
+     * @author Ruan Naude<ruan.naude@a24group.com>
+     * @since  05 Feb 2013
+     */
+    public abstract void setReadOnly(boolean readOnly);
+    
+    /**
      * Updates the selected state of all the sub nodes
      * 
      * @param selected The new selected state
