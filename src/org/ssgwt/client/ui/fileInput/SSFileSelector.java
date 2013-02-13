@@ -218,7 +218,7 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
      * @param visible - True to show button false to hide it
      */
     public void displayBrowserButton(boolean visible) {
-    	button.setVisible(visible);
+        button.setVisible(visible);
     }
     
     /**
