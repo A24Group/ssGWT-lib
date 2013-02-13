@@ -204,9 +204,21 @@ public class SSFileSelector extends Composite implements HasName, HasChangeHandl
     public boolean isFileValid() {
         String fileExtension = fileUpload.getFilename().substring(fileUpload.getFilename().lastIndexOf(".") + 1);
         if (isValidation && !allowedFiles.contains(fileExtension)) {
-        	return false;
+            return false;
         }
         return true;
+    }
+    
+    /**
+     * Sets whether this browser button is visible.
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  12 Feb 2013
+     * 
+     * @param visible - True to show button false to hide it
+     */
+    public void displayBrowserButton(boolean visible) {
+    	button.setVisible(visible);
     }
     
     /**
