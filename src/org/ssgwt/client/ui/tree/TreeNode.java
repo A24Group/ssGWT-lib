@@ -648,7 +648,7 @@ public class TreeNode extends Composite {
      * @return The data for the children
      */
     public List<NodeObject> getSubNodesData() {
-        return nodeData.arrTreeChildren;
+        return nodeData.getChildren();
     }
     
     /**

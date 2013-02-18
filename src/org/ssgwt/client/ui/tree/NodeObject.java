@@ -13,7 +13,6 @@
  */
 package org.ssgwt.client.ui.tree;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,9 +24,14 @@ import java.util.List;
 public abstract class NodeObject {
 
     /**
-     * All the sub nodes of the node
+     * Getter for the list of children nodes for this node
+     * 
+     * @author Ruan Naude<ruan.naude@a24Group.com>
+     * @since  18 Feb 2013
+     * 
+     * @return The list of children nodes for this node
      */
-    public List<NodeObject> arrTreeChildren = new ArrayList<NodeObject>();
+    public abstract List<NodeObject> getChildren();
     
     /**
      * Function used to check if all the items is selected
@@ -38,7 +42,7 @@ public abstract class NodeObject {
      * @return true in no children is selected
      */
     public boolean isNoChildrenSelected() {
-        for (NodeObject child : arrTreeChildren) {
+        for (NodeObject child : getChildren()) {
             if (child.isSelected() || !child.isNoChildrenSelected()) {
                 return false;
             }
@@ -95,8 +99,8 @@ public abstract class NodeObject {
      * @since  01 Feb 2013
      */
     public void setAllChildrenSelectedState(boolean selected) {
-        if (arrTreeChildren != null) {
-            for (NodeObject child : arrTreeChildren) {
+        if (getChildren() != null) {
+            for (NodeObject child : getChildren()) {
                 child.setSelected(selected);
                 child.setAllChildrenSelectedState(selected);
             }
