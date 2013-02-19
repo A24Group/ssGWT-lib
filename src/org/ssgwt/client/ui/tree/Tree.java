@@ -61,6 +61,7 @@ public class Tree extends Composite {
      * @since  31 Jan 2013
      */
     public void setData(List<NodeObject> treeData, boolean viewState) {
+        mainPanel.clear();
         this.treeData = treeData;
         createNodes(viewState);
     }
