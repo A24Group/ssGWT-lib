@@ -415,9 +415,13 @@ public class DateFilter extends AbstractHeaderFilter {
      * the from date and the to date
      * 
      * @param datePickerStyle - The style to apply to the datepickers
+     * @param fromMinDate - The minimum date for the from datepicker
+     * @param toMinDate - The minimum date for the to datepicker
+     * @param fromMaxDate - The maximum date for the from datepicker
+     * @param toMaxDate - The maximum date for the to datepicker
      */
-    public DateFilter(String datePickerStyle, Date fromStartDate, Date toStartDate, Date fromEndDate, Date toEndDate) {
-        this(datePickerStyle, getDefaultResources(), fromStartDate, toStartDate, fromEndDate, toEndDate);
+    public DateFilter(String datePickerStyle, Date fromMinDate, Date toMinDate, Date fromMaxDate, Date toMaxDate) {
+        this(datePickerStyle, getDefaultResources(), fromMinDate, toMinDate, fromMaxDate, toMaxDate);
     }
     
     /**
@@ -444,14 +448,18 @@ public class DateFilter extends AbstractHeaderFilter {
      * 
      * @param datePickerStyle - The style to apply to the datepickers
      * @param resources - The resources the text filter should use
+     * @param fromMinDate - The minimum date for the from datepicker
+     * @param toMinDate - The minimum date for the to datepicker
+     * @param fromMaxDate - The maximum date for the from datepicker
+     * @param toMaxDate - The maximum date for the to datepicker
      */
     public DateFilter(
         String datePickerStyle,
         DateFilterResources resources,
-        Date fromStartDate,
-        Date toStartDate,
-        Date fromEndDate,
-        Date toEndDate
+        Date fromMinDate,
+        Date toMinDate,
+        Date fromMaxDate,
+        Date toMaxDate
     ) {
         super(true);
         this.resources = resources;
@@ -460,15 +468,15 @@ public class DateFilter extends AbstractHeaderFilter {
         // Create datepickers, set their styles, and insert them into the dateboxes
         // To date
         SSDatePicker toDatePicker = new SSDatePicker();
-        toDatePicker.setMinimumDate(toStartDate);
-        toDatePicker.setMaximumDate(toEndDate);
+        toDatePicker.setMinimumDate(toMinDate);
+        toDatePicker.setMaximumDate(toMaxDate);
         toDatePicker.setStyleName(datePickerStyle);
         toDateBox = new DateBox(toDatePicker, null, SSDateBox.DEFAULT_FORMAT);
         toDateBox.setStyleName(getResources().textFilterStyle().dateBoxStyle());
         // From date
         SSDatePicker fromDatePicker = new SSDatePicker();
-        fromDatePicker.setMinimumDate(fromStartDate);
-        fromDatePicker.setMaximumDate(fromEndDate);
+        fromDatePicker.setMinimumDate(fromMinDate);
+        fromDatePicker.setMaximumDate(fromMaxDate);
         fromDatePicker.setStyleName(datePickerStyle);
         fromDateBox = new DateBox(fromDatePicker, null, SSDateBox.DEFAULT_FORMAT);
         fromDateBox.setStyleName(getResources().textFilterStyle().dateBoxStyle());
