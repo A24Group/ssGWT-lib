@@ -416,8 +416,8 @@ public class DateFilter extends AbstractHeaderFilter {
      * 
      * @param datePickerStyle - The style to apply to the datepickers
      */
-    public DateFilter(String datePickerStyle, Date fromStartDate, Date toStartDate) {
-        this(datePickerStyle, getDefaultResources(), fromStartDate, toStartDate);
+    public DateFilter(String datePickerStyle, Date fromStartDate, Date toStartDate, Date fromEndDate, Date toEndDate) {
+        this(datePickerStyle, getDefaultResources(), fromStartDate, toStartDate, fromEndDate, toEndDate);
     }
     
     /**
@@ -427,7 +427,14 @@ public class DateFilter extends AbstractHeaderFilter {
      * @param resources - The resources the text filter should use
      */
     public DateFilter(String datePickerStyle, DateFilterResources resources) {
-        this(datePickerStyle, resources, new Date(70, 1, 1), new Date(70, 1, 1));
+        this(
+            datePickerStyle,
+            resources,
+            new Date(70, 0, 1),
+            new Date(70, 0, 1),
+            new Date(120, 11, 31),
+            new Date(120, 11, 31)
+        );
     }
     
     /**
@@ -438,26 +445,30 @@ public class DateFilter extends AbstractHeaderFilter {
      * @param datePickerStyle - The style to apply to the datepickers
      * @param resources - The resources the text filter should use
      */
-    public DateFilter(String datePickerStyle, DateFilterResources resources, Date fromStartDate, Date toStartDate) {
+    public DateFilter(
+        String datePickerStyle,
+        DateFilterResources resources,
+        Date fromStartDate,
+        Date toStartDate,
+        Date fromEndDate,
+        Date toEndDate
+    ) {
         super(true);
         this.resources = resources;
         this.resources.textFilterStyle().ensureInjected();
         this.setStyleName("");
         // Create datepickers, set their styles, and insert them into the dateboxes
         // To date
-        Date now = new Date();
-        now = new Date(now.getTime() + (60 * 60 * 24 * 1000));// Add one day to now
-
         SSDatePicker toDatePicker = new SSDatePicker();
         toDatePicker.setMinimumDate(toStartDate);
-        toDatePicker.setMaximumDate(now);
+        toDatePicker.setMaximumDate(toEndDate);
         toDatePicker.setStyleName(datePickerStyle);
         toDateBox = new DateBox(toDatePicker, null, SSDateBox.DEFAULT_FORMAT);
         toDateBox.setStyleName(getResources().textFilterStyle().dateBoxStyle());
         // From date
         SSDatePicker fromDatePicker = new SSDatePicker();
         fromDatePicker.setMinimumDate(fromStartDate);
-        fromDatePicker.setMaximumDate(now);
+        fromDatePicker.setMaximumDate(fromEndDate);
         fromDatePicker.setStyleName(datePickerStyle);
         fromDateBox = new DateBox(fromDatePicker, null, SSDateBox.DEFAULT_FORMAT);
         fromDateBox.setStyleName(getResources().textFilterStyle().dateBoxStyle());
