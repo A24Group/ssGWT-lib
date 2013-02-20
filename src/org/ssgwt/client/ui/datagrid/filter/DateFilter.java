@@ -411,12 +411,56 @@ public class DateFilter extends AbstractHeaderFilter {
     }
     
     /**
+     * Class constructor uses two dates to specify the start dates for both 
+     * the from date and the to date
+     * 
+     * @param datePickerStyle - The style to apply to the datepickers
+     * @param fromMinDate - The minimum date for the from datepicker
+     * @param toMinDate - The minimum date for the to datepicker
+     * @param fromMaxDate - The maximum date for the from datepicker
+     * @param toMaxDate - The maximum date for the to datepicker
+     */
+    public DateFilter(String datePickerStyle, Date fromMinDate, Date toMinDate, Date fromMaxDate, Date toMaxDate) {
+        this(datePickerStyle, getDefaultResources(), fromMinDate, toMinDate, fromMaxDate, toMaxDate);
+    }
+    
+    /**
      * Class constructor that takes a custom resources class
      * 
      * @param datePickerStyle - The style to apply to the datepickers
      * @param resources - The resources the text filter should use
      */
     public DateFilter(String datePickerStyle, DateFilterResources resources) {
+        this(
+            datePickerStyle,
+            resources,
+            new Date(70, 0, 1),
+            new Date(70, 0, 1),
+            new Date(120, 11, 31),
+            new Date(120, 11, 31)
+        );
+    }
+    
+    /**
+     * Class constructor that takes a custom resources class
+     * and uses two dates to specify the start dates for both 
+     * the from date and the to date
+     * 
+     * @param datePickerStyle - The style to apply to the datepickers
+     * @param resources - The resources the text filter should use
+     * @param fromMinDate - The minimum date for the from datepicker
+     * @param toMinDate - The minimum date for the to datepicker
+     * @param fromMaxDate - The maximum date for the from datepicker
+     * @param toMaxDate - The maximum date for the to datepicker
+     */
+    public DateFilter(
+        String datePickerStyle,
+        DateFilterResources resources,
+        Date fromMinDate,
+        Date toMinDate,
+        Date fromMaxDate,
+        Date toMaxDate
+    ) {
         super(true);
         this.resources = resources;
         this.resources.textFilterStyle().ensureInjected();
@@ -424,11 +468,15 @@ public class DateFilter extends AbstractHeaderFilter {
         // Create datepickers, set their styles, and insert them into the dateboxes
         // To date
         SSDatePicker toDatePicker = new SSDatePicker();
+        toDatePicker.setMinimumDate(toMinDate);
+        toDatePicker.setMaximumDate(toMaxDate);
         toDatePicker.setStyleName(datePickerStyle);
         toDateBox = new DateBox(toDatePicker, null, SSDateBox.DEFAULT_FORMAT);
         toDateBox.setStyleName(getResources().textFilterStyle().dateBoxStyle());
         // From date
         SSDatePicker fromDatePicker = new SSDatePicker();
+        fromDatePicker.setMinimumDate(fromMinDate);
+        fromDatePicker.setMaximumDate(fromMaxDate);
         fromDatePicker.setStyleName(datePickerStyle);
         fromDateBox = new DateBox(fromDatePicker, null, SSDateBox.DEFAULT_FORMAT);
         fromDateBox.setStyleName(getResources().textFilterStyle().dateBoxStyle());
