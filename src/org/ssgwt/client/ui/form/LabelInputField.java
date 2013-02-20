@@ -18,6 +18,9 @@ public class LabelInputField<T> extends Label implements InputField<T, Label> {
     /**
      * Class Constructor
      * 
+     * @author Alec Erasmus<alec.erasmus@a24group.com>
+     * @since 20 Feb 2013
+     * 
      * @param text - The text to display in the label
      */
     public LabelInputField(String text) {
@@ -26,6 +29,8 @@ public class LabelInputField<T> extends Label implements InputField<T, Label> {
     
     /**
      * Class Constructor
+     * @author Alec Erasmus<alec.erasmus@a24group.com>
+     * @since 20 Feb 2013
      * 
      * @param text - The text to display in the label
      * @param required - The value from the object that should the displayed on the input field
@@ -37,6 +42,9 @@ public class LabelInputField<T> extends Label implements InputField<T, Label> {
     
     /**
      * Retrieve the value from the object that should the displayed on the input field
+     * 
+     * @author Alec Erasmus<alec.erasmus@a24group.com>
+     * @since 20 Feb 2013
      * 
      * @param object - The object the value should be retrieved from
      * 
@@ -50,6 +58,9 @@ public class LabelInputField<T> extends Label implements InputField<T, Label> {
     /**
      * Sets the value from the input field on the object
      * 
+     * @author Alec Erasmus<alec.erasmus@a24group.com>
+     * @since 20 Feb 2013
+     * 
      * @param object - The object the value was retrieved from
      * @param value - The value that is currently being displayed on the input field
      */
@@ -60,6 +71,9 @@ public class LabelInputField<T> extends Label implements InputField<T, Label> {
     /**
      * Retrieve the flag that indicates whether the input field is required or not
      * Cannot be applied to this field
+     * 
+     * @author Alec Erasmus<alec.erasmus@a24group.com>
+     * @since 20 Feb 2013
      * 
      * @return The flag that indicates whether the input field is required or not
      */
@@ -72,6 +86,9 @@ public class LabelInputField<T> extends Label implements InputField<T, Label> {
      * Sets the flag that indicates whether the input field is required or not
      * Cannot be applied to this field
      * 
+     * @author Alec Erasmus<alec.erasmus@a24group.com>
+     * @since 20 Feb 2013
+     * 
      * @param required - The flag that indicates whether the input field is required or not
      */
     @Override
@@ -80,6 +97,9 @@ public class LabelInputField<T> extends Label implements InputField<T, Label> {
 
     /**
      * Retrieve the input field as a widget
+     * 
+     * @author Alec Erasmus<alec.erasmus@a24group.com>
+     * @since 20 Feb 2013
      * 
      * @return The input field as a widget
      */
@@ -92,6 +112,9 @@ public class LabelInputField<T> extends Label implements InputField<T, Label> {
      * Set all the field as readOnly
      * Cannot be applied to this field
      * 
+     * @author Alec Erasmus<alec.erasmus@a24group.com>
+     * @since 20 Feb 2013
+     * 
      * @param readOnly - Flag to indicate whether the field should be read only
      */
     @Override
@@ -101,6 +124,9 @@ public class LabelInputField<T> extends Label implements InputField<T, Label> {
     
     /**
      * Retrieve the flag that indicates whether the field is read only
+     * 
+     * @author Alec Erasmus<alec.erasmus@a24group.com>
+     * @since 20 Feb 2013
      * 
      * @return The flag that indicates whether the field is read only
      */
@@ -112,6 +138,9 @@ public class LabelInputField<T> extends Label implements InputField<T, Label> {
     
     /**
      * Retrieve the class type the input field returns
+     * 
+     * @author Alec Erasmus<alec.erasmus@a24group.com>
+     * @since 20 Feb 2013
      * 
      * @return The class type the input field returns
      */
