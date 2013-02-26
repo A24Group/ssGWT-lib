@@ -133,6 +133,7 @@ public class FormValidator {
                 valid = ((ValidatorInterface<String>)validator).isValid(((HasValue<String>)fields.get(i).uiField).getValue());
             }
             if (!valid) {
+                fields.get(i).uiField.getElement().scrollIntoView();
                 //add error style
                 if (fields.get(i).errorStyleName != null) {
                     fields.get(i).uiField.addStyleName(fields.get(i).errorStyleName.toString());
