@@ -30,7 +30,7 @@ import com.google.gwt.user.client.Command;
  */
 public interface MenuItemInterface {
 
-	/**
+    /**
      * Getter for the place name of the menu item
      * 
      * @author Jaco Nel <jaco.nel@a24group.com>
