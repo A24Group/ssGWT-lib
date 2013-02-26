@@ -29,15 +29,15 @@ import com.google.gwt.user.client.ui.Widget;
  * @since 03 Dec 2012
  */
 public abstract class DateLabel<T> extends Label implements InputField<T, Date>, HasValue<Date> {
-	
-	public DateLabel() {
-		super();
-	}
-	
-	public DateLabel(String text) {
-		super(text);
-	}
-	
+    
+    public DateLabel() {
+        super();
+    }
+    
+    public DateLabel(String text) {
+        super(text);
+    }
+    
     /**
      * Adds change handlers to the DateLabel
      * 

@@ -26,7 +26,7 @@ public abstract class AbstractMultiSelectObject {
     /**
      * Whether or not the object is selected
      */
-	@JsonIgnore
+    @JsonIgnore
     private boolean selected;
     
     /**
@@ -34,7 +34,7 @@ public abstract class AbstractMultiSelectObject {
      * 
      * @param selected - whether the object is selected
      */
-	@JsonIgnore
+    @JsonIgnore
     public void setSelected(boolean selected) {
         this.selected = selected;
     }

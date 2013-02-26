@@ -660,7 +660,7 @@ public class TreeNode extends Composite {
      * @return An instance of a sub node
      */
     public TreeNode createSubNode() {
-    	return new TreeNode();
+        return new TreeNode();
     }
     
     /**
