@@ -748,7 +748,7 @@ public class SSPager extends AbstractPager {
      */
     @Override
     public void setPageStart(int index) {
-    	if (this.getDisplay() != null) {
+        if (this.getDisplay() != null) {
             Range range = this.getDisplay().getVisibleRange();
             int pageSize = range.getLength();
 //          if (isRangeLimited && display.isRowCountExact()) {
