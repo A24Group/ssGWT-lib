@@ -26,6 +26,16 @@ public class Level1 extends NodeObject {
 	public boolean readOnly;
 	
 	/**
+	 * Getter for the list of children nodes for this node
+	 * 
+	 * @return The list of children nodes for this node
+	 */
+	@Override
+	public List<NodeObject> getChildren() {
+		return null;
+	}
+	
+	/**
 	 * Retrieves the object's selected state
 	 * 
 	 * @return The object's selected state
@@ -89,6 +99,16 @@ public class Level2 extends NodeObject {
 	public boolean readOnly;
 	
 	/**
+	 * Getter for the list of children nodes for this node
+	 * 
+	 * @return The list of children nodes for this node
+	 */
+	@Override
+	public List<NodeObject> getChildren() {
+		return null;
+	}
+	
+	/**
 	 * Retrieves the object's selected state
 	 * 
 	 * @return The object's selected state
@@ -150,6 +170,16 @@ public class Level3 extends NodeObject {
 	public boolean selected;
 	
 	public boolean readOnly;
+	
+	/**
+	 * Getter for the list of children nodes for this node
+	 * 
+	 * @return The list of children nodes for this node
+	 */
+	@Override
+	public List<NodeObject> getChildren() {
+		return null;
+	}
 	
 	/**
 	 * Retrieves the object's selected state

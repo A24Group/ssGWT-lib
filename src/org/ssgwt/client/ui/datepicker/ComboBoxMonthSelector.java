@@ -229,7 +229,7 @@ public class ComboBoxMonthSelector extends MonthSelector {
      */
     protected void populateYearListBox() {
         int iMin = minimumDate.getYear() + 1900;
-        int iMax = new Date(maximumDate.getTime() - (1000 * 60 * 60 * 24)).getYear() + 1900;
+        int iMax = new Date(maximumDate.getTime()).getYear() + 1900;
         
         for (; iMin <= iMax; iMin++) {
             yearListBox.addItem("" + iMin);
