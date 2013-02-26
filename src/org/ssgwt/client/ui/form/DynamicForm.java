@@ -464,7 +464,7 @@ public class DynamicForm<T> extends Composite {
      * @param inputField - The input field that should be removed from the Dynamic form
      */
     public void removeField(InputField<T, ?> inputField) {
-        mainConatiner.remove(fields.get(inputField).container);
+        mainConatiner.remove(fields.get(inputField));
         fields.remove(inputField);
     }
     
