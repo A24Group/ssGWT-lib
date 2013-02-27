@@ -22,16 +22,16 @@
         
         <g:FlowPanel width="100%" styleName="{resources.textFilterStyle.dateBoxStyleContainer}">
         
-	        <g:FlowPanel width="50%" styleName="{resources.textFilterStyle.floatLeft}">
-	            <g:Label ui:field="fromLabel" text="From:" styleName="{resources.textFilterStyle.dateLabelStyle}"/>
-	            <d:DateBox ui:field="fromDateBox" styleName="{resources.textFilterStyle.dateBoxStyle}"></d:DateBox>
-	        </g:FlowPanel>
-	        
-	        <g:FlowPanel width="50%" styleName="{resources.textFilterStyle.floatLeft}">
-	            <g:Label ui:field="toLabel" text="To:" styleName="{resources.textFilterStyle.dateLabelStyle}"/>
-	            <d:DateBox ui:field="toDateBox" styleName="{resources.textFilterStyle.dateBoxStyle}"></d:DateBox>
-	        </g:FlowPanel>
-	        
+            <g:FlowPanel width="50%" styleName="{resources.textFilterStyle.floatLeft}">
+                <g:Label ui:field="fromLabel" text="From:" styleName="{resources.textFilterStyle.dateLabelStyle}"/>
+                <d:DateBox ui:field="fromDateBox" styleName="{resources.textFilterStyle.dateBoxStyle}"></d:DateBox>
+            </g:FlowPanel>
+            
+            <g:FlowPanel width="50%" styleName="{resources.textFilterStyle.floatLeft}">
+                <g:Label ui:field="toLabel" text="To:" styleName="{resources.textFilterStyle.dateLabelStyle}"/>
+                <d:DateBox ui:field="toDateBox" styleName="{resources.textFilterStyle.dateBoxStyle}"></d:DateBox>
+            </g:FlowPanel>
+            
         </g:FlowPanel>
         
         <g:FlowPanel styleName="{resources.textFilterStyle.applyButtonContainer}" width="100%">
