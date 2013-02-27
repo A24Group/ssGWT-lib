@@ -469,6 +469,16 @@ public class DynamicForm<T> extends Composite {
     }
     
     /**
+     * Sets a field to visible or invisible
+     * 
+     * @param inputField - The field that we will affect with this function
+     * @param visible    - true|false 
+     */
+    public void displayField(InputField<T, ?> inputField, boolean visible) {
+    	fields.get(inputField).setVisible(visible);
+    }
+    
+    /**
      * Validates the form and returns a string the first validation error if there is any errors
      * 
      * @return The validation error message
