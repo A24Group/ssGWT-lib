@@ -22,9 +22,9 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Complex input form that allows more complex fields to be added like an array of DynamicForm
- * 
+ *
  * Constructor need the OutterVO, InnerVO, TheField and the class literal of the TheField class
- * 
+ *
  * @author Alec Erasmus<alec.erasmus@a24group.com>
  * @since 22 November 2012
  *
@@ -33,15 +33,17 @@ import com.google.gwt.user.client.ui.Widget;
  * @param <TheField> The type of input field.
  */
 public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
-extends ComplexInput<InnerVO>, T> extends Composite
-implements HasValue<List<InnerVO>>,
-InputField<OutterVO, List>,
-ComplexInputFormAddEvent.ComplexInputFormAddHandler,
-ComplexInputFormRemoveEvent.ComplexInputFormRemoveHandler,
-ComplexInputFormConfirmationEvent.ComplexInputFormConfirmationHasHandlers,
-ComplexInputFormCancelEvent.ComplexInputFormCancelHandler,
-ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers,
-ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
+    extends
+        ComplexInput<InnerVO>, T> extends Composite
+    implements
+        HasValue<List<InnerVO>>,
+        InputField<OutterVO, List>,
+        ComplexInputFormAddEvent.ComplexInputFormAddHandler,
+        ComplexInputFormRemoveEvent.ComplexInputFormRemoveHandler,
+        ComplexInputFormConfirmationEvent.ComplexInputFormConfirmationHasHandlers,
+        ComplexInputFormCancelEvent.ComplexInputFormCancelHandler,
+        ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers,
+        ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Contain the list of the embedded Vos
@@ -100,12 +102,12 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Class constructor
-     * 
+     *
      * Build the form and fields based on the field class literal
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param classLiteral - Class Literal of the type of field on the form
      */
     public ComplexInputForm(Class<?> classLiteral) {
@@ -114,12 +116,12 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Class constructor
-     * 
+     *
      * Build the form and fields based on the field class literal
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param inputFieldCreator - input Field Creator
      * @param classLiteral - Class Literal of the type of field on the form
      */
@@ -132,10 +134,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Set an embedded Object on the the fields created
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param object - The object to set
      */
     public void setEmbeddedObject(T object) {
@@ -144,10 +146,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Return the type of the return type by the input field
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @return the List class literal
      */
     @Override
@@ -157,10 +159,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Return the field as Widget
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @return the form as a Widget
      */
     @Override
@@ -170,12 +172,12 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Get the values from the fields and add it to the Vo
-     * 
+     *
      * Populate the inner list of VOs with the data in the fields
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @return a list of the innerVO
      */
     @Override
@@ -196,11 +198,11 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Adds the a new field.
-     * 
+     *
      * This is a function that is called from the addField event that adds a
      * new field on the form after the data from the field in index is saved
      * in the array of VOs.
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
      */
@@ -241,10 +243,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
      * clicked on the field the form can handle the event.
      *     - ComplexInputFormRemoveHandler
      *     - ComplexInputFormAddHandler
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param field - The field to add the handlers to
      */
     public void addComplexInputFormHandlers(TheField field) {
@@ -257,10 +259,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
     /**
      * This function is called on the remove event the remove the field from the
      * form, field list and the field value form the list of inner VOs.
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param removeVO - The Vo to remove from the inner VO list
      * @param removeField - The field to remove from the form
      */
@@ -273,10 +275,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
     /**
      * Set the values on the fields within the form.
      * The fields is auto generated for each VO in the list.
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param value - The list of the inner VO to add to the form
      */
     @Override
@@ -295,10 +297,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
     /**
      * Generate the field based on the VO passed
      * and set the data on the field.
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param value - The innerVo that contains the data to set on the field
      */
     private void generateField(InnerVO value) {
@@ -317,7 +319,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
     /**
      * Add the field on the form it self.
      * This is only called on create and on setValue
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
      */
@@ -339,10 +341,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Handler for the ComplexInputFormRemove that is catch from the the event fired on the remove button
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param event - The event object that was fired
      */
     @Override
@@ -352,10 +354,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
             /**
              * The onfailure method that will not do anything
-             * 
+             *
              * @author Ashwin Arendse <ashwin.arendse@a24group.com>
              * @since  03 December 2012
-             * 
+             *
              * @param caught - The exception that were caught
              */
             @Override
@@ -364,10 +366,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
             /**
              * The on success if a user discards his changes
-             * 
+             *
              * @author Ashwin Arendse <ashwin.arendse@a24group.com>
              * @since  03 December 2012
-             * 
+             *
              * @param result - the result of tpe T
              */
             @Override
@@ -383,10 +385,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Function for when a ComplexInputFormConfirmationHandler needed to be added
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param handler - The handler that can re added
      */
     @Override
@@ -398,10 +400,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
     /**
      * Adds a ComplexInputFormFieldAddHandler that listen for the ComplexInputFormFieldAddEvent to
      * fire on each time a new field is added
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  1 March 2013
-     * 
+     *
      * @return {@link HandlerRegistration}
      */
     @Override
@@ -411,10 +413,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Handler for the ComplexInputFormRemove that is catch from the the event fired on the remove button
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param event - The event object that was fired
      */
     @Override
@@ -426,10 +428,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
      * Function that listen for the ComplexInputFormFieldAddEvent each time a recored have been added
      * in one of the nesting complex input forms and re-fire the event with the place where the event
      * originated form as the source.
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  1 March 2013
-     * 
+     *
      * @param handler - The handler that can re added
      */
     @Override
@@ -439,10 +441,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Handler for the ComplexInputFormAdd that is catch from the the event fired on the add button
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param event - The event object that was fired
      */
     @Override
@@ -454,7 +456,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Function that create a field and inject the an object
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
      */
@@ -467,12 +469,12 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Set the values and could fire an event
-     * 
+     *
      * NOTE : This function is not fully implemented
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param value - The values to set.
      * @param fireEvents - Flag for the firing of events
      */
@@ -483,10 +485,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Function for when a ValueChangeHandler needed to be added
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param handler - The handler that can re added
      */
     @Override
@@ -496,10 +498,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * This function is forced implemented but does not have a use in the form
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @return false
      */
     @Override
@@ -509,10 +511,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Set the fields to Required or not
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param required - If the field is required
      */
     @Override
@@ -525,10 +527,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * To set the fields to read only or not
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param readOnly - If the field is readOnly
      */
     @Override
@@ -541,10 +543,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Getter for the fields added to the compexInputForm input form.
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  01 March 2013
-     * 
+     *
      * @return the lsit og fields
      */
     public List<TheField> getFields() {
@@ -553,10 +555,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * Retrun the boolean if the the field is ReadOnly or not
-     * 
+     *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @return if the field is Read Only
      */
     @Override
@@ -566,7 +568,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
 
     /**
      * This function will determine whether there is unsaved data on a complex input
-     * 
+     *
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since  10 Dec 2012
      */

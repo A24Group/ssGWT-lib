@@ -23,20 +23,20 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * Abstract Complex Input is an input field that contains a dynamic form and a
  * view ui that is binded and used to display the view state of the field
- * 
+ *
  * @author Alec Erasmus <alec.erasmus@a24group.com>
  * @since  22 November 2012
  *
  * @param <T> is the type if data used like a VO
  */
 public abstract class ComplexInput<T> extends Composite
-implements
-HasValue<T>,
-InputField<T, T>,
-ComplexInputFormRemoveEvent.ComplexInputFormRemoveHasHandlers,
-ComplexInputFormAddEvent.ComplexInputFormAddHasHandlers,
-ComplexInputFormCancelEvent.ComplexInputFormCancelHasHandlers,
-ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
+    implements
+        HasValue<T>,
+        InputField<T, T>,
+        ComplexInputFormRemoveEvent.ComplexInputFormRemoveHasHandlers,
+        ComplexInputFormAddEvent.ComplexInputFormAddHasHandlers,
+        ComplexInputFormCancelEvent.ComplexInputFormCancelHasHandlers,
+        ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * This is the main panel.
@@ -50,14 +50,14 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * The panel that holds the view.
-     * 
+     *
      * The ui binder is added to it
      */
     protected FlowPanel viewPanel = new FlowPanel();
 
     /**
      * The panel data contains the data of the field.
-     * 
+     *
      * The view and dynamicForm.
      */
     protected FlowPanel dataPanel = new FlowPanel();
@@ -104,7 +104,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * A list of all the inputs on the the ComplexInput
-     * 
+     *
      * The add input to list must be added manually to the list by calling addInputToInputList
      */
     private final ArrayList<InputField> inputFieldsList = new ArrayList<InputField>();
@@ -145,7 +145,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Class constructor
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
      */
@@ -195,7 +195,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Function to construct all the components and add it to the main panel
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
      */
@@ -250,112 +250,112 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
          * Add click handler on editLabel
          */
         editLabel.addClickHandler(
-                new ClickHandler() {
+            new ClickHandler() {
 
-                    /**
-                     * Event cached on click of the component.
-                     * 
-                     * @author Alec Erasmus <alec.erasmus@a24group.com>
-                     * @since  22 November 2012
-                     * 
-                     * @param event - The click event
-                     */
-                    @Override
-                    public void onClick(ClickEvent event) {
-                        setEditState();
-                        mainPanel.removeStyleName(grayRowStyling);
-                    }
+                /**
+                 * Event cached on click of the component.
+                 *
+                 * @author Alec Erasmus <alec.erasmus@a24group.com>
+                 * @since  22 November 2012
+                 *
+                 * @param event - The click event
+                 */
+                @Override
+                public void onClick(ClickEvent event) {
+                    setEditState();
+                    mainPanel.removeStyleName(grayRowStyling);
                 }
-                );
+            }
+        );
 
         /**
          * Add click handler on removeLabel
          */
         removeLabel.addClickHandler(
-                new ClickHandler() {
+            new ClickHandler() {
 
-                    /**
-                     * Event cached on click of the component.
-                     * 
-                     * @author Alec Erasmus <alec.erasmus@a24group.com>
-                     * @since  22 November 2012
-                     * 
-                     * @param event - The click event
-                     */
-                    @Override
-                    public void onClick(ClickEvent event) {
-                        removeField();
-                    }
+                /**
+                 * Event cached on click of the component.
+                 *
+                 * @author Alec Erasmus <alec.erasmus@a24group.com>
+                 * @since  22 November 2012
+                 *
+                 * @param event - The click event
+                 */
+                @Override
+                public void onClick(ClickEvent event) {
+                    removeField();
                 }
-                );
+            }
+        );
 
         /**
          * Add click handler on addButton
          */
         addButton.addClickHandler(
-                new ClickHandler() {
+            new ClickHandler() {
 
-                    /**
-                     * Event cached on click of the component.
-                     * 
-                     * @author Alec Erasmus <alec.erasmus@a24group.com>
-                     * @since  22 November 2012
-                     * 
-                     * @param event - The click event
-                     */
-                    @Override
-                    public void onClick(ClickEvent event) {
-                        addField();
-                    }
+                /**
+                 * Event cached on click of the component.
+                 *
+                 * @author Alec Erasmus <alec.erasmus@a24group.com>
+                 * @since  22 November 2012
+                 *
+                 * @param event - The click event
+                 */
+                @Override
+                public void onClick(ClickEvent event) {
+                    addField();
                 }
-                );
+            }
+        );
 
         /**
          * Add click handler on saveButton
          */
         saveButton.addClickHandler(
-                new ClickHandler() {
+            new ClickHandler() {
 
-                    /**
-                     * Event cached on click of the component.
-                     * 
-                     * @author Alec Erasmus <alec.erasmus@a24group.com>
-                     * @since  22 November 2012
-                     * 
-                     * @param event - The click event
-                     */
-                    @Override
-                    public void onClick(ClickEvent event) {
-                        saveField();
-                    }
+                /**
+                 * Event cached on click of the component.
+                 *
+                 * @author Alec Erasmus <alec.erasmus@a24group.com>
+                 * @since  22 November 2012
+                 *
+                 * @param event - The click event
+                 */
+                @Override
+                public void onClick(ClickEvent event) {
+                    saveField();
                 }
-                );
+            }
+        );
 
         /**
          * Add click handler on undoButton
          */
         undoButton.addClickHandler(
-                new ClickHandler() {
+            new ClickHandler() {
 
-                    /**
-                     * Event cached on click of the component.
-                     * 
-                     * @author Alec Erasmus <alec.erasmus@a24group.com>
-                     * @since  22 November 2012
-                     * 
-                     * @param event - The click event
-                     */
-                    @Override
-                    public void onClick(ClickEvent event) {
-                        addUndo();
-                    }
+                /**
+                 * Event cached on click of the component.
+                 *
+                 * @author Alec Erasmus <alec.erasmus@a24group.com>
+                 * @since  22 November 2012
+                 *
+                 * @param event - The click event
+                 */
+                @Override
+                public void onClick(ClickEvent event) {
+                    addUndo();
                 }
-                );
+            }
+        );
     }
 
     /**
      * This function will be responsible for the canceling of data
-     * 
+     *
      * @author Ashwin Arendse <ashwin.arendse@a24group.com>
      * @since  03 December 2012
      */
@@ -363,27 +363,27 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Abstract function for the get of the ui view
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @return the ui as a Widget
      */
     public abstract Widget getUiBinder();
 
     /**
      * Abstract function for the get of the DynamicForm
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @return the DynamicForm
      */
     public abstract DynamicForm<T> getDynamicForm();
 
     /**
      * Abstract function to set the field in a view state
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
      */
@@ -391,7 +391,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Abstract function to set the field in a edit state
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
      */
@@ -399,7 +399,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Abstract function to set the field in a add state
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
      */
@@ -407,7 +407,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Abstract function that will be called on click of the save button is clicked
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
      */
@@ -415,7 +415,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Abstract function that will be called on click of the add button is clicked
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
      */
@@ -423,7 +423,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * This function will determine whether there is unsaved data on a complex input
-     * 
+     *
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since  10 Dec 2012
      */
@@ -431,7 +431,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Abstract function that will be called on click of the remove button is clicked
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
      */
@@ -439,7 +439,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Gets the save button
-     * 
+     *
      * @return the save button
      */
     public ImageButton getSaveButton() {
@@ -448,10 +448,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * If the need arise for the field to have ValueChangeHandler added to it
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param handler - The Value Change Handler
      */
     @Override
@@ -461,10 +461,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Adds a ComplexInputFormFieldAddHandler that fires each time a new recored is created
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  1 March 2013
-     * 
+     *
      * @param handler - The Complex Input Form Field Add Handler
      */
     @Override
@@ -474,10 +474,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Function that will set a widget in the action container
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param widget - The widget to set
      */
     protected void setActionPanel(Widget widget) {
@@ -487,10 +487,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Function that will add a widget in the action container
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param widget - The widget to add
      */
     protected void addToActionPanel(Widget widget) {
@@ -499,10 +499,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Function that will remove a widget in the action container
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param widget - The widget to remove
      */
     protected void removeFromActionPanel(Widget widget) {
@@ -511,7 +511,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Function that will clear the action container
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
      */
@@ -521,10 +521,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Getter for the view panel
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @return the view panel
      */
     protected FlowPanel getViewPanel() {
@@ -533,10 +533,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Getter for the dynamic panel
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @return the dynamic panel
      */
     protected FlowPanel getDynamicFormPanel() {
@@ -545,7 +545,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Set the add button to the action container.
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
      */
@@ -555,7 +555,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Used to set the text for the add button
-     * 
+     *
      * @param text The text used for the add button
      */
     protected void setAddButtonText(String text) {
@@ -564,7 +564,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Set the view buttons to the action container.
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
      */
@@ -574,7 +574,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Set the edit button to the action container.
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
      */
@@ -584,10 +584,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * A setter for an inject object
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @param object - The object to inject
      */
     public void setInjectedObject(Object object) {
@@ -596,10 +596,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Return the field as a widget
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  22 November 2012
-     * 
+     *
      * @return the field as a widget
      */
     @Override
@@ -610,9 +610,9 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
     /**
      * Set the message panel to visible and sets an error message
      * on it. Also applies the error style.
-     * 
+     *
      * @param message String to display as message
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  26 November 2012
      */
@@ -636,9 +636,9 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
     /**
      * Set the message panel to visible and sets an info message
      * on it. Also applies the info style.
-     * 
+     *
      * @param message String to display as message
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  26 November 2012
      */
@@ -662,7 +662,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
     /**
      * Clear the message panel of messages and sets it's
      * visibility to false.
-     * 
+     *
      * @author Ashwin Arendse <ashwin.arendse@a24group.com>
      * @since  12 November 2012
      */
@@ -674,10 +674,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Add a style to the actionPanel
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  1 March 2013
-     * 
+     *
      * @param style - The style to apply to the actionPanel
      */
     public void addActionPanelStyle(String style) {
@@ -686,10 +686,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Adds the a input to the input list the can be retried if needed
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  1 March 2013
-     * 
+     *
      * @param inputField - The input to add
      */
     public void addInputToInputList(InputField inputField) {
@@ -698,10 +698,10 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Get the list of inputs that have been added to the complex input
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  1 March 2013
-     * 
+     *
      * @param list of inputs
      */
     public List<InputField> getInputFromInputList() {
@@ -778,7 +778,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Sets the style that will be used by the save button
-     * 
+     *
      * @param complexSaveButtonStyle The style that will be used by the save button
      */
     public void setComplexSaveButtonStyle(String complexSaveButtonStyle) {
@@ -787,7 +787,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Sets the style that will be used by the undo button
-     * 
+     *
      * @param complexUndoButtonStyle The style that will be used by the undo button
      */
     public void setComplexUndoButtonStyle(String complexUndoButtonStyle) {
@@ -796,7 +796,7 @@ ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
 
     /**
      * Sets the style that will be used by the add button
-     * 
+     *
      * @param complexAddButtonStyle The style that will be used by the add button
      */
     public void setComplexAddButtonStyle(String complexAddButtonStyle) {
