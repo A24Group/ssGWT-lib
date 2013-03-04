@@ -288,17 +288,6 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> implements HasHa
                 replaceImageElement(resources.filterIconInactive(), filterImageElement, filterImageParentElement);
             }
             FilterChangeEvent.fire(this);
-        } else {
-            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                
-                /**
-                 * Execute the schedule event
-                 */
-                @Override
-                public void execute() {
-                    setFilterActive(FilterSortCell.this.filterActive);
-                }
-            });
         }
     }
 
