@@ -376,9 +376,9 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
             public void onSuccess(T result) {
                 // Remove a field
                 removeField(
-                        (InnerVO) complexInputFormRemoveEvent.getRemoveObjectVO(),
-                        (TheField) complexInputFormRemoveEvent.getRemoveObjectField()
-                        );
+                    (InnerVO) complexInputFormRemoveEvent.getRemoveObjectVO(),
+                    (TheField) complexInputFormRemoveEvent.getRemoveObjectField()
+                );
             }
         });
     }
