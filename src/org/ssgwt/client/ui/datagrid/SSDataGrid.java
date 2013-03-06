@@ -159,12 +159,27 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      */
     @UiField
     LayoutPanel mainContainer;
-
+    
+    /**
+     * Whether the current data set is the first set
+     */
+    private boolean firstDataSet = false;
+    
+    /**
+     * Whether the first set has already been given
+     */
+    private boolean firstDataSetGiven = false;
+    
     /**
      * Whether the range change event should be fired
      */
     private boolean doRangeChange = true;
-    
+
+    /**
+     * Variable to hold the previous range before the range is changed
+     */
+    private Range previousRange = new Range(0, 0);
+
     /**
      * Class Constructor
      * 
@@ -255,13 +270,23 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @since 29 June 2012
      */
     public void setRowData(List<T> data) {
-        doRangeChange = false;
+        if (!firstDataSetGiven) {
+            firstDataSetGiven = true;
+            firstDataSet = true;
+        }
+        
+        previousRange = dataGrid.getVisibleRange();
         if (data != null) {
             noContentLabel.setVisible(false);
             dataGrid.setRowData(data);
             refresh();
         } else {
             noContentLabel.setVisible(true);
+        }
+        
+        if (previousRange.equals(dataGrid.getVisibleRange())) {
+            doRangeChange = true;
+            firstDataSet = false;
         }
     }
 
@@ -275,12 +300,23 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @since 29 June 2012
      */
     public void setRowData(int startRow, List<T> data) {
+        if (!firstDataSetGiven) {
+            firstDataSetGiven = true;
+            firstDataSet = true;
+        }
+        
+        previousRange = dataGrid.getVisibleRange();
         if (data != null) {
             noContentLabel.setVisible(false);
             dataGrid.setRowData(startRow, data);
             refresh();
         } else {
             noContentLabel.setVisible(true);
+        }
+        
+        if (previousRange.equals(dataGrid.getVisibleRange())) {
+            doRangeChange = true;
+            firstDataSet = false;
         }
     }
 
@@ -732,6 +768,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      */
     @Override
     public void onFilterChange(FilterChangeEvent event) {
+        doRangeChange = false;
         FilterChangeEvent.fire(this);
     }
     
@@ -755,10 +792,11 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      */
     @Override
     public void onRangeChange(RangeChangeEvent event) {
-        if (doRangeChange) {
+        if (doRangeChange && !firstDataSet) {
             DataGridRangeChangeEvent.fire(this, event.getNewRange());
         } else {
             doRangeChange = true;
+            firstDataSet = false;
         }
     }
 }
