@@ -379,7 +379,12 @@ public abstract class SearchBoxUserRecord<T> extends SearchBoxRecordWidget<T> {
      */
     @Override
     public String getItemSelectionText() {
-        return getFirstNameAndLastName(itemVO) + " - " + getUsername(itemVO);
+        String itemString = getFirstNameAndLastName(itemVO);
+        if (getUsername(itemVO) != null && !getUsername(itemVO).trim().equals("")) {
+            itemString += " - " + getUsername(itemVO);
+        }
+
+        return itemString;
     }
 
     /**
