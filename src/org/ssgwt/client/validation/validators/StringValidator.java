@@ -45,6 +45,16 @@ public class StringValidator extends AbstractValidator implements ValidatorInter
     private static final String DEFAULT_VALIDATION_MESSAGE = "Invalid or no text entered";
     
     /**
+     * Whether or not null will pass the minimum length validation
+     */
+    private boolean bAllowNullToPassMinimumLenth = false;
+    
+    /**
+     * Whether or not null will pass the maximum length validation
+     */
+    private boolean bAllowNullToPassMaximumLenth = false;
+    
+    /**
      * Validates the value passed in.
      * 
      * @author Jaco Nel <jaco.nel@a24group.com>
@@ -75,6 +85,9 @@ public class StringValidator extends AbstractValidator implements ValidatorInter
                     StringValidator.OPTION_MAX_LENGTH).toString();
             int maxLength = Integer.parseInt(maxLengthConfig);
 
+            if (value == null) {
+                return bAllowNullToPassMaximumLenth;
+            }
             if (value.length() > maxLength) {
                 return false;
             }
@@ -99,7 +112,10 @@ public class StringValidator extends AbstractValidator implements ValidatorInter
                     StringValidator.OPTION_MIN_LENGTH).toString();
             int minlength = Integer.parseInt(minlengthConfiguration);
 
-            if (value == null || value.length() < minlength) {
+            if (value == null) {
+                return this.bAllowNullToPassMinimumLenth;
+            } 
+            if (value.length() < minlength) {
                 return false;
             }
         }
@@ -128,5 +144,66 @@ public class StringValidator extends AbstractValidator implements ValidatorInter
     @Override
     public String getDefaultValidationMessage() {;
         return StringValidator.DEFAULT_VALIDATION_MESSAGE;
+    }
+    
+    /**
+     * Used to set if null is allowed to pass the minimum validation
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 06 March 2013
+     * 
+     * @param bAllowNullToPassMinimumLenth - Whether to allow null to pass the minimum length validation
+     */
+    public void setAllowNullToPassMinimumLenth(boolean bAllowNullToPassMinimumLenth) {
+        this.bAllowNullToPassMinimumLenth = bAllowNullToPassMinimumLenth;
+    }
+    
+    /**
+     * Used to set if null is allowed to pass the maximum validation
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 06 March 2013
+     * 
+     * @param bAllowNullToPassMaximumLenth - Whether to allow null to pass the maximum length validation
+     */
+    public void setAllowNullToPassMaximumLenth(boolean bAllowNullToPassMaximumLenth) {
+        this.bAllowNullToPassMaximumLenth = bAllowNullToPassMaximumLenth;
+    }
+    
+    /**
+     * Used to set if null is allowed to pass the validation
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 06 March 2013
+     * 
+     * @param bAllowNullToPassLenth - Whether to allow null to pass the length validation
+     */
+    public void setAllowNullToPassLength(boolean bAllowNullToPassLenth) {
+        this.bAllowNullToPassMinimumLenth = bAllowNullToPassLenth;
+        this.bAllowNullToPassMaximumLenth = bAllowNullToPassLenth;
+    }
+    
+    /**
+     * Used to check if null is allowed to pass the minimum length validation
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 06 March 2013
+     * 
+     * @return Whether null is allowed to pass the minimum length validation
+     */
+    public boolean isNullAllowedToPassMinimumLenth() {
+        return this.bAllowNullToPassMinimumLenth;
+    }
+    
+    /**
+     * Used to check if null is allowed to pass the maximum length validation
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since 06 March 2013
+     * 
+     * @return Whether null is allowed to pass the maximum length validation
+     */
+    public boolean isNullAllowedToPassMaximumLenth() {
+        return this.bAllowNullToPassMaximumLenth;
     }
 }
