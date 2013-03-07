@@ -62,3 +62,11 @@
 .avatarImageSelected {
     margin-left: 5px;
 }
+
+/* The style for the remove icon on the right side */
+.removeImageStyle {
+    width: 16px;
+    height: 16px;
+    margin: 8px 10px 8px 0px;
+    float: right;
+}
