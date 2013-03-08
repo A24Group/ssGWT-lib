@@ -55,7 +55,15 @@ public class StringRegexValidator extends AbstractValidator implements
      * Some accent and gravis symbols are also allowed.
      */
     public static final String REGEX_NAME_PATTERN_NUMBERS = "^[0-9A-Za-zàáâäãåèéêëìíîïòóôöõøùúûüÿýñçčšžÀÁÂÄÃÅÈÉÊËÌÍÎÏÒÓÔÖÕØÙÚÛÜŸÝÑßÇŒÆČŠŽ∂ð&]+([0-9A-Z a-zàáâäãåèéêëìíîïòóôöõøùúûüÿýñçčšžÀÁÂÄÃÅÈÉÊËÌÍÎÏÒÓÔÖÕØÙÚÛÜŸÝÑßÇŒÆČŠŽ∂ð\\'-]*[0-9A-Za-zàáâäãåèéêëìíîïòóôöõøùúûüÿýñçčšžÀÁÂÄÃÅÈÉÊËÌÍÎÏÒÓÔÖÕØÙÚÛÜŸÝÑßÇŒÆČŠŽ∂ð&]){0,}$";
-   
+    
+    /**
+     * This regular expression is used to make sure that
+     * some special characters and numbers can be part of a name.
+     * We allow a hyphen or space, (, ) and / and  in the middle of the name.
+     * Some accent and gravis symbols are also allowed.
+     */
+    public static final String REGEX_NAME_PATTERN_WITH_SPECIAL_CHARACTERS = "^[0-9A-Za-zàáâäãåèéêëìíîïòóôöõøùúûüÿýñçčšžÀÁÂÄÃÅÈÉÊËÌÍÎÏÒÓÔÖÕØÙÚÛÜŸÝÑßÇŒÆČŠŽ∂ð&\\(\\)\\/]+([0-9A-Z a-zàáâäãåèéêëìíîïòóôöõøùúûüÿýñçčšžÀÁÂÄÃÅÈÉÊËÌÍÎÏÒÓÔÖÕØÙÚÛÜŸÝÑßÇŒÆČŠŽ∂ð\\'-]*[0-9A-Za-zàáâäãåèéêëìíîïòóôöõøùúûüÿýñçčšžÀÁÂÄÃÅÈÉÊËÌÍÎÏÒÓÔÖÕØÙÚÛÜŸÝÑßÇŒÆČŠŽ∂ð&\\(\\)\\/]){0,}$";
+
     /**
      * The regular expression patterns string to be used to validate an email address.
      */
