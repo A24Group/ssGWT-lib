@@ -96,9 +96,9 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
     private InputFieldCreator inputFieldCreator;
 
     /**
-     * Complex Input Form Remove Event
+     * ComplexInputFormConfirmationHandler that will be added to inner ComplexInputForm forms.
      */
-    private ComplexInputFormRemoveEvent complexInputFormRemoveEvent;
+    private ComplexInputFormConfirmationHandler complexInputFormConfirmationHandler;
 
     /**
      * Class constructor
@@ -254,6 +254,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
         field.addComplexInputFormAddHandler(this);
         field.addComplexInputFormCancelHandler(this);
         field.addComplexInputFormFieldAddHandler(this);
+        addComplexInputFormConfirmationHandlerOnFields(field, complexInputFormConfirmationHandler);
     }
 
     /**
@@ -348,8 +349,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
      * @param event - The event object that was fired
      */
     @Override
-    public void onComplexInputFormRemove(ComplexInputFormRemoveEvent event) {
-        complexInputFormRemoveEvent = event;
+    public void onComplexInputFormRemove(final ComplexInputFormRemoveEvent event) {
         ComplexInputFormConfirmationEvent.fire(true, this, new AsyncCallback<T>() {
 
             /**
@@ -376,8 +376,8 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
             public void onSuccess(T result) {
                 // Remove a field
                 removeField(
-                    (InnerVO) complexInputFormRemoveEvent.getRemoveObjectVO(),
-                    (TheField) complexInputFormRemoveEvent.getRemoveObjectField()
+                    (InnerVO) event.getRemoveObjectVO(),
+                    (TheField) event.getRemoveObjectField()
                 );
             }
         });
@@ -393,7 +393,28 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
      */
     @Override
     public HandlerRegistration addComplexInputFormConfirmationHandler(ComplexInputFormConfirmationHandler handler) {
+        this.complexInputFormConfirmationHandler = handler;
+        for (Object field : fields) {
+            if (field instanceof ComplexInput) {
+                addComplexInputFormConfirmationHandlerOnFields((ComplexInput)field, complexInputFormConfirmationHandler);
+            }
+        }
         return this.addHandler(handler, ComplexInputFormConfirmationEvent.TYPE);
+    }
+
+    /**
+     * Add the ComplexInputFormConfirmationHandler to a complexIput inner complex input form
+     *
+     * @param field - The ComplexInput field to add the ComplexInputFormConfirmationHandler
+     * @param handler - The ComplexInputFormConfirmationHandler to add to the ComplexInputForm
+     */
+    private void addComplexInputFormConfirmationHandlerOnFields(ComplexInput field, ComplexInputFormConfirmationHandler handler) {
+        List<InputField> listInputFields = field.getInputFromInputList();
+        for (InputField inputField : listInputFields) {
+            if (inputField instanceof ComplexInputForm) {
+                ((ComplexInputForm) inputField).addComplexInputFormConfirmationHandler(complexInputFormConfirmationHandler);
+            }
+        }
     }
 
 
