@@ -487,6 +487,28 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
     }
     
     /**
+     * Removes a widget from the action bar
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 March 2013
+     * 
+     * @param actionBarWidget - The widget that needs to be removed to the action bar
+     */
+    public void removeActionBarWidget(Widget actionBarWidget) {
+        this.actionBarContainer.remove(actionBarWidget);
+    }
+    
+    /**
+     * Removes all widgets from the action bar
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 March 2013
+     */
+    public void clearActionBarWidgets() {
+        this.actionBarContainer.clear();
+    }
+    
+    /**
      * Sets the size of the pager.
      * 
      * @param pageSize - The size of the pager
