@@ -761,4 +761,14 @@ public class DynamicForm<T> extends Composite {
         }
 
     }
+
+    /**
+     * Add a style to a field for the provided inputField.
+     *
+     * @param inputField - The field's inputField (the item added to the dynamic form)
+     * @param styleName - The style name to apply to the field (not the inputField)
+     */
+    public void addStyleNameToField(InputField inputField, String styleName) {
+        fields.get(inputField).addStyleName(styleName);
+    }
 }
