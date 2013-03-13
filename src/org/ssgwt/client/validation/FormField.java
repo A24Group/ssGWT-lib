@@ -15,6 +15,7 @@
 package org.ssgwt.client.validation;
 
 import java.util.HashMap;
+
 import com.google.gwt.user.client.ui.Widget;
 
 /**

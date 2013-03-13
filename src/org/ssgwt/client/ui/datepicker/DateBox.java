@@ -16,6 +16,8 @@
 
 package org.ssgwt.client.ui.datepicker;
 
+import java.util.Date;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.IsEditor;
 import com.google.gwt.editor.client.LeafValueEditor;
@@ -41,8 +43,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
-
-import java.util.Date;
 
 /**
  * A text box that shows a {@link DatePicker} when the user focuses on it.

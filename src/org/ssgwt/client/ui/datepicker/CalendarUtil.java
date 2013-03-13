@@ -16,11 +16,11 @@
 
 package org.ssgwt.client.ui.datepicker;
 
+import java.util.Date;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormatInfo;
 import com.google.gwt.i18n.client.LocaleInfo;
-
-import java.util.Date;
 
 /**
  * Useful utilities for creating views of a calendar.
