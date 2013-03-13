@@ -16,11 +16,11 @@
 
 package org.ssgwt.client.ui.datepicker;
 
+import java.util.Date;
+
 import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.shared.HasHandlers;
-
-import java.util.Date;
 
 /**
  * Creates a new value every time a date is accessed.

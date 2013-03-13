@@ -19,8 +19,6 @@ import java.util.Date;
 import java.util.HashMap;
 
 import org.ssgwt.client.ui.AdvancedInputField;
-import org.ssgwt.client.ui.AdvancedTextbox;
-import org.ssgwt.client.ui.form.InputField;
 import org.ssgwt.client.validation.validators.AgeValidator;
 import org.ssgwt.client.validation.validators.DateValidator;
 import org.ssgwt.client.validation.validators.EmailValidator;

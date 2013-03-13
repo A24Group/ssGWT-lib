@@ -14,7 +14,6 @@
 package org.ssgwt.client.ui.datagrid.event;
 
 import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.user.cellview.client.Column;
 
 /**
  * Custom event used when a sort action is performed

@@ -14,7 +14,6 @@
 
 package org.ssgwt.client.validation.validators;
 
-import java.util.regex.Pattern;
 
 /**
  * Validator to validate whether a string value is a valid

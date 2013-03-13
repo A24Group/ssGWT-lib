@@ -14,7 +14,6 @@
 package org.ssgwt.client.ui.datagrid;
 
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.resources.client.ImageResource.ImageOptions;
 import com.google.gwt.user.cellview.client.DataGrid;
 
