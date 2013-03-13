@@ -15,13 +15,13 @@
  */
 package org.ssgwt.client.ui.datepicker;
 
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
-
 import java.util.Date;
 
 import org.ssgwt.client.ui.datepicker.DefaultCalendarView.CellGrid.DateCell;
+
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.HTMLTable.CellFormatter;
 
 /**
  * Simple calendar view. Not extensible as we wish to evolve it freely over

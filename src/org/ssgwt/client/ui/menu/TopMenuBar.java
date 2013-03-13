@@ -14,19 +14,13 @@
 package org.ssgwt.client.ui.menu;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import org.ssgwt.client.ui.datagrid.SSDataGrid.Resources;
-import org.ssgwt.client.ui.datagrid.SSDataGrid.Style;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.resources.client.ClientBundle.Source;
-import com.google.gwt.resources.client.CssResource.ClassName;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;

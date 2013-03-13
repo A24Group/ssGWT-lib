@@ -14,6 +14,13 @@
 
 package org.ssgwt.client.ui.datepicker;
 
+import java.util.Date;
+
+import org.ssgwt.client.ui.FocusImage;
+import org.ssgwt.client.ui.datepicker.DateBox.Format;
+import org.ssgwt.client.ui.event.FocusImageClickEvent;
+import org.ssgwt.client.ui.event.IFocusImageClickEventHandler;
+
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.editor.client.IsEditor;
 import com.google.gwt.editor.client.LeafValueEditor;
@@ -25,12 +32,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasName;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.LayoutPanel;
-import java.util.Date;
-
-import org.ssgwt.client.ui.FocusImage;
-import org.ssgwt.client.ui.datepicker.DateBox.Format;
-import org.ssgwt.client.ui.event.FocusImageClickEvent;
-import org.ssgwt.client.ui.event.IFocusImageClickEventHandler;
 
 /**
  * Datebox component with a FocusImage icon.

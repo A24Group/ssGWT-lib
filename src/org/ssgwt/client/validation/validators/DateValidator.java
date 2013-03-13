@@ -16,8 +16,6 @@ package org.ssgwt.client.validation.validators;
 
 import java.util.Date;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
-
 /**
  * Date Validator.
  * 
