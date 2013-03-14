@@ -13,7 +13,7 @@
  */
 package org.ssgwt.client.ui.datagrid.column;
 
-import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.cellview.client.Column;
 
 /**
  * The SSTextColumn to be able to get the column name from a event
@@ -21,5 +21,13 @@ import com.google.gwt.user.cellview.client.TextColumn;
  * @author Alec Erasmus
  * @since 14 Aug 2012
  */
-public abstract class SSTextColumn<T> extends TextColumn<T> implements SortableColumnWithName {
+public abstract class SSTextColumn<T> extends Column<T, String> implements SortableColumnWithName {
+    
+    /**
+     * Construct a new TextColumn.
+     */
+    public SSTextColumn() {
+      super(new SSTextCell());
+    }
+    
 }

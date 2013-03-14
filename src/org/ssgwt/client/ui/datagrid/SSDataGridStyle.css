@@ -153,11 +153,12 @@
     padding-top: 4px;
 }
 
-.dataGridCell > div {
+.dataGridCell > div > div {
     margin-top:-1px;
     margin-left: 22px;
     white-space:nowrap;
-    text-overflow: clip;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /*First and last column styling(Not used yet)*/
@@ -177,8 +178,6 @@
 
 .dataGridLastColumnFooter {
 }
-
-
 
 /*Styling of the last element before the last column in header*/
 .dataGridLastColumnHeader {
