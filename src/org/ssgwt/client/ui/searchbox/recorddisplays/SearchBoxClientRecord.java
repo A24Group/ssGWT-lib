@@ -172,7 +172,7 @@ public abstract class SearchBoxClientRecord<T> extends SearchBoxRecordWidget<T> 
          *
          * @return The name of the compiled style
          */
-        String organisationLabelSelected();
+        String siteLabelSelected();
 
         /**
          * The style for the avatar when the record is selected
@@ -300,11 +300,11 @@ public abstract class SearchBoxClientRecord<T> extends SearchBoxRecordWidget<T> 
     public void setSelectedState(boolean selected) {
         if (selected) {
             searchBoxClientRecord.addStyleName(resources.searchBoxClientRecordStyle().searchBoxClientRecordSelected());
-            siteLabel.addStyleName(resources.searchBoxClientRecordStyle().organisationLabelSelected());
+            siteLabel.addStyleName(resources.searchBoxClientRecordStyle().siteLabelSelected());
             avatarImage.addStyleName(resources.searchBoxClientRecordStyle().avatarImageSelected());
         } else {
             searchBoxClientRecord.removeStyleName(resources.searchBoxClientRecordStyle().searchBoxClientRecordSelected());
-            siteLabel.removeStyleName(resources.searchBoxClientRecordStyle().organisationLabelSelected());
+            siteLabel.removeStyleName(resources.searchBoxClientRecordStyle().siteLabelSelected());
             avatarImage.removeStyleName(resources.searchBoxClientRecordStyle().avatarImageSelected());
         }
     }
