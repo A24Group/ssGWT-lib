@@ -20,6 +20,7 @@ import org.ssgwt.client.ui.ImageButton;
 import org.ssgwt.client.ui.searchbox.recorddisplays.SearchBoxRecordWidget;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -33,6 +34,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -63,6 +65,12 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
      */
     @UiField(provided=true)
     ImageButton submitButton;
+    
+    /**
+     * The container for the entire ui component
+     */
+    @UiField
+    LayoutPanel container;
 
     /**
      * The object that was selected by the user
@@ -127,6 +135,7 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
      */
     interface Binder extends UiBinder<Widget, SearchBox> {
     }
+    
     /**
      * Class constructor
      *
@@ -138,22 +147,53 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
     public SearchBox(String submitButtonLabel) {
         this(submitButtonLabel, getDefaultResources());
     }
-
+    
+    /**
+     * Class constructor
+     *
+     * @param submitButtonLabel - The label that will be displayed on the button
+     * @param buttonWidth - The width of the Submit Button
+     *
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  19 March 2013
+     */
+    public SearchBox(String submitButtonLabel, int buttonWidth) {
+        this(submitButtonLabel, getDefaultResources(), buttonWidth);
+    }
+    
     /**
      * Class constructor
      *
      * @param submitButtonLabel - The label that will be displayed on the button
      * @param resources - The resources the search box will use
      *
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  19 March 2013
+     */
+    public SearchBox(String submitButtonLabel, SearchBoxResources resources) {
+    	this(submitButtonLabel, resources, 0);
+    }
+
+    /**
+     * Class constructor
+     *
+     * @param submitButtonLabel - The label that will be displayed on the button
+     * @param resources - The resources the search box will use
+     * @param buttonWidth - The width of the Submit Button
+     *
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  22 January 2013
      */
-    public SearchBox(String submitButtonLabel, SearchBoxResources resources) {
+    public SearchBox(String submitButtonLabel, SearchBoxResources resources, int buttonWidth) {
         this.resources = resources;
         this.resources.searchBoxStyle().ensureInjected();
         submitButton = new ImageButton(submitButtonLabel);
         this.initWidget(uiBinder.createAndBindUi(this));
         submitButton.addClickHandler(this);
+        if (buttonWidth != 0){
+            container.setWidgetLeftRight(textBox, 0, Unit.PX, buttonWidth + 15, Unit.PX);
+            container.setWidgetRightWidth(submitButton, 0, Unit.PX, buttonWidth, Unit.PX);
+        }
         textBox.addKeyUpHandler(this);
     }
 
