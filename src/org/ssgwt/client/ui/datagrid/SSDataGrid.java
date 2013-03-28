@@ -14,11 +14,11 @@
 package org.ssgwt.client.ui.datagrid;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import org.ssgwt.client.ui.datagrid.SSPager.TextLocation;
+import org.ssgwt.client.ui.datagrid.event.DataGridRangeChangeEvent;
 import org.ssgwt.client.ui.datagrid.event.DataGridRowSelectionChangedEvent;
 import org.ssgwt.client.ui.datagrid.event.DataGridSortEvent;
 import org.ssgwt.client.ui.datagrid.event.FilterChangeEvent;
@@ -31,25 +31,20 @@ import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dev.resource.Resource;
-import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.TableRowElement;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.layout.client.Layout.Layer;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent;
-import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.ColumnSortList.ColumnSortInfo;
-import com.google.gwt.user.cellview.client.DataGrid.Style;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.Header;
+import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -57,9 +52,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.RequiresResize;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.view.client.AsyncDataProvider;
-import com.google.gwt.view.client.HasData;
-import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.RangeChangeEvent;
 
@@ -70,7 +62,8 @@ import com.google.gwt.view.client.RangeChangeEvent;
  * @author Johannes Gryffenberg
  * @since 29 June 2012
  */
-public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite implements RequiresResize, FilterChangeEvent.FilterChangeHandler {
+public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite 
+    implements RequiresResize, FilterChangeEvent.FilterChangeHandler, RangeChangeEvent.Handler {
 
     /**
      * UiBinder interface for the composite
@@ -168,6 +161,26 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
     LayoutPanel mainContainer;
     
     /**
+     * Whether the current data set is the first set
+     */
+    private boolean firstDataSet = false;
+    
+    /**
+     * Whether the first set has already been given
+     */
+    private boolean firstDataSetGiven = false;
+    
+    /**
+     * Whether the range change event should be fired
+     */
+    private boolean doRangeChange = true;
+
+    /**
+     * Variable to hold the previous range before the range is changed
+     */
+    private Range previousRange = new Range(0, 0);
+
+    /**
      * Class Constructor
      * 
      * @author Michael Barnard
@@ -245,6 +258,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
         Resources.INSTANCE.dataGridStyle().ensureInjected();
         actionBar.setStyleName(Resources.INSTANCE.dataGridStyle().actionBarStyle());
         noContentLabel.setStyleName(Resources.INSTANCE.dataGridStyle().noContentLabelStyle());
+        dataGrid.addRangeChangeHandler(this);
     }
 
     /**
@@ -256,12 +270,23 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * @since 29 June 2012
      */
     public void setRowData(List<T> data) {
+        if (!firstDataSetGiven) {
+            firstDataSetGiven = true;
+            firstDataSet = true;
+        }
+        
+        previousRange = dataGrid.getVisibleRange();
         if (data != null) {
             noContentLabel.setVisible(false);
             dataGrid.setRowData(data);
             refresh();
         } else {
             noContentLabel.setVisible(true);
+        }
+        
+        if (previousRange.equals(dataGrid.getVisibleRange())) {
+            doRangeChange = true;
+            firstDataSet = false;
         }
     }
 
@@ -275,12 +300,23 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * @since 29 June 2012
      */
     public void setRowData(int startRow, List<T> data) {
+        if (!firstDataSetGiven) {
+            firstDataSetGiven = true;
+            firstDataSet = true;
+        }
+        
+        previousRange = dataGrid.getVisibleRange();
         if (data != null) {
             noContentLabel.setVisible(false);
             dataGrid.setRowData(startRow, data);
             refresh();
         } else {
             noContentLabel.setVisible(true);
+        }
+        
+        if (previousRange.equals(dataGrid.getVisibleRange())) {
+            doRangeChange = true;
+            firstDataSet = false;
         }
     }
 
@@ -448,6 +484,28 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      */
     public void setActionBarWidget(Widget actionBarWidget) {
         this.actionBarContainer.add(actionBarWidget);
+    }
+    
+    /**
+     * Removes a widget from the action bar
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 March 2013
+     * 
+     * @param actionBarWidget - The widget that needs to be removed to the action bar
+     */
+    public void removeActionBarWidget(Widget actionBarWidget) {
+        this.actionBarContainer.remove(actionBarWidget);
+    }
+    
+    /**
+     * Removes all widgets from the action bar
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 March 2013
+     */
+    public void clearActionBarWidgets() {
+        this.actionBarContainer.clear();
     }
     
     /**
@@ -664,7 +722,6 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      */
     public void addFilterColumn(Column<T, ?> col, String label, AbstractHeaderFilter filterWidget) {
         FilterSortHeader header = new FilterSortHeader(label, filterWidget);
-        header.addFilterChangeHandler(this);
         this.addColumn(col, header);
     }
     
@@ -697,8 +754,8 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      * 
      * @return The handler registration object
      */
-    public HandlerRegistration addRangeChangeHandler(RangeChangeEvent.Handler handler) {
-        return dataGrid.addRangeChangeHandler(handler);
+    public HandlerRegistration addDataGridRangeChangeHandler(DataGridRangeChangeEvent.Handler handler) {
+        return this.addHandler(handler, DataGridRangeChangeEvent.TYPE);
     }
     
     /**
@@ -733,6 +790,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      */
     @Override
     public void onFilterChange(FilterChangeEvent event) {
+        doRangeChange = false;
         FilterChangeEvent.fire(this);
     }
     
@@ -743,5 +801,24 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite i
      */
     public void indentTable(int pixels) {
         mainContainer.setWidgetLeftRight(dataGrid, pixels, Unit.PX, 0, Unit.PX);
+    }
+
+    /**
+     * This function will determin whether the DataGridRangeChangeEvent
+     * should be fired.
+     * 
+     * @param event The range change event being handled
+     * 
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since 04 March 2013
+     */
+    @Override
+    public void onRangeChange(RangeChangeEvent event) {
+        if (doRangeChange && !firstDataSet) {
+            DataGridRangeChangeEvent.fire(this, event.getNewRange());
+        } else {
+            doRangeChange = true;
+            firstDataSet = false;
+        }
     }
 }

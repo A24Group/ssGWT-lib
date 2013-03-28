@@ -13,7 +13,7 @@
  */
 
 /* The style for the panel that contains the whole search box user record */
-.searchBoxUserRecord {
+.searchBoxClientRecord {
     width: 100%;
     height: 35px;
     overflow: hidden;
@@ -21,7 +21,7 @@
 }
 
 /* The style for the name of the user */
-.nameLabel {
+.organisationLabel {
     color: #6685AB;
     font-family: PT Sans, sans-serif;
     font-size: 12px;
@@ -31,7 +31,7 @@
 }
 
 /* The style for the label for the username of the user */
-.usernameLabel {
+.siteLabel {
     color: #B4B4B4;
     font-family: PT Sans, sans-serif;
     font-size: 12px;
@@ -48,25 +48,17 @@
 }
 
 /* The style for the user record when it is selected */
-.searchBoxUserRecordSelected {
+.searchBoxClientRecordSelected {
     background: #E6E6E5;
     cursor: pointer;
 }
 
 /* The style for the username when the record is selected */
-.usernameLabelSelected {
+.siteLabelSelected {
     color: #676767;
 }
 
 /* The style for the avatar when the record is selected */
 .avatarImageSelected {
     margin-left: 5px;
-}
-
-/* The style for the remove icon on the right side */
-.removeImageStyle {
-    width: 16px;
-    height: 16px;
-    margin: 8px 10px 8px 0px;
-    float: right;
 }

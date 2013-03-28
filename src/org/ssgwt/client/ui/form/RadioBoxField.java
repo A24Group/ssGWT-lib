@@ -14,6 +14,7 @@
 package org.ssgwt.client.ui.form;
 
 import org.ssgwt.client.ui.radioBox.RadioBoxComponent;
+
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.Widget;

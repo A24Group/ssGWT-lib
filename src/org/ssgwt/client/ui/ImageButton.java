@@ -13,15 +13,11 @@
  */
 package org.ssgwt.client.ui;
 
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.FocusPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * This is a new Button component that allows a button to have an image on it

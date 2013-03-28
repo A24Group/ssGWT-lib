@@ -16,8 +16,6 @@ package org.ssgwt.client.ui.datagrid;
 import org.ssgwt.client.ui.datagrid.event.FilterChangeEvent;
 import org.ssgwt.client.ui.datagrid.filter.AbstractHeaderFilter;
 
-import com.gargoylesoftware.htmlunit.javascript.host.Element;
-import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.cellview.client.Header;
 

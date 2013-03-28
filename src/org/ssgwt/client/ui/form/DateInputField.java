@@ -3,7 +3,6 @@ package org.ssgwt.client.ui.form;
 import java.util.Date;
 
 import org.ssgwt.client.ui.datepicker.DateBox;
-import org.ssgwt.client.ui.datepicker.DateBox.Format;
 import org.ssgwt.client.ui.datepicker.DatePicker;
 import org.ssgwt.client.ui.datepicker.SSDatePicker;
 

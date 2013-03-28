@@ -16,17 +16,17 @@
 
 package org.ssgwt.client.ui.datepicker;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.impl.ElementMapperImpl;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.UIObject;
-
-import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Highlighting, selectable cell grid. Used to help construct the default

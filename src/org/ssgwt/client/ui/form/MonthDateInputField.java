@@ -2,7 +2,6 @@ package org.ssgwt.client.ui.form;
 
 import java.util.Date;
 
-import org.ssgwt.client.ui.datepicker.DateBox;
 import org.ssgwt.client.ui.datepicker.MonthDateBox;
 
 import com.google.gwt.user.client.ui.Widget;
