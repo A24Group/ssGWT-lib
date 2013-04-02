@@ -27,12 +27,12 @@ public class SSBooleanImageCell extends AbstractCell<Boolean> {
     /**
      * The url of the image being displayed if the boolean value is true
      */
-    private final String tImageUrl;
+    private final String trueImageUrl;
 
     /**
      * The url of the image being displayed if the boolean value is false
      */
-    private final String fImageUrl;
+    private final String falseImageUrl;
 
     /**
      * The SSBooleanImageCell constructor
@@ -40,13 +40,13 @@ public class SSBooleanImageCell extends AbstractCell<Boolean> {
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since 02 April 2013
      *
-     * @param tImageUrl - The image to display if the the boolean value is true
-     * @param fImageUrl - The image to display if the the boolean value is false
+     * @param trueImageUrl - The image to display if the the boolean value is true
+     * @param falseImageUrl - The image to display if the the boolean value is false
      */
-    public SSBooleanImageCell(String tImageUrl, String fImageUrl) {
+    public SSBooleanImageCell(String trueImageUrl, String falseImageUrl) {
         super();
-        this.tImageUrl = tImageUrl;
-        this.fImageUrl = fImageUrl;
+        this.trueImageUrl = trueImageUrl;
+        this.falseImageUrl = falseImageUrl;
     }
 
     /**
@@ -66,16 +66,16 @@ public class SSBooleanImageCell extends AbstractCell<Boolean> {
             value = false;
         }
         if (value) {
-            if (tImageUrl == null) {
+            if (trueImageUrl == null) {
                 columnString = "<div title=\"" + value + "\" ></div>";
             } else {
-                columnString = "<div title=\"" + value + "\" > <img src='" + tImageUrl + "' /> </div>";
+                columnString = "<div title=\"" + value + "\" > <img src='" + trueImageUrl + "' /> </div>";
             }
         } else {
-            if (fImageUrl == null) {
+            if (falseImageUrl == null) {
                 columnString = "<div title=\"" + value + "\" ></div>";
             } else {
-                columnString = "<div title=\"" + value + "\" > <img src='" + fImageUrl + "' /> </div>";
+                columnString = "<div title=\"" + value + "\" > <img src='" + falseImageUrl + "' /> </div>";
             }
         }
         sb.appendHtmlConstant(columnString);

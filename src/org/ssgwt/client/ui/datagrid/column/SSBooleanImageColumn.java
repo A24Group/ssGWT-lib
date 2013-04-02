@@ -29,10 +29,10 @@ public abstract class SSBooleanImageColumn<T> extends Column<T, Boolean> impleme
      * @author Alec Erasmus
      * @since 02 April 2013
      *
-     * @param tImageUrl - The image to display if the the boolean value is true
-     * @param fImageUrl - The image to display if the the boolean value is false
+     * @param trueImageUrl - The image to display if the the boolean value is true
+     * @param falseImageUrl - The image to display if the the boolean value is false
      */
-    public SSBooleanImageColumn(String tImageUrl, String fImageUrl) {
-      super(new SSBooleanImageCell(tImageUrl, fImageUrl));
+    public SSBooleanImageColumn(String trueImageUrl, String falseImageUrl) {
+      super(new SSBooleanImageCell(trueImageUrl, falseImageUrl));
     }
 }
