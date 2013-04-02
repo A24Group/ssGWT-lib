@@ -17,7 +17,7 @@ public class SSBooleanImageCell extends AbstractCell<Boolean> {
     private final String tImageUrl;
 
     /**
-     * The url of the image being displayed if the boolean value is fa;se
+     * The url of the image being displayed if the boolean value is false
      */
     private final String fImageUrl;
 
@@ -37,14 +37,14 @@ public class SSBooleanImageCell extends AbstractCell<Boolean> {
     }
 
     /**
-     * This will create a image with with the url passed in by the constructor
+     * This will create a image with the url passed in by the constructor
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since 02 April 2013
      *
      * @param context -The context the cell is in
      * @param value - The value to be added in the cell but not the image thats going to be displayed
-     * @param sb -The save html builder.
+     * @param sb -The safe html builder.
      */
     @Override
     public void render(Context context, Boolean value, SafeHtmlBuilder sb) {
