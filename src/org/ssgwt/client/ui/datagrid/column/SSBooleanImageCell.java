@@ -61,24 +61,16 @@ public class SSBooleanImageCell extends AbstractCell<Boolean> {
      */
     @Override
     public void render(Context context, Boolean value, SafeHtmlBuilder sb) {
-        String columnString;
+        String columnContentString = "";
         if (value == null) {
             value = false;
         }
-        if (value) {
-            if (trueImageUrl == null) {
-                columnString = "<div title=\"" + value + "\" ></div>";
-            } else {
-                columnString = "<div title=\"" + value + "\" > <img src='" + trueImageUrl + "' /> </div>";
-            }
-        } else {
-            if (falseImageUrl == null) {
-                columnString = "<div title=\"" + value + "\" ></div>";
-            } else {
-                columnString = "<div title=\"" + value + "\" > <img src='" + falseImageUrl + "' /> </div>";
-            }
+        if (value && trueImageUrl != null) {
+            columnContentString = "<img src='" + trueImageUrl + "' />";
+        } else if (!value && falseImageUrl != null) {
+            columnContentString = "<img src='" + falseImageUrl + "' />";
         }
-        sb.appendHtmlConstant(columnString);
+        sb.appendHtmlConstant("<div>" + columnContentString + "</div>");
     }
 
 }
