@@ -57,6 +57,24 @@ This will add a column to the data grid but will not use the FilterSortHeader an
     table.addColumn(nameColumn, "Name");
 ```
 
+This is a boolean image column. The first param is the image that display if the boolean is true and the second parameter is the image that 
+will be displayed if the boolean value is false.
+
+Note: If you would like n imageses to be displayed pass in a null.
+```
+    String tImageUrl = "imageUrl/for/true.jpg";
+    String fImageUrl = "imageUrl/for/false.jpg";
+
+    SSBooleanImageColumn<Contact> nameColumn = new SSBooleanImageColumn<Contact>(tImageUrl, fImageUrl) {
+        @Override
+        public String getValue(Contact object) {
+            return object.name;
+        }
+    };
+    
+    table.addColumn(nameColumn, "Name");
+```
+
 Add a column with a FilterSortHeader can be done in 2 different ways.
 Filter will need to be class variables because they are required in the filter change event handler. This is because all
 filter will not have the same functions available to retrieve filter criteria as it is not the work of the data 
