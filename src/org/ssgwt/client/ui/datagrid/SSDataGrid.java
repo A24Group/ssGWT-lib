@@ -362,7 +362,6 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @param col the column to be added
      */
     public void addColumnWithNoType(Column col) {
-        col = col;
         col.setSortable(true);
         dataGrid.addColumn(col);
     }
