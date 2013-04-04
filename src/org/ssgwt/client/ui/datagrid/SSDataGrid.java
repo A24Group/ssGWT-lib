@@ -362,7 +362,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @param col the column to be added
      */
     public void addColumnWithNoType(Column col) {
-        col = (Column<T, ?>) col;
+        col = col;
         col.setSortable(true);
         dataGrid.addColumn(col);
     }
@@ -736,6 +736,19 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
     public void addFilterColumn(Column<T, ?> col, String label, AbstractHeaderFilter filterWidget) {
         FilterSortHeader header = new FilterSortHeader(label, filterWidget);
         this.addColumn(col, header);
+    }
+
+    /**
+     * Remove a column from the data grid
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  04 April 2013
+     *
+     * @param col - The column to remove from the data grid
+     */
+    public void removeColumn(Column<T, ?> col) {
+        dataGrid.removeColumn(col);
+        refresh();
     }
 
     /**
