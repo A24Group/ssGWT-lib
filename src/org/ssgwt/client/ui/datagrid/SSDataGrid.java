@@ -275,8 +275,8 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @since 05 April 2013
      */
     public void clearSort() {
-        ColumnSortInfo columnSortInfo2 = new ColumnSortInfo(null, false);
-        SSDataGrid.this.dataGrid.getColumnSortList().push(columnSortInfo2);
+        ColumnSortInfo columnSortInfo = new ColumnSortInfo(null, false);
+        SSDataGrid.this.dataGrid.getColumnSortList().push(columnSortInfo);
     }
 
     /**
@@ -751,7 +751,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @param filterWidget - The filter widget that should be displayed if the user clicks on the filter icon
      */
     public void addFilterColumn(Column<T, ?> col, String label, AbstractHeaderFilter filterWidget) {
-        filterWidgets.put(label,filterWidget);
+        filterWidgets.put(label, filterWidget);
         FilterSortHeader header = new FilterSortHeader(label, filterWidget);
         this.addColumn(col, header);
     }
