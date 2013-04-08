@@ -141,6 +141,22 @@ public abstract class AbstractHeaderFilter extends PopupPanel {
     }
     
     /**
+     * Set the filter's state and then updates the header with the state of the filter
+     * but does not fire the filter change event
+     * 
+     * @param filterActive - Flag to indicate if the filter is active
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 04 April 2013
+     */
+    protected void setFilterActiveNoEvent(boolean filterActive) {
+        this.filterActive = filterActive;
+        if (this.parentHeader != null) {
+            this.parentHeader.setFilterActiveNoEvent(filterActive);
+        }
+    }
+    
+    /**
      * Function to check if the filter is active
      * 
      * @return 
@@ -211,6 +227,19 @@ public abstract class AbstractHeaderFilter extends PopupPanel {
             setFilterActive(false);
         }
         this.hide();
+    }
+    
+    /**
+     * This function will clear the filter on the header
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 04 April 2013
+     */
+    public void clearFilter() {
+        setCriteriaObjectEmpty();
+        clearFields();
+        updateFieldData();
+        setFilterActiveNoEvent(false);
     }
     
     /**
