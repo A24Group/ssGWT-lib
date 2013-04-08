@@ -268,9 +268,37 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> implements HasHa
      * Setter that updates the state of the filter
      * 
      * @param filterActive - Flag indicating if the filter is active
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 04 April 2013
      */
     public void setFilterActive(boolean filterActive) {
         this.filterActive = filterActive;
+        setFilterActiveUpdateOnParent(true);
+    }
+    
+    /**
+     * Setter that updates the state of the filter
+     * 
+     * @param filterActive - Flag indicating if the filter is active
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 04 April 2013
+     */
+    public void setFilterActiveNoEvent(boolean filterActive) {
+        this.filterActive = filterActive;
+        setFilterActiveUpdateOnParent(false);
+    }
+    
+    /**
+     * Setter that updates the state of the filter's parent is one exist
+     * 
+     * @param fireEvent Whether to fire the FilterChangeEvent
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 04 April 2013
+     */
+    private void setFilterActiveUpdateOnParent(boolean fireEvent) {
         if (parent != null) {
             Element filterImageElement = getImageElement(parent);
             Element filterImageParentElement = filterImageElement.getParentElement();
@@ -279,7 +307,9 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> implements HasHa
             } else {
                 replaceImageElement(resources.filterIconInactive(), filterImageElement, filterImageParentElement);
             }
-            FilterChangeEvent.fire(this);
+            if (fireEvent) {
+                FilterChangeEvent.fire(this);
+            }
         }
     }
 
