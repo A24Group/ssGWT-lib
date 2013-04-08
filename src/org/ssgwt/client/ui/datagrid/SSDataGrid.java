@@ -16,6 +16,7 @@ package org.ssgwt.client.ui.datagrid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.ssgwt.client.ui.datagrid.SSPager.TextLocation;
 import org.ssgwt.client.ui.datagrid.event.DataGridRangeChangeEvent;
@@ -181,6 +182,11 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
     private Range previousRange = new Range(0, 0);
 
     /**
+     * Holds all the filters added to the datagrid
+     */
+    private HashMap<String, AbstractHeaderFilter> filterWidgets = new HashMap<String, AbstractHeaderFilter>();
+
+    /**
      * Class Constructor
      *
      * @author Michael Barnard
@@ -259,6 +265,18 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
         actionBar.setStyleName(Resources.INSTANCE.dataGridStyle().actionBarStyle());
         noContentLabel.setStyleName(Resources.INSTANCE.dataGridStyle().noContentLabelStyle());
         dataGrid.addRangeChangeHandler(this);
+    }
+    
+    /**
+     * This function will clear the sort icon from the
+     * datagrid
+     * 
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since 05 April 2013
+     */
+    public void clearSort() {
+        ColumnSortInfo columnSortInfo = new ColumnSortInfo(null, false);
+        SSDataGrid.this.dataGrid.getColumnSortList().push(columnSortInfo);
     }
 
     /**
@@ -733,6 +751,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @param filterWidget - The filter widget that should be displayed if the user clicks on the filter icon
      */
     public void addFilterColumn(Column<T, ?> col, String label, AbstractHeaderFilter filterWidget) {
+        filterWidgets.put(label, filterWidget);
         FilterSortHeader header = new FilterSortHeader(label, filterWidget);
         this.addColumn(col, header);
     }
@@ -750,6 +769,68 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
         refresh();
     }
 
+    /**
+     * This function will clear the sort and all the filters set on the datagrid
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 04 April 2013
+     */
+    public void clearFiltersAndSort() {
+        clearFiltersAndSort(null, false);
+    }
+    
+    /**
+     * This function will clear the sort and all the filters set on the datagrid
+     * and fire the filter event is based on passed in boolean
+     * 
+     * @param fireFilterChangeEvent Whether to fire the filter change event
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 04 April 2013
+     */
+    public void clearFiltersAndSort(boolean fireFilterChangeEvent) {
+        clearFiltersAndSort(null, fireFilterChangeEvent);
+    }
+    
+    /**
+     * This function will clear the sort and all the filters set on the datagrid except
+     * for the those in the passed in array
+     * 
+     * @param exclude The array of filter to be excluded from being cleared
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 04 April 2013
+     */
+    public void clearFiltersAndSort(ArrayList<String> exclude) {
+        clearFiltersAndSort(exclude, false);
+    }
+    
+    /**
+     * This function will clear the sort and all the filters set on the datagrid except
+     * for the those in the passed in array
+     * 
+     * @param exclude The array of filter to be excluded from being cleared
+     * @param fireFilterChangeEvent Whether to fire the filter change event
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 04 April 2013
+     */
+    public void clearFiltersAndSort(ArrayList<String> exclude, boolean fireFilterChangeEvent) {
+        if (exclude == null) {
+            exclude = new ArrayList<String>();
+        }
+        for (Map.Entry<String, AbstractHeaderFilter> entry : filterWidgets.entrySet()) {
+            if (!exclude.contains(entry.getKey())) {
+                entry.getValue().clearFilter();
+            }
+        }
+        clearSort();
+        
+        if (fireFilterChangeEvent) {
+            FilterChangeEvent.fire(this);
+        }
+    }
+    
     /**
      * Adds a event handler for the FilterChangeEvent
      *
