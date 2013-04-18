@@ -34,7 +34,7 @@ public abstract class DropDownInputField<T, ListItemType> extends ListBox implem
     /**
      * This is a hash map containing the ListItemType mapped to an id
      */
-    private final HashMap<String ,ListItemType> dataMap = new HashMap<String ,ListItemType>();
+    private final HashMap<String, ListItemType> dataMap = new HashMap<String, ListItemType>();
 
     /**
      * The value displayed if no value is selected
