@@ -914,7 +914,24 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
     }
 
     /**
-     * This function will determin whether the DataGridRangeChangeEvent
+     * Indents the table with a specified amount of pixels left, right, top and bottom
+     * This leaves the action bar on 100% width
+     *
+     * @param left - The number of pixels the table should be indented on left
+     * @param right - The number of pixels the table should be indented on right
+     * @param top - The number of pixels the table should be indented on top
+     * @param bottom - The number of pixels the table should be indented on bottom
+     * 
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since 04 March 2013
+     */
+    public void indentTableLeftRightTopBottom(int left, int right, int top, int bottom) {
+        mainContainer.setWidgetLeftRight(dataGrid, left, Unit.PX, right, Unit.PX);
+        mainContainer.setWidgetTopBottom(dataGrid, top, Unit.PX, bottom, Unit.PX);
+    }
+    
+    /**
+     * This function will determine whether the DataGridRangeChangeEvent
      * should be fired.
      *
      * @param event The range change event being handled
