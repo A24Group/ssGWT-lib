@@ -428,8 +428,8 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     /**
      * Class constructor that uses the default resources class
      *
-     * @author Michael Barnard <michael.barnard@a24group.com>
-     * @since  11 January 2012
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  26 April 2013
      *
      * @param multiselect - Specifies if multiple selection is enabled
      */
@@ -548,7 +548,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
                 if (selectedItem == null) {
                     selectedItem = getKeyFromValueMap(listBox.getItemText(i));
                 } else {
-                    selectedItem = selectedItem + ", " + getKeyFromValueMap(listBox.getItemText(i));
+                    selectedItem = selectedItem + "," + getKeyFromValueMap(listBox.getItemText(i));
                 }
              }
         }
