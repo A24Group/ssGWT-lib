@@ -570,7 +570,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
                 if (selectedItem == null) {
                     selectedItem = values[i];
                 } else {
-                    selectedItem = selectedItem + ", " + values[i];
+                    selectedItem = selectedItem + "," + values[i];
                 }
              }
         }
