@@ -430,6 +430,8 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 January 2012
+     *
+     * @param multiselect - Specifies if multiple selection is enabled
      */
     public SelectBoxFilter(boolean multiselect) {
         this(getDefaultResources(), multiselect);
@@ -442,6 +444,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * @since  11 January 2012
      *
      * @param resources - The resources the select box filter should use
+     * @param multiselect - Specifies if multiple selection is enabled
      */
     public SelectBoxFilter(SelectBoxFilterResources resources, boolean multiselect) {
         super(true);
@@ -554,7 +557,6 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
 
     /**
      * Get the values selected in a multiselect drop down and concatenate the string with a "," separating the values
-     *
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  26 April 2013

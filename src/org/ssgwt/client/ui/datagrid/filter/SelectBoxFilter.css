@@ -129,7 +129,7 @@
 /* The style for the multi select box */
 .multiListBoxStyle {
     max-height: 150px;
-/*     min-height: 55px; */
+    min-height: 55px;
     border: solid 1px #666666;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
