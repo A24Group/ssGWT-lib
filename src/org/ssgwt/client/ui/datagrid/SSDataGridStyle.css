@@ -38,6 +38,16 @@
     float: right;
 }
 
+/*
+This style is used to eliminate a windows 7 / windows 8 chrome bug
+It will set the already invisible scroll panel around the datagrid
+to not display at all, stopping it from interfering with the datagrid
+bottom items
+*/
+.isMultiSelect > div > div > div > div > div > div {
+    display: none;
+}
+
 /*The styling applied if the data grid supports multi select*/
 @external .isMultiSelect;
 .isMultiSelect .dataGridFirstColumn > div {
