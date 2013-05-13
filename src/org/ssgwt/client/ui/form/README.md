@@ -325,15 +325,15 @@ The TimePickerInputField can typically be used where you want to select the time
 	null
     ) {
 
-        @Override
-        public Date getValue(OrganisationVO object) {
-		// Do date logic
-        }
+       @Override
+       public Date getValue(OrganisationVO object) {
+           // Do date logic
+       }
 
-        @Override
-        public void setValue(OrganisationVO object, Date value) {
-		// Do date logic
-        }
+       @Override
+       public void setValue(OrganisationVO object, Date value) {
+	   // Do date logic
+       }
     };
     
     form.addField(customTimePicker, "Test Month Date Field:");
