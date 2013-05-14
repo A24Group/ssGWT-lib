@@ -313,3 +313,28 @@ giving your education details. The day you started/ended is not really relevant.
     
     form.addField(testDateField, "Test Month Date Field:");
 ```
+
+#### TimePickerInputField
+The TimePickerInputField can typically be used where you want to select the time of the date by using a spinner. The date passed in from the constructor is the value used to scrole from
+```java
+    TimePicker customTimePicker = new TimePicker(
+	new Date(),
+	null, 
+	DateTimeFormat.getFormat("HH"), 
+	DateTimeFormat.getFormat("mm"), 
+	null
+    ) {
+
+       @Override
+       public Date getValue(OrganisationVO object) {
+           // Do date logic
+       }
+
+       @Override
+       public void setValue(OrganisationVO object, Date value) {
+	   // Do date logic
+       }
+    };
+    
+    form.addField(customTimePicker, "Test Month Date Field:");
+```
