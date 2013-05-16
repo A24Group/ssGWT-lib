@@ -3,7 +3,7 @@ The DateTimeComponent allows you to select a start date and end date and display
 
 ```java
 
-   // This how you greate an instance of the DateTimeComponent
+   // This is how you create an instance of the DateTimeComponent
    /**
      * Class constructor
      *
