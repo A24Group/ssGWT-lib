@@ -16,9 +16,6 @@ package org.ssgwt.client.ui.form;
 import org.ssgwt.client.ui.form.spinner.Spinner.SpinnerResources;
 import org.ssgwt.client.ui.form.spinner.ValueSpinner;
 
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -29,7 +26,7 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @param <T> The object type the Dynamic form uses to get values from updates the value of the fields on
  */
-public abstract class ValueSpinnerInputField<T> extends ValueSpinner implements HasValue<String>, InputField<T, String> {
+public abstract class ValueSpinnerInputField<T> extends ValueSpinner implements InputField<T, Long> {
 
     /**
      * The value from the object that should displayed on the input field
@@ -168,71 +165,6 @@ public abstract class ValueSpinnerInputField<T> extends ValueSpinner implements 
     }
 
     /**
-     * Add a Handler on the change of the value
-     *
-     * @author Alec Erasmus<alec.erasmus@a24group.com>
-     * @since 13 May 2013
-     *
-     * @param handler - The value change handler
-     *
-     * @return HandlerRegistration
-     */
-    @Override
-    public HandlerRegistration addValueChangeHandler(ValueChangeHandler<String> handler) {
-        return super.getTextBox().addValueChangeHandler(handler);
-    }
-
-    /**
-     * Gets this object's value.
-     *
-     * @author Alec Erasmus<alec.erasmus@a24group.com>
-     * @since 13 May 2013
-     *
-     * @return the object's value
-     */
-    @Override
-    public String getValue() {
-        return super.getTextBox().getValue();
-    }
-
-    /**
-     * Sets this object's value. Fires
-     * {@link com.google.gwt.event.logical.shared.ValueChangeEvent} when
-     * fireEvents is true and the new value does not equal the existing value.
-     * <p>
-     * It is acceptable to fail assertions or throw (documented) unchecked
-     * exceptions in response to bad values.
-     *
-     * @author Alec Erasmus<alec.erasmus@a24group.com>
-     * @since 13 May 2013
-     *
-     * @param value the object's new value
-     */
-    @Override
-    public void setValue(String value) {
-        super.getTextBox().setValue(value);
-    }
-
-    /**
-     * Sets this object's value. Fires
-     * {@link com.google.gwt.event.logical.shared.ValueChangeEvent} when
-     * fireEvents is true and the new value does not equal the existing value.
-     * <p>
-     * It is acceptable to fail assertions or throw (documented) unchecked
-     * exceptions in response to bad values.
-     *
-     * @author Alec Erasmus<alec.erasmus@a24group.com>
-     * @since 13 May 2013
-     *
-     * @param value the object's new value
-     * @param fireEvents fire events if true and value is new
-     */
-    @Override
-    public void setValue(String value, boolean fireEvents) {
-        super.getTextBox().setValue(value, fireEvents);
-    }
-
-    /**
      * Retrieve the class type the input field returns
      *
      * @author Alec Erasmus<alec.erasmus@a24group.com>
@@ -241,8 +173,8 @@ public abstract class ValueSpinnerInputField<T> extends ValueSpinner implements 
      * @return The class type the input field returns
      */
     @Override
-    public Class<String> getReturnType() {
-        return String.class;
+    public Class<Long> getReturnType() {
+        return Long.class;
     }
 
     /**
@@ -256,7 +188,7 @@ public abstract class ValueSpinnerInputField<T> extends ValueSpinner implements 
      * @return The value that should be displayed on the field
      */
     @Override
-    public abstract String getValue(T object);
+    public abstract Long getValue(T object);
 
     /**
      * Sets the value from the input field on the object
@@ -268,7 +200,7 @@ public abstract class ValueSpinnerInputField<T> extends ValueSpinner implements 
      * @param value - The value that is currently being displayed on the input field
      */
     @Override
-    public abstract void setValue(T object, String value);
+    public abstract void setValue(T object, Long value);
 
     /**
      * Retrieve the flag that indicates whether the input field is required or not

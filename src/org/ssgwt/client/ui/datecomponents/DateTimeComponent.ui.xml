@@ -1,0 +1,41 @@
+<ui:UiBinder 
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+    xmlns:d="urn:import:org.ssgwt.client.ui.datepicker">
+
+    <g:FlowPanel ui:field="mainPanel" styleName="gwt-dateTimeComponentStyle">
+        <g:Label ui:field="headerLabel" styleName="gwt-dateTimeComponentHeaderLabel"/>
+        
+        <g:FlowPanel ui:field="startDatePanel" styleName="gwt-startDateTimeComponentStyle">
+            <g:FlowPanel ui:field="startDateLabelPanel" styleName="gwt-dateLabelPanel">
+                <g:Label ui:field="startDateLabel" text="Start Date" styleName="gwt-dateTimeComponentFieldHeader"/>
+                <g:Label ui:field="startDateAssignmentLabel" text="of Assignment" styleName="gwt-dateTimeComponentFieldHeaderExtra"/>
+            </g:FlowPanel>
+            <d:DateBox ui:field="startDateBox"></d:DateBox>
+            <g:FlowPanel ui:field="startTimeLabelPanel" styleName="gwt-timeLabelPanel">
+                <g:Label ui:field="startTimeLabel" text="Start Time" styleName="gwt-dateTimeComponentFieldHeader"/>
+                <g:Label ui:field="startTimeAssignmentLabel" text="of Shift" styleName="gwt-dateTimeComponentFieldHeaderExtra"/>
+            </g:FlowPanel>
+        </g:FlowPanel>
+        
+        <g:FlowPanel ui:field="endDatePanel" styleName="gwt-endDateTimeComponentStyle">
+            <g:FlowPanel ui:field="endDateLabelPanel" styleName="gwt-dateLabelPanel">
+                <g:Label ui:field="endDateLabel" text="End Date" styleName="gwt-dateTimeComponentFieldHeader"/>
+                <g:Label ui:field="endDateAssignmentLabel" text="of Assignment" styleName="gwt-dateTimeComponentFieldHeaderExtra"/>
+            </g:FlowPanel>
+            <d:DateBox ui:field="endDateBox"></d:DateBox>
+            <g:FlowPanel ui:field="endTimeLabelPanel" styleName="gwt-timeLabelPanel">
+                <g:Label ui:field="endTimeLabel" text="End Time" styleName="gwt-dateTimeComponentFieldHeader"/>
+                <g:Label ui:field="endTimeAssignmentLabel" text="of Shift" styleName="gwt-dateTimeComponentFieldHeaderExtra"/>
+            </g:FlowPanel>
+        </g:FlowPanel>
+        
+        <g:FlowPanel ui:field="totalTimeContainer" styleName="gwt-totalTimeContainer">
+            <g:FlowPanel ui:field="totalTimeLeftContainer" styleName="gwt-totalTimeLeftContainer"></g:FlowPanel>
+            <g:FlowPanel ui:field="totalTimeSpacing" styleName="gwt-totalTimeEmptyContainer"></g:FlowPanel>
+            <g:FlowPanel ui:field="totalTimeRightContainer" styleName="gwt-totalTimeRightContainer"></g:FlowPanel>
+        </g:FlowPanel>
+        
+        <g:Label ui:field="totalTime" styleName="gwt-totalTimeLabel"/>
+    </g:FlowPanel>
+</ui:UiBinder>
