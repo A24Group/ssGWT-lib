@@ -12,10 +12,13 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Michael Barnard <michael.barnard@a24group.com>
  * @since  14 May 2013
  *
- * @param <T> The object type the Dynamic form uses to get values from updates the value of the fields on
+ * @param <T> The object type the Dynamic form uses to get values from updates of the fields
  */
 public class StaticImageInputField<T> extends FlowPanel implements InputField<T, FlowPanel> {
     
+    /**
+     * This string will be used to store the image URL
+     */
     private String imageUrl = null;
     
     /**
@@ -62,7 +65,8 @@ public class StaticImageInputField<T> extends FlowPanel implements InputField<T,
     }
 
     /**
-     * The setter for the value
+     * The setter for the value.
+     * This can not be applied to this field.
      * 
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  14 May 2013
@@ -89,7 +93,8 @@ public class StaticImageInputField<T> extends FlowPanel implements InputField<T,
     }
 
     /**
-     * Setter for the required state of the object
+     * Setter for the required state of the object.
+     * This can not be applied to this field.
      * 
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  14 May 2013
@@ -115,12 +120,13 @@ public class StaticImageInputField<T> extends FlowPanel implements InputField<T,
     }
 
     /**
-     * Set whether the field is read only
+     * Set whether the field is read only.
+     * This can not be applied to this field.
      *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  14 May 2013
      * 
-     * @param whether the field is read only
+     * @param readOnly - whether the field is read only
      */
     @Override
     public void setReadOnly(boolean readOnly) {
