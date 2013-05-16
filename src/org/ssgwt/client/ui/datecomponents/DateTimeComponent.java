@@ -90,7 +90,7 @@ public class DateTimeComponent extends Composite {
      * Panel that will contain the total time of the diff between the start date and end date
      */
     @UiField
-    FlowPanel totalTimeContainer;
+    FlowPanel totalTimeDiffContainer;
 
     /**
      * The is the panel that display the left border
@@ -345,7 +345,7 @@ public class DateTimeComponent extends Composite {
         );
 
         endDatePicker = new SSDatePicker(getMinEndDate(getShiftMinDate()), getMaxEndDate(getShiftMaxDate()));
-        endDatePicker.setStyleName("dtPickerSize");
+        endDatePicker.setStyleName(dtPickerSizeStyle);
 
         endDateBox = new DateBox(endDatePicker, getShiftMinDate(), DEFAULT_FORMAT);
         endDateBox.getTextBox().setReadOnly(true);

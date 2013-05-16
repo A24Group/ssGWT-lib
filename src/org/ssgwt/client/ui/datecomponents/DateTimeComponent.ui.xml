@@ -30,7 +30,7 @@
             </g:FlowPanel>
         </g:FlowPanel>
         
-        <g:FlowPanel ui:field="totalTimeContainer" styleName="gwt-totalTimeContainer">
+        <g:FlowPanel ui:field="totalTimeDiffContainer" styleName="gwt-totalTimeContainer">
             <g:FlowPanel ui:field="totalTimeLeftContainer" styleName="gwt-totalTimeLeftContainer"></g:FlowPanel>
             <g:FlowPanel ui:field="totalTimeSpacing" styleName="gwt-totalTimeEmptyContainer"></g:FlowPanel>
             <g:FlowPanel ui:field="totalTimeRightContainer" styleName="gwt-totalTimeRightContainer"></g:FlowPanel>
