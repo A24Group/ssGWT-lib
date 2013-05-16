@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.ssgwt.client.ui.datecomponents.AbstractStartEndDateVo;
 import org.ssgwt.client.validation.FormValidator;
 
 import com.google.gwt.event.dom.client.KeyDownEvent;
@@ -394,6 +395,10 @@ public class DynamicForm<T> extends Composite {
                 ((InputField<T, List>)field).setValue(dataObject, ((HasValue<List>)field).getValue());
             } else if (Boolean.class.equals(field.getReturnType())) {
                 ((InputField<T, Boolean>)field).setValue(dataObject, ((HasValue<Boolean>)field).getValue());
+            } else if (AbstractStartEndDateVo.class.equals(field.getReturnType())) {
+                ((InputField<T, AbstractStartEndDateVo>)field).setValue(
+                    dataObject, ((HasValue<AbstractStartEndDateVo>)field).getValue()
+                );
             }
         }
     }
@@ -411,6 +416,10 @@ public class DynamicForm<T> extends Composite {
                 ((HasValue<List>)field).setValue(((InputField<T, List>)field).getValue(dataObject));
             } else if (Boolean.class.equals(field.getReturnType())) {
                 ((HasValue<Boolean>)field).setValue(((InputField<T, Boolean>)field).getValue(dataObject));
+            } else if (AbstractStartEndDateVo.class.equals(field.getReturnType())) {
+                ((HasValue<AbstractStartEndDateVo>)field).setValue(
+                    ((InputField<T, AbstractStartEndDateVo>)field).getValue(dataObject)
+                );
             }
         }
     }

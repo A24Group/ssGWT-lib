@@ -227,6 +227,11 @@ public class DateTimeComponent extends Composite {
     private final String timePickerStyle = "gwt-timePickerStyle";
 
     /**
+     * Indicate that this component is enabled
+     */
+    private boolean enabled = true;
+
+    /**
      * UiBinder interface for the composite
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
@@ -663,4 +668,82 @@ public class DateTimeComponent extends Composite {
         return (int) (Math.ceil(((double) min) / 15) * 15);
     }
 
+    /**
+     * Get the start date selected
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since 16 May 2013
+     *
+     * @return the selected start date
+     */
+    public Date getStartDate() {
+        return this.startTimePicker.getDateTime();
+    }
+
+    /**
+     * Get the end date selected
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since 16 May 2013
+     *
+     * @return the selected end date
+     */
+    public Date getEndDate() {
+        return this.endTimePicker.getDateTime();
+    }
+
+    /**
+     * Set the start date
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since 16 May 2013
+     *
+     * @param startDate - The start date.
+     */
+    public void setStartDate(Date startDate) {
+        this.startDateBox.setValue(startDate);
+        this.startTimePicker.setDateTime(startDate);
+    }
+
+    /**
+     * Set the end date
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since 16 May 2013
+     *
+     * @param endDate - The end date.
+     */
+    public void setEndDate(Date endDate) {
+        this.endDateBox.setValue(endDate);
+        this.endTimePicker.setDateTime(endDate);
+    }
+
+    /**
+     * Sets whether the date box is enabled.
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since 16 May 2013
+     *
+     * @param enabled is the box enabled
+     */
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+        startDateBox.setEnabled(enabled);
+        endDateBox.setEnabled(enabled);
+
+        startTimePicker.setEnabled(enabled);
+        endTimePicker.setEnabled(enabled);
+    }
+
+    /**
+     * Retrieve the flag that indicates whether the field is enabled.
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since 16 May 2013
+     *
+     * @return The flag that indicates whether the field is enabeld
+     */
+    public boolean isEnabled() {
+        return this.enabled;
+    }
 }

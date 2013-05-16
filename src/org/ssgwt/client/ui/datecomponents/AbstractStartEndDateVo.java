@@ -1,7 +1,9 @@
 package org.ssgwt.client.ui.datecomponents;
 
+import java.util.Date;
+
 /**
- * Abstract start end sate vo used for the DateTimeComponent
+ * Abstract start end date vo used for the DateTimeComponent
  *
  * @author Alec Erasmus <alec.erasmus@a24group.com>
  * @since  13 May 2013
@@ -11,10 +13,10 @@ public class AbstractStartEndDateVo {
     /**
      * String that represents the selected start date
      */
-    public String dtStart;
+    public Date dtStart;
 
     /**
      * String that represents the selected end date
      */
-    public String dtEnd;
+    public Date dtEnd;
 }
