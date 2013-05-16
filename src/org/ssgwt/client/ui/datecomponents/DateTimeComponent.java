@@ -429,6 +429,7 @@ public class DateTimeComponent extends Composite {
         endTimePicker.setMaxDate(getShiftMaxDate());
         endTimePicker.setDateTime(getShiftMinDate());
         endDateBox.setValue(startDateBox.getValue());
+        onEndDateBoxValueChange(startDateBox.getValue());
         totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
     }
 
@@ -617,7 +618,7 @@ public class DateTimeComponent extends Composite {
      */
     public String getShiftTimeDiff(Date startDate, Date endDate) {
         boolean reversed = false;
-        if (endDate.getTime() < startDate.getTime()) {
+        if (endDate.getTime() < startDate.getTime() - 1000) {
             reversed = true;
         }
         int shiftTotalHours = (int) (((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60)));
@@ -639,7 +640,7 @@ public class DateTimeComponent extends Composite {
         }
 
         //check if date difference are a varient of 0.25
-        if (((15 - (shiftTotalMin % 15) < 1)) || (totalMinAndHours > 1440) || reversed == true) {
+        if (((15 - (shiftTotalMin % 15) < 1)) || (totalMinAndHours > 1440) || reversed) {
             return "( -err )";
         }
 
