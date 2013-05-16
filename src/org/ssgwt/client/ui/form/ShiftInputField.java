@@ -34,7 +34,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Alec Erasmus <alec.erasmus@a24group.com>
  * @since 13 May 2013
  *
- * @param <T> The object type the Dynamic form uses to get values from updates the value of the fields on
+ * @param <T> The object type the Dynamic form uses to get values from and updates the value of the fields on.
  */
 public abstract class ShiftInputField<T>
     extends
