@@ -78,7 +78,7 @@ public class SSDatePicker extends DatePicker {
             new ComboBoxMonthSelector(minimum, maximum, prevMonthUrl, nextMonthUrl),
             new RangedCalendarView(minimum, maximum),
             new CalendarModel()
-           );
+       );
     }
 
     /**

@@ -13,7 +13,7 @@ The DateTimeComponent allows you to select a start date and end date and display
      * @param minShiftTime - The minimum shift length in milliseconds
      * @param maxShiftTime - The maximum shift length in milliseconds
      */
-   DateTimeComponent sateTimeComponent = new DateTimeComponent(
+   DateTimeComponent dateTimeComponent = new DateTimeComponent(
        new Date(SSDatePicker.DEFAULT_MINIMUM_YEAR - 1900, 0, 1), 
        new Date(SSDatePicker.DEFAULT_MAXIMUM_YEAR - 1900, 11, 31), 
        new Date(), 
@@ -22,8 +22,8 @@ The DateTimeComponent allows you to select a start date and end date and display
    );
 
    // How to get the selected start date
-   Date start = sateTimeComponent.getStartDate();
+   Date start = dateTimeComponent.getStartDate();
    // How to get the selected end date
-   Date end = sateTimeComponent.getEndDate();
+   Date end = dateTimeComponent.getEndDate();
     
 ```

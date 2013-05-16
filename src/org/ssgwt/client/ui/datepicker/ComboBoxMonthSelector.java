@@ -272,12 +272,12 @@ public class ComboBoxMonthSelector extends MonthSelector {
         Date minDate = (Date) minimum.clone();
         while (minDate.getTime() <= maximum.getTime()) {
             if (minDate.getYear() == year.getYear()) {
-                months.add(monthNames[ minDate.getMonth() ]);
+                months.add(monthNames[minDate.getMonth()]);
             }
             CalendarUtil.addMonthsToDate(minDate, 1);
         }
         if (!months.contains(monthNames[maximum.getMonth()])) {
-            months.add(monthNames[ maximum.getMonth() ]);
+            months.add(monthNames[maximum.getMonth()]);
         }
 
         return months.toArray(new String[]{});
