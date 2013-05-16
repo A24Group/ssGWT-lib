@@ -662,6 +662,8 @@ public class DateTimeComponent extends Composite {
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since 14 May 2013
      *
+     * @param min - The min as int
+     *
      * @return passed in min rounded up to the nearest 15 min
      */
     private int roundUpTime(int min) {

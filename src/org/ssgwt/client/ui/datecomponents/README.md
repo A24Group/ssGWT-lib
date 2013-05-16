@@ -1,5 +1,5 @@
 ### Example of how to use the DateTimeComponent
-The DateTimeComponent allows you to select a start date and end date and display you the diff between the two dates
+The DateTimeComponent allows you to select a start date and end date and display the diff between the two dates
 
 ```java
 

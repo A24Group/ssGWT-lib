@@ -15,8 +15,8 @@ package org.ssgwt.client.ui.form;
 
 import java.util.Date;
 
-import org.ssgwt.client.ui.datecomponents.AbstractStartEndDateVo;
 import org.ssgwt.client.ui.datecomponents.DateTimeComponent;
+import org.ssgwt.client.ui.datecomponents.StartEndDateVo;
 
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -40,13 +40,13 @@ public abstract class ShiftInputField<T>
     extends
         DateTimeComponent
     implements
-        HasValue<AbstractStartEndDateVo>,
-        InputField<T, AbstractStartEndDateVo> {
+        HasValue<StartEndDateVo>,
+        InputField<T, StartEndDateVo> {
 
     /**
      * The object that is used to map the start date and end date
      */
-    AbstractStartEndDateVo abstractStartEndDateVo = new AbstractStartEndDateVo();
+    StartEndDateVo abstractStartEndDateVo = new StartEndDateVo();
 
     /**
      * Flag used to indicate if the field is required
@@ -80,7 +80,7 @@ public abstract class ShiftInputField<T>
      * @return null - This is not implemented for this field
      */
     @Override
-    public HandlerRegistration addValueChangeHandler(ValueChangeHandler<AbstractStartEndDateVo> handler) {
+    public HandlerRegistration addValueChangeHandler(ValueChangeHandler<StartEndDateVo> handler) {
         return null;
     }
 
@@ -93,7 +93,7 @@ public abstract class ShiftInputField<T>
      * @return a instance of the AbstractStartEndDateVo with the start date and end date set on it
      */
     @Override
-    public AbstractStartEndDateVo getValue() {
+    public StartEndDateVo getValue() {
         abstractStartEndDateVo.dtStart = this.getStartDate();
         abstractStartEndDateVo.dtEnd = this.getEndDate();
         return abstractStartEndDateVo;
@@ -114,7 +114,7 @@ public abstract class ShiftInputField<T>
      * @param value the object's new value
      */
     @Override
-    public void setValue(AbstractStartEndDateVo value) {
+    public void setValue(StartEndDateVo value) {
         this.setStartDate(value.dtStart);
         this.setEndDate(value.dtEnd);
     }
@@ -131,7 +131,7 @@ public abstract class ShiftInputField<T>
      * @param fireEvents fire events if true and value is new
      */
     @Override
-    public void setValue(AbstractStartEndDateVo value, boolean fireEvents) {
+    public void setValue(StartEndDateVo value, boolean fireEvents) {
         this.setStartDate(value.dtStart);
         this.setEndDate(value.dtEnd);
     }
@@ -145,8 +145,8 @@ public abstract class ShiftInputField<T>
      * @return The class type the input field returns
      */
     @Override
-    public Class<AbstractStartEndDateVo> getReturnType() {
-        return AbstractStartEndDateVo.class;
+    public Class<StartEndDateVo> getReturnType() {
+        return StartEndDateVo.class;
     }
 
     /**
@@ -160,7 +160,7 @@ public abstract class ShiftInputField<T>
      * @return The value that should be displayed on the field
      */
     @Override
-    public abstract AbstractStartEndDateVo getValue(T object);
+    public abstract StartEndDateVo getValue(T object);
 
     /**
      * Sets the value from the input field on the object
@@ -172,7 +172,7 @@ public abstract class ShiftInputField<T>
      * @param value - The value that is currently being displayed on the input field
      */
     @Override
-    public abstract void setValue(T object, AbstractStartEndDateVo value);
+    public abstract void setValue(T object, StartEndDateVo value);
 
     /**
      * Retrieve the flag that indicates whether the input field is required or not

@@ -8,7 +8,7 @@ import java.util.Date;
  * @author Alec Erasmus <alec.erasmus@a24group.com>
  * @since  13 May 2013
  */
-public class AbstractStartEndDateVo {
+public class StartEndDateVo {
 
     /**
      * Date that represents the selected start date
