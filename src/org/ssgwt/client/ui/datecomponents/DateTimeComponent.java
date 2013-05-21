@@ -187,6 +187,11 @@ public class DateTimeComponent extends Composite {
     private final Date defaultSelectedDate;
 
     /**
+     * The last end date
+     */
+    private Date lastEndDate;
+
+    /**
      * The max date the the start date can be
      */
     private final Date maxDate;
@@ -380,6 +385,7 @@ public class DateTimeComponent extends Composite {
             15,
             1
         );
+        this.lastEndDate = getShiftMinDate();
         endTimePicker.addChangeHandler(
             new ChangeHandler<Date>() {
 
@@ -461,9 +467,9 @@ public class DateTimeComponent extends Composite {
                 }
                 if (endTimePicker.getDateTime().getMinutes() % 60 != 0) {
                     totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
-                    return;
                 }
                 endTimePicker.setDateTime(getShiftMinDate());
+                totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
             } else {
                 if (getShiftMaxDate().getTime() == endTimePicker.getDateTime().getTime()) {
                     totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
@@ -474,6 +480,14 @@ public class DateTimeComponent extends Composite {
                     return;
                 }
             }
+        }
+        if (
+            endDateBox.getValue().getDay() != endTimePicker.getDateTime().getDay() &&
+            startDateBox.getValue().getDay() == endDateBox.getValue().getDay()
+        ) {
+            endTimePicker.setDateTime(getShiftMinDate());
+            totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
+            return;
         }
         if (endDateBox.getValue().getDay() != endTimePicker.getDateTime().getDay()) {
             endTimePicker.setDateTime(getShiftMaxDate());
@@ -717,6 +731,7 @@ public class DateTimeComponent extends Composite {
      * @param endDate - The end date.
      */
     public void setEndDate(Date endDate) {
+        this.lastEndDate = lastEndDate;
         this.endDateBox.setValue(endDate);
         this.endTimePicker.setDateTime(endDate);
     }
