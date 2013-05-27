@@ -478,7 +478,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     /**
      * This will add event handlers for key events on the filter widget
      * 
-     * @author Ruan Naude
+     * @author Ruan Naude <nauderuan777@gmail.com>
      * @since 27 May 2013
      */
     private void addKeyEventHandlers() {
@@ -489,7 +489,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
              * 
              * @param event The key up event
              * 
-             * @author Ruan Naude
+             * @author Ruan Naude <nauderuan777@gmail.com>
              * @since 27 May 2013
              */
             @Override
