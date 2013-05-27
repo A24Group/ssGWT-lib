@@ -180,6 +180,14 @@ public abstract class AbstractHeaderFilter extends PopupPanel {
     public abstract Criteria getCriteria();
     
     /**
+     * Sets focus on the main input of the filter
+     * 
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since 24 May 2013
+     */
+    public abstract void setFocusOnMainInput();
+    
+    /**
      * Function that check if the filter is active by checking the value on the criteria object
      * 
      * @return Flag to indicate if the filter should be active based on the data in the criteria object

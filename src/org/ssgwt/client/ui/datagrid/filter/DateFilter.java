@@ -22,6 +22,9 @@ import org.ssgwt.client.ui.datepicker.SSDatePicker;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -39,6 +42,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -83,6 +87,12 @@ public class DateFilter extends AbstractHeaderFilter {
         "Last 30 days",
         "Last month"
     };
+    
+    /**
+     * The filter container
+     */
+    @UiField
+    FocusPanel filterContainer;
     
     /**
      * Holds the index of the filter listbox that will be used to remember the index
@@ -483,12 +493,42 @@ public class DateFilter extends AbstractHeaderFilter {
         
         this.setWidget(uiBinder.createAndBindUi(this));
         setCriteria(new DateFilterCriteria());
+        addKeyEventHandlers();
         addRemoveIconEventHandlers();
         addApplyButtonEventHandlers();
         addCheckBoxEventHandlers();
         populateListBox();
         addListBoxEventHandlers();
         addDateBoxListeners();
+    }
+    
+    /**
+     * This will add event handlers for key events on the filter widget
+     * 
+     * @author Ruan Naude
+     * @since 27 May 2013
+     */
+    private void addKeyEventHandlers() {
+        filterContainer.addKeyUpHandler(new KeyUpHandler() {
+            
+            /**
+             * This will handle the key up events on the input
+             * 
+             * @param event The key up event
+             * 
+             * @author Ruan Naude
+             * @since 27 May 2013
+             */
+            @Override
+            public void onKeyUp(KeyUpEvent event) {
+                if (event.getSource() == filterContainer &&
+                    event.getNativeKeyCode() == KeyCodes.KEY_ENTER
+                ) {
+                    applyButton.removeStyleName(resources.textFilterStyle().applyButtonDown());
+                    closeFilterPopup(false);
+                }
+            }
+        });
     }
     
     /**
@@ -977,5 +1017,16 @@ public class DateFilter extends AbstractHeaderFilter {
         fromDateBox.setEnabled(true);
         toDateBox.setEnabled(true);
         filterList.setEnabled(true);
+    }
+
+    /**
+     * Sets focus on the main input of the filter
+     * 
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since 24 May 2013
+     */
+    @Override
+    public void setFocusOnMainInput() {
+        filterList.setFocus(true);
     }
 }

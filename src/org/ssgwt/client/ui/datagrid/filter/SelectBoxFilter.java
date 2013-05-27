@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -34,6 +37,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -62,6 +66,12 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      */
     private final SelectBoxFilterResources resources;
 
+    /**
+     * The filter container
+     */
+    @UiField
+    FocusPanel filterContainer;
+    
     /**
      * The title label
      */
@@ -459,9 +469,39 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
             this.listBox.setStyleName(resources.selectBoxFilterStyle().listBoxStyle());
         }
         setCriteria(new SelectBoxFilterCriteria());
+        addKeyEventHandlers();
         addRemoveIconEventHandlers();
         addApplyButtonEventHandlers();
         addCheckBoxEventHandlers();
+    }
+    
+    /**
+     * This will add event handlers for key events on the filter widget
+     * 
+     * @author Ruan Naude
+     * @since 27 May 2013
+     */
+    private void addKeyEventHandlers() {
+        filterContainer.addKeyUpHandler(new KeyUpHandler() {
+            
+            /**
+             * This will handle the key up events on the input
+             * 
+             * @param event The key up event
+             * 
+             * @author Ruan Naude
+             * @since 27 May 2013
+             */
+            @Override
+            public void onKeyUp(KeyUpEvent event) {
+                if (event.getSource() == filterContainer &&
+                    event.getNativeKeyCode() == KeyCodes.KEY_ENTER
+                ) {
+                    applyButton.removeStyleName(resources.selectBoxFilterStyle().applyButtonDown());
+                    closeFilterPopup(false);
+                }
+            }
+        });
     }
 
     /**
@@ -1061,5 +1101,16 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         listBox.clear();
         valueMap.clear();
         values = new String[]{""};
+    }
+
+    /**
+     * Sets focus on the main input of the filter
+     * 
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since 24 May 2013
+     */
+    @Override
+    public void setFocusOnMainInput() {
+        listBox.setFocus(true);
     }
 }
