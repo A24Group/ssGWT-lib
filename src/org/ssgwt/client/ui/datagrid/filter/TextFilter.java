@@ -324,6 +324,7 @@ public class TextFilter extends AbstractHeaderFilter {
         this.setStyleName("");
         this.setWidget(uiBinder.createAndBindUi(this));
         setCriteria(new TextFilterCriteria());
+        addKeyEventHandlers();
         addRemoveIconEventHandlers();
         addApplyButtonEventHandlers();
         addCheckBoxEventHandlers();
