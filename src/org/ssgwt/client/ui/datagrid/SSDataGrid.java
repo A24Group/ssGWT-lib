@@ -368,9 +368,22 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @param col the column to be added
      */
     public void addColumn(Column<T, ?> col) {
-        col.setSortable(true);
-        dataGrid.addColumn(col);
+        addColumn(col, true);
     }
+
+    /**
+     * Adds a column to the end of the table.
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  30 May 2013
+     *
+     * @param col - the column to be added
+     * @param sortable - true to make sortable, false to make unsortable
+     */
+   public void addColumn(Column<T, ?> col, boolean sortable) {
+       col.setSortable(sortable);
+       dataGrid.addColumn(col);
+   }
 
     /**
      * Adds a column to the end of the table.
@@ -380,7 +393,22 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @param col the column to be added
      */
     public void addColumnWithNoType(Column col) {
-        col.setSortable(true);
+        addColumnWithNoType(col, true);
+    }
+
+    /**
+     * Adds a column to the end of the table.
+     *
+     * This is if T is not yet known
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  30 May 2013
+     *
+     * @param col the column to be added
+     * @param sortable - true to make sortable, false to make unsortable
+     */
+    public void addColumnWithNoType(Column col, boolean sortable) {
+        col.setSortable(sortable);
         dataGrid.addColumn(col);
     }
 
@@ -391,7 +419,21 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @param header the associated {@link Header}
      */
     public void addColumn(Column<T, ?> col, Header<?> header) {
-        col.setSortable(true);
+        addColumn(col, header, true);
+    }
+
+    /**
+     * Adds a column to the end of the table with an associated header.
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  30 May 2013
+     *
+     * @param col the column to be added
+     * @param header the associated {@link Header}
+     * @param sortable - true to make sortable, false to make unsortable
+     */
+    public void addColumn(Column<T, ?> col, Header<?> header, boolean sortable) {
+        col.setSortable(sortable);
         if (header instanceof FilterSortHeader) {
             ((FilterSortHeader)header).addFilterChangeHandler(this);
         }
@@ -406,7 +448,22 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @param footer the associated footer (as a {@link Header} object)
      */
     public void addColumn(Column<T, ?> col, Header<?> header, Header<?> footer) {
-        col.setSortable(true);
+        addColumn(col, header, footer, true);
+    }
+
+    /**
+     * Adds a column to the end of the table with an associated header and footer.
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  30 May 2013
+     *
+     * @param col the column to be added
+     * @param header the associated {@link Header}
+     * @param footer the associated footer (as a {@link Header} object)
+     * @param sortable - true to make sortable, false to make unsortable
+     */
+    public void addColumn(Column<T, ?> col, Header<?> header, Header<?> footer, boolean sortable) {
+        col.setSortable(sortable);
         if (header instanceof FilterSortHeader) {
             ((FilterSortHeader)header).addFilterChangeHandler(this);
         }
@@ -420,7 +477,21 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @param headerString the associated header text, as a String
      */
     public void addColumn(Column<T, ?> col, String headerString) {
-        col.setSortable(true);
+        addColumn(col, headerString, true);
+    }
+
+    /**
+     * Adds a column to the end of the table with an associated String header.
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  30 May 2013
+     *
+     * @param col the column to be added
+     * @param headerString the associated header text, as a String
+     * @param sortable - true to make sortable, false to make unsortable
+     */
+    public void addColumn(Column<T, ?> col, String headerString, boolean sortable) {
+        col.setSortable(sortable);
         dataGrid.addColumn(col, headerString);
     }
 
@@ -432,7 +503,22 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @param headerHtml the associated header text, as safe HTML
      */
     public void addColumn(Column<T, ?> col, SafeHtml headerHtml) {
-        col.setSortable(true);
+        addColumn(col, headerHtml, true);
+    }
+
+    /**
+     * Adds a column to the end of the table with an associated {@link SafeHtml}
+     * header.
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  30 May 2013
+     *
+     * @param col the column to be added
+     * @param headerHtml the associated header text, as safe HTML
+     * @param sortable - true to make sortable, false to make unsortable
+     */
+    public void addColumn(Column<T, ?> col, SafeHtml headerHtml, boolean sortable) {
+        col.setSortable(sortable);
         dataGrid.addColumn(col, headerHtml);
     }
 
@@ -445,7 +531,23 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @param footerString the associated footer text, as a String
      */
     public void addColumn(Column<T, ?> col, String headerString, String footerString) {
-        col.setSortable(true);
+        addColumn(col, headerString, footerString, true);
+    }
+
+    /**
+     * Adds a column to the end of the table with an associated String header and
+     * footer.
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  30 May 2013
+     *
+     * @param col the column to be added
+     * @param headerString the associated header text, as a String
+     * @param footerString the associated footer text, as a String
+     * @param sortable - true to make sortable, false to make unsortable
+     */
+    public void addColumn(Column<T, ?> col, String headerString, String footerString, boolean sortable) {
+        col.setSortable(sortable);
         dataGrid.addColumn(col, headerString, footerString);
     }
 
@@ -458,7 +560,23 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @param footerHtml the associated footer text, as safe HTML
      */
     public void addColumn(Column<T, ?> col, SafeHtml headerHtml, SafeHtml footerHtml) {
-        col.setSortable(true);
+        addColumn(col, headerHtml, footerHtml, true);
+    }
+
+    /**
+     * Adds a column to the end of the table with an associated {@link SafeHtml}
+     * header and footer.
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  30 May 2013
+     *
+     * @param col the column to be added
+     * @param headerHtml the associated header text, as safe HTML
+     * @param footerHtml the associated footer text, as safe HTML
+     * @param sortable - true to make sortable, false to make unsortable
+     */
+    public void addColumn(Column<T, ?> col, SafeHtml headerHtml, SafeHtml footerHtml, boolean sortable) {
+        col.setSortable(sortable);
         dataGrid.addColumn(col, headerHtml, footerHtml);
     }
 
@@ -921,7 +1039,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @param right - The number of pixels the table should be indented on right
      * @param top - The number of pixels the table should be indented on top
      * @param bottom - The number of pixels the table should be indented on bottom
-     * 
+     *
      * @author Ruan Naude <nauderuan777@gmail.com>
      * @since 04 March 2013
      */
@@ -929,7 +1047,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
         mainContainer.setWidgetLeftRight(dataGrid, left, Unit.PX, right, Unit.PX);
         mainContainer.setWidgetTopBottom(dataGrid, top, Unit.PX, bottom, Unit.PX);
     }
-    
+
     /**
      * This function will determine whether the DataGridRangeChangeEvent
      * should be fired.
@@ -948,4 +1066,5 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
             firstDataSet = false;
         }
     }
+
 }
