@@ -14,6 +14,11 @@
 package org.ssgwt.client.ui.datagrid.filter;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -29,6 +34,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -56,6 +62,12 @@ public class TextFilter extends AbstractHeaderFilter {
      * Holds an instance of resources
      */
     private TextFilterResources resources;
+    
+    /**
+     * The filter container
+     */
+    @UiField
+    FocusPanel filterContainer;
     
     /**
      * The title label
@@ -312,9 +324,59 @@ public class TextFilter extends AbstractHeaderFilter {
         this.setStyleName("");
         this.setWidget(uiBinder.createAndBindUi(this));
         setCriteria(new TextFilterCriteria());
+        addKeyEventHandlers();
         addRemoveIconEventHandlers();
         addApplyButtonEventHandlers();
         addCheckBoxEventHandlers();
+    }
+    
+    /**
+     * This will add event handlers for key events on the filter widget
+     * 
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since 27 May 2013
+     */
+    private void addKeyEventHandlers() {
+        filterContainer.addKeyUpHandler(new KeyUpHandler() {
+            
+            /**
+             * This will handle the key up events on the input
+             * 
+             * @param event The key up event
+             * 
+             * @author Ruan Naude <nauderuan777@gmail.com>
+             * @since 27 May 2013
+             */
+            @Override
+            public void onKeyUp(KeyUpEvent event) {
+                if (event.getSource() == filterContainer &&
+                    event.getNativeKeyCode() == KeyCodes.KEY_ENTER
+                ) {
+                    applyButton.removeStyleName(resources.textFilterStyle().applyButtonDown());
+                    closeFilterPopup(false);
+                }
+            }
+        });
+        
+        filterContainer.addKeyDownHandler(new KeyDownHandler() {
+            
+            /**
+             * This will handle the key down events on the input
+             * 
+             * @param event The key down event
+             * 
+             * @author Ruan Naude <nauderuan777@gmail.com>
+             * @since 27 May 2013
+             */
+            @Override
+            public void onKeyDown(KeyDownEvent event) {
+                if (event.getSource() == filterContainer &&
+                    event.getNativeKeyCode() == KeyCodes.KEY_ENTER
+                ) {
+                    applyButton.addStyleName(resources.textFilterStyle().applyButtonDown());
+                }
+            }
+        });
     }
     
     /**
@@ -385,6 +447,7 @@ public class TextFilter extends AbstractHeaderFilter {
                 applyButton.removeStyleName(resources.textFilterStyle().applyButtonDown());
             }
         });
+        
     }
 
     /**
@@ -568,5 +631,16 @@ public class TextFilter extends AbstractHeaderFilter {
      */
     protected Label getTitleLabel() {
         return titleLabel;
+    }
+
+    /**
+     * Sets focus on the main input of the filter
+     * 
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since 24 May 2013
+     */
+    @Override
+    public void setFocusOnMainInput() {
+        textBox.setFocus(true);
     }
 }
