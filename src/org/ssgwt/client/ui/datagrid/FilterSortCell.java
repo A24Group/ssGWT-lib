@@ -249,6 +249,7 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> implements HasHa
         }
         this.headerDetails.filterWidget.center();
         this.headerDetails.filterWidget.setPopupPosition(this.parent.getAbsoluteLeft(), (this.parent.getAbsoluteTop() + this.parent.getOffsetHeight() + 10));
+        this.headerDetails.filterWidget.setFocusOnMainInput();
     }
 
     /**
