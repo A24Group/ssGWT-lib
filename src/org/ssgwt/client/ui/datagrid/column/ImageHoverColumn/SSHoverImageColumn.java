@@ -14,6 +14,7 @@
 package org.ssgwt.client.ui.datagrid.column.ImageHoverColumn;
 
 import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.client.ui.Image;
 
 /**
  * The SSHoverImageColumn is a column that display an image also on hover of the cell display more information
@@ -32,9 +33,22 @@ public abstract class SSHoverImageColumn<T> extends Column<T, T> {
      * @author Alec Erasmus
      * @since 31 May 2013
      *
-     * @param imageUrl - The image to display in the cell
+     * @param popup - The popup to display on on hover
      */
-    public SSHoverImageColumn(String imageUrl, AbstractImageColumnPopup<T> popup) {
-      super(new SSHoverImageCell<T>(imageUrl, popup));
+    public SSHoverImageColumn(AbstractImageColumnPopup<T> popup) {
+        super(new SSHoverImageCell<T>(popup));
+
+        SSHoverImageCell<T> hoverImageCell = (SSHoverImageCell<T>) getCell();
+        hoverImageCell.setParentColumn(this);
     }
+
+    /**
+     * Function that will return the image that will be displayed in the in the cell.
+     *
+     * @author Alec Erasmus
+     * @since 31 May 2013
+     *
+     * @return the image that will be displayed in the cell
+     */
+    public abstract Image getImage(T data);
 }

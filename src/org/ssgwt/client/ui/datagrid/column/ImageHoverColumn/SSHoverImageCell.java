@@ -15,11 +15,15 @@ package org.ssgwt.client.ui.datagrid.column.ImageHoverColumn;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.ValueUpdater;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HasHandlers;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates.Template;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.ui.Image;
 
@@ -34,11 +38,6 @@ import com.google.gwt.user.client.ui.Image;
 public class SSHoverImageCell<T> extends AbstractCell<T> implements HasHandlers {
 
     /**
-     * The url of the image to display in the cell
-     */
-    private final String imageUrl;
-
-    /**
      * The popup the will be displayed on hover
      */
     private final AbstractImageColumnPopup<T> popup;
@@ -51,12 +50,18 @@ public class SSHoverImageCell<T> extends AbstractCell<T> implements HasHandlers 
     /**
      * The image displayed in the cess
      */
-    private final Image cellImage;
+    private Image image;
 
     /**
      * The parent element of the Cell
      */
     private Element parent;
+
+    /**
+     * The column the cell is displayed in.
+     * The parent column.
+     */
+    private SSHoverImageColumn<T> column;
 
     /**
      * The mouse over event cont
@@ -74,6 +79,11 @@ public class SSHoverImageCell<T> extends AbstractCell<T> implements HasHandlers 
     private final static String CELL_IMAGE_NAME = "cellImage";
 
     /**
+     * Instance of the template
+     */
+    private static Template template;
+
+    /**
      * The SSBooleanImageCell constructor
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
@@ -81,13 +91,42 @@ public class SSHoverImageCell<T> extends AbstractCell<T> implements HasHandlers 
      *
      * @param imageUrl - The url of the image to display in the cell
      * @param popup - The popup displayed on hover
+     * @param column - The column this
      */
-    public SSHoverImageCell(String imageUrl, AbstractImageColumnPopup<T> popup) {
+    public SSHoverImageCell(AbstractImageColumnPopup<T> popup) {
         super(MOUSE_OVER, MOUSE_OUT);
-        this.imageUrl = imageUrl;
+        if (template == null) {
+            template = GWT.create(Template.class);
+        }
         this.popup = popup;
-        this.cellImage = new Image(imageUrl);
         this.handlerManager = new HandlerManager(this);
+    }
+
+    /**
+     * Template providing SafeHTML templates to build the widget
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  31 May 2013
+     */
+    interface Template extends SafeHtmlTemplates {
+
+        @Template("<div >")
+        SafeHtml openContainerTag();
+
+        @Template("</div>")
+        SafeHtml closeContainerTag();
+    }
+
+    /**
+     * Setter for the parent column
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  31 May 2013
+     *
+     * @param column - The parent column
+     */
+    public void setParentColumn(SSHoverImageColumn<T> column) {
+        this.column = column;
     }
 
     /**
@@ -103,8 +142,13 @@ public class SSHoverImageCell<T> extends AbstractCell<T> implements HasHandlers 
      */
     @Override
     public void render(Context context, T value, SafeHtmlBuilder sb) {
-        cellImage.getElement().setAttribute("name", CELL_IMAGE_NAME);
-        sb.appendHtmlConstant("<div>" + cellImage.toString() + "</div>");
+
+        image = this.column.getImage(value);
+        image.getElement().setAttribute("name", CELL_IMAGE_NAME);
+
+        sb.append(template.openContainerTag());
+        sb.appendHtmlConstant(image.toString());
+        sb.append(template.closeContainerTag());
     }
 
     /**
@@ -155,9 +199,9 @@ public class SSHoverImageCell<T> extends AbstractCell<T> implements HasHandlers 
      *
      * @param data - The data that will be set in the popup
      */
-    private void displayPopup(T date) {
+    private void displayPopup(T data) {
         this.popup.center();
-        this.popup.setDate(date);
+        this.popup.setData(data);
         this.popup.setPopupPosition(
             this.parent.getAbsoluteLeft(),
             (this.parent.getAbsoluteTop() + this.parent.getOffsetHeight() + 10)

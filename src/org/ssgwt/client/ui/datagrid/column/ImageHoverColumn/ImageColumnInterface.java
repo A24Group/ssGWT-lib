@@ -31,6 +31,6 @@ public interface ImageColumnInterface<T> {
      *
      * @param data - The data to set in the popup
      */
-    public void setDate(T data);
+    public void setData(T data);
 
 }
