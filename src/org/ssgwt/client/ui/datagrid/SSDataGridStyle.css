@@ -67,7 +67,12 @@ bottom items
 
 /*Styling for the footer of the data grid*/
 .dataGridFooter {
-    border-top: 2px solid #6f7277;
+    font-family: 'Pt Sans';
+    font-size: 12px;
+    color: #414859;
+    background-color: #EBEBEC;
+    border-right: 1px solid white;
+    border-top: 1px solid #ebebec;
     padding-left: 25px;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -173,6 +178,9 @@ bottom items
 
 /*First and last column styling(Not used yet)*/
 .dataGridFirstColumnFooter {
+    text-align: right;
+    background: white;
+    padding-right: 14px;
 }
 
 /*Styling of the first column in the header*/
