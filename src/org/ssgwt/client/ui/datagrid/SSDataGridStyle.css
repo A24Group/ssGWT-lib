@@ -300,6 +300,21 @@ bottom items
     -webkit-box-sizing: border-box;
 }
 
+@external .actionCell;
+.actionCell {
+    color: #F79421;
+}
+
+@external .actionCell;
+.actionCell:hover {
+    text-decoration: underline;
+}
+
+@external .actionCellSeparator;
+.actionCellSeparator {
+    color: #F79421;
+}
+
 /*Cell styles*/
 .dataGridHoveredRowCell {
 }
