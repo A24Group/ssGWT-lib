@@ -938,12 +938,12 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
     }
 
     /**
-     * Get the filters added to the datagrid and if the column is a sort able column, the field name
+     * Get the filters added to the datagrid and if the column is a sortable column, the field name
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  05 June 2013
      *
-     * @return HashMap - Key is the filter and the value(if column is a sort able column else empty) is field name
+     * @return HashMap - Key is the filter and the value(if column is a sortable column else empty) is field name
      */
     public HashMap<AbstractHeaderFilter, String> getFilters() {
         return filterColumns;
