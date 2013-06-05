@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ssgwt.client.ui.datagrid.SSPager.TextLocation;
+import org.ssgwt.client.ui.datagrid.column.SortableColumnWithName;
 import org.ssgwt.client.ui.datagrid.event.DataGridRangeChangeEvent;
 import org.ssgwt.client.ui.datagrid.event.DataGridRowSelectionChangedEvent;
 import org.ssgwt.client.ui.datagrid.event.DataGridSortEvent;
@@ -186,6 +187,11 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * Holds all the filters added to the datagrid
      */
     private final HashMap<String, AbstractHeaderFilter> filterWidgets = new HashMap<String, AbstractHeaderFilter>();
+
+    /**
+     * Holds all the filters added to the datagrid and the property it maps to if is added to a sortable column.
+     */
+    private final HashMap<AbstractHeaderFilter, String> filterColumns = new HashMap<AbstractHeaderFilter, String>();
 
     /**
      * Class Constructor
@@ -919,8 +925,28 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      */
     public void addFilterColumn(Column<T, ?> col, String label, AbstractHeaderFilter filterWidget) {
         filterWidgets.put(label, filterWidget);
+
+        // The field name
+        String fieldName = null;
+        if (col instanceof SortableColumnWithName) {
+            fieldName = ((SortableColumnWithName)col).getFieldName();
+        }
+        filterColumns.put(filterWidget, fieldName);
+
         FilterSortHeader header = new FilterSortHeader(label, filterWidget);
         this.addColumn(col, header);
+    }
+
+    /**
+     * Get the filters added to the datagrid and if the column is a sortable column, the field name
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  05 June 2013
+     *
+     * @return HashMap - Key is the filter and the value(if column is a sortable column else empty) is field name
+     */
+    public HashMap<AbstractHeaderFilter, String> getFilters() {
+        return filterColumns;
     }
 
     /**
