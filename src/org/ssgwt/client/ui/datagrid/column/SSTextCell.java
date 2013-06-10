@@ -13,7 +13,10 @@
  */
 package org.ssgwt.client.ui.datagrid.column;
 
+import java.util.Date;
+
 import com.google.gwt.cell.client.AbstractCell;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
 /**
@@ -25,6 +28,41 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
  */
 public class SSTextCell extends AbstractCell<String> {
 
+    /**
+     * The format that the date is currently displayed in
+     */
+    String sDateFormat = "";
+
+    /**
+     * The format that the date value should be displayed in
+     */
+    String sDateDisplayTooltipFormat = "";
+    
+    /**
+     * Class Constructor
+     *
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  10 June 2013
+     */
+    public SSTextCell() {
+        super();
+    }
+    
+    /**
+     * Class Constructor
+     *
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  10 June 2013
+     * 
+     * @param sDateFormat - The format that the date is currently displayed in
+     * @param sDateDisplayTooltip - The date format that you want to have the tooltip displayed
+     */
+    public SSTextCell(String sDateFormat, String sDateDisplayTooltip) {
+        this();
+        this.sDateFormat = sDateFormat;
+        this.sDateDisplayTooltipFormat = sDateDisplayTooltip;
+    }
+    
     /**
      * This will create a label with text and a tooltip with the same text value
      *
@@ -40,7 +78,18 @@ public class SSTextCell extends AbstractCell<String> {
         if (value == null) {
             value = "";
         }
-        sb.appendHtmlConstant("<div title=\"" + value + "\" >" + value + "</div>");
+        String tooltip = value;
+        if (this.sDateDisplayTooltipFormat != null && this.sDateDisplayTooltipFormat != ""
+            && this.sDateFormat != null && this.sDateFormat != "") {
+            try {
+                // Convert date from sDateFormat to sDateDisplayTooltipFormat
+                Date date = DateTimeFormat.getFormat(this.sDateFormat).parse(value);
+                tooltip = DateTimeFormat.getFormat(this.sDateDisplayTooltipFormat).format(date);
+            } catch (Exception e){
+                // Ignore exception, resulting in default tooltip
+            }
+        }
+        sb.appendHtmlConstant("<div title=\"" + tooltip + "\" >" + value + "</div>");
     }
 
 }
