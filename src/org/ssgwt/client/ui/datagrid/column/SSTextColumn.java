@@ -27,7 +27,19 @@ public abstract class SSTextColumn<T> extends Column<T, String> implements Sorta
      * Construct a new TextColumn.
      */
     public SSTextColumn() {
-      super(new SSTextCell());
+        super(new SSTextCell());
     }
     
+    /**
+     * Construct a new TextColumn.
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  10 June 2013
+     * 
+     * @param sDateFormat - The format that the date is currently displayed in
+     * @param sDateDisplayTooltip - The date format that you want to have the tooltip displayed
+     */
+    public SSTextColumn(String sDateFormat, String sDateDisplayTooltip) {
+        super(new SSTextCell(sDateFormat, sDateDisplayTooltip));
+    }
 }
