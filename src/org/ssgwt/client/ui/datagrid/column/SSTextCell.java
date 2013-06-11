@@ -16,7 +16,10 @@ package org.ssgwt.client.ui.datagrid.column;
 import java.util.Date;
 
 import com.google.gwt.cell.client.AbstractCell;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
 /**
@@ -37,6 +40,23 @@ public class SSTextCell extends AbstractCell<String> {
      * The format that the date value should be displayed in
      */
     String sDateDisplayTooltipFormat = "";
+
+    /**
+     * Instance of the template
+     */
+    private static Template template;
+    
+    /**
+     * Template providing SafeHTML templates to build the widget
+     *
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 June 2013
+     */
+    interface Template extends SafeHtmlTemplates {
+
+        @Template("<div title=\"{0}\" >{1}</div>")
+        SafeHtml action(String title, String value);
+    }
     
     /**
      * Class Constructor
@@ -46,6 +66,9 @@ public class SSTextCell extends AbstractCell<String> {
      */
     public SSTextCell() {
         super();
+        if (template == null) {
+            template = GWT.create(Template.class);
+        }
     }
     
     /**
@@ -89,7 +112,7 @@ public class SSTextCell extends AbstractCell<String> {
                 // Ignore exception, resulting in default tooltip
             }
         }
-        sb.appendHtmlConstant("<div title=\"" + tooltip + "\" >" + value + "</div>");
+        sb.append(template.action(tooltip, value));
     }
 
 }
