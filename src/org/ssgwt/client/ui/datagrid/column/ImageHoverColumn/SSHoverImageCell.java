@@ -48,7 +48,7 @@ public class SSHoverImageCell<T> extends AbstractCell<T> implements HasHandlers 
     private final HandlerManager handlerManager;
 
     /**
-     * The image displayed in the cess
+     * The image displayed in the cell
      */
     private Image image;
 
