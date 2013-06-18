@@ -221,9 +221,7 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
         super.onBrowserEvent(context, parent, value, event, valueUpdater);
 
         this.parent = parent;
-        // Get the image tag in the cell
         Element imageElement = getLabelElement(parent);
-        // If the event happened on the image tag
         if (event.getEventTarget().equals(imageElement)) {
             if (MOUSE_OVER.equals(event.getType())) { // The event is MOUSE_OVER
                 // Display the popup
@@ -240,8 +238,6 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  17 June 2013
-     *
-     * @param data - The data that will be set in the popup
      */
     private void displayPopup() {
         this.popup.center();

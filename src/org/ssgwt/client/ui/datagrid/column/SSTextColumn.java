@@ -71,7 +71,6 @@ public abstract class SSTextColumn<T> extends Column<T, String> implements Sorta
      * @return the data in the row
      */
     public T getRowData() {
-        System.out.println("Hello");
         return null;
     }
 }
