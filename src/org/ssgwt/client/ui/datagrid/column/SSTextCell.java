@@ -54,8 +54,11 @@ public class SSTextCell extends AbstractCell<String> {
      */
     interface Template extends SafeHtmlTemplates {
 
-        @Template("<div title=\"{0}\" >{1}</div>")
-        SafeHtml action(String title, String value);
+        @Template("<div title=\"{0}\" >")
+        SafeHtml openTag(String title);
+        
+        @Template("</div>")
+        SafeHtml closeTag();
     }
     
     /**
@@ -112,7 +115,10 @@ public class SSTextCell extends AbstractCell<String> {
                 // Ignore exception, resulting in default tooltip
             }
         }
-        sb.append(template.action(tooltip, value));
+        
+        sb.append(template.openTag(tooltip));
+        sb.appendHtmlConstant(value.replace(" ", "&nbsp;"));
+        sb.append(template.closeTag());
     }
 
 }
