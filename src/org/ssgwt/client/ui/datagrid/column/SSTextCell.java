@@ -30,6 +30,7 @@ import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates.Template;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.user.client.Window;
 
 /**
  * A text cell that will display text in a cell with a tooltip with the
@@ -89,6 +90,16 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
      * Flag used to indicate the the cell have a custom tool tip
      */
     private boolean customToolTip = false;
+    
+    /**
+     * The left position of the popup
+     */
+    int popupLeftPosition = 0;
+    
+    /**
+     * The top position of the popup
+     */
+    int popupTopPosition = 0;
 
     /**
      * Template providing SafeHTML templates to build the widget
@@ -224,15 +235,17 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
         Element imageElement = getLabelElement(parent);
         if (event.getEventTarget().equals(imageElement)) {
             if (MOUSE_OVER.equals(event.getType())) { // The event is MOUSE_OVER
-                // Display the popup
-                displayPopup();
+                // Display the popup only if it is allowed.
+                if (column.showPopup(column.getRowData())) {
+                    displayPopup();
+                }
             } else if (MOUSE_OUT.equals(event.getType())) { // The event is MOUSE_OUT
                 // Close the popup
                 hidePopup();
             }
         }
     };
-
+    
     /**
      * Displays the popup relative to the cell
      *
@@ -242,10 +255,60 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
     private void displayPopup() {
         this.popup.center();
         this.popup.setData(column.getRowData());
+        
+        calculatePopupPosition();
+        
         this.popup.setPopupPosition(
-            this.parent.getAbsoluteLeft(),
-            (this.parent.getAbsoluteTop() + this.parent.getOffsetHeight() + 10)
+            popupLeftPosition,
+            popupTopPosition
         );
+    }
+    
+    /**
+     * Calculate the position of the popup.
+     * 
+     * @author Ryno Hartzer <ryno.hartzer@a24group.com>
+     * @since  19 June 2013
+     */
+    private void calculatePopupPosition() {
+        int windowHeight = Window.getClientHeight() - 10;
+        int windowWidth = Window.getClientWidth() - 10;
+        boolean topPointer = false;
+        
+        // Now we need to determine the x and y position of the pointer
+        int xPointerPosition = this.popup.getOffsetWidth() / 6;
+        // -1 is used as it should be shown 1px above/below the border line of the popup
+        int yPointerPosition = this.popup.getOffsetHeight() - 1;
+        int parentCenterXPosition = getLabelElement(this.parent).getAbsoluteLeft()
+            + (getLabelElement(this.parent).getOffsetWidth() / 3);
+        
+        // By default show the popup upwards if possible
+        if (this.popup.getOffsetHeight() + this.parent.getAbsoluteTop() + 10 <= windowHeight) {
+            popupTopPosition = this.parent.getAbsoluteTop() - this.popup.getOffsetHeight() - 10;
+            topPointer = false;
+        } else {
+            popupTopPosition = this.parent.getAbsoluteTop() + this.parent.getOffsetHeight() + 10;
+            // -10 as we used +10 above. -2 is needed to get the pointer to show perfectly
+            yPointerPosition = -12;
+            topPointer = true;
+        }
+        
+        // maxX will be the reference point plus the width of the popup.
+        // Used to determine if we are 'out' of the screen horizontally
+        int maxX = this.parent.getAbsoluteLeft() + this.popup.getOffsetWidth();
+        
+        // We cannot show the popup as it is out of the screen.
+        if (maxX >= windowWidth) {
+            // parentCenterXPosition is the middle x position of the parent image.
+            // xPointerPosition is a 1/6 of the popup width. Multiply this by 5
+            // so that we get 5/6.
+            // Subtract 6 to align the center of the pointer with the center of the parent image
+            popupLeftPosition = parentCenterXPosition - (xPointerPosition * 5) - 6;
+            this.popup.setPointerPosition(xPointerPosition * 5, yPointerPosition, topPointer);
+        } else {
+            popupLeftPosition = parentCenterXPosition - (xPointerPosition) - 6;
+            this.popup.setPointerPosition(xPointerPosition, yPointerPosition, topPointer);
+        }
     }
 
     /**

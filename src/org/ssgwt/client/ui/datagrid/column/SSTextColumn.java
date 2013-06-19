@@ -26,6 +26,11 @@ import com.google.gwt.user.cellview.client.Column;
 public abstract class SSTextColumn<T> extends Column<T, String> implements SortableColumnWithName {
 
     /**
+     * The vo used in the row for the column
+     */
+    public T rowVo = null;
+    
+    /**
      * Construct a new TextColumn.
      */
     public SSTextColumn() {
@@ -71,6 +76,19 @@ public abstract class SSTextColumn<T> extends Column<T, String> implements Sorta
      * @return the data in the row
      */
     public T getRowData() {
-        return null;
+        return this.rowVo;
+    }
+    
+    /**
+     * Determine whether the popup should be shown or not.
+     * 
+     * This needs to be overriden if special logic is needed.
+     * 
+     * @param data The data from the row
+     * 
+     * @return Whether the popup should be shown or not
+     */
+    public boolean showPopup(T data) {
+        return true;
     }
 }
