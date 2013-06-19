@@ -32,5 +32,18 @@ public interface ImageColumnInterface<T> {
      * @param data - The data to set in the popup
      */
     public void setData(T data);
+    
+    /**
+     * Set the pointer position (outer and inner) by generating css
+     * 
+     * @param xPosition The x position in pixels
+     * @param yPosition The y position in pixels
+     * @param topDisplay Whether the pointer should be pointing up
+     * 
+     * @author Ryno Hartzer <ryno.hartzer@a24group.com>
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  14 June 2013
+     */
+    public void setPointerPosition(int xPosition, int yPosition, boolean topDisplay);
 
 }
