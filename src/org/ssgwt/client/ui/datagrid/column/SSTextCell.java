@@ -40,6 +40,11 @@ public class SSTextCell extends AbstractCell<String> {
      * The format that the date value should be displayed in
      */
     String sDateDisplayTooltipFormat = "";
+    
+    /**
+     * String used to store the styleName
+     */
+    String styleName = "";
 
     /**
      * Instance of the template
@@ -54,8 +59,8 @@ public class SSTextCell extends AbstractCell<String> {
      */
     interface Template extends SafeHtmlTemplates {
 
-        @Template("<div title=\"{0}\" >")
-        SafeHtml openTag(String title);
+        @Template("<div class=\"{0}\" title=\"{1}\" >")
+        SafeHtml openTag(String style, String title);
         
         @Template("</div>")
         SafeHtml closeTag();
@@ -72,6 +77,19 @@ public class SSTextCell extends AbstractCell<String> {
         if (template == null) {
             template = GWT.create(Template.class);
         }
+    }
+    
+    /**
+     * Class Constructor
+     *
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  20 June 2013
+     * 
+     * @param sCustomStyle The style used for customisation
+     */
+    public SSTextCell(String sCustomStyle) {
+        super();
+        this.setStyleName(sCustomStyle);
     }
     
     /**
@@ -116,9 +134,23 @@ public class SSTextCell extends AbstractCell<String> {
             }
         }
         
-        sb.append(template.openTag(tooltip));
+        sb.append(template.openTag(styleName, tooltip));
         sb.appendHtmlConstant(value.replace(" ", "&nbsp;"));
         sb.append(template.closeTag());
+    }
+    
+    /**
+     * Used to set the style name for the cell
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  20 June 2013
+     * 
+     * @param styleName The custom style for the internal div tag
+     * 
+     * @return void
+     */
+    public void setStyleName(String styleName) {
+        this.styleName = styleName;
     }
 
 }
