@@ -196,7 +196,7 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
      */
     @Override
     public void render(Context context, String value, SafeHtmlBuilder sb) {
-    	if (value == null) {
+        if (value == null) {
             value = "";
         }
         String tooltip = value;
