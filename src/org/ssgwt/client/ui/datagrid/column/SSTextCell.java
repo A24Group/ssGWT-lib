@@ -27,7 +27,6 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
-import com.google.gwt.safehtml.client.SafeHtmlTemplates.Template;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.Window;
@@ -50,6 +49,11 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
      * The format that the date value should be displayed in
      */
     String sDateDisplayTooltipFormat = "";
+    
+    /**
+     * String used to store the styleName
+     */
+    String styleName = "";
 
     /**
      * The popup the will be displayed on hover
@@ -85,11 +89,6 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
      * Instance of the template
      */
     private static Template template;
-
-    /**
-     * Flag used to indicate the the cell have a custom tool tip
-     */
-    private boolean customToolTip = false;
     
     /**
      * The left position of the popup
@@ -108,12 +107,11 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
      * @since  11 June 2013
      */
     interface Template extends SafeHtmlTemplates {
-
-        @Template("<div title=\"{0}\" >{1}</div>")
-        SafeHtml action(String title, String value);
-
-        @Template("<div >{0}</div>")
-        SafeHtml action(String value);
+        @Template("<div class=\"{0}\" title=\"{1}\" >")
+        SafeHtml openTag(String style, String title);
+        
+        @Template("</div>")
+        SafeHtml closeTag();
     }
 
     /**
@@ -129,6 +127,19 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
         }
     }
 
+    /**
+     * Class Constructor
+     *
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  20 June 2013
+     * 
+     * @param sCustomStyle The style used for customisation
+     */
+    public SSTextCell(String sCustomStyle) {
+        super();
+        this.setStyleName(sCustomStyle);
+    }
+    
     /**
      * Class Constructor
      *
@@ -159,7 +170,6 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
         }
         this.popup = popup;
         this.handlerManager = new HandlerManager(this);
-        this.customToolTip = true;
     }
 
     /**
@@ -189,22 +199,21 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
         if (value == null) {
             value = "";
         }
-        if (!customToolTip) {
-            String tooltip = value;
-            if (this.sDateDisplayTooltipFormat != null && this.sDateDisplayTooltipFormat != ""
-                && this.sDateFormat != null && this.sDateFormat != "") {
-                try {
-                    // Convert date from sDateFormat to sDateDisplayTooltipFormat
-                    Date date = DateTimeFormat.getFormat(this.sDateFormat).parse(value);
-                    tooltip = DateTimeFormat.getFormat(this.sDateDisplayTooltipFormat).format(date);
-                } catch (Exception e){
-                    // Ignore exception, resulting in default tooltip
-                }
+        String tooltip = value;
+        if (this.sDateDisplayTooltipFormat != null && this.sDateDisplayTooltipFormat != ""
+            && this.sDateFormat != null && this.sDateFormat != "") {
+            try {
+                // Convert date from sDateFormat to sDateDisplayTooltipFormat
+                Date date = DateTimeFormat.getFormat(this.sDateFormat).parse(value);
+                tooltip = DateTimeFormat.getFormat(this.sDateDisplayTooltipFormat).format(date);
+            } catch (Exception e){
+                // Ignore exception, resulting in default tooltip
             }
-            sb.append(template.action(tooltip, value));
-        } else {
-            sb.append(template.action(value));
         }
+        
+        sb.append(template.openTag(styleName, tooltip));
+        sb.appendHtmlConstant(value.replace(" ", "&nbsp;"));
+        sb.append(template.closeTag());
     }
 
     /**
@@ -292,7 +301,6 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
             yPointerPosition = -12;
             topPointer = true;
         }
-        
         // maxX will be the reference point plus the width of the popup.
         // Used to determine if we are 'out' of the screen horizontally
         int maxX = this.parent.getAbsoluteLeft() + this.popup.getOffsetWidth();
@@ -346,6 +354,20 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
     @Override
     public void fireEvent(GwtEvent<?> event) {
         handlerManager.fireEvent(event);
+    }
+    
+    /**
+     * Used to set the style name for the cell
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  20 June 2013
+     * 
+     * @param styleName The custom style for the internal div tag
+     * 
+     * @return void
+     */
+    public void setStyleName(String styleName) {
+        this.styleName = styleName;
     }
 
 }
