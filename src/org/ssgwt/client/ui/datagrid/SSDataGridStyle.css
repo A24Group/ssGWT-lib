@@ -184,7 +184,7 @@ bottom items
 }
 
 /*Styling of the first column in the header*/
-.dataGridFirstColumnHeader {
+.isMultiSelect .dataGridFirstColumnHeader {
     padding-left: 22px !Important;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -275,7 +275,7 @@ bottom items
     -webkit-box-sizing: border-box;
 }
 
-.dataGridHoveredRow td:first-child > div {
+.isMultiSelect .dataGridHoveredRow td:first-child > div {
     border-collapse: none;
     margin-left: 19px !important;
     overflow: auto;
