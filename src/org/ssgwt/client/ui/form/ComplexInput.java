@@ -802,4 +802,12 @@ public abstract class ComplexInput<T> extends Composite
     public void setComplexAddButtonStyle(String complexAddButtonStyle) {
         this.complexAddButtonStyle = complexAddButtonStyle;
     }
+    
+    /**
+     * This function will update the field labels on the input
+     * 
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since 02 July 2013
+     */
+    public abstract void updateFieldLabels();
 }

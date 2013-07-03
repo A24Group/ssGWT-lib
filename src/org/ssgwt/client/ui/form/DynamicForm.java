@@ -169,6 +169,18 @@ public class DynamicForm<T> extends Composite {
                     break;
             }
         }
+        
+        /**
+         * Setter for the field label text
+         * 
+         * @param text - The text to set the label to
+         * 
+         * @author Ruan Naude <nauderuan777@gmail.com>
+         * @since 02 July 2013
+         */
+        public void setFieldLabel(String text) {
+            this.fieldLabel.setText(text);
+        }
     }
 
     /**
@@ -541,6 +553,24 @@ public class DynamicForm<T> extends Composite {
         Field fieldInfo = new Field(inputField, label, embeded, customStyleName);
         mainConatiner.add(fieldInfo);
         fields.put(inputField, fieldInfo);
+    }
+    
+    /**
+     * Setter for the field label text
+     * 
+     * @param inputField - The input field's label to set text for
+     * @param text - The text to set the label to
+     * 
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since 02 July 2013
+     */
+    public void setFieldLabelText(InputField<T, ?> inputField, String text) {
+        fields.get(inputField).setFieldLabel(text);
+        if (inputField instanceof ComplexInputForm) {
+            ((ComplexInputForm) inputField).updateFieldLabels();
+        } else if (inputField instanceof ComplexInput) {
+            ((ComplexInput) inputField).updateFieldLabels();
+        }
     }
 
     /**

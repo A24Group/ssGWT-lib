@@ -32,9 +32,8 @@ import com.google.gwt.user.client.ui.Widget;
  * @param <InnerVO> The object type the inner form uses to get values from updates the value of the fields on
  * @param <TheField> The type of input field.
  */
-public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
-    extends
-        ComplexInput<InnerVO>, T> extends Composite
+public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends ComplexInput<InnerVO>, T>
+    extends Composite
     implements
         HasValue<List<InnerVO>>,
         InputField<OutterVO, List>,
@@ -600,5 +599,17 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField
             }
         }
         return false;
+    }
+    
+    /**
+     * This function will update the field labels on the form
+     * 
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since 02 July 2013
+     */
+    public void updateFieldLabels() {
+        for (TheField field : fields) {
+            field.updateFieldLabels();
+        }
     }
 }
