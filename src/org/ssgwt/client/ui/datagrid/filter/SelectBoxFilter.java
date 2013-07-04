@@ -1113,4 +1113,17 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     public void setFocusOnMainInput() {
         listBox.setFocus(true);
     }
+    
+    /**
+     * Checks whether the list box is multi select
+     * 
+     * @author Ryno Hartzer <ryno.hartzer@a24group.com>
+     * @since  04 July 2013
+     * 
+     * @return Whether the list box is multi select
+     */
+    public boolean isMulitSelect() {
+        return listBox.isMultipleSelect();
+    }
+    
 }
