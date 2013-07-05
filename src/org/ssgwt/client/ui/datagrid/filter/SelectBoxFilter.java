@@ -71,7 +71,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      */
     @UiField
     FocusPanel filterContainer;
-    
+
     /**
      * The title label
      */
@@ -474,21 +474,21 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         addApplyButtonEventHandlers();
         addCheckBoxEventHandlers();
     }
-    
+
     /**
      * This will add event handlers for key events on the filter widget
-     * 
+     *
      * @author Ruan Naude <nauderuan777@gmail.com>
      * @since 27 May 2013
      */
     private void addKeyEventHandlers() {
         filterContainer.addKeyUpHandler(new KeyUpHandler() {
-            
+
             /**
              * This will handle the key up events on the input
-             * 
+             *
              * @param event The key up event
-             * 
+             *
              * @author Ruan Naude <nauderuan777@gmail.com>
              * @since 27 May 2013
              */
@@ -1105,7 +1105,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
 
     /**
      * Sets focus on the main input of the filter
-     * 
+     *
      * @author Ruan Naude <nauderuan777@gmail.com>
      * @since 24 May 2013
      */
