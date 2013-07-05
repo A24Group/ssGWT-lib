@@ -356,7 +356,7 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
      */
     @Override
     public void setValue(Long value) {
-        spinner.setValue(value, false);
+        spinner.setValue(value, true);
     }
 
     /**
