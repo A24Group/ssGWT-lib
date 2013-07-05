@@ -1122,7 +1122,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      * 
      * @return Whether the list box is multi select
      */
-    public boolean isMulitSelect() {
+    public boolean isMultiSelect() {
         return listBox.isMultipleSelect();
     }
     
