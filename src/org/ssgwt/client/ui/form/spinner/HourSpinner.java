@@ -68,7 +68,7 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
     }
 
     /**
-     * Interface used fir the styles
+     * Interface used for the styles
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  08 July 2013
