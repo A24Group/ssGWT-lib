@@ -13,6 +13,7 @@
  */
 package org.ssgwt.client.ui.datagrid.filter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -638,6 +639,67 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     @Override
     protected void updateFieldData() {
         checkBox.setValue(getCriteria().isFindEmptyEntriesOnly());
+        
+        if (isMultiSelect()) {
+            setMultiSelectListBoxValues();
+        } else {
+            setSingleSelectListBoxValue();
+        }
+        
+        listBox.setEnabled(!checkBox.getValue());
+    }
+    
+    /**
+     * This function will set the selected items of the listbox on the filter
+     * 
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since  09 July 2013
+     */
+    private void setMultiSelectListBoxValues() {
+        ArrayList<Integer> selectedIndexes = new ArrayList<Integer>();
+        String[] selectedValues = null;
+        
+        //if the criteria is empty then set first item selected if one exist
+        if (getCriteria().getCriteria() != null && !getCriteria().getCriteria().trim().equals("")) {
+            
+            //spilt the criteria to get all selected values
+            selectedValues = getCriteria().getCriteria().split(",");
+            
+            //add selected value indexes to the array
+            for (String value : selectedValues) {
+                if (bIsAdvancedMap) {
+                    selectedIndexes.add(findAdvancedIndexValue(value));
+                } else {
+                    selectedIndexes.add(findIndexOf(value));
+                }
+            }
+            
+            //set each index in the array selected in the list box
+            if (selectedIndexes.isEmpty()) {
+                if (listBox.getItemCount() > 0) {
+                    listBox.setSelectedIndex(0);
+                }
+            } else {
+                for (Integer integer : selectedIndexes) {
+                    if (listBox.getItemCount() > 0) {
+                        listBox.setItemSelected(integer, true);
+                    }
+                }
+            }
+        } else {
+            if (listBox.getItemCount() > 0) {
+                listBox.setSelectedIndex(0);
+            }
+        }
+    }
+    
+    /**
+     * This function will set the selected item of the listbox on the filter
+     * 
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since  09 July 2013
+     */
+    private void setSingleSelectListBoxValue() {
         int index = 0;
         if (bIsAdvancedMap) {
             index = findAdvancedIndexValue(getCriteria().getCriteria());
@@ -649,7 +711,6 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         } else {
             listBox.setSelectedIndex(0);
         }
-        listBox.setEnabled(!checkBox.getValue());
     }
 
     /**
