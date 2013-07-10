@@ -237,6 +237,26 @@ public class DateTimeComponent extends Composite {
     private boolean enabled = true;
 
     /**
+     * The flag used when the start date was manually set
+     */
+    private boolean startDateManuallySet = false;
+
+    /**
+     * The flag used when the start date time was manually set
+     */
+    private boolean startDateTimeManuallySet = false;
+
+    /**
+     * The flag used when the end date was manually set
+     */
+    private boolean endDateManuallySet = false;
+
+    /**
+     * The flag used when the end date time was manually set
+     */
+    private boolean endDateTimeManuallySet = false;
+
+    /**
      * UiBinder interface for the composite
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
@@ -427,20 +447,40 @@ public class DateTimeComponent extends Composite {
      * @param date - The new date selected
      */
     private void onStartTimePickerValueChange(Date date) {
-        if (date.getMinutes() % 15 != 0) {
-            startTimePicker.setDateTime(getRestDate(date));
+        if (startDateManuallySet) {
+            startDateManuallySet = false;
+            endTimePicker.setMinDate(getShiftMinDate());
+            endTimePicker.setMaxDate(getShiftMaxDate());
+        } else {
+            if (startDateTimeManuallySet) {
+                startDateTimeManuallySet = false;
+            } else {
+                if (date.getMinutes() % 15 != 0) {
+                    Date resetDate = getRestDate((Date) (date.clone()));
+                    if ((date.getMinutes() % 15) - 15 == 1) {
+                        date.setMinutes(date.getMinutes() - 1);
+                        resetDate = date;
+                    }
+                    if ((date.getMinutes() % 15) - 15 == -1) {
+                        date.setMinutes(date.getMinutes() + 1);
+                        resetDate = date;
+                    }
+                    startTimePicker.setDateTime(resetDate);
+                }
+                if (date.getHours() % 24 == 0) {
+                    System.out.println(date.getHours());
+                    startTimePicker.setDate(startDateBox.getValue());
+                }
+                if (startTimePicker.getDateTime().getDay() != startDateBox.getValue().getDay()) {
+                    startTimePicker.setDate(startDateBox.getValue());
+                }
+                endTimePicker.setMinDate(getShiftMinDate());
+                endTimePicker.setMaxDate(getShiftMaxDate());
+                endTimePicker.setDateTime(getShiftMinDate());
+                endDateBox.setValue(startDateBox.getValue());
+                onEndDateBoxValueChange(startDateBox.getValue());
+            }
         }
-        if (date.getHours() % 24 == 0) {
-            startTimePicker.setDate(startDateBox.getValue());
-        }
-        if (startTimePicker.getDateTime().getDay() != startDateBox.getValue().getDay()) {
-            startTimePicker.setDate(startDateBox.getValue());
-        }
-        endTimePicker.setMinDate(getShiftMinDate());
-        endTimePicker.setMaxDate(getShiftMaxDate());
-        endTimePicker.setDateTime(getShiftMinDate());
-        endDateBox.setValue(startDateBox.getValue());
-        onEndDateBoxValueChange(startDateBox.getValue());
         totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
     }
 
@@ -454,43 +494,60 @@ public class DateTimeComponent extends Composite {
      * @param date - The new date selected
      */
     private void onEndTimePickerValueChange(Date date) {
-        if (date.getMinutes() % 15 != 0) {
-            endTimePicker.setDateTime(getRestDate(date));
-        }
-        if (date.getHours() % 24 == 0) {
-            if (
-                (startDateBox.getValue().getDay() == endDateBox.getValue().getDay())
-            ) {
-                if (getShiftMinDate().getTime() == endTimePicker.getDateTime().getTime()) {
-                    totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
-                    return;
-                }
-                if (endTimePicker.getDateTime().getMinutes() % 60 != 0) {
-                    totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
-                }
-                endTimePicker.setDateTime(getShiftMinDate());
-                totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
+        if (endDateManuallySet) {
+            endDateManuallySet = false;
+        } else {
+            if (endDateTimeManuallySet) {
+                endDateTimeManuallySet = false;
             } else {
-                if (getShiftMaxDate().getTime() == endTimePicker.getDateTime().getTime()) {
+                if (date.getMinutes() % 15 != 0) {
+                    Date resetDate = getRestDate((Date) (date.clone()));
+                    if ((date.getMinutes() % 15) - 15 == 1) {
+                        date.setMinutes(date.getMinutes() - 1);
+                        resetDate = date;
+                    }
+                    if ((date.getMinutes() % 15) - 15 == -1) {
+                        date.setMinutes(date.getMinutes() + 1);
+                        resetDate = date;
+                    }
+                    endTimePicker.setDateTime(resetDate);
+                }
+                if (date.getHours() % 24 == 0) {
+                    if (
+                        (startDateBox.getValue().getDay() == endDateBox.getValue().getDay())
+                    ) {
+                        if (getShiftMinDate().getTime() == endTimePicker.getDateTime().getTime()) {
+                            totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
+                            return;
+                        }
+                        if (endTimePicker.getDateTime().getMinutes() % 60 != 0) {
+                            totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
+                        }
+                        endTimePicker.setDateTime(getShiftMinDate());
+                        totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
+                    } else {
+                        if (getShiftMaxDate().getTime() == endTimePicker.getDateTime().getTime()) {
+                            totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
+                            return;
+                        }
+                        if (endTimePicker.getDateTime().getMinutes() % 60 != 0) {
+                            totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
+                            return;
+                        }
+                    }
+                }
+                if (
+                    endDateBox.getValue().getDay() != endTimePicker.getDateTime().getDay() &&
+                    startDateBox.getValue().getDay() == endDateBox.getValue().getDay()
+                ) {
+                    endTimePicker.setDateTime(getShiftMinDate());
                     totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
                     return;
                 }
-                if (endTimePicker.getDateTime().getMinutes() % 60 != 0) {
-                    totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
-                    return;
+                if (endDateBox.getValue().getDay() != endTimePicker.getDateTime().getDay()) {
+                    endTimePicker.setDateTime(getShiftMaxDate());
                 }
             }
-        }
-        if (
-            endDateBox.getValue().getDay() != endTimePicker.getDateTime().getDay() &&
-            startDateBox.getValue().getDay() == endDateBox.getValue().getDay()
-        ) {
-            endTimePicker.setDateTime(getShiftMinDate());
-            totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
-            return;
-        }
-        if (endDateBox.getValue().getDay() != endTimePicker.getDateTime().getDay()) {
-            endTimePicker.setDateTime(getShiftMaxDate());
         }
         totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
     }
@@ -718,6 +775,8 @@ public class DateTimeComponent extends Composite {
      * @param startDate - The start date.
      */
     public void setStartDate(Date startDate) {
+        this.startDateManuallySet = true;
+        this.startDateTimeManuallySet= true;
         this.startDateBox.setValue(startDate);
         this.startTimePicker.setDateTime(startDate);
     }
@@ -731,6 +790,8 @@ public class DateTimeComponent extends Composite {
      * @param endDate - The end date.
      */
     public void setEndDate(Date endDate) {
+        this.endDateManuallySet = true;
+        this.endDateTimeManuallySet= true;
         this.lastEndDate = lastEndDate;
         this.endDateBox.setValue(endDate);
         this.endTimePicker.setDateTime(endDate);
