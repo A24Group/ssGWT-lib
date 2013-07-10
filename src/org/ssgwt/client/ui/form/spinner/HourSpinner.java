@@ -119,6 +119,8 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
          *
          * @author Alec Erasmus <alec.erasmus@a24group.com>
          * @since  08 July 2013
+         *
+         * @param value - The new value to set on the spinner
          */
         @Override
         public void onSpinning(long value) {
@@ -289,6 +291,11 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
     }
 
     /**
+     * Class constructor
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  08 July 2013
+     *
      * @param value - The initial value
      * @param min - The min value
      * @param max - The max value
@@ -337,6 +344,9 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
     ) {
         super();
         setStylePrimaryName(STYLENAME_DEFAULT);
+        if (resources != null) {
+            defaultResources = resources;
+        }
         long spinnerMin = (long) (min * 100);
         long spinnerMax = (long) (max * 100);
         if (images == null) {
@@ -478,7 +488,7 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
      *
      * @return the label used by this widget
      */
-    public Label getTextBoxLable() {
+    public Label getTextBoxLabel() {
         return valueBoxLabel;
     }
 
@@ -508,12 +518,12 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
     }
 
     /**
-     * Sets whether this widget is enabled.
+     * Sets the text box to ready only or not.
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  08 July 2013
      *
-     * @param enabled - true to enable the widget, false to disable it
+     * @param enabled - true to set the textbox to read only, false to enable it
      */
     public void setTextBoxReadOnly(boolean enabled) {
         valueBox.setReadOnly(enabled);
