@@ -257,6 +257,11 @@ public class DateTimeComponent extends Composite {
     private boolean endDateTimeManuallySet = false;
 
     /**
+     * The previous set end date
+     */
+    private Date previousEndDate = null;
+
+    /**
      * UiBinder interface for the composite
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
@@ -387,7 +392,10 @@ public class DateTimeComponent extends Composite {
                  */
                 @Override
                 public void onValueChange(ValueChangeEvent<Date> event) {
-                    onEndDateBoxValueChange(event.getValue());
+                    if (previousEndDate.getTime() - event.getValue().getTime() != 0) {
+                        previousEndDate = (Date) event.getValue().clone();
+                        onEndDateBoxValueChange(event.getValue());
+                    }
                 }
             }
         );
@@ -793,11 +801,14 @@ public class DateTimeComponent extends Composite {
     public void setEndDate(Date endDate) {
         endDate.setMinutes(roundUpTime(endDate.getMinutes()));
         endDate.setSeconds(0);
+        endDatePicker.setMinimumDate(getMinEndDate(getShiftMinDate()));
+        endDatePicker.setMaximumDate(getMaxEndDate(getShiftMaxDate()));
         this.endDateManuallySet = true;
         this.endDateTimeManuallySet= true;
         this.lastEndDate = lastEndDate;
         this.endDateBox.setValue(endDate);
         this.endTimePicker.setDateTime(endDate);
+        previousEndDate = (Date) this.endDateBox.getValue().clone();
     }
 
     /**
