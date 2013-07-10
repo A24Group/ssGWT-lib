@@ -158,7 +158,7 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
                     + previousText.substring(
                         valueBox.getCursorPos() + valueBox.getSelectionLength(),
                         previousText.length()
-                );
+                    );
             } else {
                 newText = previousText.substring(0, index)
                     + event.getCharCode()
@@ -172,7 +172,7 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
                 }
                 spinner.setValue(newValue, true);
             } catch (Exception e) {
-                // valueBox.cancelKey();
+                // Die silently
             }
         }
     };

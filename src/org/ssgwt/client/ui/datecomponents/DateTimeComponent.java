@@ -242,7 +242,7 @@ public class DateTimeComponent extends Composite {
     private boolean startDateManuallySet = false;
 
     /**
-     * The flag used when the start date time was manually set
+     * The flag used when the start time was manually set
      */
     private boolean startDateTimeManuallySet = false;
 
@@ -252,7 +252,7 @@ public class DateTimeComponent extends Composite {
     private boolean endDateManuallySet = false;
 
     /**
-     * The flag used when the end date time was manually set
+     * The flag used when the end time was manually set
      */
     private boolean endDateTimeManuallySet = false;
 
