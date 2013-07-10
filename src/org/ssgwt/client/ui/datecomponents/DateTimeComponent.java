@@ -468,7 +468,6 @@ public class DateTimeComponent extends Composite {
                     startTimePicker.setDateTime(resetDate);
                 }
                 if (date.getHours() % 24 == 0) {
-                    System.out.println(date.getHours());
                     startTimePicker.setDate(startDateBox.getValue());
                 }
                 if (startTimePicker.getDateTime().getDay() != startDateBox.getValue().getDay()) {
