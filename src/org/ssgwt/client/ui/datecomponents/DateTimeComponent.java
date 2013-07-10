@@ -775,6 +775,8 @@ public class DateTimeComponent extends Composite {
      * @param startDate - The start date.
      */
     public void setStartDate(Date startDate) {
+        startDate.setMinutes(roundUpTime(startDate.getMinutes()));
+        startDate.setSeconds(0);
         this.startDateManuallySet = true;
         this.startDateTimeManuallySet= true;
         this.startDateBox.setValue(startDate);
@@ -790,6 +792,8 @@ public class DateTimeComponent extends Composite {
      * @param endDate - The end date.
      */
     public void setEndDate(Date endDate) {
+        endDate.setMinutes(roundUpTime(endDate.getMinutes()));
+        endDate.setSeconds(0);
         this.endDateManuallySet = true;
         this.endDateTimeManuallySet= true;
         this.lastEndDate = lastEndDate;
