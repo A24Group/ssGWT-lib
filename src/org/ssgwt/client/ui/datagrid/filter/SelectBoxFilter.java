@@ -13,6 +13,7 @@
  */
 package org.ssgwt.client.ui.datagrid.filter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -71,7 +72,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
      */
     @UiField
     FocusPanel filterContainer;
-    
+
     /**
      * The title label
      */
@@ -474,21 +475,21 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         addApplyButtonEventHandlers();
         addCheckBoxEventHandlers();
     }
-    
+
     /**
      * This will add event handlers for key events on the filter widget
-     * 
+     *
      * @author Ruan Naude <nauderuan777@gmail.com>
      * @since 27 May 2013
      */
     private void addKeyEventHandlers() {
         filterContainer.addKeyUpHandler(new KeyUpHandler() {
-            
+
             /**
              * This will handle the key up events on the input
-             * 
+             *
              * @param event The key up event
-             * 
+             *
              * @author Ruan Naude <nauderuan777@gmail.com>
              * @since 27 May 2013
              */
@@ -638,6 +639,67 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     @Override
     protected void updateFieldData() {
         checkBox.setValue(getCriteria().isFindEmptyEntriesOnly());
+        
+        if (isMultiSelect()) {
+            setMultiSelectListBoxValues();
+        } else {
+            setSingleSelectListBoxValue();
+        }
+        
+        listBox.setEnabled(!checkBox.getValue());
+    }
+    
+    /**
+     * This function will set the selected items of the listbox on the filter
+     * 
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since  09 July 2013
+     */
+    private void setMultiSelectListBoxValues() {
+        ArrayList<Integer> selectedIndexes = new ArrayList<Integer>();
+        String[] selectedValues = null;
+        
+        //if the criteria is empty then set first item selected if one exist
+        if (getCriteria().getCriteria() != null && !getCriteria().getCriteria().trim().equals("")) {
+            
+            //spilt the criteria to get all selected values
+            selectedValues = getCriteria().getCriteria().split(",");
+            
+            //add selected value indexes to the array
+            for (String value : selectedValues) {
+                if (bIsAdvancedMap) {
+                    selectedIndexes.add(findAdvancedIndexValue(value));
+                } else {
+                    selectedIndexes.add(findIndexOf(value));
+                }
+            }
+            
+            //set each index in the array selected in the list box
+            if (selectedIndexes.isEmpty()) {
+                if (listBox.getItemCount() > 0) {
+                    listBox.setSelectedIndex(0);
+                }
+            } else {
+                for (Integer integer : selectedIndexes) {
+                    if (listBox.getItemCount() > 0) {
+                        listBox.setItemSelected(integer, true);
+                    }
+                }
+            }
+        } else {
+            if (listBox.getItemCount() > 0) {
+                listBox.setSelectedIndex(0);
+            }
+        }
+    }
+    
+    /**
+     * This function will set the selected item of the listbox on the filter
+     * 
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since  09 July 2013
+     */
+    private void setSingleSelectListBoxValue() {
         int index = 0;
         if (bIsAdvancedMap) {
             index = findAdvancedIndexValue(getCriteria().getCriteria());
@@ -649,7 +711,6 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
         } else {
             listBox.setSelectedIndex(0);
         }
-        listBox.setEnabled(!checkBox.getValue());
     }
 
     /**
@@ -1105,7 +1166,7 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
 
     /**
      * Sets focus on the main input of the filter
-     * 
+     *
      * @author Ruan Naude <nauderuan777@gmail.com>
      * @since 24 May 2013
      */
@@ -1113,4 +1174,17 @@ public class SelectBoxFilter extends AbstractHeaderFilter {
     public void setFocusOnMainInput() {
         listBox.setFocus(true);
     }
+    
+    /**
+     * Checks whether the list box is multi select
+     * 
+     * @author Ryno Hartzer <ryno.hartzer@a24group.com>
+     * @since  04 July 2013
+     * 
+     * @return Whether the list box is multi select
+     */
+    public boolean isMultiSelect() {
+        return listBox.isMultipleSelect();
+    }
+    
 }
