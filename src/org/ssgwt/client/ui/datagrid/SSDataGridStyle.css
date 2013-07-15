@@ -81,7 +81,13 @@ bottom items
     color: #4b4a4a;
     text-shadow: #ddf 1px 1px 0;
     overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.dataGridFooter > div {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /*Styling for the header of the data grid*/
