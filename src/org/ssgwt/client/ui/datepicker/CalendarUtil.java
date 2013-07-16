@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -16,7 +16,7 @@
 
 package org.ssgwt.client.ui.datepicker;
 
-import java.util.Date;
+import org.ssgwt.client.i18n.SSDate;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormatInfo;
@@ -43,23 +43,23 @@ public class CalendarUtil {
 
     /**
      * Adds the given number of days to a date.
-     * 
+     *
      * @param date the date
      * @param days number of days
      */
     @SuppressWarnings("deprecation") // GWT requires Date
-    public static void addDaysToDate(Date date, int days) {
+    public static void addDaysToDate(SSDate date, int days) {
         date.setDate(date.getDate() + days);
     }
 
     /**
      * Adds the given number of months to a date.
-     * 
+     *
      * @param date the date
      * @param months number of months
      */
     @SuppressWarnings("deprecation") // GWT requires Date
-    public static void addMonthsToDate(Date date, int months) {
+    public static void addMonthsToDate(SSDate date, int months) {
         if (months != 0) {
             int month = date.getMonth();
             int year = date.getYear();
@@ -75,27 +75,27 @@ public class CalendarUtil {
 
     /**
      * Copies a date.
-     * 
+     *
      * @param date the date
      * @return the copy
      */
-    public static Date copyDate(Date date) {
+    public static SSDate copyDate(SSDate date) {
         if (date == null) {
             return null;
         }
-        Date newDate = new Date();
+        SSDate newDate = new SSDate();
         newDate.setTime(date.getTime());
         return newDate;
     }
 
     /**
      * Returns the number of days between the two dates. Time is ignored.
-     * 
+     *
      * @param start starting date
      * @param finish ending date
      * @return the different
      */
-    public static int getDaysBetween(Date start, Date finish) {
+    public static int getDaysBetween(SSDate start, SSDate finish) {
         // Convert the dates to the same time
         start = copyDate(start);
         resetTime(start);
@@ -114,7 +114,7 @@ public class CalendarUtil {
     /**
      * Returns the day of the week on which week starts in the current locale. The
      * range between 0 for Sunday and 6 for Saturday.
-     * 
+     *
      * @return the day of the week
      */
     public static int getStartingDayOfWeek() {
@@ -124,13 +124,13 @@ public class CalendarUtil {
     /**
      * Check if two dates represent the same date of the same year, even if they
      * have different times.
-     * 
+     *
      * @param date0 a date
      * @param date1 a second date
      * @return true if the dates are the same
      */
     @SuppressWarnings("deprecation") // GWT requires Date
-    public static boolean isSameDate(Date date0, Date date1) {
+    public static boolean isSameDate(SSDate date0, SSDate date1) {
         assert date0 != null : "date0 cannot be null";
         assert date1 != null : "date1 cannot be null";
         return date0.getYear() == date1.getYear()
@@ -141,18 +141,18 @@ public class CalendarUtil {
     /**
      * Sets a date object to be at the beginning of the month and no time
      * specified.
-     * 
+     *
      * @param date the date
      */
     @SuppressWarnings("deprecation") // GWT requires Date
-    public static void setToFirstDayOfMonth(Date date) {
+    public static void setToFirstDayOfMonth(SSDate date) {
         resetTime(date);
         date.setDate(1);
     }
 
     /**
      * Is a day in the week a weekend?
-     * 
+     *
      * @param dayOfWeek day of week
      * @return is the day of week a weekend?
      */
@@ -162,11 +162,11 @@ public class CalendarUtil {
 
     /**
      * Resets the date to have no time modifiers.
-     * 
+     *
      * @param date the date
      */
     @SuppressWarnings("deprecation") // GWT requires Date
-    private static void resetTime(Date date) {
+    private static void resetTime(SSDate date) {
         long msec = date.getTime();
         msec = (msec / 1000) * 1000;
         date.setTime(msec);

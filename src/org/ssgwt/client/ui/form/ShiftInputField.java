@@ -13,8 +13,7 @@
  */
 package org.ssgwt.client.ui.form;
 
-import java.util.Date;
-
+import org.ssgwt.client.i18n.SSDate;
 import org.ssgwt.client.ui.datecomponents.DateTimeComponent;
 import org.ssgwt.client.ui.datecomponents.StartEndDateVo;
 
@@ -65,7 +64,7 @@ public abstract class ShiftInputField<T>
      * @param minShiftTime - The minimum shift length in milliseconds
      * @param maxShiftTime - The maximum shift length in milliseconds
      */
-    public ShiftInputField(Date minDate, Date maxDate, Date selectedDate, long minShiftTime, long maxShiftTime) {
+    public ShiftInputField(SSDate minDate, SSDate maxDate, SSDate selectedDate, long minShiftTime, long maxShiftTime) {
         super(minDate, maxDate, selectedDate, minShiftTime, maxShiftTime);
     }
 

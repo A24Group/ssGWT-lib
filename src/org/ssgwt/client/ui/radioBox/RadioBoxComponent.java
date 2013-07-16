@@ -1,6 +1,6 @@
 /**
  * Copyright 2012 A24Group
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -9,15 +9,15 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
 package org.ssgwt.client.ui.radioBox;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ssgwt.client.i18n.SSDate;
 import org.ssgwt.client.ui.form.DateInputField;
 import org.ssgwt.client.ui.form.InputField;
 
@@ -39,52 +39,52 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * This class if used for the creation of the radio box component
- * 
+ *
  * @author Ruan Naude <ruan.naude@a24group.com>
  * @since 03 Dec 2012
  */
 public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, ValueChangeHandler<Boolean> {
-    
+
     /**
      * Instance of the UiBinder
      */
     private static Binder uiBinder = GWT.create(Binder.class);
-    
+
     /**
      * The default group radio buttons will belong to
      */
     private static String DEFAULT_GROUP = "default";
-    
+
     /**
      * The current number of radio button groups on the form
      */
     private static int currentNumberOfGroups = 0;
-    
+
     /**
      * The current radio button group number
      */
     private int thisGroupId;
-    
+
     /**
      * The default resource to use for the RadioBoxComponent class
      */
     private static RadioBoxComponentResources DEFAULT_RESOURCES;
-    
+
     /**
      * The resource to use for the RadioBoxComponent class
      */
     private RadioBoxComponentResources resources;
-    
+
     /**
      * The list of radio button values
      */
     protected HashMap<RadioButton, InputField<T,F>> radioButtonOptions;
-    
+
     /**
      * Indicator for when an option is the first
      */
     private boolean firstOption = true;
-    
+
     /**
      * The container for the whole radio box field item
      */
@@ -95,10 +95,10 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
      * Track the index of each radio button added
      */
     protected ArrayList<RadioButton> indexedOptions = new ArrayList<RadioButton>();
-    
+
     /**
      * UiBinder interface for the composite
-     * 
+     *
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 03 Dec 2012
      */
@@ -108,58 +108,58 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
 
     /**
      * A ClientBundle that provides style for this widget.
-     * 
+     *
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 03 Dec 2012
      */
     public interface RadioBoxComponentResources extends ClientBundle {
-        
+
         /**
          * The style source to be used in this widget
          */
         @Source("RadioBoxComponent.css")
         Style radioBoxComponentStyle();
     }
-    
+
     /**
      * The Css style recourse items to use in this widget
-     * 
+     *
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 03 Dec 2012
      */
     public interface Style extends CssResource {
-        
+
         /**
          * The style for the main container of the radio box component
          */
         String radioBoxComponent();
-        
+
         /**
          * The style for a radio button option
          */
         String radioButtonOption();
-        
+
         /**
          * The style for a radio margin
          */
         String radioButtonMargin();
     }
-    
+
     /**
      * Class constructor for the radio box field
-     * 
+     *
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 03 Dec 2012
      */
     public RadioBoxComponent() {
         this(getDefaultResources());
     }
-    
+
     /**
      * Class constructor for the radio box field with a recourse
-     * 
+     *
      * @param resources The resources to be used for the RadioBoxComponent
-     * 
+     *
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 03 Dec 2012
      */
@@ -172,12 +172,12 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
         radioBoxComponent.addStyleName(resources.radioBoxComponentStyle().radioBoxComponent());
         radioButtonOptions = new HashMap<RadioButton, InputField<T,F>>();
     }
-    
+
     /**
      * Add an option to the list of radio button options
-     * 
+     *
      * @param option - The option to add to the radio button list
-     * 
+     *
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 03 Dec 2012
      */
@@ -190,57 +190,57 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
         radioButton.addStyleName(resources.radioBoxComponentStyle().radioButtonMargin());
         FlowPanel radioButtonValue = new FlowPanel();
         radioButtonValue.add(option.getInputFieldWidget());
-        
+
         //add the radio button to the layout panel
         radioButtonLayout.add(radioButton);
         radioButtonLayout.setWidgetLeftWidth(radioButton, 0, Unit.PX, 20, Unit.PX);
         radioButtonLayout.setWidgetTopBottom(radioButton, 0, Unit.PX, 0, Unit.PX);
-        
+
         //add the radio button's value to the layout panel
         radioButtonLayout.add(radioButtonValue);
         radioButtonLayout.setWidgetLeftRight(radioButtonValue, 20, Unit.PX, 0, Unit.PX);
         radioButtonLayout.setWidgetTopBottom(radioButtonValue, 0, Unit.PX, 0, Unit.PX);
-        
+
         //set default style on radio option
         radioButtonLayout.setHeight("28px");
         radioButtonLayout.setWidth("50%");
         radioButtonLayout.addStyleName(resources.radioBoxComponentStyle().radioButtonOption());
-        
+
         if (firstOption) {
             firstOption = false;
             radioButton.setValue(true);
         }
-        
+
         //add the radio button and its value to the radioButtonOptions array to retrieve selected value later
         radioButtonOptions.put(radioButton, option);
-        
+
         indexedOptions.add(radioButton);
-        
+
         //add layout to the main radio box flow panel
         radioBoxComponent.add(radioButtonLayout);
     }
-    
+
     /**
      * Allows you to get an input field so that you can set a value directly on the object
-     * 
+     *
      * @author Neil Nienaber <neil.nienaber@a24group.com>
      * @since  05 December 2012
-     * 
+     *
      * @param field The input field which has been added to the redio group
-     * 
+     *
      * @return
      */
     protected HasValue<F> getFieldAsHasValue(InputField<T, F> field) {
         return (HasValue<F>)field;
     }
-    
+
     /**
      * This function will check of there is already a default resource to
      * use for the radio box component and if not create a default resource
-     * 
+     *
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 03 Dec 2012
-     * 
+     *
      * @return The default resource for the LeftMenuItem
      */
     private static RadioBoxComponentResources getDefaultResources() {
@@ -249,12 +249,12 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
         }
         return DEFAULT_RESOURCES;
     }
-    
+
     /**
      * Adds change handlers to the radio box component
-     * 
+     *
      * @param handler - The change handlers to add
-     * 
+     *
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 03 Dec 2012
      */
@@ -264,12 +264,12 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
     }
 
     /**
-     * The value to be returned from the selected radio button on the 
+     * The value to be returned from the selected radio button on the
      * radio button component.
-     * 
+     *
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 03 Dec 2012
-     * 
+     *
      * @return The value of the selected radio button
      */
     @Override
@@ -284,16 +284,16 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
 
     /**
      * Sets the selected radio button on the radio box component
-     * 
+     *
      * @param value The selected value
-     * 
+     *
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 03 Dec 2012
      */
     @Override
     public void setValue(F value) {
         if (value != null) {
-            if (value instanceof Date) {
+            if (value instanceof SSDate) {
                 Boolean found = false;
                 Map.Entry<RadioButton, InputField<T,F>> dateInputField = null;
                 for (Map.Entry<RadioButton, InputField<T,F>> entry : radioButtonOptions.entrySet()) {
@@ -318,14 +318,14 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
             }
         }
     }
-    
+
     /**
      * Sets the selected radio button on the radio box component
      * and whether it has n event to fire
-     * 
+     *
      * @param value - The selected value
      * @param fireEvents - whether the selected item has n event to fire
-     * 
+     *
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 03 Dec 2012
      */
@@ -339,9 +339,9 @@ public class RadioBoxComponent<T, F> extends Composite implements HasValue<F>, V
 
     /**
      * Handles what happens when the selected radio button changes
-     * 
+     *
      * @param event The value change event
-     * 
+     *
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 03 Dec 2012
      */

@@ -16,7 +16,8 @@
 
 package org.ssgwt.client.ui.datepicker;
 
-import java.util.Date;
+import org.ssgwt.client.i18n.DateTimeFormat;
+import org.ssgwt.client.i18n.SSDate;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.IsEditor;
@@ -36,7 +37,6 @@ import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.ui.Composite;
@@ -67,8 +67,8 @@ import com.google.gwt.user.client.ui.TextBox;
  * {@example com.google.gwt.examples.DateBoxExample}
  * </p>
  */
-public class DateBox extends Composite implements HasValue<Date>,
-        IsEditor<LeafValueEditor<Date>> {
+public class DateBox extends Composite implements HasValue<SSDate>,
+        IsEditor<LeafValueEditor<SSDate>> {
     /**
      * Default {@link DateBox.Format} class. The date is first parsed using the
      * {@link DateTimeFormat} supplied by the user, or
@@ -107,11 +107,11 @@ public class DateBox extends Composite implements HasValue<Date>,
             this.dateTimeFormat = dateTimeFormat;
         }
 
-        public String format(DateBox box, Date date) {
+        public String format(DateBox box, SSDate date) {
             if (date == null) {
                 return "";
             } else {
-                return dateTimeFormat.format(date);
+                return dateTimeFormat.formatOrginalTimezone(date);
             }
         }
 
@@ -125,15 +125,15 @@ public class DateBox extends Composite implements HasValue<Date>,
         }
 
         @SuppressWarnings("deprecation")
-        public Date parse(DateBox dateBox, String dateText, boolean reportError) {
-            Date date = null;
+        public SSDate parse(DateBox dateBox, String dateText, boolean reportError) {
+            SSDate date = null;
             try {
                 if (dateText.length() > 0) {
                     date = dateTimeFormat.parse(dateText);
                 }
             } catch (IllegalArgumentException exception) {
                 try {
-                    date = new Date(dateText);
+                    date = new SSDate(dateText);
                 } catch (IllegalArgumentException e) {
                     if (reportError) {
                         dateBox.addStyleName(DATE_BOX_FORMAT_ERROR);
@@ -163,7 +163,7 @@ public class DateBox extends Composite implements HasValue<Date>,
          * @param date the date to format
          * @return the formatted date as a string
          */
-        String format(DateBox dateBox, Date date);
+        String format(DateBox dateBox, SSDate date);
 
         /**
          * Parses the provided string as a date.
@@ -174,7 +174,7 @@ public class DateBox extends Composite implements HasValue<Date>,
          *                    user?
          * @return the date created, or null if there was a parse error
          */
-        Date parse(DateBox dateBox, String text, boolean reportError);
+        SSDate parse(DateBox dateBox, String text, boolean reportError);
 
         /**
          * If the format did any modifications to the date box's styling, reset them
@@ -186,7 +186,7 @@ public class DateBox extends Composite implements HasValue<Date>,
         void reset(DateBox dateBox, boolean abandon);
     }
 
-    protected class DateBoxHandler implements ValueChangeHandler<Date>,
+    protected class DateBoxHandler implements ValueChangeHandler<SSDate>,
             FocusHandler, BlurHandler, ClickHandler, KeyDownHandler,
             CloseHandler<PopupPanel> {
 
@@ -230,7 +230,7 @@ public class DateBox extends Composite implements HasValue<Date>,
             }
         }
 
-        public void onValueChange(ValueChangeEvent<Date> event) {
+        public void onValueChange(ValueChangeEvent<SSDate> event) {
             setValue(parseDate(false), event.getValue(), true);
             hideDatePicker();
             preventDatePickerPopup();
@@ -251,7 +251,7 @@ public class DateBox extends Composite implements HasValue<Date>,
     private final PopupPanel popup;
     private final TextBox box = new TextBox();
     private final DatePicker picker;
-    private LeafValueEditor<Date> editor;
+    private LeafValueEditor<SSDate> editor;
     private Format format;
     private boolean allowDPShow = true;
     protected DateBoxHandler handler = new DateBoxHandler();
@@ -270,10 +270,10 @@ public class DateBox extends Composite implements HasValue<Date>,
      * @param picker the picker to drop down from the date box
      * @param format to use to parse and format dates
      */
-    public DateBox(DatePicker picker, Date date, Format format) {
+    public DateBox(DatePicker picker, SSDate date, Format format) {
         this(picker, date, format, true);
     }
-    
+
     /**
      * Create a new date box.
      *
@@ -281,11 +281,11 @@ public class DateBox extends Composite implements HasValue<Date>,
      * @param date the default date.
      * @param format to use to parse and format dates
      * @param addHandlers indicating whether a default handler should be added or not
-     * 
+     *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since 18 July 2012
      */
-    protected DateBox(DatePicker picker, Date date, Format format, boolean addHandlers) {
+    protected DateBox(DatePicker picker, SSDate date, Format format, boolean addHandlers) {
         this.picker = picker;
         this.popup = new PopupPanel(true);
         assert format != null : "You may not construct a date box with a null format";
@@ -303,10 +303,10 @@ public class DateBox extends Composite implements HasValue<Date>,
         }
         setValue(date);
     }
-    
+
     /**
      * Adds a custom handler to the item
-     * 
+     *
      * @param handler to use in on the object
      */
     protected void addHandlers(DateBoxHandler handler) {
@@ -319,14 +319,14 @@ public class DateBox extends Composite implements HasValue<Date>,
     }
 
     public HandlerRegistration addValueChangeHandler(
-            ValueChangeHandler<Date> handler) {
+            ValueChangeHandler<SSDate> handler) {
         return addHandler(handler, ValueChangeEvent.getType());
     }
 
     /**
      * Returns a {@link TakesValueEditor} backed by the DateBox.
      */
-    public LeafValueEditor<Date> asEditor() {
+    public LeafValueEditor<SSDate> asEditor() {
         if (editor == null) {
             editor = TakesValueEditor.of(this);
         }
@@ -386,7 +386,7 @@ public class DateBox extends Composite implements HasValue<Date>,
      *
      * @return the current date value
      */
-    public Date getValue() {
+    public SSDate getValue() {
         return parseDate(true);
     }
 
@@ -443,7 +443,7 @@ public class DateBox extends Composite implements HasValue<Date>,
     public void setFormat(Format format) {
         assert format != null : "A Date box may not have a null format";
         if (this.format != format) {
-            Date date = getValue();
+            SSDate date = getValue();
 
             // This call lets the formatter do whatever other clean up is required to
             // switch formatters.
@@ -471,11 +471,11 @@ public class DateBox extends Composite implements HasValue<Date>,
     /**
      * Set the date.
      */
-    public void setValue(Date date) {
+    public void setValue(SSDate date) {
         setValue(date, false);
     }
 
-    public void setValue(Date date, boolean fireEvents) {
+    public void setValue(SSDate date, boolean fireEvents) {
         setValue(picker.getValue(), date, fireEvents);
     }
 
@@ -489,21 +489,21 @@ public class DateBox extends Composite implements HasValue<Date>,
     /**
      * Shows the date picker and if the provided value for parseDate is true
      * it also parses the date currently found in the text box.
-     * 
+     *
      * @param parseDate Whether to parse the date or not.
      */
     public void showDatePicker(boolean parseDate) {
         if (parseDate) {
-            Date current = parseDate(false);
+            SSDate current = parseDate(false);
             if (current == null) {
-                current = new Date();
+                current = new SSDate();
             }
             picker.setCurrentMonth(current);
         }
         popup.showRelativeTo(this);
     }
 
-    private Date parseDate(boolean reportError) {
+    private SSDate parseDate(boolean reportError) {
         if (reportError) {
             getFormat().reset(this, false);
         }
@@ -520,7 +520,7 @@ public class DateBox extends Composite implements HasValue<Date>,
         });
     }
 
-    private void setValue(Date oldDate, Date date, boolean fireEvents) {
+    private void setValue(SSDate oldDate, SSDate date, boolean fireEvents) {
         if (date != null) {
             picker.setCurrentMonth(date);
         }
@@ -534,7 +534,7 @@ public class DateBox extends Composite implements HasValue<Date>,
     }
 
     private void updateDateFromTextBox() {
-        Date parsedDate = parseDate(true);
+        SSDate parsedDate = parseDate(true);
         if (parsedDate != null) {
             setValue(picker.getValue(), parsedDate, true);
         }

@@ -1,7 +1,7 @@
 package org.ssgwt.client.ui.datecomponents;
 
-import java.util.Date;
-
+import org.ssgwt.client.i18n.DateTimeFormat;
+import org.ssgwt.client.i18n.SSDate;
 import org.ssgwt.client.ui.datepicker.DateBox;
 import org.ssgwt.client.ui.datepicker.DateBox.DefaultFormat;
 import org.ssgwt.client.ui.datepicker.SSDatePicker;
@@ -12,7 +12,6 @@ import org.ssgwt.client.ui.form.spinner.TimePicker;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -184,22 +183,22 @@ public class DateTimeComponent extends Composite {
     /**
      * The date is selected by default
      */
-    private final Date defaultSelectedDate;
+    private final SSDate defaultSelectedDate;
 
     /**
      * The last end date
      */
-    private Date lastEndDate;
+    private SSDate lastEndDate;
 
     /**
      * The max date the the start date can be
      */
-    private final Date maxDate;
+    private final SSDate maxDate;
 
     /**
      * The min date that the start date can be
      */
-    private final Date minDate;
+    private final SSDate minDate;
 
     /**
      * The max length of the shift in milliseconds
@@ -259,7 +258,7 @@ public class DateTimeComponent extends Composite {
     /**
      * The previous set end date
      */
-    private Date previousEndDate = null;
+    private SSDate previousEndDate = null;
 
     /**
      * UiBinder interface for the composite
@@ -299,7 +298,7 @@ public class DateTimeComponent extends Composite {
      * @param minShiftTime - The minimum shift length in milliseconds
      * @param maxShiftTime - The maximum shift length in milliseconds
      */
-    public DateTimeComponent(Date minDate, Date maxDate, Date selectedDate, long minShiftTime, long maxShiftTime) {
+    public DateTimeComponent(SSDate minDate, SSDate maxDate, SSDate selectedDate, long minShiftTime, long maxShiftTime) {
         // This is the max date allowed for the start date
         this.maxDate = maxDate;
         this.maxDate.setSeconds(0);
@@ -324,7 +323,7 @@ public class DateTimeComponent extends Composite {
         startDateBox = new DateBox(startDatePicker, defaultSelectedDate, DEFAULT_FORMAT);
         startDateBox.getTextBox().setReadOnly(true);
         startDateBox.addValueChangeHandler(
-            new ValueChangeHandler<Date>() {
+            new ValueChangeHandler<SSDate>() {
 
                 /**
                  * The function that is called on the value change of the start data box
@@ -335,7 +334,7 @@ public class DateTimeComponent extends Composite {
                  * @param event - The ValueChangeEvent that was fired
                  */
                 @Override
-                public void onValueChange(ValueChangeEvent<Date> event) {
+                public void onValueChange(ValueChangeEvent<SSDate> event) {
                     onStartDateBoxValueChange(event.getValue());
                 }
             }
@@ -357,7 +356,7 @@ public class DateTimeComponent extends Composite {
 
         // Add change handler
         startTimePicker.addChangeHandler(
-            new ChangeHandler<Date>() {
+            new ChangeHandler<SSDate>() {
 
                 /**
                  * The function that is called on the value change of the startTimePicker
@@ -368,7 +367,7 @@ public class DateTimeComponent extends Composite {
                  * @param event - The ChangeEvent that was fired
                  */
                 @Override
-                public void onChange(ChangeEvent<Date> event) {
+                public void onChange(ChangeEvent<SSDate> event) {
                     onStartTimePickerValueChange(event.getNewValue());
                 }
             }
@@ -380,7 +379,7 @@ public class DateTimeComponent extends Composite {
         endDateBox = new DateBox(endDatePicker, getShiftMinDate(), DEFAULT_FORMAT);
         endDateBox.getTextBox().setReadOnly(true);
         endDateBox.addValueChangeHandler(
-            new ValueChangeHandler<Date>() {
+            new ValueChangeHandler<SSDate>() {
 
                 /**
                  * The function that is called on the value change of the end data box
@@ -391,9 +390,9 @@ public class DateTimeComponent extends Composite {
                  * @param event - The ValueChangeEvent that was fired
                  */
                 @Override
-                public void onValueChange(ValueChangeEvent<Date> event) {
+                public void onValueChange(ValueChangeEvent<SSDate> event) {
                     if (previousEndDate.getTime() - event.getValue().getTime() != 0) {
-                        previousEndDate = (Date) event.getValue().clone();
+                        previousEndDate = (SSDate) event.getValue().clone();
                         onEndDateBoxValueChange(event.getValue());
                     }
                 }
@@ -415,7 +414,7 @@ public class DateTimeComponent extends Composite {
         );
         this.lastEndDate = getShiftMinDate();
         endTimePicker.addChangeHandler(
-            new ChangeHandler<Date>() {
+            new ChangeHandler<SSDate>() {
 
                 /**
                  * The function that is called on the value change of the endTimePicker
@@ -426,7 +425,7 @@ public class DateTimeComponent extends Composite {
                  * @param event - The ChangeEvent that was fired
                  */
                 @Override
-                public void onChange(ChangeEvent<Date> event) {
+                public void onChange(ChangeEvent<SSDate> event) {
                     onEndTimePickerValueChange(event.getNewValue());
                 }
             }
@@ -454,7 +453,7 @@ public class DateTimeComponent extends Composite {
      *
      * @param date - The new date selected
      */
-    private void onStartTimePickerValueChange(Date date) {
+    private void onStartTimePickerValueChange(SSDate date) {
         if (startDateManuallySet) {
             startDateManuallySet = false;
             endTimePicker.setMinDate(getShiftMinDate());
@@ -464,7 +463,7 @@ public class DateTimeComponent extends Composite {
                 startDateTimeManuallySet = false;
             } else {
                 if (date.getMinutes() % 15 != 0) {
-                    Date resetDate = getRestDate((Date) (date.clone()));
+                    SSDate resetDate = getRestDate((SSDate) (date.clone()));
                     if ((date.getMinutes() % 15) - 15 == 1) {
                         date.setMinutes(date.getMinutes() - 1);
                         resetDate = date;
@@ -500,7 +499,7 @@ public class DateTimeComponent extends Composite {
      *
      * @param date - The new date selected
      */
-    private void onEndTimePickerValueChange(Date date) {
+    private void onEndTimePickerValueChange(SSDate date) {
         if (endDateManuallySet) {
             endDateManuallySet = false;
         } else {
@@ -508,7 +507,7 @@ public class DateTimeComponent extends Composite {
                 endDateTimeManuallySet = false;
             } else {
                 if (date.getMinutes() % 15 != 0) {
-                    Date resetDate = getRestDate((Date) (date.clone()));
+                    SSDate resetDate = getRestDate((SSDate) (date.clone()));
                     if ((date.getMinutes() % 15) - 15 == 1) {
                         date.setMinutes(date.getMinutes() - 1);
                         resetDate = date;
@@ -569,7 +568,7 @@ public class DateTimeComponent extends Composite {
      *
      * @param date - The new date selected
      */
-    private void onStartDateBoxValueChange(Date date) {
+    private void onStartDateBoxValueChange(SSDate date) {
         startTimePicker.setDate(date);
 
         endDatePicker.setMinimumDate(getMinEndDate(getShiftMinDate()));
@@ -592,7 +591,7 @@ public class DateTimeComponent extends Composite {
      *
      * @param date - The new date selected
      */
-    private void onEndDateBoxValueChange(Date date) {
+    private void onEndDateBoxValueChange(SSDate date) {
         endTimePicker.setDateTime(getShiftMinDate());
         endTimePicker.setDate(date);
         totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
@@ -620,7 +619,7 @@ public class DateTimeComponent extends Composite {
      *
      * @return the date with the reset time
      */
-    public Date getRestDate(Date restDate) {
+    public SSDate getRestDate(SSDate restDate) {
         restDate.setHours(this.defaultSelectedDate.getHours());
         restDate.setMinutes(this.defaultSelectedDate.getMinutes());
         restDate.setSeconds(00);
@@ -635,8 +634,8 @@ public class DateTimeComponent extends Composite {
      *
      * @return the shift max date
      */
-    private Date getShiftMaxDate() {
-        return new Date(startTimePicker.getDateTime().getTime() + maxShiftTime);
+    private SSDate getShiftMaxDate() {
+        return new SSDate(startTimePicker.getDateTime().getTime() + maxShiftTime);
     }
 
     /**
@@ -647,8 +646,8 @@ public class DateTimeComponent extends Composite {
      *
      * @return the shift min date
      */
-    private Date getShiftMinDate() {
-        return new Date(startTimePicker.getDateTime().getTime() + minShiftTime);
+    private SSDate getShiftMinDate() {
+        return new SSDate(startTimePicker.getDateTime().getTime() + minShiftTime);
     }
 
     /**
@@ -661,8 +660,8 @@ public class DateTimeComponent extends Composite {
      *
      * @return the max end date
      */
-    private Date getMaxEndDate(Date startDate) {
-        Date dMax = startDate;
+    private SSDate getMaxEndDate(SSDate startDate) {
+        SSDate dMax = startDate;
         dMax.setHours(23);
         dMax.setMinutes(45);
         dMax.setSeconds(00);
@@ -679,8 +678,8 @@ public class DateTimeComponent extends Composite {
      *
      * @return the min end date
      */
-    private Date getMinEndDate(Date startDate) {
-        Date dMin = startDate;
+    private SSDate getMinEndDate(SSDate startDate) {
+        SSDate dMin = startDate;
         dMin.setHours(0);
         dMin.setMinutes(0);
         dMin.setSeconds(0);
@@ -700,7 +699,7 @@ public class DateTimeComponent extends Composite {
      *
      * @return the shift is format "(H.M)"
      */
-    public String getShiftTimeDiff(Date startDate, Date endDate) {
+    public String getShiftTimeDiff(SSDate startDate, SSDate endDate) {
         boolean reversed = false;
         if (endDate.getTime() < startDate.getTime() - 1000) {
             reversed = true;
@@ -757,7 +756,7 @@ public class DateTimeComponent extends Composite {
      *
      * @return the selected start date
      */
-    public Date getStartDate() {
+    public SSDate getStartDate() {
         return this.startTimePicker.getDateTime();
     }
 
@@ -769,7 +768,7 @@ public class DateTimeComponent extends Composite {
      *
      * @return the selected end date
      */
-    public Date getEndDate() {
+    public SSDate getEndDate() {
         return this.endTimePicker.getDateTime();
     }
 
@@ -781,7 +780,7 @@ public class DateTimeComponent extends Composite {
      *
      * @param startDate - The start date.
      */
-    public void setStartDate(Date startDate) {
+    public void setStartDate(SSDate startDate) {
         startDate.setMinutes(roundUpTime(startDate.getMinutes()));
         startDate.setSeconds(0);
         this.startDateManuallySet = true;
@@ -798,7 +797,7 @@ public class DateTimeComponent extends Composite {
      *
      * @param endDate - The end date.
      */
-    public void setEndDate(Date endDate) {
+    public void setEndDate(SSDate endDate) {
         endDate.setMinutes(roundUpTime(endDate.getMinutes()));
         endDate.setSeconds(0);
         endDatePicker.setMinimumDate(getMinEndDate(getShiftMinDate()));
@@ -808,7 +807,7 @@ public class DateTimeComponent extends Composite {
         this.lastEndDate = lastEndDate;
         this.endDateBox.setValue(endDate);
         this.endTimePicker.setDateTime(endDate);
-        previousEndDate = (Date) this.endDateBox.getValue().clone();
+        previousEndDate = (SSDate) this.endDateBox.getValue().clone();
     }
 
     /**

@@ -13,8 +13,8 @@
  */
 package org.ssgwt.client.ui.datagrid.column;
 
-import java.util.Date;
-
+import org.ssgwt.client.i18n.DateTimeFormat;
+import org.ssgwt.client.i18n.SSDate;
 import org.ssgwt.client.ui.datagrid.column.ImageHoverColumn.AbstractImageColumnPopup;
 
 import com.google.gwt.cell.client.AbstractCell;
@@ -25,7 +25,6 @@ import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HasHandlers;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
@@ -49,7 +48,7 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
      * The format that the date value should be displayed in
      */
     String sDateDisplayTooltipFormat = "";
-    
+
     /**
      * String used to store the styleName
      */
@@ -89,12 +88,12 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
      * Instance of the template
      */
     private static Template template;
-    
+
     /**
      * The left position of the popup
      */
     int popupLeftPosition = 0;
-    
+
     /**
      * The top position of the popup
      */
@@ -109,7 +108,7 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
     interface Template extends SafeHtmlTemplates {
         @Template("<div class=\"{0}\" title=\"{1}\" >")
         SafeHtml openTag(String style, String title);
-        
+
         @Template("</div>")
         SafeHtml closeTag();
     }
@@ -132,14 +131,14 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
      *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  20 June 2013
-     * 
+     *
      * @param sCustomStyle The style used for customisation
      */
     public SSTextCell(String sCustomStyle) {
         super();
         this.setStyleName(sCustomStyle);
     }
-    
+
     /**
      * Class Constructor
      *
@@ -204,13 +203,13 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
             && this.sDateFormat != null && this.sDateFormat != "") {
             try {
                 // Convert date from sDateFormat to sDateDisplayTooltipFormat
-                Date date = DateTimeFormat.getFormat(this.sDateFormat).parse(value);
-                tooltip = DateTimeFormat.getFormat(this.sDateDisplayTooltipFormat).format(date);
+                SSDate date = DateTimeFormat.getFormat(this.sDateFormat).parse(value);
+                tooltip = date.formatOriginalTimezone(this.sDateDisplayTooltipFormat);
             } catch (Exception e){
                 // Ignore exception, resulting in default tooltip
             }
         }
-        
+
         sb.append(template.openTag(styleName, tooltip));
         sb.appendHtmlConstant(value.replace(" ", "&nbsp;"));
         sb.append(template.closeTag());
@@ -254,7 +253,7 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
             }
         }
     };
-    
+
     /**
      * Displays the popup relative to the cell
      *
@@ -264,18 +263,18 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
     private void displayPopup() {
         this.popup.center();
         this.popup.setData(column.getRowData());
-        
+
         calculatePopupPosition();
-        
+
         this.popup.setPopupPosition(
             popupLeftPosition,
             popupTopPosition
         );
     }
-    
+
     /**
      * Calculate the position of the popup.
-     * 
+     *
      * @author Ryno Hartzer <ryno.hartzer@a24group.com>
      * @since  19 June 2013
      */
@@ -283,14 +282,14 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
         int windowHeight = Window.getClientHeight() - 10;
         int windowWidth = Window.getClientWidth() - 10;
         boolean topPointer = false;
-        
+
         // Now we need to determine the x and y position of the pointer
         int xPointerPosition = this.popup.getOffsetWidth() / 6;
         // -1 is used as it should be shown 1px above/below the border line of the popup
         int yPointerPosition = this.popup.getOffsetHeight() - 1;
         int parentCenterXPosition = getLabelElement(this.parent).getAbsoluteLeft()
             + (getLabelElement(this.parent).getOffsetWidth() / 3);
-        
+
         // By default show the popup upwards if possible
         if (this.popup.getOffsetHeight() + this.parent.getAbsoluteTop() + 10 <= windowHeight) {
             popupTopPosition = this.parent.getAbsoluteTop() - this.popup.getOffsetHeight() - 10;
@@ -304,7 +303,7 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
         // maxX will be the reference point plus the width of the popup.
         // Used to determine if we are 'out' of the screen horizontally
         int maxX = this.parent.getAbsoluteLeft() + this.popup.getOffsetWidth();
-        
+
         // We cannot show the popup as it is out of the screen.
         if (maxX >= windowWidth) {
             // parentCenterXPosition is the middle x position of the parent image.
@@ -355,15 +354,15 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
     public void fireEvent(GwtEvent<?> event) {
         handlerManager.fireEvent(event);
     }
-    
+
     /**
      * Used to set the style name for the cell
-     * 
+     *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  20 June 2013
-     * 
+     *
      * @param styleName The custom style for the internal div tag
-     * 
+     *
      * @return void
      */
     public void setStyleName(String styleName) {

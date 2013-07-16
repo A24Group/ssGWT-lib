@@ -1,7 +1,5 @@
 package org.ssgwt.client.ui.datagrid.filter;
 
-import java.util.Date;
-
 import org.apache.catalina.deploy.FilterDef;
 
 import com.google.gwt.junit.client.GWTTestCase;
