@@ -454,6 +454,18 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
         this.active = enabled;
         updateButtonState();
     }
+    
+    /**
+     * Get enabled value
+     *
+     * @author Neil Nienaber <neil.nienaber@gmail.com>
+     * @since  17 July 2013
+     * 
+     * @return boolean - The flag indicating if button is enabled or not
+     */
+    public boolean getEnabled() {
+        return this.active;
+    }
 
     /**
      * Disabled the button but doesn't change the display state of the button
