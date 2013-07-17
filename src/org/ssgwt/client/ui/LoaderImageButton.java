@@ -463,7 +463,7 @@ public class LoaderImageButton extends FocusPanel implements ClickHandler {
      * 
      * @return boolean - The flag indicating if button is enabled or not
      */
-    public boolean getEnabled() {
+    public boolean isEnabled() {
         return this.active;
     }
 
