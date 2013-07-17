@@ -59,9 +59,11 @@ public class SSDate extends Date
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  16 July 2016
      */
-    public SSDate(int year,
-                  int month,
-                  int date) {
+    public SSDate(
+        int year,
+        int month,
+        int date
+    ) {
         super(year, month, date);
     }
 
@@ -77,11 +79,13 @@ public class SSDate extends Date
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  16 July 2016
      */
-    public SSDate(int year,
-                  int month,
-                  int date,
-                  int hrs,
-                  int min) {
+    public SSDate(
+        int year,
+        int month,
+        int date,
+        int hrs,
+        int min
+    ) {
         super(year, month, date, hrs, min);
     }
 
@@ -98,12 +102,14 @@ public class SSDate extends Date
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  16 July 2016
      */
-    public SSDate(int year,
-                  int month,
-                  int date,
-                  int hrs,
-                  int min,
-                  int sec) {
+    public SSDate(
+        int year,
+        int month,
+        int date,
+        int hrs,
+        int min,
+        int sec
+    ) {
         super(year, month, date, hrs, min, sec);
     }
 
@@ -127,6 +133,9 @@ public class SSDate extends Date
     /**
      * Retrieve the original time zone offset
      *
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  16 July 2016
+     *
      * @return The original time zone offset
      */
     public int getOriginalTimeZoneOffset() {
@@ -135,6 +144,9 @@ public class SSDate extends Date
 
     /**
      * Sets the original time zone offset
+     *
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  16 July 2016
      *
      * @param originalTimeZoneOffset - The original timezone offset for the date
      */
@@ -146,6 +158,9 @@ public class SSDate extends Date
      * Applies the original timezone offset to the date and the converts it to a string
      *
      * @param format - The string date should be in
+     *
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  16 July 2016
      *
      * @return The string date
      */
@@ -159,6 +174,9 @@ public class SSDate extends Date
      * Applies the browsers timezone offset to the date and the converts it to a string
      *
      * @param format - The string date should be in
+     *
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  16 July 2016
      *
      * @return The string date
      */
@@ -174,6 +192,9 @@ public class SSDate extends Date
      * @param format - The string date should be in.
      * @param timezoneOffset - The timezone offset the date should be converted to.
      *
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  16 July 2016
+     *
      * @return The string date
      */
     public String format(String format, int timezoneOffset) {
@@ -181,5 +202,19 @@ public class SSDate extends Date
         TimeZone timeZone = TimeZone.createTimeZone(timezoneOffset);
 
         return dateTimeFormat.format(this, timeZone);
+    }
+
+    /**
+     * Clones the date object and returns the new object.
+     *
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  16 July 2016
+     *
+     * @return copy of the object
+     */
+    public SSDate clone() {
+        SSDate newDate = new SSDate(this.getYear(), this.getMonth(), this.getDate(), this.getHours(), this.getMinutes(), this.getSeconds());
+        newDate.setOriginalTimeZoneOffset(this.getOriginalTimeZoneOffset());
+        return newDate;
     }
 }

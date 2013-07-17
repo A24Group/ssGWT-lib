@@ -174,8 +174,8 @@ public class ComboBoxMonthSelector extends MonthSelector {
             @Override
             public void onChange(ChangeEvent event) {
                 //Get a copy of the current month, we do not want the reference as when we do calculations on it we don't want it to update.
-                SSDate currentMonth = (SSDate) getModel().getCurrentMonth().clone();
-                SSDate targetMonth = (SSDate) currentMonth.clone();
+                SSDate currentMonth = getModel().getCurrentMonth().clone();
+                SSDate targetMonth = currentMonth.clone();
                 //Set the target date to the newly selected year.
                 targetMonth.setYear(Integer.parseInt(yearListBox.getItemText(yearListBox.getSelectedIndex())) - 1900);
 
@@ -269,7 +269,7 @@ public class ComboBoxMonthSelector extends MonthSelector {
     private String[] getMonthsForYearInPeriod(SSDate year, SSDate minimum, SSDate maximum) {
         String[] monthNames = LocaleInfo.getCurrentLocale().getDateTimeFormatInfo().monthsShort();
         ArrayList<String> months = new ArrayList<String>();
-        SSDate minDate = (SSDate) minimum.clone();
+        SSDate minDate = minimum.clone();
         while (minDate.getTime() <= maximum.getTime()) {
             if (minDate.getYear() == year.getYear()) {
                 months.add(monthNames[minDate.getMonth()]);

@@ -48,7 +48,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * The SSDate filter that can be used on the SSDataGrid with a FilterSortHeader
+ * The date filter that can be used on the SSDataGrid with a FilterSortHeader
  *
  * @author Lodewyk Duminy <lodewyk.duminy@a24group.com>
  * @since  16 August 2012
@@ -100,12 +100,12 @@ public class DateFilter extends AbstractHeaderFilter {
     private int filterIndex;
 
     /**
-     * Used to remember the from SSDate when the datebox gets disabled
+     * Used to remember the from date when the datebox gets disabled
      */
     private SSDate previousFromDate;
 
     /**
-     * Used to remember the to SSDate when the datebox gets disabled
+     * Used to remember the to date when the datebox gets disabled
      */
     private SSDate previousToDate;
 
@@ -296,21 +296,21 @@ public class DateFilter extends AbstractHeaderFilter {
         String applyButtonDown();
 
         /**
-         * The style for the SSDate filter drop down list
+         * The style for the date filter drop down list
          *
          * @return The name of the compiled style
          */
         String filterListStyle();
 
         /**
-         * Style for the SSDate labels
+         * Style for the date labels
          *
          * @return The name of the compiled style
          */
         String dateLabelStyle();
 
         /**
-         * Style for the SSDate boxes
+         * Style for the date boxes
          *
          * @return The name of the compiled style
          */
@@ -324,7 +324,7 @@ public class DateFilter extends AbstractHeaderFilter {
         String floatLeft();
 
         /**
-         * Style for the flow panel containing the parents of the to and from SSDate boxes and labels
+         * Style for the flow panel containing the parents of the to and from date boxes and labels
          *
          * @return The name of the compiled style
          */
@@ -340,21 +340,21 @@ public class DateFilter extends AbstractHeaderFilter {
     public static class DateFilterCriteria extends Criteria {
 
         /**
-         * SSDate holding the to SSDate of the DateFilter
+         * Date holding the to date of the DateFilter
          */
         private SSDate toDate;
 
         /**
-         * Retrieve the to SSDate that indicates the end of the search range
+         * Retrieve the to date that indicates the end of the search range
          *
-         * @return The to SSDate that indicates the end of the search range
+         * @return The to date that indicates the end of the search range
          */
         public SSDate getToDate() {
             return toDate;
         }
 
         /**
-         * Sets the to SSDate that indicates the end of the search range
+         * Sets the to date that indicates the end of the search range
          *
          * @param toDate - The new value for the to date
          */
@@ -363,21 +363,21 @@ public class DateFilter extends AbstractHeaderFilter {
         }
 
         /**
-         * SSDate holding the from SSDate of the DateFilter
+         * Date holding the from date of the DateFilter
          */
         private SSDate fromDate;
 
         /**
-         * Retrieve the from SSDate that indicates the start of the search range
+         * Retrieve the from date that indicates the start of the search range
          *
-         * @return The from SSDate that indicates the start of the search range
+         * @return The from date that indicates the start of the search range
          */
         public SSDate getFromDate() {
             return fromDate;
         }
 
         /**
-         * Sets the from SSDate that indicates the start of the search range
+         * Sets the from date that indicates the start of the search range
          *
          * @param fromDate - The new value for the from date
          */
@@ -421,13 +421,13 @@ public class DateFilter extends AbstractHeaderFilter {
 
     /**
      * Class constructor uses two dates to specify the start dates for both
-     * the from SSDate and the to date
+     * the from date and the to date
      *
      * @param datePickerStyle - The style to apply to the datepickers
-     * @param fromMinDate - The minimum SSDate for the from datepicker
-     * @param toMinDate - The minimum SSDate for the to datepicker
-     * @param fromMaxDate - The maximum SSDate for the from datepicker
-     * @param toMaxDate - The maximum SSDate for the to datepicker
+     * @param fromMinDate - The minimum date for the from datepicker
+     * @param toMinDate - The minimum date for the to datepicker
+     * @param fromMaxDate - The maximum date for the from datepicker
+     * @param toMaxDate - The maximum date for the to datepicker
      */
     public DateFilter(String datePickerStyle, SSDate fromMinDate, SSDate toMinDate, SSDate fromMaxDate, SSDate toMaxDate) {
         this(datePickerStyle, getDefaultResources(), fromMinDate, toMinDate, fromMaxDate, toMaxDate);
@@ -453,14 +453,14 @@ public class DateFilter extends AbstractHeaderFilter {
     /**
      * Class constructor that takes a custom resources class
      * and uses two dates to specify the start dates for both
-     * the from SSDate and the to date
+     * the from date and the to date
      *
      * @param datePickerStyle - The style to apply to the datepickers
      * @param resources - The resources the text filter should use
-     * @param fromMinDate - The minimum SSDate for the from datepicker
-     * @param toMinDate - The minimum SSDate for the to datepicker
-     * @param fromMaxDate - The maximum SSDate for the from datepicker
-     * @param toMaxDate - The maximum SSDate for the to datepicker
+     * @param fromMinDate - The minimum date for the from datepicker
+     * @param toMinDate - The minimum date for the to datepicker
+     * @param fromMaxDate - The maximum date for the from datepicker
+     * @param toMaxDate - The maximum date for the to datepicker
      */
     public DateFilter(
         String datePickerStyle,
@@ -531,11 +531,11 @@ public class DateFilter extends AbstractHeaderFilter {
     }
 
     /**
-     * This function will set the SSDate boxes to certain dates, depending on what option was selected
+     * This function will set the date boxes to certain dates, depending on what option was selected
      * from the filter list.
      *
-     * @param currentDate SSDate object containing the current date
-     * @param range String describing what SSDate range should be set
+     * @param currentDate date object containing the current date
+     * @param range String describing what date range should be set
      *
      * @author Lodewyk Duminy <lodewyk.duminy@a24group.com>
      * @since  15 Aug 2012
@@ -544,8 +544,8 @@ public class DateFilter extends AbstractHeaderFilter {
      */
     @SuppressWarnings("deprecation")
     protected void setDates(SSDate currentDate, String range) {
-        SSDate fromDate = (SSDate) currentDate.clone();
-        SSDate toDate = (SSDate) currentDate.clone();
+        SSDate fromDate = currentDate.clone();
+        SSDate toDate = currentDate.clone();
         if (range.equals("Customised SSDate range")) {
             toDateBox.setValue(null);
             fromDateBox.setValue(null);
@@ -659,7 +659,7 @@ public class DateFilter extends AbstractHeaderFilter {
         toDateBox.addValueChangeHandler(new ValueChangeHandler<SSDate>() {
 
             /**
-             * The function that will be called if the user changes the SSDate in the to box
+             * The function that will be called if the user changes the date in the to box
              *
              * @param even The vent that should be handled.
              */
@@ -672,7 +672,7 @@ public class DateFilter extends AbstractHeaderFilter {
         fromDateBox.addValueChangeHandler(new ValueChangeHandler<SSDate>() {
 
             /**
-             * The function that will be called if the user changes the SSDate in the from box
+             * The function that will be called if the user changes the date in the from box
              *
              * @param even The vent that should be handled.
              */
@@ -972,20 +972,20 @@ public class DateFilter extends AbstractHeaderFilter {
     }
 
     /**
-     * Retrieves the from SSDate box that is displayed on the DateFilter.
+     * Retrieves the from date box that is displayed on the DateFilter.
      * This function is protected as it is only used by test cases.
      *
-     * @return instance of the from SSDate box that is displayed on the DateFilter
+     * @return instance of the from date box that is displayed on the DateFilter
      */
     protected DateBox getFromDateBox() {
         return fromDateBox;
     }
 
     /**
-     * Retrieves the to SSDate box that is displayed on the DateFilter.
+     * Retrieves the to date box that is displayed on the DateFilter.
      * This function is protected as it is only used by test cases.
      *
-     * @return instance of the to SSDate box that is displayed on the DateFilter
+     * @return instance of the to date box that is displayed on the DateFilter
      */
     protected DateBox getToDateBox() {
         return toDateBox;
