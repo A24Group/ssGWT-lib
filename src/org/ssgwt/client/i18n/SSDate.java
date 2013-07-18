@@ -189,6 +189,77 @@ public class SSDate extends Date
         }
     }
 
+    /**
+     * Sets the day of the month
+     *
+     * @param date - the day value
+     */
+    public void setDate(int date) {
+        super.setDate(date);
+        if (this.timeZone != null) {
+            this.timeZoneOffset = this.timeZone.getOffset(this);
+        }
+    }
+
+    /**
+     * Sets the month value
+     *
+     * @param month - The month value
+     */
+    public void setMonth(int month) {
+        super.setMonth(month);
+        if (this.timeZone != null) {
+            this.timeZoneOffset = this.timeZone.getOffset(this);
+        }
+    }
+
+    /**
+     * Sets the year
+     *
+     * @param year - The year value
+     */
+    public void setYear(int year) {
+        super.setYear(year);
+        if (this.timeZone != null) {
+            this.timeZoneOffset = this.timeZone.getOffset(this);
+        }
+    }
+
+    /**
+     * Sets the hours
+     *
+     * @param hours - The hours value
+     */
+    public void setHours(int hours) {
+        super.setHours(hours);
+        if (this.timeZone != null) {
+            this.timeZoneOffset = this.timeZone.getOffset(this);
+        }
+    }
+
+    /**
+     * Sets the minutes
+     *
+     * @param minutes - The minutes value
+     */
+    public void setMinutes(int minutes) {
+        super.setMinutes(minutes);
+        if (this.timeZone != null) {
+            this.timeZoneOffset = this.timeZone.getOffset(this);
+        }
+    }
+
+    /**
+     * Sets the seconds
+     *
+     * @param seconds - The seconds value
+     */
+    public void setSeconds(int seconds) {
+        super.setSeconds(seconds);
+        if (this.timeZone != null) {
+            this.timeZoneOffset = this.timeZone.getOffset(this);
+        }
+    }
 
     /**
      * Retrieves the time zone of the date
