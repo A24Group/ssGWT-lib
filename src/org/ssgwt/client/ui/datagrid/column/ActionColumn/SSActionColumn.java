@@ -35,10 +35,22 @@ public abstract class SSActionColumn<T> extends Column<T, T> {
      * @since  03 June 2013
      */
     public SSActionColumn() {
-      super(new SSActionCell<T>());
+        this(5);
+    }
+    
+    /**
+     * Construct a new SSActionColumn.
+     *
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  18 July 2013
+     * 
+     * @param spacerSize - The space between the actions
+     */
+    public SSActionColumn(int spacerSize) {
+        super(new SSActionCell<T>(spacerSize));
 
-      SSActionCell<T> actionCell = (SSActionCell<T>) getCell();
-      actionCell.setParentColumn(this);
+        SSActionCell<T> actionCell = (SSActionCell<T>) getCell();
+        actionCell.setParentColumn(this);
     }
 
     /**

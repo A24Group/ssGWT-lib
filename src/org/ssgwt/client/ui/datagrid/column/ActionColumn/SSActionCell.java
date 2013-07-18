@@ -59,6 +59,11 @@ public class SSActionCell<T> extends AbstractCell<T> implements HasHandlers {
      * The parent element of the Cell
      */
     private Element parent;
+    
+    /**
+     * The action spacer size defaulted to 5px
+     */
+    private int spacerSize = 5;
 
     /**
      * Instance of the template
@@ -79,31 +84,44 @@ public class SSActionCell<T> extends AbstractCell<T> implements HasHandlers {
     interface Template extends SafeHtmlTemplates {
 
         @Template(
-            "<div class=\"actionCell\" name=\"{0}\" style=\"display: inline; margin-left: 5px; cursor: pointer;\">"
+            "<div class=\"actionCell\" name=\"{0}\" style=\"display: inline; margin-left: {1}px !important; cursor: pointer;\">"
             + "{0}"
             + "</div>"
         )
-        SafeHtml action(String actionName);
+        SafeHtml action(String actionName, int spacerSize);
 
         @Template("<div class=\"actionCell\" name=\"{0}\" style=\"display: inline; cursor: pointer;\">{0}</div>")
         SafeHtml firstAction(String actionName);
 
-        @Template("<div class=\"actionCellSeparator\" style=\"display: inline-block; margin-left: 5px;\" >|</div>")
-        SafeHtml actionSeparator();
+        @Template("<div class=\"actionCellSeparator\" style=\"display: inline-block; margin-left: {0}px !important;\" >|</div>")
+        SafeHtml actionSeparator(int spacerSize);
     }
 
     /**
      * The SSActionCell constructor
      *
-     * @author Alec Erasmus <alec.erasmus@a24group.com>
-     * @since 03 June 2013
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  18 July 2013
+     * 
+     * @param spacerSize - The size to be used between the action items
      */
-    public SSActionCell() {
+    public SSActionCell(int spacerSize) {
         super(MOUSE_UP);
         this.handlerManager = new HandlerManager(this);
         if (template == null) {
             template = GWT.create(Template.class);
         }
+        this.spacerSize = spacerSize;
+    }
+    
+    /**
+     * The SSActionCell constructor
+     * 
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since 03 June 2013
+     */
+    public SSActionCell() {
+        this(5);
     }
 
     /**
@@ -138,8 +156,8 @@ public class SSActionCell<T> extends AbstractCell<T> implements HasHandlers {
                 sb.append(template.firstAction(action));
                 firstItem = false;
             } else {
-                sb.append(template.actionSeparator());
-                sb.append(template.action(action));
+                sb.append(template.actionSeparator(this.spacerSize));
+                sb.append(template.action(action, this.spacerSize));
             }
         }
     }
