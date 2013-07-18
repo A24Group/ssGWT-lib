@@ -28,6 +28,16 @@ public class SSDate extends Date
 {
 
     /**
+     * The original time zone offset
+     */
+    private int timeZoneOffset = 0;
+
+    /**
+     * The time zone for the date
+     */
+    private TimeZone timeZone;
+
+    /**
      * Class constructor
      *
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
@@ -35,6 +45,13 @@ public class SSDate extends Date
      */
     public SSDate() {
         super();
+        this.timeZoneOffset = super.getTimezoneOffset();
+        TimeZoneSettings tzs = TimeZoneSettings.getInstance();
+        if (tzs.getCurrentTimeZone() != null) {
+            setTimeZone(tzs.getCurrentTimeZone());
+        } else {
+            setTimezoneOffset(tzs.getCurrentTimeZoneOffset());
+        }
     }
 
     /**
@@ -47,6 +64,13 @@ public class SSDate extends Date
      */
     public SSDate(long date) {
         super(date);
+        TimeZoneSettings tzs = TimeZoneSettings.getInstance();
+        if (tzs.getCurrentTimeZone() != null) {
+            this.timeZone = tzs.getCurrentTimeZone();
+            this.timeZoneOffset = tzs.getCurrentTimeZone().getOffset(this);
+        } else {
+            this.timeZoneOffset = tzs.getCurrentTimeZoneOffset();
+        }
     }
 
     /**
@@ -65,6 +89,13 @@ public class SSDate extends Date
         int date
     ) {
         super(year, month, date);
+        TimeZoneSettings tzs = TimeZoneSettings.getInstance();
+        if (tzs.getCurrentTimeZone() != null) {
+            this.timeZone = tzs.getCurrentTimeZone();
+            this.timeZoneOffset = tzs.getCurrentTimeZone().getOffset(this);
+        } else {
+            this.timeZoneOffset = tzs.getCurrentTimeZoneOffset();
+        }
     }
 
     /**
@@ -87,6 +118,13 @@ public class SSDate extends Date
         int min
     ) {
         super(year, month, date, hrs, min);
+        TimeZoneSettings tzs = TimeZoneSettings.getInstance();
+        if (tzs.getCurrentTimeZone() != null) {
+            this.timeZone = tzs.getCurrentTimeZone();
+            this.timeZoneOffset = tzs.getCurrentTimeZone().getOffset(this);
+        } else {
+            this.timeZoneOffset = tzs.getCurrentTimeZoneOffset();
+        }
     }
 
     /**
@@ -111,6 +149,13 @@ public class SSDate extends Date
         int sec
     ) {
         super(year, month, date, hrs, min, sec);
+        TimeZoneSettings tzs = TimeZoneSettings.getInstance();
+        if (tzs.getCurrentTimeZone() != null) {
+            this.timeZone = tzs.getCurrentTimeZone();
+            this.timeZoneOffset = tzs.getCurrentTimeZone().getOffset(this);
+        } else {
+            this.timeZoneOffset = tzs.getCurrentTimeZoneOffset();
+        }
     }
 
     /**
@@ -123,12 +168,52 @@ public class SSDate extends Date
      */
     public SSDate(String s) {
         super(s);
+        TimeZoneSettings tzs = TimeZoneSettings.getInstance();
+        if (tzs.getCurrentTimeZone() != null) {
+            this.timeZone = tzs.getCurrentTimeZone();
+            this.timeZoneOffset = tzs.getCurrentTimeZone().getOffset(this);
+        } else {
+            this.timeZoneOffset = tzs.getCurrentTimeZoneOffset();
+        }
     }
 
     /**
-     * The original time zone offset
+     * Sets the time using a time stamp. And ensures the time zone offset is correct
+     *
+     * @param time - The unix timestamp
      */
-    private int originalTimeZoneOffset = Integer.MIN_VALUE;
+    public void setTime(long time) {
+        super.setTime(time);
+        if (this.timeZone != null) {
+            this.timeZoneOffset = this.timeZone.getOffset(this);
+        }
+    }
+
+
+    /**
+     * Retrieves the time zone of the date
+     *
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  16 July 2016
+     *
+     * @return The timezone of the date
+     */
+    public TimeZone getTimeZone() {
+        return timeZone;
+    }
+
+    /**
+     * Sets the time zone of the date
+     *
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  16 July 2016
+     *
+     * @param timeZone - The time zone of the date
+     */
+    public void setTimeZone(TimeZone timeZone) {
+        setTimezoneOffset(timeZone.getOffset(this));
+        this.timeZone = timeZone;
+    }
 
     /**
      * Retrieve the original time zone offset
@@ -138,8 +223,8 @@ public class SSDate extends Date
      *
      * @return The original time zone offset
      */
-    public int getOriginalTimeZoneOffset() {
-        return originalTimeZoneOffset;
+    public int getTimezoneOffset() {
+        return timeZoneOffset;
     }
 
     /**
@@ -148,10 +233,12 @@ public class SSDate extends Date
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  16 July 2016
      *
-     * @param originalTimeZoneOffset - The original timezone offset for the date
+     * @param timeZoneOffset - The original timezone offset for the date
      */
-    public void setOriginalTimeZoneOffset(int originalTimeZoneOffset) {
-        this.originalTimeZoneOffset = originalTimeZoneOffset;
+    public void setTimezoneOffset(int timeZoneOffset) {
+        this.timeZone = null;
+        this.setTime(this.getTime() + (this.timeZoneOffset - timeZoneOffset) * 60 * 1000);
+        this.timeZoneOffset = timeZoneOffset;
     }
 
     /**
@@ -164,26 +251,10 @@ public class SSDate extends Date
      *
      * @return The string date
      */
-    public String formatOriginalTimezone(String format) {
+    public String format(String format) {
         DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat(format);
 
-        return dateTimeFormat.formatOrginalTimezone(this);
-    }
-
-    /**
-     * Applies the browsers timezone offset to the date and the converts it to a string
-     *
-     * @param format - The string date should be in
-     *
-     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
-     * @since  16 July 2016
-     *
-     * @return The string date
-     */
-    public String formatBrowserTimezone(String format) {
-        DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat(format);
-
-        return dateTimeFormat.formatBrowserTimezone(this);
+        return dateTimeFormat.format(this);
     }
 
     /**
@@ -214,7 +285,19 @@ public class SSDate extends Date
      */
     public SSDate clone() {
         SSDate newDate = new SSDate(this.getYear(), this.getMonth(), this.getDate(), this.getHours(), this.getMinutes(), this.getSeconds());
-        newDate.setOriginalTimeZoneOffset(this.getOriginalTimeZoneOffset());
+        newDate.setTimezoneOffset(this.getTimezoneOffset());
         return newDate;
+    }
+
+    /**
+     * Creates string representation of the date
+     *
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  16 July 2016
+     *
+     * @return String representation of the date
+     */
+    public String toString() {
+        return DateTimeFormat.getFormat("dd MMMM yyyy HH:mm:ss ZZ").format(this, null);
     }
 }

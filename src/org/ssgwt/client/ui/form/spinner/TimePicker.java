@@ -82,7 +82,7 @@ public class TimePicker extends Composite implements FiresChangeEvents<SSDate> {
         protected String formatValue(long value) {
             dateInMillis = value;
             if (dateTimeFormat != null) {
-                return dateTimeFormat.formatOrginalTimezone(new SSDate(dateInMillis));
+                return dateTimeFormat.format(new SSDate(dateInMillis));
             }
             return "";
         }

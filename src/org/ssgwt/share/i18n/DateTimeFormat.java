@@ -746,22 +746,7 @@ public class DateTimeFormat {
    *
    * @return string representation for this date in desired format
    */
-  public String formatOrginalTimezone(SSDate date) {
-    TimeZone timeZone = null;
-    if (date.getOriginalTimeZoneOffset() > Integer.MIN_VALUE) {
-      timeZone = createTimeZone(date.getOriginalTimeZoneOffset());
-    }
-    return format(date, timeZone);
-  }
-
-  /**
-   * Format a date object.
-   *
-   * @param date the date object being formatted
-   *
-   * @return string representation for this date in desired format
-   */
-  public String formatBrowserTimezone(SSDate date) {
+  public String format(SSDate date) {
     return format(date, null);
   }
 

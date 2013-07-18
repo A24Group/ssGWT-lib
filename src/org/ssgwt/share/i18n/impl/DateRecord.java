@@ -221,10 +221,8 @@ public class DateRecord extends SSDate {
 
     // Adjust time zone.
     if (this.tzOffset > Integer.MIN_VALUE) {
-        date.setOriginalTimeZoneOffset(this.tzOffset);
-      int offset = date.getTimezoneOffset();
-      date.setTime(date.getTime() + (this.tzOffset - offset) * 60 * 1000);
-      // HBJ date.setTime(date.getTime() + this.tzOffset * 60 * 1000);
+      date.setTimezoneOffset(this.tzOffset);
+      date.setTime(date.getTime());
     }
 
     return true;

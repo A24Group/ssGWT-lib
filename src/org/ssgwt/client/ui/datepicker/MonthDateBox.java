@@ -338,7 +338,7 @@ public class MonthDateBox extends Composite implements HasValue<SSDate> {
      */
     private void updateDateTextBox() {
         if (monthPicker.getValue() != null) {
-            box.setText(DateTimeFormat.getFormat(getDateFormat()).formatOrginalTimezone(monthPicker.getValue()));
+            box.setText(DateTimeFormat.getFormat(getDateFormat()).format(monthPicker.getValue()));
         }
     }
 

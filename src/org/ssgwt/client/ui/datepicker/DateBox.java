@@ -111,7 +111,7 @@ public class DateBox extends Composite implements HasValue<SSDate>,
             if (date == null) {
                 return "";
             } else {
-                return dateTimeFormat.formatOrginalTimezone(date);
+                return dateTimeFormat.format(date);
             }
         }
 

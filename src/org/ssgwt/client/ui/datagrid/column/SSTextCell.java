@@ -204,7 +204,7 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
             try {
                 // Convert date from sDateFormat to sDateDisplayTooltipFormat
                 SSDate date = DateTimeFormat.getFormat(this.sDateFormat).parse(value);
-                tooltip = date.formatOriginalTimezone(this.sDateDisplayTooltipFormat);
+                tooltip = date.format(this.sDateDisplayTooltipFormat);
             } catch (Exception e){
                 // Ignore exception, resulting in default tooltip
             }

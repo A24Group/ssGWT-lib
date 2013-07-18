@@ -56,7 +56,7 @@ public class CalendarModel {
         for (int i = 1; i <= 7; i++) {
             date.setDate(i);
             int dayOfWeek = date.getDay();
-            dayOfWeekNames[dayOfWeek] = getDayOfWeekFormatter().formatOrginalTimezone(date);
+            dayOfWeekNames[dayOfWeek] = getDayOfWeekFormatter().format(date);
         }
 
         // Finding day of month names
@@ -64,7 +64,7 @@ public class CalendarModel {
 
         for (int i = 1; i < 32; ++i) {
             date.setDate(i);
-            dayOfMonthNames[i] = getDayOfMonthFormatter().formatOrginalTimezone(date);
+            dayOfMonthNames[i] = getDayOfMonthFormatter().format(date);
         }
     }
 
@@ -74,7 +74,7 @@ public class CalendarModel {
      * @return the formatted month
      */
     public String formatCurrentMonth() {
-        return getMonthAndYearFormatter().formatOrginalTimezone(currentMonth);
+        return getMonthAndYearFormatter().format(currentMonth);
     }
 
     /**
