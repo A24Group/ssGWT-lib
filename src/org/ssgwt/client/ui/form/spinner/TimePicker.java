@@ -16,13 +16,13 @@
 package org.ssgwt.client.ui.form.spinner;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import org.ssgwt.client.i18n.DateTimeFormat;
+import org.ssgwt.client.i18n.SSDate;
 import org.ssgwt.client.ui.form.spinner.Spinner.SpinnerResources;
 import org.ssgwt.client.ui.form.spinner.ValueSpinner.ValueSpinnerResources;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -30,12 +30,12 @@ import com.google.gwt.user.client.ui.Label;
 /**
  * {@link TimePicker} widget to enter the time part of a date using spinners
  */
-public class TimePicker extends Composite implements FiresChangeEvents<Date> {
+public class TimePicker extends Composite implements FiresChangeEvents<SSDate> {
 
     private class TimeSpinner extends ValueSpinner {
         private final DateTimeFormat dateTimeFormat;
 
-        public TimeSpinner(Date date, Date minDate, Date maxDate, DateTimeFormat dateTimeFormat, int step,
+        public TimeSpinner(SSDate date, SSDate minDate, SSDate maxDate, DateTimeFormat dateTimeFormat, int step,
                 boolean constrained, ValueSpinnerResources styles, SpinnerResources images,
                 boolean readOnly) {
             super(date.getTime(), minDate.getTime(), maxDate.getTime(), 1, 99, constrained, styles, images);
@@ -55,7 +55,7 @@ public class TimePicker extends Composite implements FiresChangeEvents<Date> {
          *
          * @param maxDate - The max allowed date
          */
-        public void setMaxDate(Date maxDate) {
+        public void setMaxDate(SSDate maxDate) {
             setMaxValue(maxDate.getTime());
         }
 
@@ -67,13 +67,13 @@ public class TimePicker extends Composite implements FiresChangeEvents<Date> {
          *
          * @param minDate - The min allowed date
          */
-        public void setMinDate(Date minDate) {
+        public void setMinDate(SSDate minDate) {
             setMinValue(minDate.getTime());
         }
 
         @Override
         protected long parseValue(String value) {
-            Date parsedDate = new Date(dateInMillis);
+            SSDate parsedDate = new SSDate(dateInMillis);
             dateTimeFormat.parse(value, 0, parsedDate);
             return parsedDate.getTime();
         }
@@ -82,7 +82,7 @@ public class TimePicker extends Composite implements FiresChangeEvents<Date> {
         protected String formatValue(long value) {
             dateInMillis = value;
             if (dateTimeFormat != null) {
-                return dateTimeFormat.format(new Date(dateInMillis));
+                return dateTimeFormat.format(new SSDate(dateInMillis));
             }
             return "";
         }
@@ -95,7 +95,7 @@ public class TimePicker extends Composite implements FiresChangeEvents<Date> {
     private static final int DAY_IN_MS = 86400000;
 
     private final List<TimeSpinner> timeSpinners = new ArrayList<TimeSpinner>();
-    private List<ChangeHandler<Date>> changeHandlers;
+    private List<ChangeHandler<SSDate>> changeHandlers;
     private long dateInMillis;
     private boolean enabled = true;
     private int minuteStep = 1;
@@ -105,12 +105,12 @@ public class TimePicker extends Composite implements FiresChangeEvents<Date> {
         @Override
         public void onSpinning(long value) {
             if (changeHandlers != null) {
-                for (ChangeHandler<Date> changeHandler : changeHandlers) {
+                for (ChangeHandler<SSDate> changeHandler : changeHandlers) {
                     changeHandler.onChange(
-                        new ChangeEvent<Date>(
+                        new ChangeEvent<SSDate>(
                             TimePicker.this,
-                            new Date(dateInMillis),
-                            new Date(value)
+                            new SSDate(dateInMillis),
+                            new SSDate(value)
                         )
                     );
                 }
@@ -123,7 +123,7 @@ public class TimePicker extends Composite implements FiresChangeEvents<Date> {
      *            if set to true the {@link TimePicker} will use 24h format
      */
     public TimePicker(boolean use24Hours) {
-        this(new Date(), use24Hours);
+        this(new SSDate(), use24Hours);
     }
 
     /**
@@ -132,11 +132,11 @@ public class TimePicker extends Composite implements FiresChangeEvents<Date> {
      * @param use24Hours
      *            if set to true the {@link TimePicker} will use 24h format
      */
-    public TimePicker(Date date, boolean use24Hours) {
+    public TimePicker(SSDate date, boolean use24Hours) {
         this(
             date,
-            new Date("January 1, 1970, 00:00:00 GMT"),
-            new Date("January 1, 1970, 00:00:00 GMT"),
+            new SSDate("January 1, 1970, 00:00:00 GMT"),
+            new SSDate("January 1, 1970, 00:00:00 GMT"),
             false,
             use24Hours ? null : DateTimeFormat.getFormat("aa"),
             use24Hours ? DateTimeFormat.getFormat("HH") : DateTimeFormat.getFormat("hh"),
@@ -162,7 +162,7 @@ public class TimePicker extends Composite implements FiresChangeEvents<Date> {
      *            the format to display the seconds. Can be null to seconds
      *            field
      */
-    public TimePicker(Date date, Date min, Date max, boolean constrained, DateTimeFormat amPmFormat,
+    public TimePicker(SSDate date, SSDate min, SSDate max, boolean constrained, DateTimeFormat amPmFormat,
             DateTimeFormat hoursFormat, DateTimeFormat minutesFormat,
             DateTimeFormat secondsFormat, int minuteStep, int hourStep) {
         this(date, min, max, amPmFormat, hoursFormat, minutesFormat, secondsFormat, constrained, null,
@@ -191,7 +191,7 @@ public class TimePicker extends Composite implements FiresChangeEvents<Date> {
      *            images to be used by all nested Spinner widgets
      *
      */
-    public TimePicker(Date date, Date min, Date max, DateTimeFormat amPmFormat,
+    public TimePicker(SSDate date, SSDate min, SSDate max, DateTimeFormat amPmFormat,
             DateTimeFormat hoursFormat, DateTimeFormat minutesFormat,
             DateTimeFormat secondsFormat, boolean constrained, ValueSpinnerResources styles,
             SpinnerResources images, boolean readOnly, int minuteStep, int hourStep) {
@@ -259,9 +259,9 @@ public class TimePicker extends Composite implements FiresChangeEvents<Date> {
      * (com.google.gwt.widgetideas.client.event.ChangeHandler)
      */
     @Override
-    public void addChangeHandler(ChangeHandler<Date> changeHandler) {
+    public void addChangeHandler(ChangeHandler<SSDate> changeHandler) {
         if (changeHandlers == null) {
-            changeHandlers = new ArrayList<ChangeHandler<Date>>();
+            changeHandlers = new ArrayList<ChangeHandler<SSDate>>();
         }
         changeHandlers.add(changeHandler);
     }
@@ -269,8 +269,8 @@ public class TimePicker extends Composite implements FiresChangeEvents<Date> {
     /**
      * @return the date specified by this {@link TimePicker}
      */
-    public Date getDateTime() {
-        return new Date(dateInMillis);
+    public SSDate getDateTime() {
+        return new SSDate(dateInMillis);
     }
 
     /**
@@ -288,7 +288,7 @@ public class TimePicker extends Composite implements FiresChangeEvents<Date> {
      *
      * @param maxDate - The new max date
      */
-    public void setMaxDate(Date maxDate) {
+    public void setMaxDate(SSDate maxDate) {
         for (TimeSpinner timeSpinner : timeSpinners) {
             timeSpinner.setMaxDate(maxDate);
         }
@@ -302,7 +302,7 @@ public class TimePicker extends Composite implements FiresChangeEvents<Date> {
      *
      * @param minDate - The new min date
      */
-    public void setMinDate(Date minDate) {
+    public void setMinDate(SSDate minDate) {
         for (TimeSpinner timeSpinner : timeSpinners) {
             timeSpinner.setMinDate(minDate);
         }
@@ -316,7 +316,7 @@ public class TimePicker extends Composite implements FiresChangeEvents<Date> {
      * (com.google.gwt.widgetideas.client.event.ChangeHandler)
      */
     @Override
-    public void removeChangeHandler(ChangeHandler<Date> changeHandler) {
+    public void removeChangeHandler(ChangeHandler<SSDate> changeHandler) {
         if (changeHandlers != null) {
             changeHandlers.remove(changeHandler);
         }
@@ -327,8 +327,8 @@ public class TimePicker extends Composite implements FiresChangeEvents<Date> {
      *            the date to be set. Only the date part will be set, the time
      *            part will not be affected
      */
-    public void setDate(Date date) {
-        Date currentDate = new Date(dateInMillis);
+    public void setDate(SSDate date) {
+        SSDate currentDate = new SSDate(dateInMillis);
         // Only change the date part, leave time part untouched
         date.setHours(currentDate.getHours());
         date.setMinutes(currentDate.getMinutes());
@@ -344,7 +344,7 @@ public class TimePicker extends Composite implements FiresChangeEvents<Date> {
      * @param date
      *            the date to be set. Both date and time part will be set
      */
-    public void setDateTime(Date date) {
+    public void setDateTime(SSDate date) {
         dateInMillis = date.getTime();
         for (TimeSpinner spinner : timeSpinners) {
             spinner.getSpinner().setValue(dateInMillis, true);

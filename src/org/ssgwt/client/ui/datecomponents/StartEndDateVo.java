@@ -1,6 +1,6 @@
 package org.ssgwt.client.ui.datecomponents;
 
-import java.util.Date;
+import org.ssgwt.client.i18n.SSDate;
 
 /**
  * Abstract start and end date vo used for the DateTimeComponent
@@ -13,10 +13,10 @@ public class StartEndDateVo {
     /**
      * Date that represents the selected start date
      */
-    public Date dtStart;
+    public SSDate dtStart;
 
     /**
      * Date that represents the selected end date
      */
-    public Date dtEnd;
+    public SSDate dtEnd;
 }

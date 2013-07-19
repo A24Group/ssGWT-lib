@@ -1,12 +1,12 @@
 /*
  * Copyright 2008 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,8 +15,7 @@
  */
 package org.ssgwt.client.ui.datepicker;
 
-import java.util.Date;
-
+import org.ssgwt.client.i18n.SSDate;
 import org.ssgwt.client.ui.datepicker.DefaultCalendarView.CellGrid.DateCell;
 
 import com.google.gwt.user.client.DOM;
@@ -35,7 +34,7 @@ public final class DefaultCalendarView extends CalendarView {
      * Cell grid.
      */
     // Javac bug requires that date be fully specified here.
-    class CellGrid extends CellGridImpl<java.util.Date> {
+    class CellGrid extends CellGridImpl<SSDate> {
         /**
          * A cell representing a date.
          */
@@ -44,7 +43,7 @@ public final class DefaultCalendarView extends CalendarView {
             private String dateStyle;
 
             DateCell(Element td, boolean isWeekend) {
-                super(td, new Date());
+                super(td, new SSDate());
                 cellStyle = css().day();
                 if (isWeekend) {
                     cellStyle += " " + css().dayIsWeekend();
@@ -86,7 +85,7 @@ public final class DefaultCalendarView extends CalendarView {
                 updateStyle();
             }
 
-            public void update(Date current) {
+            public void update(SSDate current) {
                 setEnabled(true);
                 getValue().setTime(current.getTime());
                 String value = getModel().formatDayOfMonth(getValue());
@@ -139,9 +138,9 @@ public final class DefaultCalendarView extends CalendarView {
 
     private CellGrid grid = new CellGrid();
 
-    private Date firstDisplayed;
+    private SSDate firstDisplayed;
 
-    private Date lastDisplayed = new Date();
+    private SSDate lastDisplayed = new SSDate();
 
     /**
      * Constructor.
@@ -150,7 +149,7 @@ public final class DefaultCalendarView extends CalendarView {
     }
 
     @Override
-    public void addStyleToDate(String styleName, Date date) {
+    public void addStyleToDate(String styleName, SSDate date) {
         assert getDatePicker().isDateVisible(date) : "You tried to add style " + styleName + " to "
                 + date + ". The calendar is currently showing " + getFirstDate()
                 + " to " + getLastDate();
@@ -158,17 +157,17 @@ public final class DefaultCalendarView extends CalendarView {
     }
 
     @Override
-    public Date getFirstDate() {
+    public SSDate getFirstDate() {
         return firstDisplayed;
     }
 
     @Override
-    public Date getLastDate() {
+    public SSDate getLastDate() {
         return lastDisplayed;
     }
 
     @Override
-    public boolean isDateEnabled(Date d) {
+    public boolean isDateEnabled(SSDate d) {
         return getCell(d).isEnabled();
     }
 
@@ -193,12 +192,12 @@ public final class DefaultCalendarView extends CalendarView {
     }
 
     @Override
-    public void removeStyleFromDate(String styleName, Date date) {
+    public void removeStyleFromDate(String styleName, SSDate date) {
         getCell(date).removeStyleName(styleName);
     }
 
     @Override
-    public void setEnabledOnDate(boolean enabled, Date date) {
+    public void setEnabledOnDate(boolean enabled, SSDate date) {
         getCell(date).setEnabled(enabled);
     }
 
@@ -241,7 +240,7 @@ public final class DefaultCalendarView extends CalendarView {
         grid.setStyleName(css().days());
     }
 
-    private DateCell getCell(Date d) {
+    private DateCell getCell(SSDate d) {
         int index = CalendarUtil.getDaysBetween(firstDisplayed, d);
         assert (index >= 0);
 

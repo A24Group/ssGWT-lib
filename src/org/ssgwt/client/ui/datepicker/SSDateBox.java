@@ -1,6 +1,6 @@
 /**
  * Copyright 2012 A24Group
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -9,13 +9,13 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
 
 package org.ssgwt.client.ui.datepicker;
 
-import java.util.Date;
-
+import org.ssgwt.client.i18n.DateTimeFormat;
+import org.ssgwt.client.i18n.SSDate;
 import org.ssgwt.client.ui.FocusImage;
 import org.ssgwt.client.ui.datepicker.DateBox.Format;
 import org.ssgwt.client.ui.event.FocusImageClickEvent;
@@ -27,7 +27,6 @@ import com.google.gwt.editor.client.LeafValueEditor;
 import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasName;
 import com.google.gwt.user.client.ui.HasValue;
@@ -35,17 +34,17 @@ import com.google.gwt.user.client.ui.LayoutPanel;
 
 /**
  * Datebox component with a FocusImage icon.
- * 
+ *
  * @author Johannes Gryffenberg<johannes.gryffenberg@gmail.com>
  * @since  16 July 2012
  */
-public class SSDateBox extends Composite implements HasName, HasValue<Date>, IsEditor<LeafValueEditor<Date>>, IFocusImageClickEventHandler, HasValueChangeHandlers<Date> {
+public class SSDateBox extends Composite implements HasName, HasValue<SSDate>, IsEditor<LeafValueEditor<SSDate>>, IFocusImageClickEventHandler, HasValueChangeHandlers<SSDate> {
 
     /**
      * Default date format
      */
     public static final DateBox.DefaultFormat DEFAULT_FORMAT = new DateBox.DefaultFormat(DateTimeFormat.getFormat("dd MMM yyyy"));
-    
+
     /**
      * Layout panel for laying out the date box and focus image on the composite.
      */
@@ -68,38 +67,38 @@ public class SSDateBox extends Composite implements HasName, HasValue<Date>, IsE
 
     /**
      * Constructor used when not specifying an icon image.
-     * 
+     *
      * @param picker The datepicker to use.
      * @param date The date that is selected by default.
      * @param format The date format that should be displayed in the date box.
      */
-    public SSDateBox(DatePicker picker, Date date, Format format) {
+    public SSDateBox(DatePicker picker, SSDate date, Format format) {
         this(picker, date, format, new FocusImage(23, 22, "images/datepicker/datebox_icon.png"));
     }
-    
+
     /**
      * Constructor to use when sending in a custom focus image
-     * 
+     *
      * @param picker The datepicker to use.
      * @param date The date that is selected by default.
      * @param format The date format that should be displayed in the date box.
      * @param img The Focus image to use as an icon.
      */
-    public SSDateBox(DatePicker picker, Date date, Format format, FocusImage img) {
+    public SSDateBox(DatePicker picker, SSDate date, Format format, FocusImage img) {
         this(picker, date, format, img, 0);
     }
-    
+
     /**
-     * Constructor to use when sending in a custom focus image, and setting the 
+     * Constructor to use when sending in a custom focus image, and setting the
      * space between the calendar image and input box
-     * 
+     *
      * @param picker The datepicker to use.
      * @param date The date that is selected by default.
      * @param format The date format that should be displayed in the date box.
      * @param img The Focus image to use as an icon.
      * @param space Space between calendar image and input box
-     */ 
-    public SSDateBox(DatePicker picker, Date date, Format format, FocusImage img, int space) {
+     */
+    public SSDateBox(DatePicker picker, SSDate date, Format format, FocusImage img, int space) {
         box = new DateBox(picker, date, format);
         image = img;
 
@@ -113,46 +112,46 @@ public class SSDateBox extends Composite implements HasName, HasValue<Date>, IsE
 
         initWidget(layoutPanel);
     }
-    
+
     /**
      * Adds the provided value change handler to the date box.
-     * 
+     *
      * @param handler The ValueChangeHandler implementation that will handle date changes.
      */
-    public HandlerRegistration addValueChangeHandler(ValueChangeHandler<Date> handler) {
+    public HandlerRegistration addValueChangeHandler(ValueChangeHandler<SSDate> handler) {
         return box.addValueChangeHandler(handler);
     }
 
     /**
      * Returns the date box as a editor.
-     * 
+     *
      * @return the date box as a editor.
      */
-    public LeafValueEditor<Date> asEditor() {
+    public LeafValueEditor<SSDate> asEditor() {
         return box.asEditor();
     }
 
     /**
      * Retrieves the currently selected date from the date box.
-     * 
+     *
      * @return The selected date.
      */
-    public Date getValue() {
+    public SSDate getValue() {
         return box.getValue();
     }
 
     /**
      * Sets the selected date.
-     * 
+     *
      * @param value The new date.
      */
-    public void setValue(Date value) {
+    public void setValue(SSDate value) {
         box.setValue(value);
     }
 
     /**
      * Returns the string value of the date box.
-     * 
+     *
      * @return String date value
      */
     public String getStringValue() {
@@ -161,18 +160,18 @@ public class SSDateBox extends Composite implements HasName, HasValue<Date>, IsE
 
     /**
      * Sets the selected date.
-     * 
+     *
      * @param value The new date.
      * @param fireEvents Whether to dispatch events when changing the date.
      */
-    public void setValue(Date value, boolean fireEvents) {
+    public void setValue(SSDate value, boolean fireEvents) {
         box.setValue(value, fireEvents);
     }
 
     /**
      * Handler function for when the user clicks on the icon.
      * This pops up the date picker.
-     * 
+     *
      * @param event The event to be handled.
      */
     public void onFocusImageClickEvent(FocusImageClickEvent event) {
@@ -181,7 +180,7 @@ public class SSDateBox extends Composite implements HasName, HasValue<Date>, IsE
 
     /**
      * Sets the name that this item should have on a form.
-     * 
+     *
      * @param name The new name
      */
     public void setName(String name) {
@@ -191,7 +190,7 @@ public class SSDateBox extends Composite implements HasName, HasValue<Date>, IsE
 
     /**
      * Returns the current name used on the form.
-     * 
+     *
      * @return Current name.
      */
     public String getName() {
@@ -200,7 +199,7 @@ public class SSDateBox extends Composite implements HasName, HasValue<Date>, IsE
 
     /**
      * Returns the date box used by this instance.
-     * 
+     *
      * @return The date box.
      */
     public DateBox getDateBox() {
