@@ -74,7 +74,7 @@ public class DateFilter extends AbstractHeaderFilter {
      * Holds a list of filters that will be used to populate the filter listbox
      */
     private String[] filters = {
-        "Customised SSDate range",
+        "Customised date range",
         "Today",
         "Yesterday",
         "This week (Mon-Today)",
@@ -546,7 +546,7 @@ public class DateFilter extends AbstractHeaderFilter {
     protected void setDates(SSDate currentDate, String range) {
         SSDate fromDate = currentDate.clone();
         SSDate toDate = currentDate.clone();
-        if (range.equals("Customised SSDate range")) {
+        if (range.equals("Customised date range")) {
             toDateBox.setValue(null);
             fromDateBox.setValue(null);
 
