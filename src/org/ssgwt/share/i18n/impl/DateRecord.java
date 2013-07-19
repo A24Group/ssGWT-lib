@@ -221,8 +221,9 @@ public class DateRecord extends SSDate {
 
     // Adjust time zone.
     if (this.tzOffset > Integer.MIN_VALUE) {
+      long timeStamp = date.getTime();
       date.setTimezoneOffset(this.tzOffset);
-      date.setTime(date.getTime());
+      date.setTime(timeStamp);
     }
 
     return true;
