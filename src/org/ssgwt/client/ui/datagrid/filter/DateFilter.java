@@ -317,7 +317,7 @@ public class DateFilter extends AbstractHeaderFilter {
         String dateBoxStyle();
 
         /**
-         * Style for the panels containing the to and from SSDate boxes and labels
+         * Style for the panels containing the to and from date boxes and labels
          *
          * @return The name of the compiled style
          */
@@ -566,7 +566,7 @@ public class DateFilter extends AbstractHeaderFilter {
 
             // THIS GETS -1 BECAUSE firstDayOfTheWeek() ADDS A DAY FOR SOME REASON.
             int firstDay = Integer.parseInt(constants.firstDayOfTheWeek()) -1;
-            // Get the offset that will be used to calculate what SSDate the Monday is on.
+            // Get the offset that will be used to calculate what date the Monday is on.
             int offset = firstDay - fromDate.getDay();
             fromDate.setDate(fromDate.getDate() + offset);
 
@@ -583,7 +583,7 @@ public class DateFilter extends AbstractHeaderFilter {
             DateTimeConstants constants = LocaleInfo.getCurrentLocale().getDateTimeConstants();
             // THIS GETS -1 BECAUSE firstDayOfTheWeek() ADDS A DAY FOR SOME REASON.
             int firstDay = Integer.parseInt(constants.firstDayOfTheWeek()) -1;
-            // Get the offset that will be used to calculate what SSDate the Monday is on.
+            // Get the offset that will be used to calculate what date the Monday is on.
             int offset = (firstDay - fromDate.getDay()) - 7;
             fromDate.setDate(fromDate.getDate() + offset);
 
@@ -596,7 +596,7 @@ public class DateFilter extends AbstractHeaderFilter {
             DateTimeConstants constants = LocaleInfo.getCurrentLocale().getDateTimeConstants();
             // THIS GETS -1 BECAUSE firstDayOfTheWeek() ADDS A DAY FOR SOME REASON.
             int firstDay = Integer.parseInt(constants.firstDayOfTheWeek()) -1;
-            // Get the offset that will be used to calculate what SSDate the Monday is on.
+            // Get the offset that will be used to calculate what date the Monday is on.
             int offset = (firstDay - fromDate.getDay()) - 7;
             fromDate.setDate(fromDate.getDate() + offset);
 
