@@ -1,7 +1,5 @@
 package org.ssgwt.client.ui.datecomponents;
 
-import java.util.Date;
-
 import org.ssgwt.client.ui.datecomponents.DateTimeComponent;
 import org.ssgwt.client.ui.datepicker.DateBox;
 import org.ssgwt.client.ui.datepicker.DateBox.DefaultFormat;
@@ -13,7 +11,6 @@ import org.ssgwt.client.ui.form.spinner.TimePicker;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;

@@ -1,9 +1,9 @@
 package org.ssgwt.client.ui.form;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.ssgwt.client.i18n.SSDate;
 import org.ssgwt.client.ui.datecomponents.StartEndDateVo;
 import org.ssgwt.client.validation.FormValidator;
 
@@ -168,6 +168,18 @@ public class DynamicForm<T> extends Composite {
                     }
                     break;
             }
+        }
+
+        /**
+         * Setter for the field label text
+         *
+         * @param text - The text to set the label to
+         *
+         * @author Ruan Naude <nauderuan777@gmail.com>
+         * @since 02 July 2013
+         */
+        public void setFieldLabel(String text) {
+            this.fieldLabel.setText(text);
         }
     }
 
@@ -389,8 +401,8 @@ public class DynamicForm<T> extends Composite {
         for(InputField<T, ?> field : fields.keySet()) {
             if (String.class.equals(field.getReturnType())) {
                 ((InputField<T, String>)field).setValue(dataObject, ((HasValue<String>)field).getValue());
-            } else if (Date.class.equals(field.getReturnType())) {
-                ((InputField<T, Date>)field).setValue(dataObject, ((HasValue<Date>)field).getValue());
+            } else if (SSDate.class.equals(field.getReturnType())) {
+                ((InputField<T, SSDate>)field).setValue(dataObject, ((HasValue<SSDate>)field).getValue());
             } else if (List.class.equals(field.getReturnType())) {
                 ((InputField<T, List>)field).setValue(dataObject, ((HasValue<List>)field).getValue());
             } else if (Boolean.class.equals(field.getReturnType())) {
@@ -414,8 +426,8 @@ public class DynamicForm<T> extends Composite {
         for(InputField<T, ?> field : fields.keySet()) {
             if (String.class.equals(field.getReturnType())) {
                 ((HasValue<String>)field).setValue(((InputField<T, String>)field).getValue(dataObject));
-            } else if (Date.class.equals(field.getReturnType())) {
-                ((HasValue<Date>)field).setValue(((InputField<T, Date>)field).getValue(dataObject));
+            } else if (SSDate.class.equals(field.getReturnType())) {
+                ((HasValue<SSDate>)field).setValue(((InputField<T, SSDate>)field).getValue(dataObject));
             } else if (List.class.equals(field.getReturnType())) {
                 ((HasValue<List>)field).setValue(((InputField<T, List>)field).getValue(dataObject));
             } else if (Boolean.class.equals(field.getReturnType())) {
@@ -549,6 +561,24 @@ public class DynamicForm<T> extends Composite {
         Field fieldInfo = new Field(inputField, label, embeded, customStyleName);
         mainConatiner.add(fieldInfo);
         fields.put(inputField, fieldInfo);
+    }
+
+    /**
+     * Setter for the field label text
+     *
+     * @param inputField - The input field's label to set text for
+     * @param text - The text to set the label to
+     *
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since 02 July 2013
+     */
+    public void setFieldLabelText(InputField<T, ?> inputField, String text) {
+        fields.get(inputField).setFieldLabel(text);
+        if (inputField instanceof ComplexInputForm) {
+            ((ComplexInputForm) inputField).updateFieldLabels();
+        } else if (inputField instanceof ComplexInput) {
+            ((ComplexInput) inputField).updateFieldLabels();
+        }
     }
 
     /**

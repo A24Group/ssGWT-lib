@@ -14,7 +14,7 @@
 
 package org.ssgwt.client.ui.datepicker;
 
-import java.util.Date;
+import org.ssgwt.client.i18n.SSDate;
 
 /**
  * This date picker uses a slightly different Month Selector and Calendar view
@@ -46,7 +46,7 @@ public class SSDatePicker extends DatePicker {
      */
     public SSDatePicker() {
         //this(new DefaultMonthSelector2(DEFAULT_MINIMUM_YEAR, DEFAULT_MAXIMUM_YEAR), new DefaultCalendarView2(), new CalendarModel());
-        this(new Date(DEFAULT_MINIMUM_YEAR - 1900, 0, 1), new Date(DEFAULT_MAXIMUM_YEAR - 1900, 11, 31));
+        this(new SSDate(DEFAULT_MINIMUM_YEAR - 1900, 0, 1), new SSDate(DEFAULT_MAXIMUM_YEAR - 1900, 11, 31));
     }
 
     /**
@@ -56,7 +56,7 @@ public class SSDatePicker extends DatePicker {
      * @param minimum The minimum date that can be chosen on this date picker.
      * @param maximum The maximum date that can be chosen on this date picker.
      */
-    public SSDatePicker(Date minimum, Date maximum) {
+    public SSDatePicker(SSDate minimum, SSDate maximum) {
         super(
             new ComboBoxMonthSelector(minimum, maximum),
             new RangedCalendarView(minimum, maximum),
@@ -73,7 +73,7 @@ public class SSDatePicker extends DatePicker {
      * @param prevMonthUrl The url of the image to be used for the previous month button.
      * @param nextMonthUrl The url of the image to be used for the next month button.
      */
-    public SSDatePicker(Date minimum, Date maximum, String prevMonthUrl, String nextMonthUrl) {
+    public SSDatePicker(SSDate minimum, SSDate maximum, String prevMonthUrl, String nextMonthUrl) {
         super(
             new ComboBoxMonthSelector(minimum, maximum, prevMonthUrl, nextMonthUrl),
             new RangedCalendarView(minimum, maximum),
@@ -86,7 +86,7 @@ public class SSDatePicker extends DatePicker {
      *
      * @param minimumDate The new minimum date
      */
-    public void setMinimumDate(Date minimum) {
+    public void setMinimumDate(SSDate minimum) {
         ((ComboBoxMonthSelector) getMonthSelector()).setMinimumDate(minimum);
         ((RangedCalendarView) getView()).setMinimumDate(minimum);
         refreshAll();
@@ -97,7 +97,7 @@ public class SSDatePicker extends DatePicker {
      *
      * @param minimumDate The new maximum date
      */
-    public void setMaximumDate(Date maximum) {
+    public void setMaximumDate(SSDate maximum) {
         ((ComboBoxMonthSelector) getMonthSelector()).setMaximumDate(maximum);
         ((RangedCalendarView) getView()).setMaximumDate(maximum);
         refreshAll();

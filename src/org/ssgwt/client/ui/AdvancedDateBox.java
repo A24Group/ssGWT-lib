@@ -1,6 +1,6 @@
 /**
  * Copyright 2012 A24Group
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -9,7 +9,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
 
 /**
@@ -17,8 +17,7 @@
  */
 package org.ssgwt.client.ui;
 
-import java.util.Date;
-
+import org.ssgwt.client.i18n.SSDate;
 import org.ssgwt.client.ui.datepicker.DateBox;
 import org.ssgwt.client.ui.datepicker.SSDateBox;
 import org.ssgwt.client.ui.datepicker.SSDatePicker;
@@ -28,35 +27,35 @@ import com.google.gwt.event.dom.client.FocusEvent;
 
 /**
  * AdvancedDatePicker
- * 
+ *
  * A date picker box that allows the developer to set a placeholder label inside it.
  * When in focus, the placeholder text is removed, when the focus fades, the
  * placeholder text will be replaced if no value was supplied.
- * 
+ *
  * @author Michael Barnard <michael.barnard@a24group.com>
  * @since 18 July 2012
  */
-public class AdvancedDateBox extends DateBox implements AdvancedInputField<Date> {
-    
+public class AdvancedDateBox extends DateBox implements AdvancedInputField<SSDate> {
+
     /**
      * The DateBoxHandler that replaces the origional handlers
      */
     protected DateBoxHandler handler = new DateBoxHandlerOveride();
-    
+
     /**
      * DateBoxHandlerOveride
-     * 
+     *
      * Internal class used to override the Focus and Blur handlers
      * that is put on the item
-     * 
+     *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since 18 July 2012
      */
     public class DateBoxHandlerOveride extends DateBoxHandler {
-        
+
         /**
          * Called when the method gains focus
-         * 
+         *
          * @param event - The event causing the call
          */
         public void onFocus(FocusEvent event) {
@@ -66,7 +65,7 @@ public class AdvancedDateBox extends DateBox implements AdvancedInputField<Date>
 
         /**
          * Called when the method loses focus
-         * 
+         *
          * @param event - The event causing the call
          */
         public void onBlur(BlurEvent event) {
@@ -74,7 +73,7 @@ public class AdvancedDateBox extends DateBox implements AdvancedInputField<Date>
             displayPlaceholder();
         }
     }
-    
+
     /**
      * The text to be used as place holder inside the datepicker.
      */
@@ -85,22 +84,22 @@ public class AdvancedDateBox extends DateBox implements AdvancedInputField<Date>
      * displayed. Defaults to 'placeholder'.
      */
     protected String placeholderStyleName = "placeholder";
-    
+
     /**
      * Indicates whether the value for the datepicker is required to be filled in
      * when displayed on screen or not.
      */
     protected boolean required = false;
-    
+
     /**
      * The style name to be added to the element if the element is marked as
      * required
      */
     protected String requiredStyleName = "required";
-    
+
     /**
      * Class constructor
-     * 
+     *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since 18 July 2012
      */
@@ -108,39 +107,39 @@ public class AdvancedDateBox extends DateBox implements AdvancedInputField<Date>
         super(new SSDatePicker(), null, SSDateBox.DEFAULT_FORMAT, false);
         addHandlers(handler);
     }
-    
+
     /**
      * Class constructor
-     * 
+     *
      * @param minimum - The minimum date that can be chosen on this date picker.
      * @param maximum - The maximum date that can be chosen on this date picker.
-     * 
+     *
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 13 Aug 2012
      */
-    public AdvancedDateBox(Date minimum, Date maximum) {
+    public AdvancedDateBox(SSDate minimum, SSDate maximum) {
         super(new SSDatePicker(minimum, maximum), null, SSDateBox.DEFAULT_FORMAT, false);
         addHandlers(handler);
     }
-    
+
     /**
      * Sets the place holder text to be displayed when no value is given in the
      * text input.
-     * 
+     *
      * @param placeholderText - The text to be used as the placeholder
      */
     public void setPlaceholder(String placeholderText) {
         this.placeholderText = placeholderText.trim();
         this.displayPlaceholder();
     }
-    
+
     /**
      * Retrieves the place holder text to be displayed when no value is given in
      * the text input.
-     * 
+     *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since 18 July 2012
-     * 
+     *
      * @return The text to be used as the placeholder
      */
     public String getPlaceholderText() {
@@ -149,20 +148,20 @@ public class AdvancedDateBox extends DateBox implements AdvancedInputField<Date>
 
     /**
      * Changes the style name for the placeholder text in the datepicker.
-     * 
+     *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since 18 July 2012
      */
     public void setPlaceholderStyleName(String placeholderStyleName) {
         this.placeholderStyleName = placeholderStyleName.trim();
     }
-    
+
     /**
      * Returns the placeholder style name set on the datepicker.
-     * 
+     *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since 18 July 2012
-     * 
+     *
      * @return The placeholder styleName
      */
     public String getPlaceholderStyleName() {
@@ -171,17 +170,17 @@ public class AdvancedDateBox extends DateBox implements AdvancedInputField<Date>
 
     /**
      * Returns whether the field is required or not
-     * 
+     *
      * @return required or not
      */
     public boolean isRequired() {
         return required;
     }
-    
+
     /**
      * Set the field to be either required or not. Will apply or remove the
      * required style name from the element dependant on the value provided.
-     * 
+     *
      * @param required - Whether the field is required or not
      */
     public void setRequired(boolean required) {
@@ -192,19 +191,19 @@ public class AdvancedDateBox extends DateBox implements AdvancedInputField<Date>
             this.removeStyleName(this.getRequiredStyleName());
         }
     }
-    
+
     /**
      * Retrieve the required style name
-     * 
+     *
      * @return the requiredStyleName
      */
     public String getRequiredStyleName() {
         return requiredStyleName;
     }
-    
+
     /**
      * Set the required style name
-     * 
+     *
      * @param requiredStyleName - The required style name to set
      */
     public void setRequiredStyleName(String requiredStyleName) {
@@ -215,12 +214,12 @@ public class AdvancedDateBox extends DateBox implements AdvancedInputField<Date>
             this.addStyleName(this.getRequiredStyleName());
         }
     }
-    
+
     /**
      * Displays the placeholder text only if no other value was provided. It
      * also adds the placeholder style name to the datepicker when adding the
      * placeholder text.
-     * 
+     *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since 18 July 2012
      */
@@ -230,11 +229,11 @@ public class AdvancedDateBox extends DateBox implements AdvancedInputField<Date>
             super.getTextBox().addStyleName(this.getPlaceholderStyleName());
         }
     }
-    
+
     /**
      * Hides the placeholder by removing the placeholder text from the datepicker
      * and also removing the placeholder style name from the datepicker.
-     * 
+     *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since 18 July 2012
      */
@@ -247,11 +246,11 @@ public class AdvancedDateBox extends DateBox implements AdvancedInputField<Date>
 
     /**
      * Used to get the type of the input
-     * 
-     * @return The class type 
+     *
+     * @return The class type
      */
     @Override
-    public Class<Date> getReturnType() {
-        return Date.class;
+    public Class<SSDate> getReturnType() {
+        return SSDate.class;
     }
-} 
+}

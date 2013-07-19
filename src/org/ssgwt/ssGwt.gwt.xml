@@ -1,5 +1,9 @@
 <module>
     <inherits name="com.google.gwt.user.User"/>
+    
+    <source path="client"/>
+    <source path="share"/>
+    
     <replace-with class="org.ssgwt.client.ui.form.ComplexInput">
         <when-type-is class="org.ssgwt.client.ui.form.ComplexInput"/>
     </replace-with>

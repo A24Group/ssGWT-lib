@@ -15,8 +15,8 @@
 package org.ssgwt.client.ui.datepicker;
 
 import java.util.ArrayList;
-import java.util.Date;
 
+import org.ssgwt.client.i18n.SSDate;
 import org.ssgwt.client.ui.FocusImage;
 import org.ssgwt.client.ui.event.FocusImageClickEvent;
 import org.ssgwt.client.ui.event.IFocusImageClickEventHandler;
@@ -66,12 +66,12 @@ public class ComboBoxMonthSelector extends MonthSelector {
     /**
      * The minimum date that can be selected.
      */
-    private Date minimumDate;
+    private SSDate minimumDate;
 
     /**
      * The maximum date that can be selected.
      */
-    private Date maximumDate;
+    private SSDate maximumDate;
 
     /**
      * The offset value of the months combo box, this allows us to easily determine
@@ -96,7 +96,7 @@ public class ComboBoxMonthSelector extends MonthSelector {
      * @param minimumDate The minimum date that can be chosen on this month selector.
      * @param maximumDate The maximum date that can be chosen on this month selector.
      */
-    public ComboBoxMonthSelector(Date minimumDate, Date maximumDate) {
+    public ComboBoxMonthSelector(SSDate minimumDate, SSDate maximumDate) {
         this(minimumDate, maximumDate, "images/datepicker/prev_month.png", "images/datepicker/next_month.png");
     }
 
@@ -108,7 +108,7 @@ public class ComboBoxMonthSelector extends MonthSelector {
      * @param prevMonthUrl The url of the previous month image string.
      * @param nextMonthUrl The url of the next month image.
      */
-    public ComboBoxMonthSelector(Date minimumDate, Date maximumDate, String prevMonthUrl, String nextMonthUrl) {
+    public ComboBoxMonthSelector(SSDate minimumDate, SSDate maximumDate, String prevMonthUrl, String nextMonthUrl) {
         this.minimumDate = minimumDate;
         this.maximumDate = maximumDate;
         this.previousMonthUrl = prevMonthUrl;
@@ -142,7 +142,7 @@ public class ComboBoxMonthSelector extends MonthSelector {
         backMonth.addFocusImageClickEventHandler(new IFocusImageClickEventHandler() {
             @Override
             public void onFocusImageClickEvent(FocusImageClickEvent event) {
-                Date currentMonth = getModel().getCurrentMonth();
+                SSDate currentMonth = getModel().getCurrentMonth();
                 //Only allow going back if we're not already on the minimum.
                 if (currentMonth.getYear() > minimumDate.getYear() || currentMonth.getMonth() > minimumDate.getMonth()) {
                     addMonths(-1);
@@ -154,7 +154,7 @@ public class ComboBoxMonthSelector extends MonthSelector {
         addMonth.addFocusImageClickEventHandler(new IFocusImageClickEventHandler() {
             @Override
             public void onFocusImageClickEvent(FocusImageClickEvent event) {
-                Date currentMonth = getModel().getCurrentMonth();
+                SSDate currentMonth = getModel().getCurrentMonth();
                 if (currentMonth.getYear() < maximumDate.getYear() || currentMonth.getMonth() < maximumDate.getMonth()) {
                     addMonths(+1);
                 }
@@ -174,8 +174,8 @@ public class ComboBoxMonthSelector extends MonthSelector {
             @Override
             public void onChange(ChangeEvent event) {
                 //Get a copy of the current month, we do not want the reference as when we do calculations on it we don't want it to update.
-                Date currentMonth = (Date) getModel().getCurrentMonth().clone();
-                Date targetMonth = (Date) currentMonth.clone();
+                SSDate currentMonth = getModel().getCurrentMonth().clone();
+                SSDate targetMonth = currentMonth.clone();
                 //Set the target date to the newly selected year.
                 targetMonth.setYear(Integer.parseInt(yearListBox.getItemText(yearListBox.getSelectedIndex())) - 1900);
 
@@ -235,7 +235,7 @@ public class ComboBoxMonthSelector extends MonthSelector {
      */
     protected void populateYearListBox() {
         int iMin = minimumDate.getYear() + 1900;
-        int iMax = new Date(maximumDate.getTime()).getYear() + 1900;
+        int iMax = new SSDate(maximumDate.getTime()).getYear() + 1900;
 
         for (; iMin <= iMax; iMin++) {
             yearListBox.addItem("" + iMin);
@@ -247,7 +247,7 @@ public class ComboBoxMonthSelector extends MonthSelector {
      * for this month selector.
      */
     protected void populateMonthListBox() {
-        Date currentMonth = getModel().getCurrentMonth();
+        SSDate currentMonth = getModel().getCurrentMonth();
         String[] usableMonths = getMonthsForYearInPeriod(currentMonth, minimumDate, maximumDate);
         monthListBox.clear();
         for (String month : usableMonths) {
@@ -266,10 +266,10 @@ public class ComboBoxMonthSelector extends MonthSelector {
      *
      * @return String array of month names.
      */
-    private String[] getMonthsForYearInPeriod(Date year, Date minimum, Date maximum) {
+    private String[] getMonthsForYearInPeriod(SSDate year, SSDate minimum, SSDate maximum) {
         String[] monthNames = LocaleInfo.getCurrentLocale().getDateTimeFormatInfo().monthsShort();
         ArrayList<String> months = new ArrayList<String>();
-        Date minDate = (Date) minimum.clone();
+        SSDate minDate = minimum.clone();
         while (minDate.getTime() <= maximum.getTime()) {
             if (minDate.getYear() == year.getYear()) {
                 months.add(monthNames[minDate.getMonth()]);
@@ -293,7 +293,7 @@ public class ComboBoxMonthSelector extends MonthSelector {
      *
      * @return The amount of months that we're offset by.
      */
-    private int getMonthsOffset(Date year, Date minimum, Date maximum) {
+    private int getMonthsOffset(SSDate year, SSDate minimum, SSDate maximum) {
         if (year.getYear() != minimum.getYear()) {
             return 0;
         } else {
@@ -305,7 +305,7 @@ public class ComboBoxMonthSelector extends MonthSelector {
      * Sets the correct selected indexes for the month and year combo boxes.
      */
     protected void setListBoxesValues() {
-        Date currentSelectedDate = getModel().getCurrentMonth();
+        SSDate currentSelectedDate = getModel().getCurrentMonth();
 
         try {
             yearListBox.setSelectedIndex(Math.abs(minimumDate.getYear() - currentSelectedDate.getYear()));
@@ -324,7 +324,7 @@ public class ComboBoxMonthSelector extends MonthSelector {
      *
      * @return The minimum date
      */
-    public Date getMinimumDate() {
+    public SSDate getMinimumDate() {
         return minimumDate;
     }
 
@@ -333,7 +333,7 @@ public class ComboBoxMonthSelector extends MonthSelector {
      *
      * @param minimumDate The new minimum date
      */
-    public void setMinimumDate(Date minimumDate) {
+    public void setMinimumDate(SSDate minimumDate) {
         this.minimumDate = minimumDate;
         yearListBox.clear();
         monthListBox.clear();
@@ -346,7 +346,7 @@ public class ComboBoxMonthSelector extends MonthSelector {
      *
      * @return The maximum date
      */
-    public Date getMaximumDate() {
+    public SSDate getMaximumDate() {
         return maximumDate;
     }
 
@@ -355,7 +355,7 @@ public class ComboBoxMonthSelector extends MonthSelector {
      *
      * @param minimumDate The new maximum date
      */
-    public void setMaximumDate(Date maximumDate) {
+    public void setMaximumDate(SSDate maximumDate) {
         this.maximumDate = maximumDate;
         yearListBox.clear();
         monthListBox.clear();
