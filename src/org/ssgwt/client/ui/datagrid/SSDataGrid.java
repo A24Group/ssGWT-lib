@@ -1141,5 +1141,18 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
             firstDataSet = false;
         }
     }
+    
+    /**
+     * This function is used to apply a custom width for a datagrid column
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  25 July 2013
+     * 
+     * @param column - The column to set the width for
+     * @param width - The width in style format (This can be any valid css mesurement)
+     */
+    public void setColumnWidth(Column<T, ?> column, String width) {
+        dataGrid.setColumnWidth(column, width);
+    }
 
 }
