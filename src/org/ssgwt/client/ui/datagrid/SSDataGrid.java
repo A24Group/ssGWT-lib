@@ -1149,7 +1149,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @since  25 July 2013
      * 
      * @param column - The column to set the width for
-     * @param width - The width in style format
+     * @param width - The width in style format (This can be any valid css mesurement)
      */
     public void setColumnWidth(Column<T, ?> column, String width) {
         dataGrid.setColumnWidth(column, width);
