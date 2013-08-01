@@ -274,7 +274,7 @@ public class GenericPopup extends PopupPanel {
     
     /**
      * This function will check if there is already a default resource to
-     * use for the generic popup and if not one will be create a default resource
+     * use for the generic popup and if not one will be created
      * 
      * @author Ruan Naude <naudeuran777@gmail.com>
      * @since 15 July 2013
