@@ -21,7 +21,7 @@
 
 /* The style for the inner arrow panel */
 .hoverPopupInnerArrow{
-    border-color: transparent transparent #fff transparent;
+    border-color: transparent transparent #ffffff transparent;
     border-style: solid;
     border-width: 6px;
     position:     absolute;
@@ -29,7 +29,7 @@
 
 /* The style for the popup outer arrow panel */
 .hoverPopupOuterArrow{
-    border-color: transparent transparent #666 transparent;
+    border-color: transparent transparent #666666 transparent;
     border-style: solid;
     border-width: 6px;
     position:     absolute;
@@ -52,10 +52,10 @@
 
 /* The style for a white border at the top */
 .borderColorWhiteTop{
-    border-color: transparent transparent #fff transparent;
+    border-color: transparent transparent #ffffff transparent;
 }
 
 /* The style for a white border at the bottom */
 .borderColorWhiteBottom{
-    border-color: #fff transparent transparent transparent;
+    border-color: #ffffff transparent transparent transparent;
 }

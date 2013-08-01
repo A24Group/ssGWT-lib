@@ -273,8 +273,8 @@ public class GenericPopup extends PopupPanel {
     }
     
     /**
-     * This function will check of there is already a default resource to
-     * use for the left menu item and if not create a default resource
+     * This function will check if there is already a default resource to
+     * use for the generic popup and if not one will be create a default resource
      * 
      * @author Ruan Naude <naudeuran777@gmail.com>
      * @since 15 July 2013
