@@ -51,9 +51,16 @@ public class SSActionCell<T> extends AbstractCell<T> implements HasHandlers {
     private final HandlerManager handlerManager;
 
     /**
-     * List that contains the actions
+     * List that contains the actions.
+     * 
+     * Used to determine what action was clicked on
      */
-    private ArrayList<String> actionList;
+    private ArrayList<String> actionList = new ArrayList<String>();
+    
+    /**
+     * List that contains the actions to be used for display purpose
+     */
+    private ArrayList<String> displayActionList = new ArrayList<String>();
 
     /**
      * The parent element of the Cell
@@ -148,10 +155,15 @@ public class SSActionCell<T> extends AbstractCell<T> implements HasHandlers {
      */
     @Override
     public void render(Context context, T value, SafeHtmlBuilder sb) {
-        actionList = column.getActions(value);
+        displayActionList = column.getActions(value);
+        
         // Flag used to indicate the first item
         boolean firstItem = true;
-        for (String action : actionList) {
+        for (String action : displayActionList) {
+            if (!actionList.contains(action)) {
+                actionList.add(action);
+            }
+            
             if (firstItem) {
                 sb.append(template.firstAction(action));
                 firstItem = false;
@@ -183,7 +195,7 @@ public class SSActionCell<T> extends AbstractCell<T> implements HasHandlers {
         NativeEvent event,
         ValueUpdater<T> valueUpdater
     ) {
-        // All the already browser event should still behave as it use to
+        // All the browser events should still behave as before
         super.onBrowserEvent(context, parent, value, event, valueUpdater);
 
         this.parent = parent;
