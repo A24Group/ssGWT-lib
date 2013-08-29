@@ -8,6 +8,8 @@ import org.ssgwt.client.ui.form.event.ComplexInputFormAddEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormCancelEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormFieldAddEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler;
+import org.ssgwt.client.ui.form.event.ComplexInputFormMessageEvent;
+import org.ssgwt.client.ui.form.event.ComplexInputFormMessageEvent.ComplexInputFormMessageHandler;
 import org.ssgwt.client.ui.form.event.ComplexInputFormRemoveEvent;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -29,14 +31,17 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @param <T> is the type if data used like a VO
  */
-public abstract class ComplexInput<T> extends Composite
+public abstract class ComplexInput<T>
+    extends
+        Composite
     implements
         HasValue<T>,
         InputField<T, T>,
         ComplexInputFormRemoveEvent.ComplexInputFormRemoveHasHandlers,
         ComplexInputFormAddEvent.ComplexInputFormAddHasHandlers,
         ComplexInputFormCancelEvent.ComplexInputFormCancelHasHandlers,
-        ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
+        ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers,
+        ComplexInputFormMessageEvent.ComplexInputFormMessageHasHandlers {
 
     /**
      * This is the main panel.
@@ -142,6 +147,11 @@ public abstract class ComplexInput<T> extends Composite
      * Injected Object
      */
     protected Object injectedObject;
+
+    /**
+     * The ComplexInputFormMessageHandler added to this class
+     */
+    protected ComplexInputFormMessageHandler complexInputFormMessageHandler;
 
     /**
      * Class constructor
@@ -470,6 +480,22 @@ public abstract class ComplexInput<T> extends Composite
     @Override
     public HandlerRegistration addComplexInputFormFieldAddHandler(ComplexInputFormFieldAddHandler handler) {
         return this.addHandler(handler, ComplexInputFormFieldAddEvent.TYPE);
+    }
+
+    /**
+     * Sets the message as a variable so that it can be passed on to other components also
+     * Adds a ComplexInputFormMessageHandler that can be fired each time if a message needs to be displayed
+     * out side the scope of the class
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  29 Aug 2013
+     *
+     * @param handler - The complex input form message handler
+     */
+    @Override
+    public HandlerRegistration addComplexInputFormMessageHandler(ComplexInputFormMessageHandler handler) {
+        this.complexInputFormMessageHandler = handler;
+        return this.addHandler(handler, ComplexInputFormMessageEvent.TYPE);
     }
 
     /**
@@ -802,10 +828,10 @@ public abstract class ComplexInput<T> extends Composite
     public void setComplexAddButtonStyle(String complexAddButtonStyle) {
         this.complexAddButtonStyle = complexAddButtonStyle;
     }
-    
+
     /**
      * This function will update the field labels on the input
-     * 
+     *
      * @author Ruan Naude <nauderuan777@gmail.com>
      * @since 02 July 2013
      */

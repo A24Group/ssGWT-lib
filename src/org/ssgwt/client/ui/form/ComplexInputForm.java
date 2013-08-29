@@ -9,6 +9,8 @@ import org.ssgwt.client.ui.form.event.ComplexInputFormConfirmationEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormConfirmationEvent.ComplexInputFormConfirmationHandler;
 import org.ssgwt.client.ui.form.event.ComplexInputFormFieldAddEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler;
+import org.ssgwt.client.ui.form.event.ComplexInputFormMessageEvent;
+import org.ssgwt.client.ui.form.event.ComplexInputFormMessageEvent.ComplexInputFormMessageHandler;
 import org.ssgwt.client.ui.form.event.ComplexInputFormRemoveEvent;
 
 import com.google.gwt.core.client.GWT;
@@ -42,7 +44,8 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
         ComplexInputFormConfirmationEvent.ComplexInputFormConfirmationHasHandlers,
         ComplexInputFormCancelEvent.ComplexInputFormCancelHandler,
         ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers,
-        ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
+        ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler,
+        ComplexInputFormMessageEvent.ComplexInputFormMessageHasHandlers {
 
     /**
      * Contain the list of the embedded Vos
@@ -98,6 +101,11 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
      * ComplexInputFormConfirmationHandler that will be added to inner ComplexInputForm forms.
      */
     private ComplexInputFormConfirmationHandler complexInputFormConfirmationHandler;
+
+    /**
+     * ComplexInputFormMessageHandler that will be added to the inner ComplexInputForms.
+     */
+    private ComplexInputFormMessageHandler complexInputFormMessageHandler;
 
     /**
      * Class constructor
@@ -254,6 +262,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
         field.addComplexInputFormCancelHandler(this);
         field.addComplexInputFormFieldAddHandler(this);
         addComplexInputFormConfirmationHandlerOnFields(field, complexInputFormConfirmationHandler);
+        addComplexInputFormMessageHandlerOnFields(field, complexInputFormMessageHandler);
     }
 
     /**
@@ -416,6 +425,47 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
         }
     }
 
+    /**
+     * Sets the message as a variable so that it can be passed on to other components also
+     * Adds a ComplexInputFormMessageHandler that can be fired each time if a message needs to be displayed
+     * out side the scope of the class
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  29 Aug 2013
+     *
+     * @param handler - The complex input form message handler
+     */
+    @Override
+    public HandlerRegistration addComplexInputFormMessageHandler(ComplexInputFormMessageHandler handler) {
+        this.complexInputFormMessageHandler = handler;
+        for (Object field : fields) {
+            if (field instanceof ComplexInput) {
+                addComplexInputFormMessageHandlerOnFields((ComplexInput)field, complexInputFormMessageHandler);
+            }
+        }
+        return this.addHandler(handler, ComplexInputFormMessageEvent.TYPE);
+    }
+
+    /**
+     * Add the ComplexInputFormMessageHandler to a complexIput inner complex input form
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  29 Aug 2013
+     *
+     * @param field - The ComplexInput field to add the ComplexInputFormMessageHandler
+     * @param handler - The ComplexInputFormMessageHandler to add to the ComplexInputForm
+     */
+    private void addComplexInputFormMessageHandlerOnFields(ComplexInput field, ComplexInputFormMessageHandler handler) {
+        if (handler != null) {
+            field.addComplexInputFormMessageHandler(handler);
+            List<InputField> listInputFields = field.getInputFromInputList();
+            for (InputField inputField : listInputFields) {
+                if (inputField instanceof ComplexInputForm) {
+                    ((ComplexInputForm) inputField).addComplexInputFormMessageHandler(handler);
+                }
+            }
+        }
+    }
 
     /**
      * Adds a ComplexInputFormFieldAddHandler that listen for the ComplexInputFormFieldAddEvent to
@@ -600,10 +650,10 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
         }
         return false;
     }
-    
+
     /**
      * This function will update the field labels on the form
-     * 
+     *
      * @author Ruan Naude <nauderuan777@gmail.com>
      * @since 02 July 2013
      */

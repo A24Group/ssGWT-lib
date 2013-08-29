@@ -59,7 +59,7 @@ public class SSActionCell<T> extends AbstractCell<T> implements HasHandlers {
      * The parent element of the Cell
      */
     private Element parent;
-    
+
     /**
      * The action spacer size defaulted to 5px
      */
@@ -102,7 +102,7 @@ public class SSActionCell<T> extends AbstractCell<T> implements HasHandlers {
      *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  18 July 2013
-     * 
+     *
      * @param spacerSize - The size to be used between the action items
      */
     public SSActionCell(int spacerSize) {
@@ -113,10 +113,10 @@ public class SSActionCell<T> extends AbstractCell<T> implements HasHandlers {
         }
         this.spacerSize = spacerSize;
     }
-    
+
     /**
      * The SSActionCell constructor
-     * 
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since 03 June 2013
      */
@@ -187,11 +187,11 @@ public class SSActionCell<T> extends AbstractCell<T> implements HasHandlers {
         super.onBrowserEvent(context, parent, value, event, valueUpdater);
 
         this.parent = parent;
-
         if (MOUSE_UP.equals(event.getType())) { // The event is MOUSE_UP
             for (String action : actionList) {
                 if (event.getEventTarget().equals(getElementByName(parent, action))) {
                     ActionClickEvent.fire(this, action, value);
+                    break;
                 }
             }
         }
