@@ -3,14 +3,14 @@ package org.ssgwt.client.ui.form;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ssgwt.client.ui.form.event.ComplexInputFormActionEvent;
+import org.ssgwt.client.ui.form.event.ComplexInputFormActionEvent.ComplexInputFormActionHandler;
 import org.ssgwt.client.ui.form.event.ComplexInputFormAddEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormCancelEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormConfirmationEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormConfirmationEvent.ComplexInputFormConfirmationHandler;
 import org.ssgwt.client.ui.form.event.ComplexInputFormFieldAddEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler;
-import org.ssgwt.client.ui.form.event.ComplexInputFormMessageEvent;
-import org.ssgwt.client.ui.form.event.ComplexInputFormMessageEvent.ComplexInputFormMessageHandler;
 import org.ssgwt.client.ui.form.event.ComplexInputFormRemoveEvent;
 
 import com.google.gwt.core.client.GWT;
@@ -45,7 +45,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
         ComplexInputFormCancelEvent.ComplexInputFormCancelHandler,
         ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers,
         ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler,
-        ComplexInputFormMessageEvent.ComplexInputFormMessageHasHandlers {
+        ComplexInputFormActionEvent.ComplexInputFormActionHasHandlers {
 
     /**
      * Contain the list of the embedded Vos
@@ -103,9 +103,9 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
     private ComplexInputFormConfirmationHandler complexInputFormConfirmationHandler;
 
     /**
-     * ComplexInputFormMessageHandler that will be added to the inner ComplexInputForms.
+     * ComplexInputFormActionHandler that will be added to the inner ComplexInputForms.
      */
-    private ComplexInputFormMessageHandler complexInputFormMessageHandler;
+    private ComplexInputFormActionHandler complexInputFormActionHandler;
 
     /**
      * Class constructor
@@ -262,7 +262,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
         field.addComplexInputFormCancelHandler(this);
         field.addComplexInputFormFieldAddHandler(this);
         addComplexInputFormConfirmationHandlerOnFields(field, complexInputFormConfirmationHandler);
-        addComplexInputFormMessageHandlerOnFields(field, complexInputFormMessageHandler);
+        addComplexInputFormActionHandlerOnFields(field, complexInputFormActionHandler);
     }
 
     /**
@@ -436,32 +436,32 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
      * @param handler - The complex input form message handler
      */
     @Override
-    public HandlerRegistration addComplexInputFormMessageHandler(ComplexInputFormMessageHandler handler) {
-        this.complexInputFormMessageHandler = handler;
+    public HandlerRegistration addComplexInputFormActionHandler(ComplexInputFormActionHandler handler) {
+        this.complexInputFormActionHandler = handler;
         for (Object field : fields) {
             if (field instanceof ComplexInput) {
-                addComplexInputFormMessageHandlerOnFields((ComplexInput)field, complexInputFormMessageHandler);
+                addComplexInputFormActionHandlerOnFields((ComplexInput)field, complexInputFormActionHandler);
             }
         }
-        return this.addHandler(handler, ComplexInputFormMessageEvent.TYPE);
+        return this.addHandler(handler, ComplexInputFormActionEvent.TYPE);
     }
 
     /**
-     * Add the ComplexInputFormMessageHandler to a complexIput inner complex input form
+     * Add the ComplexInputFormActionHandler to a complexIput inner complex input form
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  29 Aug 2013
      *
      * @param field - The ComplexInput field to add the ComplexInputFormMessageHandler
-     * @param handler - The ComplexInputFormMessageHandler to add to the ComplexInputForm
+     * @param handler - The ComplexInputFormActionHandler to add to the ComplexInputForm
      */
-    private void addComplexInputFormMessageHandlerOnFields(ComplexInput field, ComplexInputFormMessageHandler handler) {
+    private void addComplexInputFormActionHandlerOnFields(ComplexInput field, ComplexInputFormActionHandler handler) {
         if (handler != null) {
-            field.addComplexInputFormMessageHandler(handler);
+            field.addComplexInputFormActionHandler(handler);
             List<InputField> listInputFields = field.getInputFromInputList();
             for (InputField inputField : listInputFields) {
                 if (inputField instanceof ComplexInputForm) {
-                    ((ComplexInputForm) inputField).addComplexInputFormMessageHandler(handler);
+                    ((ComplexInputForm) inputField).addComplexInputFormActionHandler(handler);
                 }
             }
         }

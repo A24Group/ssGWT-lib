@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ssgwt.client.ui.ImageButton;
+import org.ssgwt.client.ui.form.event.ComplexInputFormActionEvent;
+import org.ssgwt.client.ui.form.event.ComplexInputFormActionEvent.ComplexInputFormActionHandler;
 import org.ssgwt.client.ui.form.event.ComplexInputFormAddEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormCancelEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormFieldAddEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler;
-import org.ssgwt.client.ui.form.event.ComplexInputFormMessageEvent;
-import org.ssgwt.client.ui.form.event.ComplexInputFormMessageEvent.ComplexInputFormMessageHandler;
 import org.ssgwt.client.ui.form.event.ComplexInputFormRemoveEvent;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -41,7 +41,7 @@ public abstract class ComplexInput<T>
         ComplexInputFormAddEvent.ComplexInputFormAddHasHandlers,
         ComplexInputFormCancelEvent.ComplexInputFormCancelHasHandlers,
         ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers,
-        ComplexInputFormMessageEvent.ComplexInputFormMessageHasHandlers {
+        ComplexInputFormActionEvent.ComplexInputFormActionHasHandlers {
 
     /**
      * This is the main panel.
@@ -149,9 +149,9 @@ public abstract class ComplexInput<T>
     protected Object injectedObject;
 
     /**
-     * The ComplexInputFormMessageHandler added to this class
+     * The ComplexInputFormActionHandler added to this class
      */
-    protected ComplexInputFormMessageHandler complexInputFormMessageHandler;
+    protected ComplexInputFormActionHandler complexInputFormActionHandler;
 
     /**
      * Class constructor
@@ -483,9 +483,9 @@ public abstract class ComplexInput<T>
     }
 
     /**
-     * Sets the message as a variable so that it can be passed on to other components also
-     * Adds a ComplexInputFormMessageHandler that can be fired each time if a message needs to be displayed
-     * out side the scope of the class
+     * Sets the action event as a variable so that it can be passed on to other components also
+     * Adds a ComplexInputFormActionHandler that can be fired each time if a custom action needs to happen on the
+     * parent presenter.
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  29 Aug 2013
@@ -493,9 +493,9 @@ public abstract class ComplexInput<T>
      * @param handler - The complex input form message handler
      */
     @Override
-    public HandlerRegistration addComplexInputFormMessageHandler(ComplexInputFormMessageHandler handler) {
-        this.complexInputFormMessageHandler = handler;
-        return this.addHandler(handler, ComplexInputFormMessageEvent.TYPE);
+    public HandlerRegistration addComplexInputFormActionHandler(ComplexInputFormActionHandler handler) {
+        this.complexInputFormActionHandler = handler;
+        return this.addHandler(handler, ComplexInputFormActionEvent.TYPE);
     }
 
     /**
