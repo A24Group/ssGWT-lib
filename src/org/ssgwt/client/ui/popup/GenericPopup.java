@@ -748,6 +748,7 @@ public class GenericPopup extends PopupPanel {
      */
     public void setLoadingState(Boolean loading) {
         this.loadingState = loading;
+        setLoaderStateSize();
         loaderFlowPanel.setVisible(loading);
         popupContent.setVisible(!loading);
     }
