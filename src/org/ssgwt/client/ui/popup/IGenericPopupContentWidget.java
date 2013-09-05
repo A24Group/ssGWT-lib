@@ -48,11 +48,12 @@ public interface IGenericPopupContentWidget {
      * Sets the data required by the popup content widget
      * 
      * @param data - The required data
+     * @param loadingState - Whether the item is in loading state
      * 
      * @author Ruan Naude <naudeuran777@gmail.com>
      * @since 15 July 2013
      */
-    void setData(Object data, boolean bLoadingState);
+    void setData(Object data, boolean loadingState);
     
     /**
      * Return the popup content widget as a widget

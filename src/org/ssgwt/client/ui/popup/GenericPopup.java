@@ -346,19 +346,20 @@ public class GenericPopup extends PopupPanel {
      * 
      * @param popupContentWidget - The widget to display in the popup
      * @param closeOnMouseOut - Whether to close the popup on mouse out
-     * @param bLockBackground Whether the background should be locked so clicking is disabled
+     * @param lockBackground Whether the background should be locked so clicking is disabled
      * 
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  02 September 2013
      */
-    public GenericPopup(IGenericPopupContentWidget popupContentWidget, Boolean bLockBackground, Boolean closeOnMouseOut, Boolean useArrow) {
-        this(popupContentWidget, bLockBackground, closeOnMouseOut, useArrow, getDefaultResources());
+    public GenericPopup(IGenericPopupContentWidget popupContentWidget, Boolean lockBackground, Boolean closeOnMouseOut, Boolean useArrow) {
+        this(popupContentWidget, lockBackground, closeOnMouseOut, useArrow, getDefaultResources());
     }
     
     /**
      * Class constructor sets the widget to display in popup
      * 
      * @param popupContentWidget - The widget to display in the popup
+     * @param lockBackground - Whether to lock the background
      * @param closeOnMouseOut - Whether to close the popup on mouse out
      * @param useArrow - Whether to use a arrow on the popup
      * @param resource The resource to be used for the GenericPopup
@@ -367,10 +368,10 @@ public class GenericPopup extends PopupPanel {
      * @since 15 July 2013
      */
     public GenericPopup(
-        IGenericPopupContentWidget popupContentWidget, Boolean bLockBackground, final Boolean closeOnMouseOut, Boolean useArrow, GenericPopupResource resource
+        IGenericPopupContentWidget popupContentWidget, Boolean lockBackground, final Boolean closeOnMouseOut, Boolean useArrow, GenericPopupResource resource
     ) {
-        super(!bLockBackground);
-        setGlassEnabled(bLockBackground);
+        super(!lockBackground);
+        setGlassEnabled(lockBackground);
         setGlassStyleName("generalPopupOpacity");
         
         this.resource = resource;
