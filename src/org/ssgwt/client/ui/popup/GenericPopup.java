@@ -147,7 +147,7 @@ public class GenericPopup extends PopupPanel {
     /**
      * Whether the popup is in loading state
      */
-    private Boolean loadingState;
+    private Boolean loadingState = true;
     
     /**
      * The timer for the mouse out event
@@ -297,7 +297,7 @@ public class GenericPopup extends PopupPanel {
      * @since 15 July 2013
      */
     public GenericPopup(IGenericPopupContentWidget popupContentWidget) {
-        this(popupContentWidget, false, false, getDefaultResources());
+        this(popupContentWidget, false, false, false, getDefaultResources());
     }
     
     /**
@@ -310,7 +310,7 @@ public class GenericPopup extends PopupPanel {
      * @since 15 July 2013
      */
     public GenericPopup(IGenericPopupContentWidget popupContentWidget, Boolean closeOnMouseOut) {
-        this(popupContentWidget, closeOnMouseOut, false, getDefaultResources());
+        this(popupContentWidget, false, closeOnMouseOut, false, getDefaultResources());
     }
     
     /**
@@ -324,7 +324,7 @@ public class GenericPopup extends PopupPanel {
      * @since 15 July 2013
      */
     public GenericPopup(IGenericPopupContentWidget popupContentWidget, Boolean closeOnMouseOut, Boolean useArrow) {
-        this(popupContentWidget, closeOnMouseOut, useArrow, getDefaultResources());
+        this(popupContentWidget, false, closeOnMouseOut, useArrow, getDefaultResources());
     }
     
     /**
@@ -338,13 +338,28 @@ public class GenericPopup extends PopupPanel {
      * @since 15 July 2013
      */
     public GenericPopup(IGenericPopupContentWidget popupContentWidget, Boolean closeOnMouseOut, GenericPopupResource resource) {
-        this(popupContentWidget, closeOnMouseOut, false, getDefaultResources());
+        this(popupContentWidget, false, closeOnMouseOut, false, getDefaultResources());
     }
     
     /**
      * Class constructor sets the widget to display in popup
      * 
      * @param popupContentWidget - The widget to display in the popup
+     * @param closeOnMouseOut - Whether to close the popup on mouse out
+     * @param lockBackground Whether the background should be locked so clicking is disabled
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  02 September 2013
+     */
+    public GenericPopup(IGenericPopupContentWidget popupContentWidget, Boolean lockBackground, Boolean closeOnMouseOut, Boolean useArrow) {
+        this(popupContentWidget, lockBackground, closeOnMouseOut, useArrow, getDefaultResources());
+    }
+    
+    /**
+     * Class constructor sets the widget to display in popup
+     * 
+     * @param popupContentWidget - The widget to display in the popup
+     * @param lockBackground - Whether to lock the background
      * @param closeOnMouseOut - Whether to close the popup on mouse out
      * @param useArrow - Whether to use a arrow on the popup
      * @param resource The resource to be used for the GenericPopup
@@ -353,9 +368,12 @@ public class GenericPopup extends PopupPanel {
      * @since 15 July 2013
      */
     public GenericPopup(
-        IGenericPopupContentWidget popupContentWidget, final Boolean closeOnMouseOut, Boolean useArrow, GenericPopupResource resource
+        IGenericPopupContentWidget popupContentWidget, Boolean lockBackground, final Boolean closeOnMouseOut, Boolean useArrow, GenericPopupResource resource
     ) {
-        super(true);
+        super(!lockBackground);
+        setGlassEnabled(lockBackground);
+        setGlassStyleName("generalPopupOpacity");
+        
         this.resource = resource;
         this.closeOnMouseOut = closeOnMouseOut;
         this.useArrow = useArrow;
@@ -389,7 +407,9 @@ public class GenericPopup extends PopupPanel {
              */
             @Override
             public void onResize(ResizeEvent event) {
-                calculatePopupPosition();
+                if (isShowing()) {
+                    calculatePopupPosition();
+                }
             }
         });
         
@@ -543,6 +563,7 @@ public class GenericPopup extends PopupPanel {
             }
         };
         timer.schedule(100);
+        
     }
     
     /**
@@ -555,7 +576,7 @@ public class GenericPopup extends PopupPanel {
     public void calculatePopupPosition() {
         //displays the popup in the center of the screen
         this.center();
-        
+
         //set the height of the loader panel according to the 
         //size of the content
         setLoaderStateSize();
@@ -728,6 +749,7 @@ public class GenericPopup extends PopupPanel {
      */
     public void setLoadingState(Boolean loading) {
         this.loadingState = loading;
+        setLoaderStateSize();
         loaderFlowPanel.setVisible(loading);
         popupContent.setVisible(!loading);
     }
