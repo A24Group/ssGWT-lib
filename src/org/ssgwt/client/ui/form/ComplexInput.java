@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ssgwt.client.ui.ImageButton;
+import org.ssgwt.client.ui.form.event.ComplexInputFormActionEvent;
+import org.ssgwt.client.ui.form.event.ComplexInputFormActionEvent.ComplexInputFormActionHandler;
 import org.ssgwt.client.ui.form.event.ComplexInputFormAddEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormCancelEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormFieldAddEvent;
@@ -29,14 +31,17 @@ import com.google.gwt.user.client.ui.Widget;
  *
  * @param <T> is the type if data used like a VO
  */
-public abstract class ComplexInput<T> extends Composite
+public abstract class ComplexInput<T>
+    extends
+        Composite
     implements
         HasValue<T>,
         InputField<T, T>,
         ComplexInputFormRemoveEvent.ComplexInputFormRemoveHasHandlers,
         ComplexInputFormAddEvent.ComplexInputFormAddHasHandlers,
         ComplexInputFormCancelEvent.ComplexInputFormCancelHasHandlers,
-        ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers {
+        ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers,
+        ComplexInputFormActionEvent.ComplexInputFormActionHasHandlers {
 
     /**
      * This is the main panel.
@@ -142,6 +147,11 @@ public abstract class ComplexInput<T> extends Composite
      * Injected Object
      */
     protected Object injectedObject;
+
+    /**
+     * The ComplexInputFormActionHandler added to this class
+     */
+    protected ComplexInputFormActionHandler complexInputFormActionHandler;
 
     /**
      * Class constructor
@@ -470,6 +480,23 @@ public abstract class ComplexInput<T> extends Composite
     @Override
     public HandlerRegistration addComplexInputFormFieldAddHandler(ComplexInputFormFieldAddHandler handler) {
         return this.addHandler(handler, ComplexInputFormFieldAddEvent.TYPE);
+    }
+
+    /**
+     * Adds a ComplexInputFormActionHandler that can be fired each time if a custom action needs to happen on the
+     * parent presenter.
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  29 Aug 2013
+     *
+     * @param handler - The complex input form action handler
+     *
+     * @return the HandlerRegistration
+     */
+    @Override
+    public HandlerRegistration addComplexInputFormActionHandler(ComplexInputFormActionHandler handler) {
+        this.complexInputFormActionHandler = handler;
+        return this.addHandler(handler, ComplexInputFormActionEvent.TYPE);
     }
 
     /**
@@ -802,10 +829,10 @@ public abstract class ComplexInput<T> extends Composite
     public void setComplexAddButtonStyle(String complexAddButtonStyle) {
         this.complexAddButtonStyle = complexAddButtonStyle;
     }
-    
+
     /**
      * This function will update the field labels on the input
-     * 
+     *
      * @author Ruan Naude <nauderuan777@gmail.com>
      * @since 02 July 2013
      */
