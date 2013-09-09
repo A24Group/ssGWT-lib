@@ -432,6 +432,8 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
      * @since  29 Aug 2013
      *
      * @param handler - The complex input form action handler
+     *
+     * @return the HandlerRegistration
      */
     @Override
     public HandlerRegistration addComplexInputFormActionHandler(ComplexInputFormActionHandler handler) {
@@ -451,7 +453,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
      * @since  29 Aug 2013
      *
      * @param field - The ComplexInput field to add the ComplexInputFormMessageHandler
-     * @param handler - The ComplexInputFormActionHandler to add to the ComplexInputForm
+     * @param handler - The ComplexInputFormActionHandler to add to the ComplexInputForms
      */
     private void addComplexInputFormActionHandlerOnFields(ComplexInput field, ComplexInputFormActionHandler handler) {
         if (handler != null) {

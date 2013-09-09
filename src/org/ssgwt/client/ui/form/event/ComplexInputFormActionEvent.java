@@ -99,7 +99,7 @@ public class ComplexInputFormActionEvent extends GwtEvent<ComplexInputFormAction
      * @since  29 Aug 2013
      *
      * @param action - The action fired
-     * @param params - Array with the params
+     * @param params - Hashmap with the params for the action
      */
     public ComplexInputFormActionEvent(String action, HashMap<String, String> params) {
         this.action = action;
@@ -150,8 +150,8 @@ public class ComplexInputFormActionEvent extends GwtEvent<ComplexInputFormAction
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  29 Aug 2013
      *
-     * @param action - This is a generic action repersented with a string
      * @param source - The component that dispatches the event.
+     * @param action - This is a generic action repersented with a string
      */
     public static void fire(HasHandlers source, String action) {
         source.fireEvent(new ComplexInputFormActionEvent(action));
@@ -163,8 +163,8 @@ public class ComplexInputFormActionEvent extends GwtEvent<ComplexInputFormAction
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  29 Aug 2013
      *
-     * @param action - This is a generic action repersented with a string
      * @param source - The component that dispatches the event.
+     * @param action - This is a generic action repersented with a string
      * @param params - This is parameters for the action
      */
     public static void fire(HasHandlers source, String action, HashMap<String, String> params) {
