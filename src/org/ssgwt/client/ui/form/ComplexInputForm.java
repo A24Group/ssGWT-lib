@@ -426,14 +426,12 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
     }
 
     /**
-     * Sets the message as a variable so that it can be passed on to other components also
-     * Adds a ComplexInputFormMessageHandler that can be fired each time if a message needs to be displayed
-     * out side the scope of the class
+     * Adds a ComplexInputFormActionHandler to this class and its childern.
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  29 Aug 2013
      *
-     * @param handler - The complex input form message handler
+     * @param handler - The complex input form action handler
      */
     @Override
     public HandlerRegistration addComplexInputFormActionHandler(ComplexInputFormActionHandler handler) {
@@ -447,7 +445,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
     }
 
     /**
-     * Add the ComplexInputFormActionHandler to a complexIput inner complex input form
+     * Add the ComplexInputFormActionHandler to a complexIput inner complex input forms
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  29 Aug 2013

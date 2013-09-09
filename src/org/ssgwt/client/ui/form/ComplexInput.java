@@ -483,14 +483,15 @@ public abstract class ComplexInput<T>
     }
 
     /**
-     * Sets the action event as a variable so that it can be passed on to other components also
      * Adds a ComplexInputFormActionHandler that can be fired each time if a custom action needs to happen on the
      * parent presenter.
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since  29 Aug 2013
      *
-     * @param handler - The complex input form message handler
+     * @param handler - The complex input form action handler
+     *
+     * @return the HandlerRegistration
      */
     @Override
     public HandlerRegistration addComplexInputFormActionHandler(ComplexInputFormActionHandler handler) {

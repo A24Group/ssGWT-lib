@@ -1,5 +1,7 @@
 package org.ssgwt.client.ui.form.event;
 
+import java.util.HashMap;
+
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -18,6 +20,16 @@ public class ComplexInputFormActionEvent extends GwtEvent<ComplexInputFormAction
      * Type of the event.
      */
     public static Type<ComplexInputFormActionHandler> TYPE = new Type<ComplexInputFormActionHandler>();
+
+    /**
+     * The constant for the email Confirmation action
+     */
+    public final static String EMAIL_CONFIRMATION_ACTION = "emailConfirmationAction";
+
+    /**
+     * This is a HashMap that can be used as parameters
+     */
+    private final HashMap<String, String> params;
 
     /**
      * This is the action that was fired.
@@ -77,7 +89,21 @@ public class ComplexInputFormActionEvent extends GwtEvent<ComplexInputFormAction
      * @param action - The action fired
      */
     public ComplexInputFormActionEvent(String action) {
+        this(action, null);
+    }
+
+    /**
+     * Class constructor.
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  29 Aug 2013
+     *
+     * @param action - The action fired
+     * @param params - Array with the params
+     */
+    public ComplexInputFormActionEvent(String action, HashMap<String, String> params) {
         this.action = action;
+        this.params = params;
     }
 
     /**
@@ -132,6 +158,20 @@ public class ComplexInputFormActionEvent extends GwtEvent<ComplexInputFormAction
     }
 
     /**
+     * Convenience method used to easily dispatch events of this type.
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  29 Aug 2013
+     *
+     * @param action - This is a generic action repersented with a string
+     * @param source - The component that dispatches the event.
+     * @param params - This is parameters for the action
+     */
+    public static void fire(HasHandlers source, String action, HashMap<String, String> params) {
+        source.fireEvent(new ComplexInputFormActionEvent(action, params));
+    }
+
+    /**
      * This is the getter for the action string that was fired
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
@@ -141,5 +181,17 @@ public class ComplexInputFormActionEvent extends GwtEvent<ComplexInputFormAction
      */
     public String getAction() {
         return this.action;
+    }
+
+    /**
+     * Getter for the params passed in by the constructor
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  02 September 2013
+     *
+     * @return Hashmap used for params
+     */
+    public HashMap<String, String> getParams() {
+        return this.params;
     }
 }
