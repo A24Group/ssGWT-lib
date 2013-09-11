@@ -3,6 +3,8 @@ package org.ssgwt.client.ui.form;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ssgwt.client.ui.form.event.ComplexInputFormActionEvent;
+import org.ssgwt.client.ui.form.event.ComplexInputFormActionEvent.ComplexInputFormActionHandler;
 import org.ssgwt.client.ui.form.event.ComplexInputFormAddEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormCancelEvent;
 import org.ssgwt.client.ui.form.event.ComplexInputFormConfirmationEvent;
@@ -42,7 +44,8 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
         ComplexInputFormConfirmationEvent.ComplexInputFormConfirmationHasHandlers,
         ComplexInputFormCancelEvent.ComplexInputFormCancelHandler,
         ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHasHandlers,
-        ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler {
+        ComplexInputFormFieldAddEvent.ComplexInputFormFieldAddHandler,
+        ComplexInputFormActionEvent.ComplexInputFormActionHasHandlers {
 
     /**
      * Contain the list of the embedded Vos
@@ -98,6 +101,11 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
      * ComplexInputFormConfirmationHandler that will be added to inner ComplexInputForm forms.
      */
     private ComplexInputFormConfirmationHandler complexInputFormConfirmationHandler;
+
+    /**
+     * ComplexInputFormActionHandler that will be added to the inner ComplexInputForms.
+     */
+    private ComplexInputFormActionHandler complexInputFormActionHandler;
 
     /**
      * Class constructor
@@ -254,6 +262,7 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
         field.addComplexInputFormCancelHandler(this);
         field.addComplexInputFormFieldAddHandler(this);
         addComplexInputFormConfirmationHandlerOnFields(field, complexInputFormConfirmationHandler);
+        addComplexInputFormActionHandlerOnFields(field, complexInputFormActionHandler);
     }
 
     /**
@@ -416,6 +425,47 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
         }
     }
 
+    /**
+     * Adds a ComplexInputFormActionHandler to this class and its childern.
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  29 Aug 2013
+     *
+     * @param handler - The complex input form action handler
+     *
+     * @return the HandlerRegistration
+     */
+    @Override
+    public HandlerRegistration addComplexInputFormActionHandler(ComplexInputFormActionHandler handler) {
+        this.complexInputFormActionHandler = handler;
+        for (Object field : fields) {
+            if (field instanceof ComplexInput) {
+                addComplexInputFormActionHandlerOnFields((ComplexInput)field, complexInputFormActionHandler);
+            }
+        }
+        return this.addHandler(handler, ComplexInputFormActionEvent.TYPE);
+    }
+
+    /**
+     * Add the ComplexInputFormActionHandler to a complexIput inner complex input forms
+     *
+     * @author Alec Erasmus <alec.erasmus@a24group.com>
+     * @since  29 Aug 2013
+     *
+     * @param field - The ComplexInput field to add the ComplexInputFormMessageHandler
+     * @param handler - The ComplexInputFormActionHandler to add to the ComplexInputForms
+     */
+    private void addComplexInputFormActionHandlerOnFields(ComplexInput field, ComplexInputFormActionHandler handler) {
+        if (handler != null) {
+            field.addComplexInputFormActionHandler(handler);
+            List<InputField> listInputFields = field.getInputFromInputList();
+            for (InputField inputField : listInputFields) {
+                if (inputField instanceof ComplexInputForm) {
+                    ((ComplexInputForm) inputField).addComplexInputFormActionHandler(handler);
+                }
+            }
+        }
+    }
 
     /**
      * Adds a ComplexInputFormFieldAddHandler that listen for the ComplexInputFormFieldAddEvent to
@@ -600,10 +650,10 @@ public abstract class ComplexInputForm<OutterVO, InnerVO, TheField extends Compl
         }
         return false;
     }
-    
+
     /**
      * This function will update the field labels on the form
-     * 
+     *
      * @author Ruan Naude <nauderuan777@gmail.com>
      * @since 02 July 2013
      */
