@@ -415,6 +415,8 @@ public class DynamicForm<T> extends Composite {
                 ((InputField<T, Long>)field).setValue(dataObject, ((HasValue<Long>)field).getValue());
             } else if (Double.class.equals(field.getReturnType())) {
                 ((InputField<T, Double>)field).setValue(dataObject, ((HasValue<Double>)field).getValue());
+            } else if (Object.class.equals(field.getReturnType())) {
+                ((InputField<T, Object>)field).setValue(dataObject, ((HasValue<Object>)field).getValue());
             }
         }
     }
@@ -440,6 +442,8 @@ public class DynamicForm<T> extends Composite {
                 ((HasValue<Long>)field).setValue(((InputField<T, Long>)field).getValue(dataObject));
             } else if (Double.class.equals(field.getReturnType())) {
                 ((HasValue<Double>)field).setValue(((InputField<T, Double>)field).getValue(dataObject));
+            } else if (Object.class.equals(field.getReturnType())) {
+                ((HasValue<Object>)field).setValue(((InputField<T, Object>)field).getValue(dataObject));
             }
         }
     }

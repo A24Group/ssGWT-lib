@@ -1,5 +1,45 @@
+# THE FileSelector
+### The FileSelector is a rewrite of the ssFileSelector, using a much better system on javascript injection on a specified GWT widget.
 
-## SSFileSelector
+### Usage
+Creating a new file upload widget
+```java
+FileSelector upload = new FileSelector(
+    customWidget
+);
+upload.setName("file"); // This does not matter
+upload.setAllowedFileTypes(arrayListOfFIleTypes);
+```
+**NOTE:** Make sure that no other handlers are attached to the widget
+
+Moving the file browser to another component
+```java
+upload.reConnectWidgetToFileSelector(
+    someOtherWidget
+);
+```
+
+Listening for fileUploads
+```java
+upload.addChangeHandler(new ChangeHandler() {
+    @Override
+    public void onChange(ChangeEvent event) {
+        // When a file is uploaded.
+        // YOUR CODE HERE        
+    }
+});
+```
+
+Checking uploaded files
+```java
+boolean cancelClickedAfterFirstBrowse = upload.isFileNone();
+boolean fileOfCorrectAllowedMimeType = upload.isFileValid();
+String fileName = upload.getFileName();
+```
+
+
+# THE DEPRICATED SSFileSelector
+## For future use, please refrain from using the ssFileSelector as it was only build as a temporary fix for a problem. Rather use the former file selector
 
 ### Description of features
 
