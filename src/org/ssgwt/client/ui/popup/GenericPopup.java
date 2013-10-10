@@ -132,7 +132,7 @@ public class GenericPopup extends PopupPanel {
     /**
      * The flag to indicate whether to use arrow on the popup
      */
-    private Boolean useArrow = true;
+    private boolean useArrow = true;
 
     /**
      * The x axis center position of the parent
@@ -142,12 +142,12 @@ public class GenericPopup extends PopupPanel {
     /**
      * Wherher to close the popup on mouse out
      */
-    private Boolean closeOnMouseOut;
+    private boolean closeOnMouseOut;
 
     /**
      * Whether the popup is in loading state
      */
-    private Boolean loadingState = true;
+    private boolean loadingState = true;
     
     /**
      * The timer for the mouse out event
@@ -309,7 +309,7 @@ public class GenericPopup extends PopupPanel {
      * @author Ruan Naude <naudeuran777@gmail.com>
      * @since 15 July 2013
      */
-    public GenericPopup(IGenericPopupContentWidget popupContentWidget, Boolean closeOnMouseOut) {
+    public GenericPopup(IGenericPopupContentWidget popupContentWidget, boolean closeOnMouseOut) {
         this(popupContentWidget, false, closeOnMouseOut, false, getDefaultResources());
     }
     
@@ -323,7 +323,7 @@ public class GenericPopup extends PopupPanel {
      * @author Ruan Naude <naudeuran777@gmail.com>
      * @since 15 July 2013
      */
-    public GenericPopup(IGenericPopupContentWidget popupContentWidget, Boolean closeOnMouseOut, Boolean useArrow) {
+    public GenericPopup(IGenericPopupContentWidget popupContentWidget, boolean closeOnMouseOut, boolean useArrow) {
         this(popupContentWidget, false, closeOnMouseOut, useArrow, getDefaultResources());
     }
     
@@ -337,7 +337,7 @@ public class GenericPopup extends PopupPanel {
      * @author Ruan Naude <naudeuran777@gmail.com>
      * @since 15 July 2013
      */
-    public GenericPopup(IGenericPopupContentWidget popupContentWidget, Boolean closeOnMouseOut, GenericPopupResource resource) {
+    public GenericPopup(IGenericPopupContentWidget popupContentWidget, boolean closeOnMouseOut, GenericPopupResource resource) {
         this(popupContentWidget, false, closeOnMouseOut, false, getDefaultResources());
     }
     
@@ -351,7 +351,7 @@ public class GenericPopup extends PopupPanel {
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  02 September 2013
      */
-    public GenericPopup(IGenericPopupContentWidget popupContentWidget, Boolean lockBackground, Boolean closeOnMouseOut, Boolean useArrow) {
+    public GenericPopup(IGenericPopupContentWidget popupContentWidget, boolean lockBackground, boolean closeOnMouseOut, boolean useArrow) {
         this(popupContentWidget, lockBackground, closeOnMouseOut, useArrow, getDefaultResources());
     }
     
@@ -368,7 +368,7 @@ public class GenericPopup extends PopupPanel {
      * @since 15 July 2013
      */
     public GenericPopup(
-        IGenericPopupContentWidget popupContentWidget, Boolean lockBackground, final Boolean closeOnMouseOut, Boolean useArrow, GenericPopupResource resource
+        IGenericPopupContentWidget popupContentWidget, boolean lockBackground, final boolean closeOnMouseOut, boolean useArrow, GenericPopupResource resource
     ) {
         super(!lockBackground);
         setGlassEnabled(lockBackground);
@@ -527,7 +527,7 @@ public class GenericPopup extends PopupPanel {
      * @param attachToWidget - The widget the popup is attached to
      * @param closeOnMouseOut - Whether to close the popup on mouse out
      */
-    public void displayPopup(Widget attachToWidget, Boolean closeOnMouseOut) {
+    public void displayPopup(Widget attachToWidget, boolean closeOnMouseOut) {
         displayPopup(attachToWidget, closeOnMouseOut, this.useArrow);
     }
     
@@ -542,7 +542,7 @@ public class GenericPopup extends PopupPanel {
      * @param closeOnMouseOut - Whether to close the popup on mouse out
      * @param useArrow - Whether to use a arrow on the popup
      */
-    public void displayPopup(Widget attachToWidget, Boolean closeOnMouseOut, Boolean useArrow) {
+    public void displayPopup(Widget attachToWidget, boolean closeOnMouseOut, boolean useArrow) {
         this.useArrow = useArrow;
         this.attachToWidget = attachToWidget;
         this.closeOnMouseOut = closeOnMouseOut;
@@ -747,7 +747,7 @@ public class GenericPopup extends PopupPanel {
      * 
      * @param loading - Whether to set popup into loading state
      */
-    public void setLoadingState(Boolean loading) {
+    public void setLoadingState(boolean loading) {
         this.loadingState = loading;
         setLoaderStateSize();
         loaderFlowPanel.setVisible(loading);
