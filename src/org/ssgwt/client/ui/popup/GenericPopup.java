@@ -748,10 +748,24 @@ public class GenericPopup extends PopupPanel {
      * @param loading - Whether to set popup into loading state
      */
     public void setLoadingState(boolean loading) {
+        // Set the popup in the center of the screen.
+        // only if it does not attach onto a widget
+        if (useArrow == false) {
+            this.center();
+        }
+        
         this.loadingState = loading;
+        // Calculate the size of the loader.
         setLoaderStateSize();
         loaderFlowPanel.setVisible(loading);
         popupContent.setVisible(!loading);
+        
+        // The popup size is determined by the content in it, so we need
+        // to re-center the popup as it's size might have changed.
+        // This will only be centered if the popup has NO arrow
+        if (useArrow == false) {
+            this.center();
+        }
     }
     
     /** 
