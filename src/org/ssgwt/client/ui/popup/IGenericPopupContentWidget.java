@@ -64,5 +64,15 @@ public interface IGenericPopupContentWidget {
      * @return the component as a widget
      */
     Widget asWidget();
+    
+    /**
+     * Set the loading state
+     * 
+     * @author Ryno Hartzer <ryno.hartzer@a24group.com>
+     * @since  09 October 2013
+     * 
+     * @param loading - Whether the loader should show or not
+     */
+    void setLoadingState(boolean loading);
 
 }
