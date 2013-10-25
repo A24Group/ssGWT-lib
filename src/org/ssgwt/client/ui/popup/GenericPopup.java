@@ -153,6 +153,7 @@ public class GenericPopup extends PopupPanel {
      * The timer for the mouse out event
      */
     Timer mouseOutTimer = null;
+    
 
     /**
      * A ClientBundle that provides style for this widget.
@@ -168,6 +169,7 @@ public class GenericPopup extends PopupPanel {
          * @author Ruan Naude <naudeuran777@gmail.com>
          * @since 15 July 2013
          */
+        
         @Source("GenericPopup.css")
         Style genericPopupStyle();
         
@@ -198,7 +200,7 @@ public class GenericPopup extends PopupPanel {
          * 
          * @return The name of the compiled style
          */
-        String hoverPopupContainer();
+        String ssHoverPopupContainer();
         
         /**
          * The style for the inner arrow panel
@@ -208,7 +210,7 @@ public class GenericPopup extends PopupPanel {
          * 
          * @return The name of the compiled style
          */
-        String hoverPopupInnerArrow();
+        String ssHoverPopupInnerArrow();
         
         /**
          * The style for the popup loader image
@@ -218,7 +220,7 @@ public class GenericPopup extends PopupPanel {
          * 
          * @return The name of the compiled style
          */
-        String popupLoaderImage();
+        String ssPopupLoaderImage();
         
         /**
          * The style for the popup outer arrow panel
@@ -228,7 +230,7 @@ public class GenericPopup extends PopupPanel {
          * 
          * @return The name of the compiled style
          */
-        String hoverPopupOuterArrow();
+        String ssHoverPopupOuterArrow();
         
         /**
          * The style for a gray border at the top
@@ -238,7 +240,7 @@ public class GenericPopup extends PopupPanel {
          * 
          * @return The name of the compiled style
          */
-        String borderColorGreyTop();
+        String ssBorderColorGreyTop();
         
         /**
          * The style for a gray border at the bottom
@@ -248,7 +250,7 @@ public class GenericPopup extends PopupPanel {
          * 
          * @return The name of the compiled style
          */
-        String borderColorGreyBottom();
+        String ssBorderColorGreyBottom();
         
         /**
          * The style for a white border at the top
@@ -258,7 +260,7 @@ public class GenericPopup extends PopupPanel {
          * 
          * @return The name of the compiled style
          */
-        String borderColorWhiteTop();
+        String ssBorderColorWhiteTop();
         
         /**
          * The style for a white border at the bottom
@@ -268,7 +270,7 @@ public class GenericPopup extends PopupPanel {
          * 
          * @return The name of the compiled style
          */
-        String borderColorWhiteBottom();
+        String ssBorderColorWhiteBottom();
         
     }
     
@@ -391,10 +393,10 @@ public class GenericPopup extends PopupPanel {
         mainFlowPanel.add(loaderFlowPanel);
         
         //set the styles on the popup
-        innerArrow.addStyleName(resource.genericPopupStyle().hoverPopupInnerArrow());
-        outerArrow.addStyleName(resource.genericPopupStyle().hoverPopupOuterArrow());
-        this.setStyleName(resource.genericPopupStyle().hoverPopupContainer());
-        loaderImage.addStyleName(resource.genericPopupStyle().popupLoaderImage());
+        innerArrow.addStyleName(resource.genericPopupStyle().ssHoverPopupInnerArrow());
+        outerArrow.addStyleName(resource.genericPopupStyle().ssHoverPopupOuterArrow());
+        this.setStyleName(resource.genericPopupStyle().ssHoverPopupContainer());
+        loaderImage.addStyleName(resource.genericPopupStyle().ssPopupLoaderImage());
         
         //This will listen to the browser resize event and update the popup location
         Window.addResizeHandler(new ResizeHandler() {
@@ -547,22 +549,22 @@ public class GenericPopup extends PopupPanel {
         this.attachToWidget = attachToWidget;
         this.closeOnMouseOut = closeOnMouseOut;
         
-        Timer timer = new Timer() {
-            
-            /**
-             * This method will be called when a timer fires 
-             * allowing time for the resource to be loaded and
-             * then calculate Popup Position
-             * 
-             * @author Ruan Naude <naudeuran777@gmail.com>
-             * @since 15 July 2013
-             */
-            @Override
-            public void run() {
+//        Timer timer = new Timer() {
+//            
+//            /**
+//             * This method will be called when a timer fires 
+//             * allowing time for the resource to be loaded and
+//             * then calculate Popup Position
+//             * 
+//             * @author Ruan Naude <naudeuran777@gmail.com>
+//             * @since 15 July 2013
+//             */
+//            @Override
+//            public void run() {
                 calculatePopupPosition();
-            }
-        };
-        timer.schedule(100);
+//            }
+//        };
+//        timer.schedule(100);
         
     }
     
@@ -701,11 +703,11 @@ public class GenericPopup extends PopupPanel {
         }
         
         if (topPointer) {
-            outerArrow.removeStyleName(resource.genericPopupStyle().borderColorGreyBottom());
-            outerArrow.addStyleName(resource.genericPopupStyle().borderColorGreyTop());
+            outerArrow.removeStyleName(resource.genericPopupStyle().ssBorderColorGreyBottom());
+            outerArrow.addStyleName(resource.genericPopupStyle().ssBorderColorGreyTop());
         } else {
-            outerArrow.removeStyleName(resource.genericPopupStyle().borderColorGreyTop());
-            outerArrow.addStyleName(resource.genericPopupStyle().borderColorGreyBottom());
+            outerArrow.removeStyleName(resource.genericPopupStyle().ssBorderColorGreyTop());
+            outerArrow.addStyleName(resource.genericPopupStyle().ssBorderColorGreyBottom());
         }
         
         // For IE we need an additional 1 px on y position
@@ -727,11 +729,11 @@ public class GenericPopup extends PopupPanel {
         }
         
         if (topPointer) {
-            innerArrow.removeStyleName(resource.genericPopupStyle().borderColorWhiteBottom());
-            innerArrow.addStyleName(resource.genericPopupStyle().borderColorWhiteTop());
+            innerArrow.removeStyleName(resource.genericPopupStyle().ssBorderColorWhiteBottom());
+            innerArrow.addStyleName(resource.genericPopupStyle().ssBorderColorWhiteTop());
         } else {
-            innerArrow.removeStyleName(resource.genericPopupStyle().borderColorWhiteTop());
-            innerArrow.addStyleName(resource.genericPopupStyle().borderColorWhiteBottom());
+            innerArrow.removeStyleName(resource.genericPopupStyle().ssBorderColorWhiteTop());
+            innerArrow.addStyleName(resource.genericPopupStyle().ssBorderColorWhiteBottom());
         }
         
         innerArrow.getElement().getStyle().setProperty(STYLE_PROPERTY_TOP, yPosition + Unit.PX.getType());
