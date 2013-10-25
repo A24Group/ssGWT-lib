@@ -321,10 +321,24 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @param startRow - The start row the data is for
      * @param data - The data the should be displayed on the data grid
      *
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since 23 October 2012
+     */
+    public void setRowData(int startRow, List<T> data) {
+        setRowData(startRow, data, 0);
+    }
+
+    /**
+     * Set the complete list of values to display on one page
+     *
+     * @param startRow - The start row the data is for
+     * @param data - The data the should be displayed on the data grid
+     * @param rowsPerPage - The amount of records to display per page
+     *
      * @author Lodewyk Duminy
      * @since 29 June 2012
      */
-    public void setRowData(int startRow, List<T> data) {
+    public void setRowData(int startRow, List<T> data, int rowsPerPage) {
         if (!firstDataSetGiven) {
             firstDataSetGiven = true;
             firstDataSet = true;
@@ -332,7 +346,14 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
 
         previousRange = dataGrid.getVisibleRange();
         if (data != null) {
+            doRangeChange = false;
             noContentLabel.setVisible(false);
+            
+            if (rowsPerPage != 0) {
+                Range range = new Range(startRow, rowsPerPage);
+                dataGrid.setVisibleRangeAndClearData(range, true);
+            }
+            
             dataGrid.setRowData(startRow, data);
             refresh();
         } else {
