@@ -153,7 +153,6 @@ public class GenericPopup extends PopupPanel {
      * The timer for the mouse out event
      */
     Timer mouseOutTimer = null;
-    
 
     /**
      * A ClientBundle that provides style for this widget.
@@ -169,7 +168,6 @@ public class GenericPopup extends PopupPanel {
          * @author Ruan Naude <naudeuran777@gmail.com>
          * @since 15 July 2013
          */
-        
         @Source("GenericPopup.css")
         Style genericPopupStyle();
         
