@@ -549,23 +549,7 @@ public class GenericPopup extends PopupPanel {
         this.attachToWidget = attachToWidget;
         this.closeOnMouseOut = closeOnMouseOut;
         
-//        Timer timer = new Timer() {
-//            
-//            /**
-//             * This method will be called when a timer fires 
-//             * allowing time for the resource to be loaded and
-//             * then calculate Popup Position
-//             * 
-//             * @author Ruan Naude <naudeuran777@gmail.com>
-//             * @since 15 July 2013
-//             */
-//            @Override
-//            public void run() {
-                calculatePopupPosition();
-//            }
-//        };
-//        timer.schedule(100);
-        
+        calculatePopupPosition();
     }
     
     /**
