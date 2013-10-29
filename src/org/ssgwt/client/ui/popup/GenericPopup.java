@@ -132,7 +132,7 @@ public class GenericPopup extends PopupPanel {
     /**
      * The flag to indicate whether to use arrow on the popup
      */
-    private Boolean useArrow = true;
+    private boolean useArrow = true;
 
     /**
      * The x axis center position of the parent
@@ -142,12 +142,12 @@ public class GenericPopup extends PopupPanel {
     /**
      * Wherher to close the popup on mouse out
      */
-    private Boolean closeOnMouseOut;
+    private boolean closeOnMouseOut;
 
     /**
      * Whether the popup is in loading state
      */
-    private Boolean loadingState = true;
+    private boolean loadingState = true;
     
     /**
      * The timer for the mouse out event
@@ -198,7 +198,7 @@ public class GenericPopup extends PopupPanel {
          * 
          * @return The name of the compiled style
          */
-        String hoverPopupContainer();
+        String ssHoverPopupContainer();
         
         /**
          * The style for the inner arrow panel
@@ -208,7 +208,7 @@ public class GenericPopup extends PopupPanel {
          * 
          * @return The name of the compiled style
          */
-        String hoverPopupInnerArrow();
+        String ssHoverPopupInnerArrow();
         
         /**
          * The style for the popup loader image
@@ -218,7 +218,7 @@ public class GenericPopup extends PopupPanel {
          * 
          * @return The name of the compiled style
          */
-        String popupLoaderImage();
+        String ssPopupLoaderImage();
         
         /**
          * The style for the popup outer arrow panel
@@ -228,7 +228,7 @@ public class GenericPopup extends PopupPanel {
          * 
          * @return The name of the compiled style
          */
-        String hoverPopupOuterArrow();
+        String ssHoverPopupOuterArrow();
         
         /**
          * The style for a gray border at the top
@@ -238,7 +238,7 @@ public class GenericPopup extends PopupPanel {
          * 
          * @return The name of the compiled style
          */
-        String borderColorGreyTop();
+        String ssBorderColorGreyTop();
         
         /**
          * The style for a gray border at the bottom
@@ -248,7 +248,7 @@ public class GenericPopup extends PopupPanel {
          * 
          * @return The name of the compiled style
          */
-        String borderColorGreyBottom();
+        String ssBorderColorGreyBottom();
         
         /**
          * The style for a white border at the top
@@ -258,7 +258,7 @@ public class GenericPopup extends PopupPanel {
          * 
          * @return The name of the compiled style
          */
-        String borderColorWhiteTop();
+        String ssBorderColorWhiteTop();
         
         /**
          * The style for a white border at the bottom
@@ -268,7 +268,7 @@ public class GenericPopup extends PopupPanel {
          * 
          * @return The name of the compiled style
          */
-        String borderColorWhiteBottom();
+        String ssBorderColorWhiteBottom();
         
     }
     
@@ -309,7 +309,7 @@ public class GenericPopup extends PopupPanel {
      * @author Ruan Naude <naudeuran777@gmail.com>
      * @since 15 July 2013
      */
-    public GenericPopup(IGenericPopupContentWidget popupContentWidget, Boolean closeOnMouseOut) {
+    public GenericPopup(IGenericPopupContentWidget popupContentWidget, boolean closeOnMouseOut) {
         this(popupContentWidget, false, closeOnMouseOut, false, getDefaultResources());
     }
     
@@ -323,7 +323,7 @@ public class GenericPopup extends PopupPanel {
      * @author Ruan Naude <naudeuran777@gmail.com>
      * @since 15 July 2013
      */
-    public GenericPopup(IGenericPopupContentWidget popupContentWidget, Boolean closeOnMouseOut, Boolean useArrow) {
+    public GenericPopup(IGenericPopupContentWidget popupContentWidget, boolean closeOnMouseOut, boolean useArrow) {
         this(popupContentWidget, false, closeOnMouseOut, useArrow, getDefaultResources());
     }
     
@@ -337,7 +337,7 @@ public class GenericPopup extends PopupPanel {
      * @author Ruan Naude <naudeuran777@gmail.com>
      * @since 15 July 2013
      */
-    public GenericPopup(IGenericPopupContentWidget popupContentWidget, Boolean closeOnMouseOut, GenericPopupResource resource) {
+    public GenericPopup(IGenericPopupContentWidget popupContentWidget, boolean closeOnMouseOut, GenericPopupResource resource) {
         this(popupContentWidget, false, closeOnMouseOut, false, getDefaultResources());
     }
     
@@ -351,7 +351,7 @@ public class GenericPopup extends PopupPanel {
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  02 September 2013
      */
-    public GenericPopup(IGenericPopupContentWidget popupContentWidget, Boolean lockBackground, Boolean closeOnMouseOut, Boolean useArrow) {
+    public GenericPopup(IGenericPopupContentWidget popupContentWidget, boolean lockBackground, boolean closeOnMouseOut, boolean useArrow) {
         this(popupContentWidget, lockBackground, closeOnMouseOut, useArrow, getDefaultResources());
     }
     
@@ -368,7 +368,7 @@ public class GenericPopup extends PopupPanel {
      * @since 15 July 2013
      */
     public GenericPopup(
-        IGenericPopupContentWidget popupContentWidget, Boolean lockBackground, final Boolean closeOnMouseOut, Boolean useArrow, GenericPopupResource resource
+        IGenericPopupContentWidget popupContentWidget, boolean lockBackground, final boolean closeOnMouseOut, boolean useArrow, GenericPopupResource resource
     ) {
         super(!lockBackground);
         setGlassEnabled(lockBackground);
@@ -391,10 +391,10 @@ public class GenericPopup extends PopupPanel {
         mainFlowPanel.add(loaderFlowPanel);
         
         //set the styles on the popup
-        innerArrow.addStyleName(resource.genericPopupStyle().hoverPopupInnerArrow());
-        outerArrow.addStyleName(resource.genericPopupStyle().hoverPopupOuterArrow());
-        this.setStyleName(resource.genericPopupStyle().hoverPopupContainer());
-        loaderImage.addStyleName(resource.genericPopupStyle().popupLoaderImage());
+        innerArrow.addStyleName(resource.genericPopupStyle().ssHoverPopupInnerArrow());
+        outerArrow.addStyleName(resource.genericPopupStyle().ssHoverPopupOuterArrow());
+        this.setStyleName(resource.genericPopupStyle().ssHoverPopupContainer());
+        loaderImage.addStyleName(resource.genericPopupStyle().ssPopupLoaderImage());
         
         //This will listen to the browser resize event and update the popup location
         Window.addResizeHandler(new ResizeHandler() {
@@ -527,7 +527,7 @@ public class GenericPopup extends PopupPanel {
      * @param attachToWidget - The widget the popup is attached to
      * @param closeOnMouseOut - Whether to close the popup on mouse out
      */
-    public void displayPopup(Widget attachToWidget, Boolean closeOnMouseOut) {
+    public void displayPopup(Widget attachToWidget, boolean closeOnMouseOut) {
         displayPopup(attachToWidget, closeOnMouseOut, this.useArrow);
     }
     
@@ -542,28 +542,12 @@ public class GenericPopup extends PopupPanel {
      * @param closeOnMouseOut - Whether to close the popup on mouse out
      * @param useArrow - Whether to use a arrow on the popup
      */
-    public void displayPopup(Widget attachToWidget, Boolean closeOnMouseOut, Boolean useArrow) {
+    public void displayPopup(Widget attachToWidget, boolean closeOnMouseOut, boolean useArrow) {
         this.useArrow = useArrow;
         this.attachToWidget = attachToWidget;
         this.closeOnMouseOut = closeOnMouseOut;
         
-        Timer timer = new Timer() {
-            
-            /**
-             * This method will be called when a timer fires 
-             * allowing time for the resource to be loaded and
-             * then calculate Popup Position
-             * 
-             * @author Ruan Naude <naudeuran777@gmail.com>
-             * @since 15 July 2013
-             */
-            @Override
-            public void run() {
-                calculatePopupPosition();
-            }
-        };
-        timer.schedule(100);
-        
+        calculatePopupPosition();
     }
     
     /**
@@ -701,11 +685,11 @@ public class GenericPopup extends PopupPanel {
         }
         
         if (topPointer) {
-            outerArrow.removeStyleName(resource.genericPopupStyle().borderColorGreyBottom());
-            outerArrow.addStyleName(resource.genericPopupStyle().borderColorGreyTop());
+            outerArrow.removeStyleName(resource.genericPopupStyle().ssBorderColorGreyBottom());
+            outerArrow.addStyleName(resource.genericPopupStyle().ssBorderColorGreyTop());
         } else {
-            outerArrow.removeStyleName(resource.genericPopupStyle().borderColorGreyTop());
-            outerArrow.addStyleName(resource.genericPopupStyle().borderColorGreyBottom());
+            outerArrow.removeStyleName(resource.genericPopupStyle().ssBorderColorGreyTop());
+            outerArrow.addStyleName(resource.genericPopupStyle().ssBorderColorGreyBottom());
         }
         
         // For IE we need an additional 1 px on y position
@@ -727,11 +711,11 @@ public class GenericPopup extends PopupPanel {
         }
         
         if (topPointer) {
-            innerArrow.removeStyleName(resource.genericPopupStyle().borderColorWhiteBottom());
-            innerArrow.addStyleName(resource.genericPopupStyle().borderColorWhiteTop());
+            innerArrow.removeStyleName(resource.genericPopupStyle().ssBorderColorWhiteBottom());
+            innerArrow.addStyleName(resource.genericPopupStyle().ssBorderColorWhiteTop());
         } else {
-            innerArrow.removeStyleName(resource.genericPopupStyle().borderColorWhiteTop());
-            innerArrow.addStyleName(resource.genericPopupStyle().borderColorWhiteBottom());
+            innerArrow.removeStyleName(resource.genericPopupStyle().ssBorderColorWhiteTop());
+            innerArrow.addStyleName(resource.genericPopupStyle().ssBorderColorWhiteBottom());
         }
         
         innerArrow.getElement().getStyle().setProperty(STYLE_PROPERTY_TOP, yPosition + Unit.PX.getType());
@@ -747,11 +731,25 @@ public class GenericPopup extends PopupPanel {
      * 
      * @param loading - Whether to set popup into loading state
      */
-    public void setLoadingState(Boolean loading) {
+    public void setLoadingState(boolean loading) {
+        // Set the popup in the center of the screen.
+        // only if it does not attach onto a widget
+        if (useArrow == false) {
+            this.center();
+        }
+        
         this.loadingState = loading;
+        // Calculate the size of the loader.
         setLoaderStateSize();
         loaderFlowPanel.setVisible(loading);
         popupContent.setVisible(!loading);
+        
+        // The popup size is determined by the content in it, so we need
+        // to re-center the popup as it's size might have changed.
+        // This will only be centered if the popup has NO arrow
+        if (useArrow == false) {
+            this.center();
+        }
     }
     
     /** 

@@ -12,14 +12,23 @@
  * limitations under the License. 
  */
  
+ @external ssHoverPopupContainer;
+ @external ssHoverPopupInnerArrow;
+ @external ssHoverPopupOuterArrow;
+ @external ssPopupLoaderImage;
+ @external ssBorderColorGreyTop;
+ @external ssBorderColorGreyBottom;
+ @external ssBorderColorWhiteTop;
+ @external ssBorderColorWhiteBottom;
+ 
 /* The style for the popup main panel */
-.hoverPopupContainer{
+.ssHoverPopupContainer{
     background-color: #FFFFFF;
     border:           1px solid #7E828E;
 }
 
 /* The style for the inner arrow panel */
-.hoverPopupInnerArrow{
+.ssHoverPopupInnerArrow{
     border-color: transparent transparent #ffffff transparent;
     border-style: solid;
     border-width: 6px;
@@ -27,7 +36,7 @@
 }
 
 /* The style for the popup outer arrow panel */
-.hoverPopupOuterArrow{
+.ssHoverPopupOuterArrow{
     border-color: transparent transparent #666666 transparent;
     border-style: solid;
     border-width: 6px;
@@ -35,26 +44,26 @@
 }
 
 /* The style for the popup loader image */
-.popupLoaderImage {
+.ssPopupLoaderImage {
     position: absolute;
 }
 
 /* The style for a gray border at the top */
-.borderColorGreyTop{
+.ssBorderColorGreyTop{
     border-color:transparent transparent #7E828E transparent;
 }
 
 /* The style for a gray border at the bottom */
-.borderColorGreyBottom{
+.ssBorderColorGreyBottom{
     border-color: #7E828E transparent transparent transparent;
 }
 
 /* The style for a white border at the top */
-.borderColorWhiteTop{
+.ssBorderColorWhiteTop{
     border-color: transparent transparent #ffffff transparent;
 }
 
 /* The style for a white border at the bottom */
-.borderColorWhiteBottom{
+.ssBorderColorWhiteBottom{
     border-color: #ffffff transparent transparent transparent;
 }
