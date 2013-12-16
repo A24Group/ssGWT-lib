@@ -90,3 +90,6 @@
     text-align: center;
     color: #999999;
 }
+.popUpText {
+	overflow: hidden !important;
+}

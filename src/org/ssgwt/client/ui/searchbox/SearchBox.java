@@ -274,6 +274,15 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
          * @return The name of the compiled style
          */
         String noResultText();
+        
+        /**
+         * The style for the pop up text box with hidden overflow field
+         * 
+         * @author saurabh <saurabh.chawla@jktech.com>
+         * 
+         * @return The name of the compiled style
+         */
+        String popUpText();
 
     }
 
@@ -408,11 +417,14 @@ public abstract class SearchBox<T> extends Composite implements KeyUpHandler, Cl
      * Creates the drop down that displays the search results
      *
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @author saurabh <saurabh.chawla@jktech.com>
      * @since  22 January 2013
      */
     private void createDropDownPopup() {
         if (dropDownPopup == null) {
             dropDownPopup = new SearchBoxDropDown(resources);
+            //settin popup dropdown style overflow to hidden
+            dropDownPopup.setStyleName(this.resources.searchBoxStyle().popUpText());
             dropDownPopup.setPopupPosition(this.getAbsoluteLeft(), this.getAbsoluteTop() + this.getOffsetHeight());
             dropDownPopup.setWidth(this.getOffsetWidth() + "px");
             dropDownPopup.show();
