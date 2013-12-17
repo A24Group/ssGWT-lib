@@ -90,3 +90,7 @@
     text-align: center;
     color: #999999;
 }
+
+.dropDownPopUpContainer {
+    overflow: hidden !important;
+}
