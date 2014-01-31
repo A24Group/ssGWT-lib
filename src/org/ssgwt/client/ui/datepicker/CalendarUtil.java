@@ -67,7 +67,24 @@ public class CalendarUtil {
             int resultMonthCount = year * 12 + month + months;
             int resultYear = resultMonthCount / 12;
             int resultMonth = resultMonthCount - resultYear * 12;
-
+            
+            if (resultMonth == 1 && date.getDate() > 28) {
+                //we are dealing with Feb and an overflow into another month
+                if (((resultYear % 4 == 0) && (resultYear % 100 != 0)) || (resultYear % 400 == 0)) {
+                    //appears that this is a leap year so the date max is 29
+                    date.setDate(29);
+                } else {
+                    //appears that this is not a leap year so the date max is 28
+                    date.setDate(28);
+                }
+            } else if (
+                date.getDate() == 31 && 
+                (resultMonth <= 6 && resultMonth % 2 != 0) || (resultMonth > 6 && resultMonth % 2 == 0)
+            ) {
+                //Here we are dealing with calculations on months with 31 days
+                date.setDate(30);
+            }
+            
             date.setMonth(resultMonth);
             date.setYear(resultYear);
         }
