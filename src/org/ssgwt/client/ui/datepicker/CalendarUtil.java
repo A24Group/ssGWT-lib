@@ -54,6 +54,11 @@ public class CalendarUtil {
 
     /**
      * Adds the given number of months to a date.
+     * 
+     * This method will add a number of months onto the current month. If the resultant month has fewer
+     * days, we will set the date to max day for that month. If the calculated month has more days than the current
+     * date that has been passed into the method, the month is simply incremented by the requested number of months
+     * passed into the method.
      *
      * @param date the date
      * @param months number of months
@@ -67,7 +72,23 @@ public class CalendarUtil {
             int resultMonthCount = year * 12 + month + months;
             int resultYear = resultMonthCount / 12;
             int resultMonth = resultMonthCount - resultYear * 12;
-
+            
+            if (resultMonth == 1 && date.getDate() > 28) {
+                //we are dealing with Feb and an overflow into another month
+                if (((resultYear % 4 == 0) && (resultYear % 100 != 0)) || (resultYear % 400 == 0)) {
+                    //appears that this is a leap year so the date max is 29
+                    date.setDate(29);
+                } else {
+                    //appears that this is not a leap year so the date max is 28
+                    date.setDate(28);
+                }
+            } else if (
+                date.getDate() == 31 && (resultMonth == 3 || resultMonth == 5 || resultMonth == 8 || resultMonth == 10)
+            ) {
+                //Here we are dealing with calculations on months with max of 30 days
+                date.setDate(30);
+            }
+            
             date.setMonth(resultMonth);
             date.setYear(resultYear);
         }
