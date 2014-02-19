@@ -28,6 +28,7 @@ import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.Window;
 
 /**
@@ -187,6 +188,7 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
      * This will create a label with text and a tooltip with the same text value
      *
      * @author Ruan Naude <nauderuan777@gmail.com>
+     * @author Saurabh Chawla <saurabh.chawla@a24group.com>
      * @since 14 March 2013
      *
      * @param context -The context the cell is in
@@ -198,7 +200,11 @@ public class SSTextCell<T> extends AbstractCell<String> implements HasHandlers {
         if (value == null) {
             value = "";
         }
+        
         String tooltip = value;
+        //html encoding the string
+        value = SafeHtmlUtils.fromString(value).asString();
+
         if (this.sDateDisplayTooltipFormat != null && this.sDateDisplayTooltipFormat != ""
             && this.sDateFormat != null && this.sDateFormat != "") {
             try {
