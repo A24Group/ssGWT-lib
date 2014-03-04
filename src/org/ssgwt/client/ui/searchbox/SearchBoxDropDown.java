@@ -119,6 +119,7 @@ public class SearchBoxDropDown<T> extends PopupPanel {
      * Selects the next item in the drop down and change the item to it's selected style
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @author Saurabh Chawla <saurabh.chawla@a24group.com>
      * @since  22 January 2013
      * 
      * @return The display text for the item
@@ -132,7 +133,7 @@ public class SearchBoxDropDown<T> extends PopupPanel {
             resultDisplayItems.get(selectedIndex).setSelectedState(true);
             resultDisplayItems.get(selectedIndex).getElement().scrollIntoView();
         }
-        if (selectedIndex >= 0) {
+        if (selectedIndex >= 0 && resultDisplayItems.size() > selectedIndex) {
             return resultDisplayItems.get(selectedIndex).getItemSelectionText();
         } else {
             return null;
@@ -143,6 +144,7 @@ public class SearchBoxDropDown<T> extends PopupPanel {
      * Selects the previous item in the drop down and change the item to it's selected style
      * 
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @author Saurabh Chawla <saurabh.chawla@a24group.com>
      * @since  22 January 2013
      * 
      * @return The display text for the item
@@ -156,7 +158,7 @@ public class SearchBoxDropDown<T> extends PopupPanel {
                 resultDisplayItems.get(selectedIndex).getElement().scrollIntoView();
             }
         }
-        if (selectedIndex >= 0) {
+        if (selectedIndex >= 0 && resultDisplayItems.size() > selectedIndex) {
             return resultDisplayItems.get(selectedIndex).getItemSelectionText();
         } else {
             return null;
