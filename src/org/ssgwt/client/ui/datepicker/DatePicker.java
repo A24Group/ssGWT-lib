@@ -681,4 +681,28 @@ public class DatePicker extends Composite implements
         this.highlighted = highlighted;
         fireEvent(new DateHighlightEvent(highlighted));
     }
+
+    /**
+     * Getter for the minimum date
+     *
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  11 March 2014
+     *
+     * @return The minimum date
+     */
+    public SSDate getMinimumDate() {
+        return ((RangedCalendarView) getView()).getMinimumDate();
+    }
+
+    /**
+     * Getter for the maximum date
+     *
+     * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
+     * @since  11 March 2014
+     *
+     * @return The maximum date
+     */
+    public SSDate getMaximumDate() {
+        return ((RangedCalendarView) getView()).getMaximumDate();
+    }
 }

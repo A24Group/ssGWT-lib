@@ -521,8 +521,13 @@ public class DateBox extends Composite implements HasValue<SSDate>,
     }
 
     private void setValue(SSDate oldDate, SSDate date, boolean fireEvents) {
-        if (date != null) {
-            picker.setCurrentMonth(date);
+        SSDate pickerDate = date;
+        if (date != null && this.getDatePicker().getMinimumDate().getTime() > date.getTime()) {
+            pickerDate = new SSDate(this.getDatePicker().getMinimumDate().getTime());
+            pickerDate.setDate(this.getDatePicker().getMinimumDate().getDate() + 1);
+        }
+        if (pickerDate != null) {
+            picker.setCurrentMonth(pickerDate);
         }
         picker.setValue(date, false);
         format.reset(this, false);
