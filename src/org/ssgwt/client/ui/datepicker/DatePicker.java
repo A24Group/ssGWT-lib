@@ -683,24 +683,24 @@ public class DatePicker extends Composite implements
     }
 
     /**
-     * Setter for the minimum date
+     * Getter for the minimum date
      *
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  11 March 2014
      *
-     * @param minimumDate The new minimum date
+     * @return The minimum date
      */
     public SSDate getMinimumDate() {
         return ((RangedCalendarView) getView()).getMinimumDate();
     }
 
     /**
-     * Setter for the maximum date
+     * Getter for the maximum date
      *
      * @author Johannes Gryffenberg <johannes.gryffenberg@gmail.com>
      * @since  11 March 2014
      *
-     * @param minimumDate The new maximum date
+     * @return The maximum date
      */
     public SSDate getMaximumDate() {
         return ((RangedCalendarView) getView()).getMaximumDate();

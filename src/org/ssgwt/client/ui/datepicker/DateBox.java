@@ -523,7 +523,6 @@ public class DateBox extends Composite implements HasValue<SSDate>,
     private void setValue(SSDate oldDate, SSDate date, boolean fireEvents) {
         SSDate pickerDate = date;
         if (date != null && this.getDatePicker().getMinimumDate().getTime() > date.getTime()) {
-            System.out.println("It has been set");
             pickerDate = new SSDate(this.getDatePicker().getMinimumDate().getTime());
             pickerDate.setDate(this.getDatePicker().getMinimumDate().getDate() + 1);
         }
