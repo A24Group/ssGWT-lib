@@ -110,7 +110,9 @@ public abstract class DropDownInputField<T, ListItemType> extends ListBox implem
     public void setListBoxItems(List<ListItemType> data) {
          this.data = data;
          this.clear();
-         this.addItem(prompt, "");
+         if (prompt != null) {
+             this.addItem(prompt, "");
+         }
          for (ListItemType listItem : this.data) {
             this.dataMap.put(getListId(listItem), listItem);
             this.addItem(getListLabel(listItem), getListId(listItem));
