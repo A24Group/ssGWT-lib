@@ -98,14 +98,20 @@ public class TipBar extends Composite {
         
         /**
          * The style for a tip bar font item
-         *  
+         * 
+         * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+         * @since  9 June 2014
+         * 
          * @return The name of the font style
          */
         String fontStyle();
 
         /**
          * The style for a tip bar link item
-         *  
+         * 
+         * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+         * @since  9 June 2014
+         * 
          * @return The name of the link style
          */
         String linkStyle();
@@ -113,6 +119,9 @@ public class TipBar extends Composite {
     
     /**
      * The class constructor
+     * 
+     * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+     * @since  9 June 2014
      * 
      * @param tipBarItems - The list of tip bar items that needs to be added to the tip bar
      */
@@ -122,6 +131,9 @@ public class TipBar extends Composite {
 
     /**
      * The class constructor
+     * 
+     * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+     * @since  9 June 2014
      * 
      * @param tipBarItems - The list of tip bar items that needs to be added to the tip bar
      * @param resources - The resources that needs to be used on the tip bar
