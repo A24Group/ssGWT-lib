@@ -29,8 +29,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * This class will render a top menu based on a list 
- * of menu items that is passed in to it
+ * This class will render a tip bar based on a list 
+ * of tip items that is passed in to it
  * 
  * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
  * @since  5 June 2014
@@ -75,6 +75,9 @@ public class TipBar extends Composite {
 
     /**
      * A ClientBundle that provides resources for this widget.
+     * 
+     * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+     * @since  9 June 2014
      */
     public interface TipBarResources extends ClientBundle {
         
@@ -132,6 +135,9 @@ public class TipBar extends Composite {
     
     /**
      * Setter for the tip bar Items
+     *
+     * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+     * @since  9 June 2014
      * 
      * @param tipItems - The list of tip items that needs to be added to the tip bar
      */
@@ -143,35 +149,8 @@ public class TipBar extends Composite {
                 tipBarPanel.setVisible(false);
             } else {
                 tipBarPanel.setVisible(true);
-                for (TipItemInterface menuItem : tipItems) {
-
-                    final FlowPanel flowPanel = new FlowPanel();
-                    final TipItemInterface currentItem = menuItem;
-
-                    final Label label = new Label();
-                    label.setText("- " + currentItem.getLabel());
-                    label.setStyleName(resources.tipBarStyle().fontStyle());
-
-                    final Label actionLabel = new Label();
-                    actionLabel.setText(currentItem.getActionLabel());
-                    actionLabel.setStyleName(resources.tipBarStyle().linkStyle());
-                    actionLabel.addClickHandler(new ClickHandler() {
-                        
-                        /**
-                         * Will add the callback function for the action label click
-                         * 
-                         * author Dmitri De Klerk <dmitri.deklerk@a24group.com>
-                         * @since 9 June 2014
-                         *  
-                         * @param event - The click event that fires the callback
-                         */
-                        public void onClick(ClickEvent event) {
-                            currentItem.getCallBack().onClickAction();
-                        }
-                    });
-                    flowPanel.add(label);
-                    flowPanel.add(actionLabel);
-                    tipBar.add(flowPanel);
+                for (TipItemInterface tipItem : tipItems) {
+                    addTipBarItem(tipItem);
                 }
             }
         }
@@ -204,8 +183,8 @@ public class TipBar extends Composite {
             /**
              * Will add the callback function for the action label click
              * 
-             * author Dmitri De Klerk <dmitri.deklerk@a24group.com>
-             * @since 9 June 2014
+             * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+             * @since  9 June 2014
              * 
              * @param event - The click event that fires the callback
              */
@@ -232,6 +211,9 @@ public class TipBar extends Composite {
     
     /**
      * Gets the default tip bar resources
+     * 
+     * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+     * @since  9 June 2014
      * 
      * @return The default resources that should be used for the tip bar
      */

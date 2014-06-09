@@ -19,7 +19,7 @@ package org.ssgwt.client.ui.component;
  * Represents a single tip bar item for the tip bar. All models that are to be used with the tip bar
  * components need to implement this interface.
  * 
- * author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+ * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
  * @since 6 June 2014
  */
 public interface TipItemInterface {

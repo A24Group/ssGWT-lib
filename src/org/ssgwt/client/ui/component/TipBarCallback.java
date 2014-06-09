@@ -16,7 +16,7 @@ package org.ssgwt.client.ui.component;
 /**
  * Callback used within the tip bar.
  * 
- * author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+ * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
  * @since 9 June 2014
  */
 public abstract class TipBarCallback {
@@ -24,7 +24,7 @@ public abstract class TipBarCallback {
     /**
      * Will add the callback function for the action label click
      * 
-     * author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+     * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
      * @since 9 June 2014
      */
     public abstract void onClickAction( );

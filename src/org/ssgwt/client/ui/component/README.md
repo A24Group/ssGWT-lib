@@ -1,4 +1,4 @@
-The Component package contains four classes
+The Component package contains classes
 
 ## TipBar
 This class displays a tip bar, and lists all tip items under one another, This class
