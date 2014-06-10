@@ -27,5 +27,5 @@ public abstract class TipBarCallback {
      * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
      * @since 9 June 2014
      */
-    public abstract void onClickAction( );
+    public abstract void onClickAction();
 }

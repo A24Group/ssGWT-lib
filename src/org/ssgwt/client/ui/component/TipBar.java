@@ -174,7 +174,7 @@ public class TipBar extends Composite {
      * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
      * @since  9 June 2014
      * 
-     * @param tipItems - The tip items that needs to be added to the tip bar
+     * @param tipBarItem - The tip items that needs to be added to the tip bar
      */
     public void addTipBarItem(TipItemInterface tipBarItem) {
         tipBarPanel.setVisible(true);

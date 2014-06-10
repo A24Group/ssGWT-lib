@@ -75,6 +75,9 @@ public class TipItem implements TipItemInterface {
     /**
      * Setter for the label value
      * 
+     * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+     * @since  9 June 2014
+     * 
      * @param labelValue - The label value
      */
     public void setLabel(String labelValue) {
@@ -83,6 +86,9 @@ public class TipItem implements TipItemInterface {
 
     /**
      * Setter for the action label value
+     * 
+     * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+     * @since  9 June 2014
      * 
      * @param actionLabelValue - The action label value
      * @param callback - The tip bar callback 

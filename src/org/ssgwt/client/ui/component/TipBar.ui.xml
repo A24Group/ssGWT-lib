@@ -1,5 +1,6 @@
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+<ui:UiBinder 
+    xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui">
 
     <g:HorizontalPanel ui:field="tipBarPanel">
         <g:FlowPanel width="30px" height="100%">
