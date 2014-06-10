@@ -41,12 +41,12 @@ public class InfoInputField<T> extends FlowPanel implements InputField<T, FlowPa
      * @since 06 June 2014
      * 
      * @param text - The text to display in as info
-     * @param imagUrl - The url to the info icon to display
+     * @param imageUrl - The url to the info icon to display
      */
-    public InfoInputField(String text, String imagUrl) {
+    public InfoInputField(String text, String imageUrl) {
         super();
-        if (imagUrl != null) {
-            Image icon = new Image(imagUrl);
+        if (imageUrl != null) {
+            Image icon = new Image(imageUrl);
             icon.getElement().setAttribute("style", "vertical-align: top; max-width: 10%; padding-top: 3px;");
             this.add(icon);
         }
