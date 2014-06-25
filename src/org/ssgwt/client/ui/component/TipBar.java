@@ -105,6 +105,16 @@ public class TipBar extends Composite {
          * @return The name of the font style
          */
         String fontStyle();
+        
+        /**
+         * The style for a tip bar dash style
+         * 
+         * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+         * @since  24 June 2014
+         * 
+         * @return The name of the dash style
+         */
+        String dashStyle();
 
         /**
          * The style for a tip bar link item
@@ -179,14 +189,20 @@ public class TipBar extends Composite {
     public void addTipBarItem(TipItemInterface tipBarItem) {
         tipBarPanel.setVisible(true);
 
+        Label dashLabel = new Label();
+        dashLabel.setText("- ");
+        dashLabel.setStyleName(resources.tipBarStyle().dashStyle());
+        
+        HorizontalPanel horPanel = new HorizontalPanel();
+        horPanel.add(dashLabel);
+        
         FlowPanel flowPanel = new FlowPanel();
         final TipItemInterface currentItem = tipBarItem;
 
         Label label = new Label();
-        label.setText("- " + currentItem.getLabel());
+        label.setText(currentItem.getLabel());
         label.setStyleName(resources.tipBarStyle().fontStyle());
-        flowPanel.add(label);
-
+        
         Label actionLabel = new Label();
         actionLabel.setText(currentItem.getActionLabel());
         actionLabel.setStyleName(resources.tipBarStyle().linkStyle());
@@ -204,9 +220,12 @@ public class TipBar extends Composite {
                 currentItem.getCallBack().onClickAction();
             }
         });
+        flowPanel.add(label);
         flowPanel.add(actionLabel);
         
-        tipBar.add(flowPanel);
+        horPanel.add(flowPanel);
+
+        tipBar.add(horPanel);
     }
     
     /**

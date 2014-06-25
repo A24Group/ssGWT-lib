@@ -18,6 +18,13 @@
     float:left;
 }
 
+.dashStyle {
+    color: #666666;
+    font-size: 12px;
+    float:left;
+    padding-right: 3px;
+}
+
 .linkStyle {
     font-size: 12px;
     color: #485E87;
