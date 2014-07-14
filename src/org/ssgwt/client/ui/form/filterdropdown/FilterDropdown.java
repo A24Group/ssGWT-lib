@@ -171,7 +171,17 @@ public abstract class FilterDropdown<T, ListType>
      * @since  10 Jul 2014
      */
     public FilterDropdown() {
-        this(getDefaultResources());
+        this(getDefaultResources(), false);
+    }
+    
+    /**
+     * Class constructor
+     *
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  10 Jul 2014
+     */
+    public FilterDropdown(boolean bRequired) {
+        this(getDefaultResources(), bRequired);
     }
     
     /**
@@ -184,11 +194,25 @@ public abstract class FilterDropdown<T, ListType>
      * @since  10 Jul 2014
      */
     public FilterDropdown(FilterDropdownResources resources) {
+        this(resources, false);
+    }
+    
+    /**
+     * Class constructor
+     *
+     * @param submitButtonLabel - The label that will be displayed on the button
+     * @param resources - The resources the search box will use
+     *
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  10 Jul 2014
+     */
+    public FilterDropdown(FilterDropdownResources resources, boolean bRequired) {
         this.resources = resources;
         this.resources.filterDropdownStyle().ensureInjected();
         this.initWidget(uiBinder.createAndBindUi(this));
         textBox.addKeyUpHandler(this);
         textBox.addClickHandler(this);
+        this.bRequired = bRequired;
     }
 
     /**
