@@ -22,6 +22,7 @@ import org.ssgwt.client.ui.form.filterdropdown.recorddisplays.FilterDropdownReco
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -166,13 +167,11 @@ public abstract class FilterDropdown<T, ListType>
     /**
      * Class constructor
      *
-     * @param submitButtonLabel - The label that will be displayed on the button
-     *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  10 Jul 2014
      */
-    public FilterDropdown(String submitButtonLabel) {
-        this(submitButtonLabel, getDefaultResources());
+    public FilterDropdown() {
+        this(getDefaultResources());
     }
     
     /**
@@ -184,11 +183,12 @@ public abstract class FilterDropdown<T, ListType>
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  10 Jul 2014
      */
-    public FilterDropdown(String submitButtonLabel, FilterDropdownResources resources) {
+    public FilterDropdown(FilterDropdownResources resources) {
         this.resources = resources;
         this.resources.filterDropdownStyle().ensureInjected();
         this.initWidget(uiBinder.createAndBindUi(this));
         textBox.addKeyUpHandler(this);
+        textBox.addClickHandler(this);
     }
 
     /**
@@ -270,16 +270,6 @@ public abstract class FilterDropdown<T, ListType>
         String dropDownPopUpContainer();
 
     }
-
-    /**
-     * The function that will contain action of the submit
-     *
-     * @param selectedObject - The object the user selected
-     *
-     * @author Michael Barnard <michael.barnard@a24group.com>
-     * @since  10 Jul 2014
-     */
-    public abstract void onSubmit(ListType selectedObject);
 
     /**
      * Create an instance on the default resources object if it the
@@ -372,21 +362,12 @@ public abstract class FilterDropdown<T, ListType>
             if (dropDownPopup != null) {
                 setSelectedDisplayItem(dropDownPopup.getSelectedItem());
             }
-            onSubmit(selectedObject);
         } else if (textBox.getText().length() >= this.minCharCount && !textBox.getText().equals(previousSearchString)) {
             selectedObject = null;
             previousSearchString = textBox.getText();
             createDropDownPopup();
 
-            ArrayList<FilterDropdownRecordWidget<ListType>> tempListing
-                = new ArrayList<FilterDropdownRecordWidget<ListType>>();
-            
-            for (FilterDropdownRecordWidget<ListType> item : currentDisplayItems) {
-                if (item.compareToSearchCriteria(textBox.getText())) {
-                    tempListing.add(item);
-                }
-            }
-            dropDownPopup.setSelectableItems(tempListing);
+            applyFilter();
             
         } else if (textBox.getText().length() < this.minCharCount) {
             selectedObject = null;
@@ -395,6 +376,24 @@ public abstract class FilterDropdown<T, ListType>
         }
     }
 
+    /**
+     * This action is used to apply a new filter using the text in the textbox
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  10 Jul 2014
+     */
+    private void applyFilter() {
+        ArrayList<FilterDropdownRecordWidget<ListType>> tempListing
+            = new ArrayList<FilterDropdownRecordWidget<ListType>>();
+        
+        for (FilterDropdownRecordWidget<ListType> item : currentDisplayItems) {
+            if (item.compareToSearchCriteria(textBox.getText())) {
+                tempListing.add(item);
+            }
+        }
+        dropDownPopup.setSelectableItems(tempListing);
+    }
+    
     /**
      * Creates the drop down that displays the search results
      *
@@ -439,17 +438,6 @@ public abstract class FilterDropdown<T, ListType>
             dropDownPopup = null;
         }
     }
-
-    /**
-     * The function that is called to start a service call to return search data
-     *
-     * @param searchString - The search string the user entered
-     * @param requestId - The id of the request
-     *
-     * @author Michael Barnard <michael.barnard@a24group.com>
-     * @since  10 Jul 2014
-     */
-    public abstract void retrieveResult(String searchString, final int requestId);
 
     /**
      * Set the data on the search box that was returned by the service call
@@ -651,7 +639,13 @@ public abstract class FilterDropdown<T, ListType>
      */
     @Override
     public void onClick(ClickEvent event) {
-        // Forced implemenation
+        if (textBox.getText().length() == 0) {
+            createDropDownPopup();
+            dropDownPopup.setSelectableItems(currentDisplayItems);
+        } else {
+            createDropDownPopup();
+            applyFilter();
+        }
     }
     
 }
