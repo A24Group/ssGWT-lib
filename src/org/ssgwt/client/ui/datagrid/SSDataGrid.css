@@ -25,3 +25,7 @@
 	text-align: center;
 	z-index: -1000;
 }
+
+.loadingIndicatorStyle {
+    margin: auto;
+}

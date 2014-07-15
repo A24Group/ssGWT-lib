@@ -28,6 +28,7 @@ import org.ssgwt.client.ui.datagrid.event.IDataGridEventHandler;
 import org.ssgwt.client.ui.datagrid.event.ISelectAllEventHandler;
 import org.ssgwt.client.ui.datagrid.event.SelectAllEvent;
 import org.ssgwt.client.ui.datagrid.filter.AbstractHeaderFilter;
+import org.ssgwt.client.ui.datagrid.filter.SelectBoxFilter.SelectBoxFilterResources;
 
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.CheckboxCell;
@@ -38,19 +39,26 @@ import com.google.gwt.dom.client.TableRowElement;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.resources.client.ClientBundle.Source;
+import com.google.gwt.resources.client.ImageResource.ImageOptions;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent;
 import com.google.gwt.user.cellview.client.ColumnSortList.ColumnSortInfo;
+import com.google.gwt.user.cellview.client.DataGrid.Resources;
+import com.google.gwt.user.cellview.client.LoadingStateChangeEvent.LoadingState;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.Header;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.TextHeader;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.RequiresResize;
@@ -69,6 +77,11 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
     implements RequiresResize, FilterChangeEvent.FilterChangeHandler, RangeChangeEvent.Handler {
 
     /**
+     * Holds an instance of the default resources
+     */
+    private static Resources DEFAULT_RESOURCES;
+
+    /**
      * UiBinder interface for the composite
      *
      * @author Johannes Gryffenberg
@@ -81,6 +94,11 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * A ClientBundle that provides images for this widget.
      */
     public interface Resources extends ClientBundle {
+        /**
+         * The loading indicator used while the table is waiting for data.
+         */
+        @Source("images/cellTableLoading.gif")
+        ImageResource dataGridLoading();
 
         public static final Resources INSTANCE = GWT.create(Resources.class);
 
@@ -98,15 +116,38 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
          */
         @ClassName("actionBarStyle")
         String actionBarStyle();
-
+        
         /**
          * Applied to the "No Content" label displayed.
          */
         @ClassName("noContentLabelStyle")
         String noContentLabelStyle();
 
+        /**
+         * The loading indicator style.
+         */
+        @ClassName("loadingIndicatorStyle")
+        String loadingIndicatorStyle();
+
     }
 
+    /**
+     * Create an instance on the default resources object if it the
+     * DEFAULT_RESOURCES variable is null if not it just return the object in
+     * the DEFAULT_RESOURCES variable
+     *
+     * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+     * @since  15 July 2014
+     *
+     * @return the default resource object
+     */
+    private static Resources getDefaultResources() {
+        if (DEFAULT_RESOURCES == null) {
+            DEFAULT_RESOURCES = GWT.create(SelectBoxFilterResources.class);
+        }
+        return DEFAULT_RESOURCES;
+    }
+    
     /**
      * Whether the data grid supports selecting multiple rows
      */
@@ -133,6 +174,12 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      */
     @UiField
     protected LayoutPanel actionBar;
+    
+    /**
+     * The loading indicator that will be displayed over the datagrid
+     */
+    @UiField
+    protected FlowPanel loadingIndicator;
 
     /**
      * The no content label.
@@ -240,6 +287,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * @param multiSelect - Whether the data grid supports multiple selects
      */
     public SSDataGrid(DataGrid.Resources dataGridResource, SSPager.Resources pagerResource, boolean multiSelect) {
+        System.out.println("SSDataGrid contructor");
         dataGrid = new DataGrid<T>(10, dataGridResource);
 
         dataGrid.addColumnSortHandler(new ColumnSortEvent.Handler() {
@@ -251,6 +299,10 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
              */
             @Override
             public void onColumnSort(ColumnSortEvent event) {
+                System.out.println("does a column sort");
+                //dataGrid.setLoadingState(LoadingState.LOADED);
+                
+                
                 ColumnSortInfo columnSortInfo;
                 if ((columnSortInfo = columnSortDetail.get(event.getColumn())) != null) {
                     columnSortDetail.remove(event.getColumn());
@@ -260,6 +312,8 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
                 }
                 SSDataGrid.this.dataGrid.getColumnSortList().push(columnSortDetail.get(event.getColumn()));
                 fireEvent(new DataGridSortEvent(event.getColumn(), columnSortDetail.get(event.getColumn()).isAscending()));
+                
+                System.out.println("done with column sort");
             }
         });
 
@@ -270,10 +324,31 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
         this.initWidget(uiBinder.createAndBindUi(this));
         Resources.INSTANCE.dataGridStyle().ensureInjected();
         actionBar.setStyleName(Resources.INSTANCE.dataGridStyle().actionBarStyle());
+        
+        loadingIndicator.setStyleName(Resources.INSTANCE.dataGridStyle().loadingIndicatorStyle());
+        loadingIndicator.add(this.createDefaultLoadingIndicator(Resources.INSTANCE));
+        
         noContentLabel.setStyleName(Resources.INSTANCE.dataGridStyle().noContentLabelStyle());
         dataGrid.addRangeChangeHandler(this);
     }
 
+    /**
+     * Create the default loading indicator using the loading image in the
+     * specified {@link Resources}.
+     * 
+     * @param resources the resources containing the loading image
+     * @return a widget loading indicator
+     */
+    private static Widget createDefaultLoadingIndicator(Resources resources) {
+        ImageResource loadingImg = resources.dataGridLoading();
+        if (loadingImg == null) {
+            return null;
+        }
+        Image image = new Image(loadingImg);
+        image.getElement().getStyle().setProperty("margin", "auto");
+        return image;
+    }
+    
     /**
      * This function will clear the sort icon from the
      * datagrid
