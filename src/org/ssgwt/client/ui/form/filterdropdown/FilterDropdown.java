@@ -22,7 +22,6 @@ import org.ssgwt.client.ui.form.filterdropdown.recorddisplays.FilterDropdownReco
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -67,11 +66,6 @@ public abstract class FilterDropdown<T, ListType>
      */
     @UiField
     TextBox textBox;
-    
-    /**
-     * The value that is currently used by the textbox
-     */
-    String sValue = "";
     
     /**
      * The container for the entire ui component
@@ -337,7 +331,6 @@ public abstract class FilterDropdown<T, ListType>
             this.selectedDisplayItem = selectedDisplayItem;
             this.selectedObject = this.selectedDisplayItem.getItemValue();
             textBox.setText(this.selectedDisplayItem.getItemSelectionText());
-            this.sValue = textBox.getText();
             destroyDropDownPopup();
         }
     }
@@ -389,6 +382,7 @@ public abstract class FilterDropdown<T, ListType>
         } else if (textBox.getText().length() >= this.minCharCount && !textBox.getText().equals(previousSearchString)) {
             selectedObject = null;
             previousSearchString = textBox.getText();
+            this.setValue(textBox.getText());
             createDropDownPopup();
 
             applyFilter();
@@ -396,6 +390,7 @@ public abstract class FilterDropdown<T, ListType>
         } else if (textBox.getText().length() < this.minCharCount) {
             selectedObject = null;
             previousSearchString = textBox.getText();
+            this.setValue(textBox.getText());
             destroyDropDownPopup();
         }
     }
@@ -585,60 +580,6 @@ public abstract class FilterDropdown<T, ListType>
     }
     
     /**
-     * Gets this object's value.
-     *
-     * @author Michael Barnard <michael.barnard@a24group.com>
-     * @since  11 Jul 2014
-     *
-     * @return the object's value
-     */
-    @Override
-    public String getValue() {
-        return this.sValue;
-    }
-
-    /**
-     * Sets this object's value without firing any events. This should be
-     * identical to calling setValue(value, false).
-     * <p>
-     * It is acceptable to fail assertions or throw (documented) unchecked
-     * exceptions in response to bad values.
-     * <p>
-     * Widgets must accept null as a valid value. By convention, setting a widget to
-     * null clears value, calling getValue() on a cleared widget returns null. Widgets
-     * that can not be cleared (e.g. {@link CheckBox}) must find another valid meaning
-     * for null input.
-     * 
-     * @author Michael Barnard <michael.barnard@a24group.com>
-     * @since  11 Jul 2014
-     *
-     * @param value the object's new value
-     */
-    @Override
-    public void setValue(String value) {
-        this.sValue = value;
-    }
-
-    /**
-     * Sets this object's value. Fires
-     * {@link com.google.gwt.event.logical.shared.ValueChangeEvent} when
-     * fireEvents is true and the new value does not equal the existing value.
-     * <p>
-     * It is acceptable to fail assertions or throw (documented) unchecked
-     * exceptions in response to bad values.
-     *
-     * @param value the object's new value
-     * @param fireEvents fire events if true and value is new
-     * 
-     * @author Michael Barnard <michael.barnard@a24group.com>
-     * @since  11 Jul 2014
-     */
-    @Override
-    public void setValue(String value, boolean fireEvents) {
-        setValue(value);
-    }
-    
-    /**
      * Add a handerler on the change of the data selected
      *
      * @param handler - The value change handler
@@ -672,4 +613,62 @@ public abstract class FilterDropdown<T, ListType>
         }
     }
     
+    /**
+     * Gets this object's value.
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 Jul 2014
+     *
+     * @return the object's value
+     */
+    @Override
+    public String getValue() {
+        return textBox.getText();
+    }
+
+    /**
+     * Sets this object's value without firing any events. This should be
+     * identical to calling setValue(value, false).
+     * <p>
+     * It is acceptable to fail assertions or throw (documented) unchecked
+     * exceptions in response to bad values.
+     * <p>
+     * Widgets must accept null as a valid value. By convention, setting a widget to
+     * null clears value, calling getValue() on a cleared widget returns null. Widgets
+     * that can not be cleared (e.g. {@link CheckBox}) must find another valid meaning
+     * for null input.
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 Jul 2014
+     *
+     * @param value the object's new value
+     */
+    @Override
+    public void setValue(String value) {
+        if (value == null) {
+            textBox.setText("");
+        } else {
+            textBox.setText(value);
+        }
+    }
+
+    /**
+     * Sets this object's value. Fires
+     * {@link com.google.gwt.event.logical.shared.ValueChangeEvent} when
+     * fireEvents is true and the new value does not equal the existing value.
+     * <p>
+     * It is acceptable to fail assertions or throw (documented) unchecked
+     * exceptions in response to bad values.
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  11 Jul 2014
+     *
+     * @param value the object's new value
+     * @param fireEvents fire events if true and value is new
+     */
+    @Override
+    public void setValue(String value, boolean fireEvents) {
+        setValue(value);
+    }
+
 }

@@ -25,8 +25,7 @@
     font-size: 12px;
     float: left;
     padding: 0px 5px;
-    border: 1px solid #A6A8AC;
-    border-top: 1px solid #999999;
+    border: none;
     font-size: small;
     margin: 0px;
     -moz-box-sizing: border-box;
