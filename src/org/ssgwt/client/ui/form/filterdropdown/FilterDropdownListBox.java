@@ -20,6 +20,7 @@ import org.ssgwt.client.ui.form.filterdropdown.recorddisplays.FilterDropdownReco
 import org.ssgwt.client.ui.searchbox.SearchBox.SearchBoxResources;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
@@ -35,7 +36,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
  * @author Michael Barnard <michael.barnard@a24group.com>
  * @since  10 Jul 2014
  *
- * @param <T> The type of the VO that will hold the data displayed by the search widget
+ * @param <ListType> The type of data items that are used in the dropdown
  */
 public class FilterDropdownListBox<ListType> extends PopupPanel {
     
@@ -75,6 +76,16 @@ public class FilterDropdownListBox<ListType> extends PopupPanel {
     private FilterDropdownResources resources;
     
     /**
+     * This constant will be used to store the text when no results are found
+     */
+    private final static String NO_RESULT_TEXT = "~ No results found ~";
+    
+    /**
+     * This is used to store the default height 
+     */
+    private final static int DEFAULT_HEIGHT = 250;
+    
+    /**
      * Class constructor
      * 
      * @param resources
@@ -90,8 +101,20 @@ public class FilterDropdownListBox<ListType> extends PopupPanel {
         mainPanel.setStyleName(this.resources.filterDropdownStyle().dropDown());
         this.add(mainPanel);
         addInfoMessages();
-        mainPanel.getElement().getStyle().setProperty("maxHeight", "250px");
+        this.setMainPanelHeight(DEFAULT_HEIGHT + Unit.PX.getType());
         mainPanel.getElement().getStyle().setProperty("overflow", "auto");
+    }
+    
+    /**
+     * Set the height of the mainpanel
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  16 Jul 2014
+     * 
+     * @param The new height of the panel as a sting
+     */
+    public void setMainPanelHeight(String sHeight) {
+        mainPanel.getElement().getStyle().setProperty("maxHeight", sHeight);
     }
     
     /**
@@ -103,7 +126,7 @@ public class FilterDropdownListBox<ListType> extends PopupPanel {
     public void addInfoMessages() {
         mainPanel.clear();
         if (!hasResults) {
-            infoLabel.setText("~ No results found ~");
+            infoLabel.setText(NO_RESULT_TEXT);
             infoLabel.setStyleName(this.resources.filterDropdownStyle().noResultText());
         }
         mainPanel.add(infoLabel);
@@ -158,8 +181,8 @@ public class FilterDropdownListBox<ListType> extends PopupPanel {
     }
     
     /**
-     * Create an instance on the default resources object if it the
-     * DEFAULT_RESOURCES variable is null if not it just return the object in
+     * Create an instance on the default resources object if the
+     * DEFAULT_RESOURCES variable is null, if not it just return the object in
      * the DEFAULT_RESOURCES variable
      * 
      * @author Michael Barnard <michael.barnard@a24group.com>
@@ -189,7 +212,7 @@ public class FilterDropdownListBox<ListType> extends PopupPanel {
     /**
      * Updates the items that should be displayed on the drop down for the user
      * 
-     * @param resultDisplayItems
+     * @param resultDisplayItems - The items that can be filtered using the filter box
      * 
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  10 Jul 2014

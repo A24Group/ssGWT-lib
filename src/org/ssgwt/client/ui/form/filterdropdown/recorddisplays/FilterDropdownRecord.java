@@ -66,8 +66,8 @@ public abstract class FilterDropdownRecord<ListType> extends FilterDropdownRecor
     /**
      * UiBinder interface for the composite
      *
-     * @author Ruan Naude <nauderuan777@gmail.com>
-     * @since 22 Jan 2013
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  10 Jul 2014
      */
     interface Binder extends UiBinder<Widget, FilterDropdownRecord<?>> {
     }
@@ -127,7 +127,7 @@ public abstract class FilterDropdownRecord<ListType> extends FilterDropdownRecor
     }
 
     /**
-     * This function will check of there is already a default resource to
+     * This function will check if there is already a default resource to
      * use for the filter dropdown and if not, will create a default resource
      *
      * @author Michael Barnard <michael.barnard@a24group.com>

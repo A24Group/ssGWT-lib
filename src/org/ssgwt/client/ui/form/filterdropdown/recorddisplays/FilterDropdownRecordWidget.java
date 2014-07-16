@@ -82,7 +82,7 @@ public abstract class FilterDropdownRecordWidget<ListType> extends FocusPanel {
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 Jul 2014
      * 
-     * @param selected - Indicates if the it should be is selected state
+     * @param selected - Indicates if the item should be is selected state
      */
     public abstract void setSelectedState(boolean selected);
     

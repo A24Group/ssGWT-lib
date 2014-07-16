@@ -20,6 +20,7 @@ import org.ssgwt.client.ui.form.InputField;
 import org.ssgwt.client.ui.form.filterdropdown.recorddisplays.FilterDropdownRecordWidget;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -111,11 +112,11 @@ public abstract class FilterDropdown<T, ListType>
     /**
      * The selected display item
      */
-    private final ArrayList<FilterDropdownRecordWidget<ListType>> currentDisplayItems
-        = new ArrayList<FilterDropdownRecordWidget<ListType>>();
+    private final ArrayList<FilterDropdownRecordWidget<ListType>> currentDisplayItems =
+        new ArrayList<FilterDropdownRecordWidget<ListType>>();
 
     /**
-     * The string the last delay time was created for
+     * The string that has previously been searched for
      */
     private String previousSearchString = null;
 
@@ -141,7 +142,7 @@ public abstract class FilterDropdown<T, ListType>
      *
      * @param object - The object the value should be retrieved from
      *
-     * @return The value that should be displayed ob the field
+     * @return The value that should be displayed on the field
      */
     @Override
     public abstract String getValue(T object);
@@ -170,6 +171,8 @@ public abstract class FilterDropdown<T, ListType>
     
     /**
      * Class constructor
+     * 
+     * @param bRequired - Whether or not this filed is required
      *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  10 Jul 2014
@@ -181,7 +184,6 @@ public abstract class FilterDropdown<T, ListType>
     /**
      * Class constructor
      *
-     * @param submitButtonLabel - The label that will be displayed on the button
      * @param resources - The resources the search box will use
      *
      * @author Michael Barnard <michael.barnard@a24group.com>
@@ -194,8 +196,8 @@ public abstract class FilterDropdown<T, ListType>
     /**
      * Class constructor
      *
-     * @param submitButtonLabel - The label that will be displayed on the button
      * @param resources - The resources the search box will use
+     * @param bRequired - Whether or not this filed is required
      *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  10 Jul 2014
@@ -290,8 +292,8 @@ public abstract class FilterDropdown<T, ListType>
     }
 
     /**
-     * Create an instance on the default resources object if it the
-     * DEFAULT_RESOURCES variable is null if not it just return the object in
+     * Create an instance on the default resources object if the
+     * DEFAULT_RESOURCES variable is null, if not it just return the object in
      * the DEFAULT_RESOURCES variable
      *
      * @author Michael Barnard <michael.barnard@a24group.com>
@@ -356,9 +358,10 @@ public abstract class FilterDropdown<T, ListType>
      * @since  10 Jul 2014
      */
     @Override
-    public void onKeyUp(KeyUpEvent event){
-        if (event.isLeftArrow() && event.isRightArrow()) {
-            // Capture these to prevent further execution, but do nothing
+    public void onKeyUp(KeyUpEvent event) {
+        if (event.isLeftArrow() || event.isRightArrow()) {
+            // Capture these to prevent further execution
+            // If the left or right arrow is pressed, we do not want any else if's to fire
         } else if (event.isDownArrow()) {
             if (dropDownPopup != null) {
                 String itemText = dropDownPopup.selectNextItem();
@@ -402,8 +405,8 @@ public abstract class FilterDropdown<T, ListType>
      * @since  10 Jul 2014
      */
     private void applyFilter() {
-        ArrayList<FilterDropdownRecordWidget<ListType>> tempListing
-            = new ArrayList<FilterDropdownRecordWidget<ListType>>();
+        ArrayList<FilterDropdownRecordWidget<ListType>> tempListing =
+            new ArrayList<FilterDropdownRecordWidget<ListType>>();
         
         for (FilterDropdownRecordWidget<ListType> item : currentDisplayItems) {
             if (item.compareToSearchCriteria(textBox.getText())) {
@@ -425,7 +428,7 @@ public abstract class FilterDropdown<T, ListType>
             //setting popup dropdown style overflow to hidden
             dropDownPopup.setStyleName(this.resources.filterDropdownStyle().dropDownPopUpContainer());
             dropDownPopup.setPopupPosition(this.getAbsoluteLeft(), this.getAbsoluteTop() + this.getOffsetHeight());
-            dropDownPopup.setWidth(this.getOffsetWidth() + "px");
+            dropDownPopup.setWidth(this.getOffsetWidth() + Unit.PX.getType());
             dropDownPopup.show();
             dropDownPopup.addCloseHandler(new CloseHandler<PopupPanel>() {
 
@@ -462,7 +465,6 @@ public abstract class FilterDropdown<T, ListType>
      * Set the data on the search box that was returned by the service call
      *
      * @param searchResults - The search results
-     * @param requestId - The id of the request
      *
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  10 Jul 2014
@@ -515,7 +517,7 @@ public abstract class FilterDropdown<T, ListType>
     }
 
     /**
-     * This will set wheather or not the field is required
+     * This will set whether or not the field is required
      * 
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 Jul 2014
@@ -546,7 +548,7 @@ public abstract class FilterDropdown<T, ListType>
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 Jul 2014
      * 
-     * @param Whether this field is read only
+     * @param readOnly Whether this field is read only
      */
     @Override
     public void setReadOnly(boolean readOnly) {
@@ -580,7 +582,7 @@ public abstract class FilterDropdown<T, ListType>
     }
     
     /**
-     * Add a handerler on the change of the data selected
+     * Add a handler on the change of the data selected
      *
      * @param handler - The value change handler
      * 
@@ -600,7 +602,7 @@ public abstract class FilterDropdown<T, ListType>
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 Jul 2014
      * 
-     * @param event - The event that cuased this click
+     * @param event - The event that caused this click
      */
     @Override
     public void onClick(ClickEvent event) {
@@ -614,12 +616,12 @@ public abstract class FilterDropdown<T, ListType>
     }
     
     /**
-     * Gets this object's value.
+     * Gets this value of this component.
      * 
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  11 Jul 2014
      *
-     * @return the object's value
+     * @return the value of this component
      */
     @Override
     public String getValue() {
@@ -664,11 +666,23 @@ public abstract class FilterDropdown<T, ListType>
      * @since  11 Jul 2014
      *
      * @param value the object's new value
-     * @param fireEvents fire events if true and value is new
+     * @param fireEvents fire events if true and above param value has a new value
      */
     @Override
     public void setValue(String value, boolean fireEvents) {
         setValue(value);
+    }
+    
+    /**
+     * Set the height of the mainpanel
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  16 Jul 2014
+     * 
+     * @param The new height of the panel as a sting
+     */
+    public void setMainPanelHeight(String sHeight) {
+        dropDownPopup.setHeight(sHeight);
     }
 
 }
