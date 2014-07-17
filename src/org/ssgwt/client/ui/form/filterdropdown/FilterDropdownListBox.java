@@ -81,11 +81,6 @@ public class FilterDropdownListBox<ListType> extends PopupPanel {
     private final static String NO_RESULT_TEXT = "~ No results found ~";
     
     /**
-     * This is used to store the default height 
-     */
-    private final static int DEFAULT_HEIGHT = 250;
-    
-    /**
      * Class constructor
      * 
      * @param resources
@@ -101,20 +96,7 @@ public class FilterDropdownListBox<ListType> extends PopupPanel {
         mainPanel.setStyleName(this.resources.filterDropdownStyle().dropDown());
         this.add(mainPanel);
         addInfoMessages();
-        this.setMainPanelHeight(DEFAULT_HEIGHT + Unit.PX.getType());
         mainPanel.getElement().getStyle().setProperty("overflow", "auto");
-    }
-    
-    /**
-     * Set the height of the mainpanel
-     * 
-     * @author Michael Barnard <michael.barnard@a24group.com>
-     * @since  16 Jul 2014
-     * 
-     * @param The new height of the panel as a sting
-     */
-    public void setMainPanelHeight(String sHeight) {
-        mainPanel.getElement().getStyle().setProperty("maxHeight", sHeight);
     }
     
     /**
@@ -226,7 +208,6 @@ public class FilterDropdownListBox<ListType> extends PopupPanel {
             for (final FilterDropdownRecordWidget<ListType> displayItem : this.resultDisplayItems) {
                 if (count > 0) {
                     SimplePanel recordsSplitter = new SimplePanel();
-                    recordsSplitter.setHeight("1px");
                     recordsSplitter.setStyleName("itemSplitter");
                     mainPanel.add(recordsSplitter);
                 }

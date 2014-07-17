@@ -212,7 +212,7 @@ public abstract class FilterDropdownRecord<ListType> extends FilterDropdownRecor
      */
     @Override
     public String getItemSelectionText() {
-        return (String)this.getItemValue();
+        return (String) this.getItemValue();
     }
 
     /**
@@ -244,7 +244,7 @@ public abstract class FilterDropdownRecord<ListType> extends FilterDropdownRecor
      */
     @Override
     public boolean compareToSearchCriteria(String sCriteria) {
-        String sItemValue = (String)this.getItemValue();
+        String sItemValue = (String) this.getItemValue();
         return sItemValue.startsWith(sCriteria);
     }
 

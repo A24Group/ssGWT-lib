@@ -672,17 +672,5 @@ public abstract class FilterDropdown<T, ListType>
     public void setValue(String value, boolean fireEvents) {
         setValue(value);
     }
-    
-    /**
-     * Set the height of the mainpanel
-     * 
-     * @author Michael Barnard <michael.barnard@a24group.com>
-     * @since  16 Jul 2014
-     * 
-     * @param The new height of the panel as a sting
-     */
-    public void setMainPanelHeight(String sHeight) {
-        dropDownPopup.setHeight(sHeight);
-    }
 
 }
