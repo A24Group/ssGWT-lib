@@ -41,7 +41,7 @@
     box-sizing: border-box;
     box-shadow: 2px 2px 3px -1px #CCCCCC;
     background-color: #FFFFFF;
-    height: 250px;
+    max-height: 250px;
 }
 
 .infoText {
