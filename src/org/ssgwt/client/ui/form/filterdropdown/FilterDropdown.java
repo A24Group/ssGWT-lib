@@ -331,6 +331,7 @@ public abstract class FilterDropdown<T, ListType>
     public void setSelectedDisplayItem(FilterDropdownRecordWidget<ListType> selectedDisplayItem) {
         if (selectedDisplayItem != null) {
             this.selectedDisplayItem = selectedDisplayItem;
+            this.selectedDisplayItem.setSelectedState(false);
             this.selectedObject = this.selectedDisplayItem.getItemValue();
             textBox.setText(this.selectedDisplayItem.getItemSelectionText());
             destroyDropDownPopup();
@@ -385,7 +386,6 @@ public abstract class FilterDropdown<T, ListType>
         } else if (textBox.getText().length() >= this.minCharCount && !textBox.getText().equals(previousSearchString)) {
             selectedObject = null;
             previousSearchString = textBox.getText();
-            this.setValue(textBox.getText());
             createDropDownPopup();
 
             applyFilter();
@@ -393,7 +393,6 @@ public abstract class FilterDropdown<T, ListType>
         } else if (textBox.getText().length() < this.minCharCount) {
             selectedObject = null;
             previousSearchString = textBox.getText();
-            this.setValue(textBox.getText());
             destroyDropDownPopup();
         }
     }
