@@ -60,7 +60,7 @@ public abstract class FilterDropdown<T, ListType>
     /**
      * The minimum characters required for a filter to fire
      */
-    private int minCharCount = 1;
+    private int minCharCount = 0;
 
     /**
      * The text box the user will type the search criteria in

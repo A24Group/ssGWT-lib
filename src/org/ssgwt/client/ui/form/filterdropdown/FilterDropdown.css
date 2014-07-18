@@ -27,7 +27,6 @@
     float: left;
     padding: 0px 5px;
     border: none;
-    font-size: small;
     margin: 0px;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -35,7 +34,6 @@
 
 .dropDown {
     border-radius: 3px;
-    padding: 5px 14px;
     border: solid 1px #A6A8AC;
     -moz-box-sizing: border-box;
     box-sizing: border-box;

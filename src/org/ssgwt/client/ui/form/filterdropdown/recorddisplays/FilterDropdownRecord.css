@@ -14,7 +14,6 @@
 
 /* The style for the panel that contains the whole search result record */
 .searchResultRecord {
-    width: 100%;
     height: 35px;
     overflow: hidden;
     background: #FFFFFF;
@@ -25,9 +24,8 @@
     color: #6685AB;
     font-family: PT Sans, sans-serif;
     font-size: 12px;
-    margin-top: 9px;
     margin-right: 3px;
-    width: 100%;
+    padding: 5px;
 }
 
 /* The style for a selected record */
