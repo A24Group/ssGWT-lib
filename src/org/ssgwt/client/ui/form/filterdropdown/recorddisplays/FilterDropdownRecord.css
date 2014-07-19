@@ -32,4 +32,5 @@
 .searchResultRecordSelected {
     background: #E6E6E5;
     cursor: pointer;
+    padding-left: 5px;
 }
