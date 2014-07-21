@@ -338,3 +338,34 @@ The TimePickerInputField can typically be used where you want to select the time
     
     form.addField(customTimePicker, "Test Month Date Field:");
 ```
+
+#### FilterDropdown
+
+This FilterDropdown can typically be used where you have textbox and a predefined list of items that are most commonly used in this list. These items will be placed when the user types in the box and can then be selected to quickly populate the data in the field.
+
+```java
+	
+	FilterDropdown filterInputField = new FilterDropdown<YourAbstractVO, String>() {
+       
+            @Override
+            public String getValue(YourAbstractVO object) {
+		return object.sProperty;
+            }
+         
+            @Override
+            public void setValue(YourAbstractVO object, String value) {
+                object.sProperty = value;
+            }
+
+            @Override
+            public FilterDropdownRecordWidget<String> createDisplayWidgetInstance() {
+                return new FilterDropdownRecord<String>() {};
+            }
+
+        };
+	form.addField(filterInputField, "Username:");
+```
+
+
+
+
