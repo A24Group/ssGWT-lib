@@ -115,7 +115,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
         String noContentLabelStyle();
         
         /**
-         * Applied to the "No Content" label displayed.
+         * Applied to the loader image displayed.
          */
         @ClassName("loaderImage")
         String loaderImage();
