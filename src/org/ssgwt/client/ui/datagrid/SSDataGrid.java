@@ -38,6 +38,8 @@ import com.google.gwt.dom.client.TableRowElement;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -51,6 +53,7 @@ import com.google.gwt.user.cellview.client.TextHeader;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.RequiresResize;
@@ -89,6 +92,12 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
          */
         @Source("SSDataGrid.css")
         Style dataGridStyle();
+        
+        /**
+         * The image used in the loading state of the datagrid.
+         */
+        @Source("images/loader_image.gif")
+        ImageResource loaderImage();
     }
 
     public interface Style extends CssResource {
@@ -104,6 +113,12 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
          */
         @ClassName("noContentLabelStyle")
         String noContentLabelStyle();
+        
+        /**
+         * Applied to the loader image displayed.
+         */
+        @ClassName("loaderImage")
+        String loaderImage();
 
     }
 
@@ -139,6 +154,12 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      */
     @UiField
     protected Label noContentLabel;
+    
+    /**
+     * The loader container.
+     */
+    @UiField
+    protected Image loaderImage;
 
     /**
      * The flow panel that will contain the action bar
@@ -271,7 +292,33 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
         Resources.INSTANCE.dataGridStyle().ensureInjected();
         actionBar.setStyleName(Resources.INSTANCE.dataGridStyle().actionBarStyle());
         noContentLabel.setStyleName(Resources.INSTANCE.dataGridStyle().noContentLabelStyle());
+        loaderImage.setResource(Resources.INSTANCE.loaderImage());
+        loaderImage.addStyleName(Resources.INSTANCE.dataGridStyle().loaderImage());
+        loaderImage.getElement().getStyle().setProperty(
+            "marginLeft",
+            -(Resources.INSTANCE.loaderImage().getWidth() / 2) + Unit.PX.getType()
+        );
+        loaderImage.getElement().getStyle().setProperty(
+            "marginTop",
+            -(Resources.INSTANCE.loaderImage().getHeight() / 2) + Unit.PX.getType()
+        );
         dataGrid.addRangeChangeHandler(this);
+        setLoadingIndicatorState(false);
+    }
+    
+    /**
+     * Setter for the loading indicator of the datagrid.
+     * 
+     * @param loading - Whether the loader should show.
+     * 
+     * @author Ruan Naude <nauderuan777@gmail.com>
+     * @since 17 July 2014
+     */
+    public void setLoadingIndicatorState(boolean loading) {
+        loaderImage.setVisible(loading);
+        if (loading) {
+            noContentLabel.setVisible(false);
+        }
     }
 
     /**
@@ -301,7 +348,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
         }
 
         previousRange = dataGrid.getVisibleRange();
-        if (data != null) {
+        if (data != null && data.size() > 0) {
             noContentLabel.setVisible(false);
             dataGrid.setRowData(data);
             refresh();
@@ -313,6 +360,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
             doRangeChange = true;
             firstDataSet = false;
         }
+        setLoadingIndicatorState(false);
     }
 
     /**
@@ -345,7 +393,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
         }
 
         previousRange = dataGrid.getVisibleRange();
-        if (data != null) {
+        if (data != null && data.size() > 0) {
             doRangeChange = false;
             noContentLabel.setVisible(false);
             
@@ -364,6 +412,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
             doRangeChange = true;
             firstDataSet = false;
         }
+        setLoadingIndicatorState(false);
     }
 
     /**
