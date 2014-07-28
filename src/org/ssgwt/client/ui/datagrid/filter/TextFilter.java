@@ -361,7 +361,10 @@ public class TextFilter extends AbstractHeaderFilter {
     }
     
     /**
-     * The class constructor that will check for an exact match
+     * The class constructor that can check for an exact match
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  28 Jul 2014
      * 
      * @param exactMatch - Whether the filter should be an exact match
      */
@@ -380,6 +383,10 @@ public class TextFilter extends AbstractHeaderFilter {
     
     /**
      * Class constructor that takes a custom resources class
+     * and can check for an exact match
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  28 Jul 2014
      * 
      * @param resources - The resources the text filter should use
      * @param exactMatch - Whether the filter should be an exact match
