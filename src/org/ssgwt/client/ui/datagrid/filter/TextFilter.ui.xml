@@ -13,6 +13,10 @@
                 <g:CheckBox ui:field="checkBox" styleName="{resources.textFilterStyle.checkBoxStyle}"/>
                 <g:Label ui:field="checkBoxLabel" text="Find Empty Entries Only" styleName="{resources.textFilterStyle.checkBoxLabelStyle}"/>
             </g:FlowPanel>
+            <g:FlowPanel ui:field="exactMatchPanel" styleName="{resources.textFilterStyle.checkBoxContainerStyle}" width="100%">
+                <g:CheckBox ui:field="exactMatch" styleName="{resources.textFilterStyle.checkBoxStyle}"/>
+                <g:Label ui:field="exactMatchLabel" text="Find Exact Match Only" styleName="{resources.textFilterStyle.checkBoxLabelStyle}"/>
+            </g:FlowPanel>
             <g:Label ui:field="textBoxLabel" text="Text to filter:" styleName="{resources.textFilterStyle.textBoxLabelStyle}" width="100%"/>
             <g:FlowPanel styleName="{resources.textFilterStyle.textBoxStyleContainer}" width="100%">
                 <g:TextBox ui:field="textBox" styleName="{resources.textFilterStyle.textBoxStyle}" width="100%"/>

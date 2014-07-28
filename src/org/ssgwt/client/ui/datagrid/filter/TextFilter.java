@@ -34,6 +34,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -80,7 +81,25 @@ public class TextFilter extends AbstractHeaderFilter {
      */
     @UiField
     CheckBox checkBox;
-
+    
+    /**
+     * The check box for exact matches on the filter popup
+     */
+    @UiField
+    CheckBox exactMatch;
+    
+    /**
+     * The label for the exact match check box
+     */
+    @UiField
+    Label exactMatchLabel;
+    
+    /**
+     * The panel containing the exact match criteria
+     */
+    @UiField
+    FlowPanel exactMatchPanel;
+    
     /**
      * The label of the check box
      */
@@ -268,6 +287,11 @@ public class TextFilter extends AbstractHeaderFilter {
         private boolean findEmptyEntriesOnly;
         
         /**
+         * Flag to indicate if the user is looking for an exact match on the entries
+         */
+        private boolean exactMatchEntries = false;
+        
+        /**
          * Retrieve the flag that indicates if the user is looking for empty entries only
          * 
          * @return The flag that indicates if the user is looking for empty entries only
@@ -283,6 +307,30 @@ public class TextFilter extends AbstractHeaderFilter {
          */
         public void setFindEmptyEntriesOnly(boolean findEmptyEntriesOnly) {
             this.findEmptyEntriesOnly = findEmptyEntriesOnly;
+        }
+
+        /**
+         * Retrieve the flag that indicates if the user is looking for an exact match on the entries
+         * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  28 Jul 2014
+         * 
+         * @return The flag that indicates if the user is looking for an exact match on the entries
+         */
+        public boolean isExactMatchEntries() {
+            return exactMatchEntries;
+        }
+        
+        /**
+         * Sets the flag that the user is looking for an exact match on the entries
+         * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  28 Jul 2014
+         * 
+         * @param exactMatchEntries - The new value for the flag value
+         */
+        public void setExactMatchEntries(boolean exactMatchEntries) {
+            this.exactMatchEntries = exactMatchEntries;
         }
 
         /**
@@ -309,7 +357,16 @@ public class TextFilter extends AbstractHeaderFilter {
      * The default class constructor
      */
     public TextFilter() {
-        this(getDefaultResources());
+        this(getDefaultResources(), false);
+    }
+    
+    /**
+     * The class constructor that will check for an exact match
+     * 
+     * @param exactMatch - Whether the filter should be an exact match
+     */
+    public TextFilter(boolean exactMatch) {
+        this(getDefaultResources(), exactMatch);
     }
     
     /**
@@ -318,12 +375,29 @@ public class TextFilter extends AbstractHeaderFilter {
      * @param resources - The resources the text filter should use
      */
     public TextFilter(TextFilterResources resources) {
+        this(resources, false);
+    }
+    
+    /**
+     * Class constructor that takes a custom resources class
+     * 
+     * @param resources - The resources the text filter should use
+     * @param exactMatch - Whether the filter should be an exact match
+     */
+    public TextFilter(TextFilterResources resources, boolean exactMatch) {
         super(true);
         this.resources = resources;
         this.resources.textFilterStyle().ensureInjected();
         this.setStyleName("");
         this.setWidget(uiBinder.createAndBindUi(this));
-        setCriteria(new TextFilterCriteria());
+        
+        TextFilterCriteria criteria = new TextFilterCriteria();
+        criteria.setExactMatchEntries(exactMatch);
+        setCriteria(criteria);
+        this.exactMatchPanel.setVisible(exactMatch);
+        this.exactMatch.setValue(true);
+        this.exactMatch.setEnabled(false);
+        
         addKeyEventHandlers();
         addRemoveIconEventHandlers();
         addApplyButtonEventHandlers();
