@@ -212,6 +212,13 @@ public class TextFilter extends AbstractHeaderFilter {
         String checkBoxContainerStyle();
         
         /**
+         * The style for the container that holds any additional checkbox items
+         * 
+         * @return The name of the compiled style
+         */
+        String secondaryCheckBoxContainerStyle();
+        
+        /**
          * The style for the checkbox
          * 
          * @return The name of the compiled style
