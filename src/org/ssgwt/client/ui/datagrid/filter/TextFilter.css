@@ -77,6 +77,13 @@
     box-sizing: border-box;
 }
 
+.secondaryCheckBoxContainerStyle {
+    padding-left: 4px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 /* The style for the checkbox */
 .checkBoxStyle {
     display: inline-block;
