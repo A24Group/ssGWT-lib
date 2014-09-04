@@ -454,6 +454,9 @@ public class DynamicForm<T> extends Composite {
      * @param inputField - The input field that should be added to the form
      * @param label - The label that should be display above the field
      * @param beforeIndex the index before which it will be inserted
+     * 
+     * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+     * @since  4 Sept 2014
      */
     public void insertField(InputField<T, ?> inputField, String label, int beforeIndex) {
         drawField(inputField, label, false, "", beforeIndex);
@@ -571,6 +574,9 @@ public class DynamicForm<T> extends Composite {
      * @param label - The label that should be display above the field
      * @param embeded - Whether the component is an embeded object or not
      * @param customStyleName - The custom style to apply to the field
+     * 
+     * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+     * @since  4 Sept 2014
      */
     private void drawField(InputField<T, ?> inputField, String label, boolean embeded, String customStyleName) {
         Field fieldInfo = new Field(inputField, label, embeded, customStyleName);
