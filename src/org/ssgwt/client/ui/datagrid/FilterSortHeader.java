@@ -16,8 +16,6 @@ package org.ssgwt.client.ui.datagrid;
 import org.ssgwt.client.ui.datagrid.event.FilterChangeEvent;
 import org.ssgwt.client.ui.datagrid.filter.AbstractHeaderFilter;
 
-import com.google.gwt.cell.client.Cell;
-import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.Element;
@@ -26,7 +24,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.ColumnSortEvent;
 import com.google.gwt.user.cellview.client.Header;
-import com.google.gwt.user.client.Window;
 
 /**
  * The header that is used to enable filtering on a table that uses the
@@ -93,7 +90,7 @@ public class FilterSortHeader extends Header<HeaderDetails> {
      */
     @Override
     public boolean onPreviewColumnSortEvent(Context context, Element parent, NativeEvent event) {
-        Element filterImageElement = getImageElement(parent);
+        Element filterImageElement = getFilterImageElement(parent);
         
         // If the filter image element is clicked, then we don't want to perform a column sort event.
         if (event.getEventTarget().equals(filterImageElement)) {
@@ -105,7 +102,7 @@ public class FilterSortHeader extends Header<HeaderDetails> {
     }
     
     /**
-     * Retrieves the element of the image that is being displayed in the Cell
+     * Retrieves the element of the filter image that is being displayed in the Cell
      * 
      * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
      * @since  12 Sept 2014
@@ -114,10 +111,7 @@ public class FilterSortHeader extends Header<HeaderDetails> {
      * 
      * @return The element object that represents the image in the Cell
      */
-    protected Element getImageElement(Element parent) {
-        if (parent.getFirstChildElement().getElementsByTagName("img").getItem(0).getAttribute("name").equals("filterIcon")) {
-            return parent.getFirstChildElement().getElementsByTagName("img").getItem(0);
-        }
-        return parent.getFirstChildElement().getElementsByTagName("img").getItem(1);
+    protected Element getFilterImageElement(Element parent) {
+        return parent.getFirstChildElement().getElementsByTagName("img").getItem(0);
     }
 }
