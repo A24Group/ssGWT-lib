@@ -81,8 +81,11 @@ public class FilterSortHeader extends Header<HeaderDetails> {
      * This method will be invoked even if the header's cell does not consume a click event.
      * </p>
      * 
+     * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+     * @since  12 Sept 2014
+     * 
      * @param context the context of the header
-     * @param elem the parent Element
+     * @param parent the parent Element
      * @param event the native browser event
      * @return true if the {@link CellTable} should continue respond to the event (i.e., if this is
      *         a click event on a sortable column's header, fire {@link ColumnSortEvent}). False if
