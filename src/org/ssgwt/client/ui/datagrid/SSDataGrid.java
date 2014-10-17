@@ -361,6 +361,9 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
             firstDataSet = false;
         }
         setLoadingIndicatorState(false);
+
+        //Redraw headers so we can display the active filters
+        dataGrid.redrawHeaders();
     }
 
     /**
