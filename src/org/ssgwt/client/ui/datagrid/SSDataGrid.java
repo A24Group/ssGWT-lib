@@ -203,7 +203,12 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
      * Variable to hold the previous range before the range is changed
      */
     private Range previousRange = new Range(0, 0);
-
+    
+    /**
+     * The default range to apply to an empty data grid.
+     */
+    private Range emptyDataGridRange = new Range(0, 0);
+    
     /**
      * Holds all the filters added to the datagrid
      */
@@ -354,6 +359,8 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
             refresh();
         } else {
             noContentLabel.setVisible(true);
+            //No data to display so we reset the range selector 
+            dataGrid.setVisibleRange(emptyDataGridRange);
         }
 
         if (previousRange.equals(dataGrid.getVisibleRange())) {
