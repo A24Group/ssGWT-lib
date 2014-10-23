@@ -1237,5 +1237,15 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
     public void setColumnWidth(Column<T, ?> column, String width) {
         dataGrid.setColumnWidth(column, width);
     }
+    
+    /**
+     * Refresh the datagrid
+     * 
+     * @author Dmitri De Klerk <dmitri.deklerk@a24group.com>
+     * @since  23 Oct 2014
+     */
+    public void refreshDatagrid() {
+        refresh();
+    }
 
 }
