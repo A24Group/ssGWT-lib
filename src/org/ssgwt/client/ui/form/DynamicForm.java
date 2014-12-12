@@ -859,7 +859,7 @@ public class DynamicForm<T> extends Composite {
      * Sets a new layout on the dynamic form
      * 
      * @author Michael Barnard <michael.barnard@a24group.com>
-     * @since  11 November 2014
+     * @since  11 December 2014
      * 
      * @param layout - The new layout that the form should use
      */
