@@ -337,6 +337,67 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
         ColumnSortInfo columnSortInfo = new ColumnSortInfo(null, false);
         SSDataGrid.this.dataGrid.getColumnSortList().push(columnSortInfo);
     }
+    
+    /**
+     * This function will get the column with the specified field name and then set that
+     * column as sorted, either descending or ascending.
+     * 
+     * @param columnFieldName - The field name of the column to sort
+     * @param ascending - Whether to sort ascending or descending
+     * 
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 12 May 2015
+     * 
+     */
+     public void setSort(String columnFieldName, boolean ascending) {
+         if (columnFieldName != null) {
+             for (int i = 0; i < SSDataGrid.this.dataGrid.getColumnCount(); i++) {
+                 Column<T, ?> column = SSDataGrid.this.dataGrid.getColumn(i);
+                 if (column instanceof SortableColumnWithName) {
+                     if (columnFieldName.equals(((SortableColumnWithName) column).getFieldName())) {
+                         ColumnSortInfo columnSortInfo = new ColumnSortInfo(column, ascending);
+                         SSDataGrid.this.dataGrid.getColumnSortList().push(columnSortInfo);
+                     }
+                 }
+            }
+         }
+     }
+     
+     /**
+      * This function will update the datagrid pager values as well as column sort states
+      * 
+      * @param backToFirstPage - If we should reset the current page to page one
+      * @param rowData - The new row data to display on the datagrid
+      * @param rowCount - The total amount of rows there are
+      * @param startRow - The start row of the current page range
+      * @param recordsPerPage - The amount of record that should be displayed per page
+      * @param sortColumnFieldName - The field name of the column that should be sorted
+      * @param assending - The direction in which the column should be sorted.
+      * 
+      * @author Ruan Naude <ruan.naude@a24group.com>
+      * @since 12 May 2015
+      */
+     public void updateDatagridPagerAndSort(
+         boolean backToFirstPage,
+         List rowData,
+         int rowCount,
+         int startRow,
+         int recordsPerPage,
+         String sortColumnFieldName,
+         boolean assending
+     ) {
+         if (backToFirstPage) {
+             setRowData(rowData);
+         } else {
+             //set row count to override the last row count from when the datagrid showed previously
+             //have to set this again lower down since the setRowData internal process sets this to the
+             //count of the data send in(only visible range, not total amount of records)
+             setRowCount(rowCount, true);
+             setRowData(startRow, rowData, recordsPerPage);
+         }
+         setRowCount(rowCount, true);
+         setSort(sortColumnFieldName, assending);
+     }
 
     /**
      * Set the complete list of values to display on one page
