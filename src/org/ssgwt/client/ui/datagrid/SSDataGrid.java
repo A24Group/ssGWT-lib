@@ -359,7 +359,7 @@ public class SSDataGrid<T extends AbstractMultiSelectObject> extends Composite
                          SSDataGrid.this.dataGrid.getColumnSortList().push(columnSortInfo);
                      }
                  }
-            }
+             }
          }
      }
      
