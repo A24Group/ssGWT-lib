@@ -28,6 +28,11 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class DateTimeComponent extends Composite {
 
+    private static final String TOTAL_TIME_FORMAT_START = "( ";
+    private static final String TOTAL_TIME_FORMAT_HOURS = "H";
+    private static final String TOTAL_TIME_FORMAT_MINUTES = "Min";
+    private static final String TOTAL_TIME_FORMAT_END = " )";
+
     /**
      * Instance of the UiBinder
      */
@@ -261,6 +266,15 @@ public class DateTimeComponent extends Composite {
     private SSDate previousEndDate = null;
 
     /**
+     * Will hold the value in which to increase the hours for every spin
+     */
+    private int hoursStep = 1;
+    
+    /**
+     * Will hold the value in which to increase the minutes for every spin
+     */
+    private int minutesStep = 1;
+    /**
      * UiBinder interface for the composite
      *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
@@ -289,6 +303,28 @@ public class DateTimeComponent extends Composite {
     /**
      * Class constructor
      *
+     * @author Ruan Naude <runa.naude@a24group.com>
+     * @since 12 June 2015
+     *
+     * @param minDate - The minimum start date
+     * @param maxDate - The maximum start date
+     * @param selectedDate - The default selected date
+     * @param minShiftTime - The minimum shift length in milliseconds
+     * @param maxShiftTime - The maximum shift length in milliseconds
+     */
+    public DateTimeComponent(
+        SSDate minDate,
+        SSDate maxDate,
+        SSDate selectedDate,
+        long minShiftTime,
+        long maxShiftTime
+    ) {
+        this(minDate, maxDate, selectedDate, minShiftTime, maxShiftTime, 1, 15);
+    }
+    
+    /**
+     * Class constructor
+     *
      * @author Alec Erasmus <alec.erasmus@a24group.com>
      * @since 13 May 2013
      *
@@ -297,8 +333,21 @@ public class DateTimeComponent extends Composite {
      * @param selectedDate - The default selected date
      * @param minShiftTime - The minimum shift length in milliseconds
      * @param maxShiftTime - The maximum shift length in milliseconds
+     * @param hoursStep - The step to increase the hours with
+     * @param minutesStep - The step to increase the minutes with
      */
-    public DateTimeComponent(SSDate minDate, SSDate maxDate, SSDate selectedDate, long minShiftTime, long maxShiftTime) {
+    public DateTimeComponent(
+        SSDate minDate,
+        SSDate maxDate,
+        SSDate selectedDate,
+        long minShiftTime,
+        long maxShiftTime,
+        int hoursStep,
+        int minutesStep
+    ) {
+        this.hoursStep = hoursStep;
+        this.minutesStep = minutesStep;
+        
         // This is the max date allowed for the start date
         this.maxDate = maxDate;
         this.maxDate.setSeconds(0);
@@ -350,8 +399,8 @@ public class DateTimeComponent extends Composite {
             DateTimeFormat.getFormat("HH"),
             DateTimeFormat.getFormat("mm"),
             null,
-            15,
-            1
+            minutesStep,
+            hoursStep
         );
 
         // Add change handler
@@ -409,8 +458,8 @@ public class DateTimeComponent extends Composite {
             DateTimeFormat.getFormat("HH"),
             DateTimeFormat.getFormat("mm"),
             null,
-            15,
-            1
+            minutesStep,
+            hoursStep
         );
         this.lastEndDate = getShiftMinDate();
         endTimePicker.addChangeHandler(
@@ -462,13 +511,13 @@ public class DateTimeComponent extends Composite {
             if (startDateTimeManuallySet) {
                 startDateTimeManuallySet = false;
             } else {
-                if (date.getMinutes() % 15 != 0) {
+                if (date.getMinutes() % minutesStep != 0) {
                     SSDate resetDate = getRestDate((SSDate) (date.clone()));
-                    if ((date.getMinutes() % 15) - 15 == 1) {
+                    if ((date.getMinutes() % minutesStep) - minutesStep == 1) {
                         date.setMinutes(date.getMinutes() - 1);
                         resetDate = date;
                     }
-                    if ((date.getMinutes() % 15) - 15 == -1) {
+                    if ((date.getMinutes() % minutesStep) - minutesStep == -1) {
                         date.setMinutes(date.getMinutes() + 1);
                         resetDate = date;
                     }
@@ -506,13 +555,13 @@ public class DateTimeComponent extends Composite {
             if (endDateTimeManuallySet) {
                 endDateTimeManuallySet = false;
             } else {
-                if (date.getMinutes() % 15 != 0) {
+                if (date.getMinutes() % minutesStep != 0) {
                     SSDate resetDate = getRestDate((SSDate) (date.clone()));
-                    if ((date.getMinutes() % 15) - 15 == 1) {
+                    if ((date.getMinutes() % minutesStep) - minutesStep == 1) {
                         date.setMinutes(date.getMinutes() - 1);
                         resetDate = date;
                     }
-                    if ((date.getMinutes() % 15) - 15 == -1) {
+                    if ((date.getMinutes() % minutesStep) - minutesStep == -1) {
                         date.setMinutes(date.getMinutes() + 1);
                         resetDate = date;
                     }
@@ -700,38 +749,58 @@ public class DateTimeComponent extends Composite {
      * @return the shift is format "(H.M)"
      */
     public String getShiftTimeDiff(SSDate startDate, SSDate endDate) {
-        boolean reversed = false;
-        if (endDate.getTime() < startDate.getTime() - 1000) {
-            reversed = true;
-        }
-        int shiftTotalHours = (int) (((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60)));
-        int shiftTotalMin = (int) (((endDate.getTime() - startDate.getTime()) / (1000 * 60)) % 60);
-        if (shiftTotalMin == 59) {
-            shiftTotalMin = 0;
-            shiftTotalHours++;
-        } else if (shiftTotalMin % 15 == 14) {
-            shiftTotalMin++;
-        }
-        int totalMinAndHours = (shiftTotalHours * 60) + shiftTotalMin;
-
-        if (totalMinAndHours >= 1441 || totalMinAndHours <= 1439) {
-            if (endDate.getTime() - startDate.getTime() > 86399000) {
-                shiftTotalHours = 24;
-                totalMinAndHours = 1440;
-                shiftTotalMin = 0;
+        if (minutesStep == 15) {
+            boolean reversed = false;
+            if (endDate.getTime() < startDate.getTime() - 1000) {
+                reversed = true;
             }
+            int shiftTotalHours = (int) (((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60)));
+            int shiftTotalMin = (int) (((endDate.getTime() - startDate.getTime()) / (1000 * 60)) % 60);
+            if (shiftTotalMin == 59) {
+                shiftTotalMin = 0;
+                shiftTotalHours++;
+            } else if (shiftTotalMin % 15 == 14) {
+                shiftTotalMin++;
+            }
+            int totalMinAndHours = (shiftTotalHours * 60) + shiftTotalMin;
+    
+            if (totalMinAndHours >= 1441 || totalMinAndHours <= 1439) {
+                if (endDate.getTime() - startDate.getTime() > 86399000) {
+                    shiftTotalHours = 24;
+                    totalMinAndHours = 1440;
+                    shiftTotalMin = 0;
+                }
+            }
+    
+            //check if date difference are a varient of 0.25
+            if (((15 - (shiftTotalMin % 15) < 1)) || (totalMinAndHours > 1440) || reversed) {
+                return "( -err )";
+            }
+    
+            if (shiftTotalMin == 0) {
+                return "( " + shiftTotalHours + "h )";
+            }
+            String displayedMinutes = String.valueOf((int)((Math.ceil(shiftTotalMin) / 60) * 100)).replaceAll("0", "");
+            return "( " + shiftTotalHours + "." + displayedMinutes + "h )";
+        } else {
+            //getTime is in milliseconds, so divide by 100 for seconds and then 60 for minutes
+            float shiftTotalMinutes = (endDate.getTime() - startDate.getTime()) / 1000 / 60;
+            
+            //divide the total minutes by 60 and cast to int to get amount of hours e.g 8.3h will be 8h
+            int hours = (int) (shiftTotalMinutes / 60);
+            //subtract the amount of minutes taken up by whole hours above to get remaining minutes.
+            int min = (int) (shiftTotalMinutes - (hours * 60));
+            
+            String totalTimeString = TOTAL_TIME_FORMAT_START + hours + TOTAL_TIME_FORMAT_HOURS;
+            if (min < 10) {
+                totalTimeString += " " + 0;
+            } else {
+                totalTimeString += " ";
+            }
+            totalTimeString += min + TOTAL_TIME_FORMAT_MINUTES + TOTAL_TIME_FORMAT_END;
+            
+            return totalTimeString;
         }
-
-        //check if date difference are a varient of 0.25
-        if (((15 - (shiftTotalMin % 15) < 1)) || (totalMinAndHours > 1440) || reversed) {
-            return "( -err )";
-        }
-
-        if (shiftTotalMin == 0) {
-            return "( " + shiftTotalHours + "h )";
-        }
-        String displayedMinutes = String.valueOf((int)((Math.ceil(shiftTotalMin) / 60) * 100)).replaceAll("0", "");
-        return "( " + shiftTotalHours + "." + displayedMinutes + "h )";
     }
 
     /**
@@ -745,7 +814,7 @@ public class DateTimeComponent extends Composite {
      * @return passed in min rounded up to the nearest 15 min
      */
     private int roundUpTime(int min) {
-        return (int) (Math.ceil(((double) min) / 15) * 15);
+        return (int) (Math.ceil(((double) min) / minutesStep) * minutesStep);
     }
 
     /**

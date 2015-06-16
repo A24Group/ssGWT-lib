@@ -397,6 +397,7 @@ public class DynamicForm<T> extends Composite {
     /**
      * Updates the data object that was set using the setData function with the data in the fields
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     protected void updateDataObject() {
         for(InputField<T, ?> field : fields.keySet()) {
             if (String.class.equals(field.getReturnType())) {
@@ -417,6 +418,8 @@ public class DynamicForm<T> extends Composite {
                 ((InputField<T, Double>)field).setValue(dataObject, ((HasValue<Double>)field).getValue());
             } else if (Object.class.equals(field.getReturnType())) {
                 ((InputField<T, Object>)field).setValue(dataObject, ((HasValue<Object>)field).getValue());
+            } else if (Integer.class.equals(field.getReturnType())) {
+                ((InputField<T, Integer>)field).setValue(dataObject, ((HasValue<Integer>)field).getValue());
             }
         }
     }
@@ -424,6 +427,7 @@ public class DynamicForm<T> extends Composite {
     /**
      * Updates the fields with the data that was set using the setData function
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     protected void updateFieldData() {
         for(InputField<T, ?> field : fields.keySet()) {
             if (String.class.equals(field.getReturnType())) {
@@ -444,6 +448,8 @@ public class DynamicForm<T> extends Composite {
                 ((HasValue<Double>)field).setValue(((InputField<T, Double>)field).getValue(dataObject));
             } else if (Object.class.equals(field.getReturnType())) {
                 ((HasValue<Object>)field).setValue(((InputField<T, Object>)field).getValue(dataObject));
+            } else if (Integer.class.equals(field.getReturnType())) {
+                ((HasValue<Integer>)field).setValue(((InputField<T, Integer>)field).getValue(dataObject));
             }
         }
     }
