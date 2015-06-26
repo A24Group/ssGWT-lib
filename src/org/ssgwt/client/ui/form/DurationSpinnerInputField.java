@@ -84,15 +84,8 @@ public abstract class DurationSpinnerInputField<T> extends DurationSpinner imple
      * @param value - The initial value for the duration spinner
      * @param minValue - The minimum value the duration is allowed to be
      * @param maxValue - The maximum value the duration is allowed to be
-     * @param hourMinStep - The minimum value the hour is allowed to be stepped through
-     * @param hourMaxStep - The maximum value the hour is allowed to be stepped through
-     * @param minuteMinStep - The minimum value the minute is allowed to be stepped through
-     * @param minuteMaxStep - The maximum value the minute is allowed to be stepped through
-     * @param constrained - If set to false minimum and maximum value for will not have any effect on spinners
      * @param hourLabelText - The value of the text next to the hour spinner
      * @param minuteLabelText - The value of the text next to the minute spinner
-     * @param resources - The styles and images used by this widget
-     * @param images - The images used by the spinners
      * 
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 15 June 2015
@@ -127,11 +120,8 @@ public abstract class DurationSpinnerInputField<T> extends DurationSpinner imple
      * @param hourMaxStep - The maximum value the hour is allowed to be stepped through
      * @param minuteMinStep - The minimum value the minute is allowed to be stepped through
      * @param minuteMaxStep - The maximum value the minute is allowed to be stepped through
-     * @param constrained - If set to false minimum and maximum value for will not have any effect on spinners
      * @param hourLabelText - The value of the text next to the hour spinner
      * @param minuteLabelText - The value of the text next to the minute spinner
-     * @param resources - The styles and images used by this widget
-     * @param images - The images used by the spinners
      * 
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 15 June 2015
@@ -174,8 +164,6 @@ public abstract class DurationSpinnerInputField<T> extends DurationSpinner imple
      * @param constrained - If set to false minimum and maximum value for will not have any effect on spinners
      * @param hourLabelText - The value of the text next to the hour spinner
      * @param minuteLabelText - The value of the text next to the minute spinner
-     * @param resources - The styles and images used by this widget
-     * @param images - The images used by the spinners
      * 
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 15 June 2015
@@ -221,7 +209,6 @@ public abstract class DurationSpinnerInputField<T> extends DurationSpinner imple
      * @param hourLabelText - The value of the text next to the hour spinner
      * @param minuteLabelText - The value of the text next to the minute spinner
      * @param resources - The styles and images used by this widget
-     * @param images - The images used by the spinners
      * 
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 15 June 2015
