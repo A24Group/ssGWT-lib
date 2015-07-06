@@ -71,7 +71,7 @@ public abstract class ShiftInputField<T>
     /**
      * Class constructor
      *
-     * @author Ruan Naude <runa.naude@a24group.com>
+     * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 12 June 2015
      *
      * @param minDate - The minimum start date

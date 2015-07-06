@@ -28,9 +28,24 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class DateTimeComponent extends Composite {
 
+    /**
+     * Constant for the opening total time string
+     */
     private static final String TOTAL_TIME_FORMAT_START = "( ";
+    
+    /**
+     * Constant for the hour format in the total time string
+     */
     private static final String TOTAL_TIME_FORMAT_HOURS = "H";
+    
+    /**
+     * Constant for the minute format in the total time string
+     */
     private static final String TOTAL_TIME_FORMAT_MINUTES = "Min";
+    
+    /**
+     * Constant for the closing total time string
+     */
     private static final String TOTAL_TIME_FORMAT_END = " )";
 
     /**
@@ -274,6 +289,7 @@ public class DateTimeComponent extends Composite {
      * Will hold the value in which to increase the minutes for every spin
      */
     private int minutesStep = 1;
+    
     /**
      * UiBinder interface for the composite
      *
@@ -303,7 +319,7 @@ public class DateTimeComponent extends Composite {
     /**
      * Class constructor
      *
-     * @author Ruan Naude <runa.naude@a24group.com>
+     * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 12 June 2015
      *
      * @param minDate - The minimum start date

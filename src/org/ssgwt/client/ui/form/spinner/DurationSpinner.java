@@ -206,9 +206,7 @@ public class DurationSpinner extends FlowPanel implements HasValue<Integer>{
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 15 June 2015
      */
-    public DurationSpinner(
-        int value
-    ) {
+    public DurationSpinner(int value) {
         this(value, null, null);
     }
 
@@ -713,7 +711,7 @@ public class DurationSpinner extends FlowPanel implements HasValue<Integer>{
     }
 
     /**
-     * Set the value of the spinners
+     * Set the value of the spinners and fire the value change event
      *
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 15 June 2015
@@ -722,7 +720,7 @@ public class DurationSpinner extends FlowPanel implements HasValue<Integer>{
      */
     @Override
     public void setValue(Integer value) {
-      //divide the total minutes by 60 and cast to int hours will be whole e.g 8.6h will be 8h
+        //divide the total minutes by 60 and cast to int hours will be whole e.g 8.6h will be 8h
         int hours = (int) (value / 60);
         //subtract the amount of minutes taken up by whole hours above to get remaining minutes.
         int minutes = (int) (value - (hours * 60));

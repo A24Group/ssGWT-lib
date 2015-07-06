@@ -41,9 +41,7 @@ public abstract class DurationSpinnerInputField<T> extends DurationSpinner imple
      * @author Ruan Naude <ruan.naude@a24group.com>
      * @since 15 June 2015
      */
-    public DurationSpinnerInputField(
-        int value
-    ) {
+    public DurationSpinnerInputField(int value) {
         super(value, null, null);
     }
 
@@ -297,8 +295,8 @@ public abstract class DurationSpinnerInputField<T> extends DurationSpinner imple
     /**
      * Sets the flag that indicates whether the input field is required or not
      *
-     * @author Alec Erasmus<alec.erasmus@a24group.com>
-     * @since 08 July 2013
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 15 June 2015
      *
      * @param required - The flag that indicates whether the input field is required or not
      */
