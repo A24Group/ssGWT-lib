@@ -67,6 +67,32 @@ public abstract class ShiftInputField<T>
     public ShiftInputField(SSDate minDate, SSDate maxDate, SSDate selectedDate, long minShiftTime, long maxShiftTime) {
         super(minDate, maxDate, selectedDate, minShiftTime, maxShiftTime);
     }
+    
+    /**
+     * Class constructor
+     *
+     * @author Ruan Naude <ruan.naude@a24group.com>
+     * @since 12 June 2015
+     *
+     * @param minDate - The minimum start date
+     * @param maxDate - The maximum start date
+     * @param selectedDate - The default selected date
+     * @param minShiftTime - The minimum shift length in milliseconds
+     * @param maxShiftTime - The maximum shift length in milliseconds
+     * @param hoursStep - The step to increase the hours with
+     * @param minuteStep - The step to increase the minutes with
+     */
+    public ShiftInputField(
+        SSDate minDate,
+        SSDate maxDate,
+        SSDate selectedDate,
+        long minShiftTime,
+        long maxShiftTime,
+        int hoursStep,
+        int minuteStep
+    ) {
+        super(minDate, maxDate, selectedDate, minShiftTime, maxShiftTime, hoursStep, minuteStep);
+    }
 
     /**
      * Add a ValueChangeHandler to this class
