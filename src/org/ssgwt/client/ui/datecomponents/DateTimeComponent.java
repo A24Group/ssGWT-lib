@@ -204,6 +204,11 @@ public class DateTimeComponent extends Composite {
      * The date is selected by default
      */
     private final SSDate defaultSelectedDate;
+    
+    /**
+     * The date that was previously selected by the component
+     */
+    private SSDate lastUsedDate;
 
     /**
      * The last end date
@@ -377,6 +382,8 @@ public class DateTimeComponent extends Composite {
 
         this.defaultSelectedDate.setSeconds(0);
         this.defaultSelectedDate.setMinutes(roundUpTime(defaultSelectedDate.getMinutes()));
+        
+        this.lastUsedDate = this.defaultSelectedDate;
 
         this.maxShiftTime = maxShiftTime;
         this.minShiftTime = minShiftTime;
@@ -634,17 +641,26 @@ public class DateTimeComponent extends Composite {
      * @param date - The new date selected
      */
     private void onStartDateBoxValueChange(SSDate date) {
-        startTimePicker.setDate(date);
 
-        endDatePicker.setMinimumDate(getMinEndDate(getShiftMinDate()));
-        endDatePicker.setMaximumDate(getMaxEndDate(getShiftMaxDate()));
+        SSDate previousDate = this.lastUsedDate;
+        previousDate.resetTime();
 
-        endDateBox.setValue(getShiftMinDate());
-        endTimePicker.setDateTime(getShiftMinDate());
+        SSDate currentDate = date;
+        currentDate.resetTime();
 
-        endTimePicker.setMinDate(getShiftMinDate());
-        endTimePicker.setMaxDate(getShiftMaxDate());
-        totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
+        if (!currentDate.equals(date)) {
+            startTimePicker.setDate(date);
+
+            endDatePicker.setMinimumDate(getMinEndDate(getShiftMinDate()));
+            endDatePicker.setMaximumDate(getMaxEndDate(getShiftMaxDate()));
+
+            endDateBox.setValue(getShiftMinDate());
+            endTimePicker.setDateTime(getShiftMinDate());
+
+            endTimePicker.setMinDate(getShiftMinDate());
+            endTimePicker.setMaxDate(getShiftMaxDate());
+            totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
+        }
     }
 
     /**

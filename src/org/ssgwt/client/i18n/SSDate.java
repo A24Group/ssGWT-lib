@@ -260,6 +260,21 @@ public class SSDate extends Date
             this.timeZoneOffset = this.timeZone.getOffset(this);
         }
     }
+    
+    /**
+     * This method will be used to reset the time to 00:00:00
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  21 July 2015
+     * 
+     * @return The instance of the ssdate with time reset
+     */
+    public SSDate resetTime() {
+        this.setHours(0);
+        this.setMinutes(0);
+        this.setSeconds(0);
+        return this;
+    }
 
     /**
      * Retrieves the time zone of the date
