@@ -397,7 +397,24 @@ public class DateTimeComponent extends Composite {
         
         this.lastUsedDate = this.defaultSelectedDate;
         
-        startDateBox = new DateBox(startDatePicker, defaultSelectedDate, DEFAULT_FORMAT);
+        startDateBox = new DateBox(startDatePicker, defaultSelectedDate, DEFAULT_FORMAT) {
+            /**
+             * This function is overridden so that we can set the last used date as well
+             * 
+             * @author Michael Barnard <michael.barnard@a24group.com>
+             * @since  22 July 2015
+             * 
+             * @param date - The date that should be set in the date picker
+             * @param fireEvents - Whether or not to fire events when the value is set
+             * 
+             * @return void
+             */
+            @Override
+            public void setValue(SSDate date, boolean fireEvents) {
+                super.setValue(date, fireEvents);
+                lastUsedDate = date;
+            }
+        };
         startDateBox.getTextBox().setReadOnly(true);
         startDateBox.addValueChangeHandler(
             new ValueChangeHandler<SSDate>() {
@@ -455,7 +472,24 @@ public class DateTimeComponent extends Composite {
         
         this.lastUsedEndDate = getShiftMinDate();
         
-        endDateBox = new DateBox(endDatePicker, getShiftMinDate(), DEFAULT_FORMAT);
+        endDateBox = new DateBox(endDatePicker, getShiftMinDate(), DEFAULT_FORMAT) {
+            /**
+             * This function is overridden so that we can set the last used date as well
+             * 
+             * @author Michael Barnard <michael.barnard@a24group.com>
+             * @since  22 July 2015
+             * 
+             * @param date - The date that should be set in the date picker
+             * @param fireEvents - Whether or not to fire events when the value is set
+             * 
+             * @return void
+             */
+            @Override
+            public void setValue(SSDate date, boolean fireEvents) {
+                super.setValue(date, fireEvents);
+                lastUsedEndDate = date;
+            }
+        };
         endDateBox.getTextBox().setReadOnly(true);
         endDateBox.addValueChangeHandler(
             new ValueChangeHandler<SSDate>() {
@@ -656,7 +690,7 @@ public class DateTimeComponent extends Composite {
         // Get the new date without time
         SSDate currentDate = date;
         currentDate.resetTime();
-
+        
         // Execute only if the dates are different
         if (!currentDate.equals(previousDate)) {
             this.lastUsedDate = date;
