@@ -204,6 +204,16 @@ public class DateTimeComponent extends Composite {
      * The date is selected by default
      */
     private final SSDate defaultSelectedDate;
+    
+    /**
+     * The date that was previously selected by the component
+     */
+    private SSDate lastUsedDate;
+    
+    /**
+     * The end date that was previously selected by the component
+     */
+    private SSDate lastUsedEndDate;
 
     /**
      * The last end date
@@ -377,15 +387,34 @@ public class DateTimeComponent extends Composite {
 
         this.defaultSelectedDate.setSeconds(0);
         this.defaultSelectedDate.setMinutes(roundUpTime(defaultSelectedDate.getMinutes()));
-
+        
         this.maxShiftTime = maxShiftTime;
         this.minShiftTime = minShiftTime;
 
         // The date picker for the start date
         startDatePicker = new SSDatePicker(this.minDate, this.maxDate);
         startDatePicker.setStyleName(dtPickerSizeStyle);
-
-        startDateBox = new DateBox(startDatePicker, defaultSelectedDate, DEFAULT_FORMAT);
+        
+        this.lastUsedDate = this.defaultSelectedDate;
+        
+        startDateBox = new DateBox(startDatePicker, defaultSelectedDate, DEFAULT_FORMAT) {
+            /**
+             * This function is overridden so that we can set the last used date as well
+             * 
+             * @author Michael Barnard <michael.barnard@a24group.com>
+             * @since  22 July 2015
+             * 
+             * @param date - The date that should be set in the date picker
+             * @param fireEvents - Whether or not to fire events when the value is set
+             * 
+             * @return void
+             */
+            @Override
+            public void setValue(SSDate date, boolean fireEvents) {
+                super.setValue(date, fireEvents);
+                lastUsedDate = date;
+            }
+        };
         startDateBox.getTextBox().setReadOnly(true);
         startDateBox.addValueChangeHandler(
             new ValueChangeHandler<SSDate>() {
@@ -440,8 +469,27 @@ public class DateTimeComponent extends Composite {
 
         endDatePicker = new SSDatePicker(getMinEndDate(getShiftMinDate()), getMaxEndDate(getShiftMaxDate()));
         endDatePicker.setStyleName(dtPickerSizeStyle);
-
-        endDateBox = new DateBox(endDatePicker, getShiftMinDate(), DEFAULT_FORMAT);
+        
+        this.lastUsedEndDate = getShiftMinDate();
+        
+        endDateBox = new DateBox(endDatePicker, getShiftMinDate(), DEFAULT_FORMAT) {
+            /**
+             * This function is overridden so that we can set the last used date as well
+             * 
+             * @author Michael Barnard <michael.barnard@a24group.com>
+             * @since  22 July 2015
+             * 
+             * @param date - The date that should be set in the date picker
+             * @param fireEvents - Whether or not to fire events when the value is set
+             * 
+             * @return void
+             */
+            @Override
+            public void setValue(SSDate date, boolean fireEvents) {
+                super.setValue(date, fireEvents);
+                lastUsedEndDate = date;
+            }
+        };
         endDateBox.getTextBox().setReadOnly(true);
         endDateBox.addValueChangeHandler(
             new ValueChangeHandler<SSDate>() {
@@ -634,17 +682,30 @@ public class DateTimeComponent extends Composite {
      * @param date - The new date selected
      */
     private void onStartDateBoxValueChange(SSDate date) {
-        startTimePicker.setDate(date);
 
-        endDatePicker.setMinimumDate(getMinEndDate(getShiftMinDate()));
-        endDatePicker.setMaximumDate(getMaxEndDate(getShiftMaxDate()));
+        // Get the previous date without time
+        SSDate previousDate = this.lastUsedDate;
+        previousDate.resetTime();
 
-        endDateBox.setValue(getShiftMinDate());
-        endTimePicker.setDateTime(getShiftMinDate());
+        // Get the new date without time
+        SSDate currentDate = date;
+        currentDate.resetTime();
+        
+        // Execute only if the dates are different
+        if (!currentDate.equals(previousDate)) {
+            this.lastUsedDate = date;
+            startTimePicker.setDate(date);
 
-        endTimePicker.setMinDate(getShiftMinDate());
-        endTimePicker.setMaxDate(getShiftMaxDate());
-        totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
+            endDatePicker.setMinimumDate(getMinEndDate(getShiftMinDate()));
+            endDatePicker.setMaximumDate(getMaxEndDate(getShiftMaxDate()));
+
+            endDateBox.setValue(getShiftMinDate());
+            endTimePicker.setDateTime(getShiftMinDate());
+
+            endTimePicker.setMinDate(getShiftMinDate());
+            endTimePicker.setMaxDate(getShiftMaxDate());
+            totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
+        }
     }
 
     /**
@@ -657,9 +718,21 @@ public class DateTimeComponent extends Composite {
      * @param date - The new date selected
      */
     private void onEndDateBoxValueChange(SSDate date) {
-        endTimePicker.setDateTime(getShiftMinDate());
-        endTimePicker.setDate(date);
-        totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
+        // Get the previous date without time
+        SSDate previousDate = this.lastUsedEndDate;
+        previousDate.resetTime();
+
+        // Get the new date without time
+        SSDate currentDate = date;
+        currentDate.resetTime();
+
+        // Execute only if the dates are different
+        if (!currentDate.equals(previousDate)) {
+            this.lastUsedEndDate = date;
+            endTimePicker.setDateTime(getShiftMinDate());
+            endTimePicker.setDate(date);
+            totalTime.setText(getShiftTimeDiff(startTimePicker.getDateTime(), endTimePicker.getDateTime()));
+        }
     }
 
     /**
