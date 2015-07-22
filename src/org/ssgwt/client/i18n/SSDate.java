@@ -267,13 +267,12 @@ public class SSDate extends Date
      * @author Michael Barnard <michael.barnard@a24group.com>
      * @since  21 July 2015
      * 
-     * @return The instance of the ssdate with time reset
+     * @return void
      */
-    public SSDate resetTime() {
+    public void resetTime() {
         this.setHours(0);
         this.setMinutes(0);
         this.setSeconds(0);
-        return this;
     }
 
     /**
