@@ -17,6 +17,10 @@ import org.ssgwt.client.ui.datagrid.SSDataGrid.Resources;
 import org.ssgwt.client.ui.form.spinner.Spinner.SpinnerResources;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -149,7 +153,8 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
          */
         @Override
         public void onKeyPress(KeyPressEvent event) {
-            int index = valueBox.getCursorPos();
+            /*
+        	int index = valueBox.getCursorPos();
             String previousText = valueBox.getText();
             String newText;
             if (valueBox.getSelectionLength() > 0) {
@@ -175,7 +180,7 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
                 spinner.setValue(newValue, true);
             } catch (Exception e) {
                 // Die silently
-            }
+            }*/
         }
     };
 
@@ -373,6 +378,27 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
         }
         valueBox.setStyleName(TEXTBOX_STYLE);
         valueBox.addKeyPressHandler(keyPressHandler);
+        valueBox.addBlurHandler(new BlurHandler() {
+			
+			@Override
+			public void onBlur(BlurEvent event) {
+				String value = valueBox.getValue();
+				System.out.println("yup: " + value);
+				try {
+	                long newValue = parseValue(value);
+	                System.out.println(newValue);
+	                System.out.println("steppi[" + spinner.getMinStep() + "]");
+	                if (spinner.isConstrained() && (newValue > spinner.getMax() || newValue < spinner.getMin())) {
+	                    return;
+	                }
+	                newValue = Math.round((float)newValue/(float)spinner.getMinStep())*spinner.getMinStep();
+	                spinner.setValue(newValue, true);
+	            } catch (Exception e) {
+	            	System.out.println(e.getMessage());
+	            	spinner.setValue(25, true);
+	            }
+			}
+		});
         spinnerContainer.add(valueBox);
 
         FlowPanel arrowsPanel = new FlowPanel();
@@ -451,9 +477,8 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
      * @return the parsed value.
      */
     protected long parseValue(String value) {
-        double doubleValue = Double.parseDouble(value);
-        doubleValue = doubleValue * 100;
-        return Long.valueOf(String.valueOf(doubleValue));
+        double doubleValue= Double.parseDouble(value);
+        return (long)(doubleValue * 100);
     }
 
     /**

@@ -79,6 +79,7 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
 
         @Override
         public void onKeyPress(KeyPressEvent event) {
+            System.out.println(event.getCharCode());
             int index = valueBox.getCursorPos();
             String previousText = valueBox.getText();
             String newText;
@@ -243,6 +244,7 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
             int maxStep, boolean constrained, ValueSpinnerResources resources,
             SpinnerResources images) {
         super();
+        System.out.println("construct");
         setStylePrimaryName(STYLENAME_DEFAULT);
         if (images == null) {
             spinner = new Spinner(spinnerListener, value, min, max, minStep,
@@ -296,6 +298,7 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
      *            true to enable the widget, false to disable it
      */
     public void setEnabled(boolean enabled) {
+    	System.out.println("enable");
         spinner.setEnabled(enabled);
         valueBox.setEnabled(enabled);
     }
@@ -306,6 +309,7 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
      * @return the formatted value
      */
     protected String formatValue(long value) {
+    	System.out.println("format");
         return String.valueOf(value);
     }
 
@@ -315,6 +319,7 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
      * @return the parsed value
      */
     protected long parseValue(String value) {
+    	System.out.println("parse");
         return Long.valueOf(value);
     }
 
@@ -330,6 +335,7 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
      */
     @Override
     public HandlerRegistration addValueChangeHandler(ValueChangeHandler<Long> handler) {
+    	System.out.println("add value change handler");
          return addHandler(handler, ValueChangeEvent.getType());
     }
 
@@ -370,6 +376,7 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
      */
     @Override
     public void setValue(Long value, boolean fireEvents) {
+    	System.out.println("setValue");
         spinner.setValue(value, fireEvents);
     }
 
