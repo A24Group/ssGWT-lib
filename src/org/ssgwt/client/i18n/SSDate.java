@@ -270,9 +270,25 @@ public class SSDate extends Date
      * @return void
      */
     public void resetTime() {
-        this.setHours(0);
-        this.setMinutes(0);
-        this.setSeconds(0);
+        this.setDirectTime(0, 0, 0);
+    }
+    
+    /**
+     * This method will be used to set the time to the given hour minutes and second values
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  27 July 2015
+     * 
+     * @param hours - The hour value
+     * @param minute - The minute value
+     * @param seconds - The seconds value
+     * 
+     * @return void
+     */
+    public void setDirectTime(int hours, int minutes, int seconds) {
+        this.setHours(hours);
+        this.setMinutes(minutes);
+        this.setSeconds(seconds);
     }
 
     /**
