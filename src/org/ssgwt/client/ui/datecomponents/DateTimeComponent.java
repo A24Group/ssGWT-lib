@@ -872,6 +872,29 @@ public class DateTimeComponent extends Composite {
             String displayedMinutes = String.valueOf((int)((Math.ceil(shiftTotalMin) / 60) * 100)).replaceAll("0", "");
             return "( " + shiftTotalHours + "." + displayedMinutes + "h )";
         } else {
+            /**
+             * Due to the nature of the events being thrown in this component, the
+             * getShiftTimeDiff ignores the values passed in to this method(unless the minutes 
+             * step is 15) and instead retrieves it from the components itself. This way, it is 
+             * guaranteed to always have the latest values, and avoid being thrown off by a dalayed
+             * event containing old date values.
+             */
+            // Get start date object
+            startDate = startDatePicker.getValue();
+            // Set the time to the start time picker
+            startDate.setDirectTime(
+                startTimePicker.getDateTime().getHours(),
+                startTimePicker.getDateTime().getMinutes(),
+                startTimePicker.getDateTime().getSeconds()
+            );
+            // Get end date object
+            endDate = endDatePicker.getValue();
+            // Set the time to the end time picker
+            endDate.setDirectTime(
+                endTimePicker.getDateTime().getHours(),
+                endTimePicker.getDateTime().getMinutes(),
+                endTimePicker.getDateTime().getSeconds()
+            );
             //getTime is in milliseconds, so divide by 100 for seconds and then 60 for minutes
             float shiftTotalMinutes = (endDate.getTime() - startDate.getTime()) / 1000 / 60;
             
