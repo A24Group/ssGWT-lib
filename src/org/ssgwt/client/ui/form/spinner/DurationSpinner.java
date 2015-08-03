@@ -560,14 +560,16 @@ public class DurationSpinner extends FlowPanel implements HasValue<Integer>{
                 if (!readOnly) {
                     try {
                         int newHourValue = Integer.parseInt(hourValueBox.getValue());
-                        if (newHourValue > getHourSpinner().getMax()) {
-                            newHourValue = (int)getHourSpinner().getMax();
+                        if (oldHourValue != newHourValue) {
+                            if (newHourValue > getHourSpinner().getMax()) {
+                                newHourValue = (int)getHourSpinner().getMax();
+                            }
+                            if (newHourValue < getHourSpinner().getMin()) {
+                                newHourValue = (int)getHourSpinner().getMin();
+                            }
+                            getHourSpinner().setValue(newHourValue, true);
+                            oldHourValue = newHourValue;
                         }
-                        if (newHourValue < getHourSpinner().getMin()) {
-                            newHourValue = (int)getHourSpinner().getMin();
-                        }
-                        getHourSpinner().setValue(newHourValue, true);
-                        oldHourValue = newHourValue;
                     } catch (Exception e) {
                         // This means the number entered was invalid... reverting back to the original
                         getHourSpinner().setValue(oldHourValue, true);
@@ -591,14 +593,16 @@ public class DurationSpinner extends FlowPanel implements HasValue<Integer>{
                 if (!readOnly) {
                     try {
                         int newMinuteValue = Integer.parseInt(minuteValueBox.getValue());
-                        if (newMinuteValue > getMinuteSpinner().getMax()) {
-                            newMinuteValue = (int)getMinuteSpinner().getMax();
+                        if (oldMinuteValue != newMinuteValue) {
+                            if (newMinuteValue > getMinuteSpinner().getMax()) {
+                                newMinuteValue = (int)getMinuteSpinner().getMax();
+                            }
+                            if (newMinuteValue < getMinuteSpinner().getMin()) {
+                                newMinuteValue = (int)getMinuteSpinner().getMin();
+                            }
+                            getMinuteSpinner().setValue(newMinuteValue, true);
+                            oldMinuteValue = newMinuteValue;
                         }
-                        if (newMinuteValue < getMinuteSpinner().getMin()) {
-                            newMinuteValue = (int)getMinuteSpinner().getMin();
-                        }
-                        getMinuteSpinner().setValue(newMinuteValue, true);
-                        oldMinuteValue = newMinuteValue;
                     } catch (Exception e) {
                         // This means the number entered was invalid... reverting back to the original
                         getMinuteSpinner().setValue(oldMinuteValue, true);
