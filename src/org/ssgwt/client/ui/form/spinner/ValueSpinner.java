@@ -112,61 +112,63 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
         public void onBlur(BlurEvent event) {
             // Get the value from the text box
             String value = valueBox.getValue();
-            try {
-                // Convert text to number
-                long numericNew = Long.parseLong(value);
-                // Set minimum as 0
-                if (numericNew < 0) {
-                    numericNew = 0;
-                }
-                
-                // Calculate the difference in with the multiplier
-                long difference = numericNew - oldValue;
-                long timeDiff = difference * multiplier;
-                long newValue = spinner.getValue() + timeDiff;
-                
-                // Get a limited value for the 
-                long shortNewValue = Long.parseLong(formatValue(newValue));
-                // Compare the limited and non limited values
-                if (numericNew != shortNewValue) {
-                    // Shift the time
-                    long shifting = (numericNew - Long.parseLong(formatValue(newValue)));
-                    // minus one to conform to 0 start
-                    shifting -= 1;
-                    difference = shifting - oldValue;
-                    timeDiff = difference * multiplier;
-                    // Recalculate the value
-                    newValue = spinner.getValue() + timeDiff;
-                }
-                if (getSpinner().isConstrained()) {
-                    // Get spinner constraints
-                    long maxValue = getSpinner().getMax();
-                    long minValue = getSpinner().getMin();
-                    // Check that the spinner conforms to the constraints
-                    if (newValue < minValue) {
-                        newValue = minValue;
+            if (!value.equals(formatValue(getSpinner().getValue()))){
+                try {
+                    // Convert text to number
+                    long numericNew = Long.parseLong(value);
+                    // Set minimum as 0
+                    if (numericNew < 0) {
+                        numericNew = 0;
                     }
-                    if (newValue > maxValue) {
-                        newValue = maxValue;
+                    
+                    // Calculate the difference in with the multiplier
+                    long difference = numericNew - oldValue;
+                    long timeDiff = difference * multiplier;
+                    long newValue = spinner.getValue() + timeDiff;
+                    
+                    // Get a limited value for the 
+                    long shortNewValue = Long.parseLong(formatValue(newValue));
+                    // Compare the limited and non limited values
+                    if (numericNew != shortNewValue) {
+                        // Shift the time
+                        long shifting = (numericNew - Long.parseLong(formatValue(newValue)));
+                        // minus one to conform to 0 start
+                        shifting -= 1;
+                        difference = shifting - oldValue;
+                        timeDiff = difference * multiplier;
+                        // Recalculate the value
+                        newValue = spinner.getValue() + timeDiff;
                     }
+                    if (getSpinner().isConstrained()) {
+                        // Get spinner constraints
+                        long maxValue = getSpinner().getMax();
+                        long minValue = getSpinner().getMin();
+                        // Check that the spinner conforms to the constraints
+                        if (newValue < minValue) {
+                            newValue = minValue;
+                        }
+                        if (newValue > maxValue) {
+                            newValue = maxValue;
+                        }
+                    }
+    
+                    // Set the spinner value
+                    if (getSpinner() != null) {
+                        getSpinner().setValue(newValue, false);
+                    }
+                    String updateValue = formatValue(newValue);
+                    //Perform normal update
+                    valueBox.setText(updateValue);
+                    if (updateValue != null && !updateValue.equals("")) {
+                        oldValue = Long.parseLong(updateValue);
+                    }
+                    // Fire update so that recalculations can happen
+                    getSpinner().fireOnValueChanged();
+                } catch (Exception e) {
+                    // If any exception happens, we revert back to the original value that was typed in
+                    valueBox.setText(formatValue(getSpinner().getValue()));
                 }
-
-                // Set the spinner value
-                if (getSpinner() != null) {
-                    getSpinner().setValue(newValue, false);
-                }
-                String updateValue = formatValue(newValue);
-                //Perform normal update
-                valueBox.setText(updateValue);
-                if (updateValue != null && !updateValue.equals("")) {
-                    oldValue = Long.parseLong(updateValue);
-                }
-            } catch (Exception e) {
-                // If any exception happens, we revert back to the original value that was typed in
-                valueBox.setText(formatValue(getSpinner().getValue()));
             }
-            // Fire update so that recalculations can happen
-            getSpinner().fireOnValueChanged();
         }
     };
     
