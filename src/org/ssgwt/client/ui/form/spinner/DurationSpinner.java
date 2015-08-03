@@ -604,7 +604,7 @@ public class DurationSpinner extends FlowPanel implements HasValue<Integer>{
                             oldMinuteValue = newMinuteValue;
                         }
                     } catch (Exception e) {
-                        // This means the number entered was invalid... reverting back to the original
+                        // This means the number entered was invalid... reverting back to the original value
                         getMinuteSpinner().setValue(oldMinuteValue, true);
                     }
                 }
