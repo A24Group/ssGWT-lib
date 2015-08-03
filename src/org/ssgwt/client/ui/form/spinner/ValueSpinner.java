@@ -116,20 +116,16 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
                 try {
                     // Convert text to number
                     long numericNew = Long.parseLong(value);
-                    // Set minimum as 0
-                    if (numericNew < 0) {
-                        numericNew = 0;
-                    }
                     
-                    // Calculate the difference in with the multiplier
+                    // Calculate the difference between the typed value and the old value
                     long difference = numericNew - oldValue;
                     long timeDiff = difference * multiplier;
                     long newValue = spinner.getValue() + timeDiff;
                     
-                    // Get a limited value for the 
-                    long shortNewValue = Long.parseLong(formatValue(newValue));
+                    // Get a formatted version of the value typed in
+                    long formattedNewValue = Long.parseLong(formatValue(newValue));
                     // Compare the limited and non limited values
-                    if (numericNew != shortNewValue) {
+                    if (numericNew != formattedNewValue) {
                         // Shift the time
                         long shifting = (numericNew - Long.parseLong(formatValue(newValue)));
                         // minus one to conform to 0 start

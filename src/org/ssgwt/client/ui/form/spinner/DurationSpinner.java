@@ -562,16 +562,16 @@ public class DurationSpinner extends FlowPanel implements HasValue<Integer>{
                         int newHourValue = Integer.parseInt(hourValueBox.getValue());
                         if (oldHourValue != newHourValue) {
                             if (newHourValue > getHourSpinner().getMax()) {
-                                newHourValue = (int)getHourSpinner().getMax();
+                                newHourValue = (int) getHourSpinner().getMax();
                             }
                             if (newHourValue < getHourSpinner().getMin()) {
-                                newHourValue = (int)getHourSpinner().getMin();
+                                newHourValue = (int) getHourSpinner().getMin();
                             }
                             getHourSpinner().setValue(newHourValue, true);
                             oldHourValue = newHourValue;
                         }
                     } catch (Exception e) {
-                        // This means the number entered was invalid... reverting back to the original
+                        // This means the number entered was invalid... reverting back to the original value
                         getHourSpinner().setValue(oldHourValue, true);
                     }
                 }
