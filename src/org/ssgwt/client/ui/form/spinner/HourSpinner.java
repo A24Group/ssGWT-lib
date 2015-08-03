@@ -429,7 +429,7 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
      * @return the parsed value.
      */
     protected long parseValue(String value) {
-        double doubleValue= Double.parseDouble(value);
+        double doubleValue = Double.parseDouble(value);
         return (long)(doubleValue * 100);
     }
 

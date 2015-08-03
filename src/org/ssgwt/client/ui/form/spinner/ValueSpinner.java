@@ -65,7 +65,14 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
     private Spinner spinner;
     private final TextBox valueBox = new TextBox();
     
-    public long multiplier = -1;
+    /**
+     * This stores the default multiplier used by the value spinner for calculations
+     */
+    public long multiplier = 1;
+    
+    /**
+     * This will store the old value on the spinner
+     */
     private long oldValue;
 
     private final SpinnerListener spinnerListener = new SpinnerListener() {
@@ -76,13 +83,21 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
                 getSpinner().setValue(value, false);
             }
             String updateValue = formatValue(value);
+            // Set the new value for the valueBox
             valueBox.setText(updateValue);
             if (updateValue != null && !updateValue.equals("")) {
+                // Replace old value with a new one
                 oldValue = Long.parseLong(updateValue);
             }
         }
     };
 
+    /**
+     * This is a blur handler for the numeric field
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  03 August 2015
+     */
     private final BlurHandler blurHandler = new BlurHandler() {
 
         /**
@@ -95,31 +110,39 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
          */
         @Override
         public void onBlur(BlurEvent event) {
+            // Get the value from the text box
             String value = valueBox.getValue();
             try {
+                // Convert text to number
                 long numericNew = Long.parseLong(value);
-                
+                // Set minimum as 0
                 if (numericNew < 0) {
                     numericNew = 0;
                 }
                 
-                long maxValue = getSpinner().getMax();
-                long minValue = getSpinner().getMin();
-                
+                // Calculate the difference in with the multiplier
                 long difference = numericNew - oldValue;
                 long timeDiff = difference * multiplier;
                 long newValue = spinner.getValue() + timeDiff;
                 
+                // Get a limited value for the 
                 long shortNewValue = Long.parseLong(formatValue(newValue));
-                
+                // Compare the limited and non limited values
                 if (numericNew != shortNewValue) {
+                    // Shift the time
                     long shifting = (numericNew - Long.parseLong(formatValue(newValue)));
+                    // minus one to conform to 0 start
                     shifting -= 1;
                     difference = shifting - oldValue;
                     timeDiff = difference * multiplier;
+                    // Recalculate the value
                     newValue = spinner.getValue() + timeDiff;
                 }
                 if (getSpinner().isConstrained()) {
+                    // Get spinner constraints
+                    long maxValue = getSpinner().getMax();
+                    long minValue = getSpinner().getMin();
+                    // Check that the spinner conforms to the constraints
                     if (newValue < minValue) {
                         newValue = minValue;
                     }
@@ -128,17 +151,21 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
                     }
                 }
 
+                // Set the spinner value
                 if (getSpinner() != null) {
                     getSpinner().setValue(newValue, false);
                 }
                 String updateValue = formatValue(newValue);
+                //Perform normal update
                 valueBox.setText(updateValue);
                 if (updateValue != null && !updateValue.equals("")) {
                     oldValue = Long.parseLong(updateValue);
                 }
             } catch (Exception e) {
+                // If any exception happens, we revert back to the original value that was typed in
                 valueBox.setText(formatValue(getSpinner().getValue()));
             }
+            // Fire update so that recalculations can happen
             getSpinner().fireOnValueChanged();
         }
     };
