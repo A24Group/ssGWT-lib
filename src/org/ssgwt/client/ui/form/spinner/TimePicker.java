@@ -37,14 +37,15 @@ public class TimePicker extends Composite implements FiresChangeEvents<SSDate> {
 
         public TimeSpinner(SSDate date, SSDate minDate, SSDate maxDate, DateTimeFormat dateTimeFormat, int step,
                 boolean constrained, ValueSpinnerResources styles, SpinnerResources images,
-                boolean readOnly) {
+                boolean readOnly, long multiplier) {
             super(date.getTime(), minDate.getTime(), maxDate.getTime(), 1, 99, constrained, styles, images);
             this.dateTimeFormat = dateTimeFormat;
+            this.multiplier = multiplier;
             getSpinner().setMinStep(step);
             getSpinner().setMaxStep(step);
             // Refresh value after dateTimeFormat is set
             getSpinner().setValue(date.getTime(), true);
-            getTextBox().setReadOnly(readOnly);
+            getTextBox().setReadOnly(false);
         }
 
         /**
@@ -202,13 +203,13 @@ public class TimePicker extends Composite implements FiresChangeEvents<SSDate> {
         horizontalPanel.setStylePrimaryName("gwt-TimePicker");
         if (amPmFormat != null) {
             TimeSpinner amPmSpinner = new TimeSpinner(date, min, max, amPmFormat,
-                    HALF_DAY_IN_MS, constrained, styles, images, readOnly);
+                    HALF_DAY_IN_MS, constrained, styles, images, readOnly, HALF_DAY_IN_MS);
             timeSpinners.add(amPmSpinner);
             horizontalPanel.add(amPmSpinner);
         }
         if (hoursFormat != null) {
             TimeSpinner hoursSpinner = new TimeSpinner(date, min, max, hoursFormat,
-                    HOUR_IN_MILLIS * hourStep, constrained, styles, images, readOnly);
+                    HOUR_IN_MILLIS * hourStep, constrained, styles, images, readOnly, HOUR_IN_MILLIS);
             if (timeSpinners.size() != 0) {
                 Label separator = new Label(":");
                 separator.setStylePrimaryName("gwt-TimePickerSeparator");
@@ -219,7 +220,7 @@ public class TimePicker extends Composite implements FiresChangeEvents<SSDate> {
         }
         if (minutesFormat != null) {
             TimeSpinner minutesSpinner = new TimeSpinner(date, min, max, minutesFormat,
-                    MINUTE_IN_MILLIS * minuteStep, constrained, styles, images, readOnly);
+                    MINUTE_IN_MILLIS * minuteStep, constrained, styles, images, readOnly, MINUTE_IN_MILLIS);
             if (timeSpinners.size() != 0) {
                 Label separator = new Label(":");
                 separator.setStylePrimaryName("gwt-TimePickerSeparator");
@@ -230,7 +231,7 @@ public class TimePicker extends Composite implements FiresChangeEvents<SSDate> {
         }
         if (secondsFormat != null) {
             TimeSpinner secondsSpinner = new TimeSpinner(date, min, max, secondsFormat,
-                    SECOND_IN_MILLIS, constrained, styles, images, readOnly);
+                    SECOND_IN_MILLIS, constrained, styles, images, readOnly, SECOND_IN_MILLIS);
             if (timeSpinners.size() != 0) {
                 Label separator = new Label(":");
                 separator.setStylePrimaryName("gwt-TimePickerSeparator");

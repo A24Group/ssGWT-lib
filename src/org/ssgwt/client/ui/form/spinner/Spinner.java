@@ -462,7 +462,7 @@ public class Spinner {
         timer.cancel();
     }
 
-    private void fireOnValueChanged() {
+    protected void fireOnValueChanged() {
         for (SpinnerListener listener : spinnerListeners) {
             listener.onSpinning(value);
         }

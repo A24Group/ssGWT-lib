@@ -17,6 +17,8 @@ import org.ssgwt.client.ui.datagrid.SSDataGrid.Resources;
 import org.ssgwt.client.ui.form.spinner.Spinner.SpinnerResources;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -114,6 +116,21 @@ public class DurationSpinner extends FlowPanel implements HasValue<Integer>{
      * The maximum minutes that is allowed
      */
     private int spinnerMinuteMaximum;
+    
+    /**
+     * This stores whether the spinner boxes are read only
+     */
+    private boolean readOnly = false;
+    
+    /**
+     * This will store the previous version of the hour value
+     */
+    private int oldHourValue = 0;
+    
+    /**
+     * This will store the previous version of the minute value
+     */
+    private int oldMinuteValue = 0;
 
     /**
      * A ClientBundle that provides images for this widget.
@@ -164,6 +181,7 @@ public class DurationSpinner extends FlowPanel implements HasValue<Integer>{
         public void onSpinning(long value) {
             if (getHourSpinner() != null) {
                 getHourSpinner().setValue(value, false);
+                oldHourValue = (int)value;
             }
             hourValueBox.setText(String.valueOf(value));
             
@@ -452,8 +470,10 @@ public class DurationSpinner extends FlowPanel implements HasValue<Integer>{
         
         //divide the total minutes by 60 and cast to int hours will be whole e.g 8.6h will be 8h
         int hourValue = (int) (value / 60);
+        oldHourValue = hourValue;
         //subtract the amount of minutes taken up by whole hours above to get remaining minutes.
         int minuteValue = (int) (value - (hourValue * 60));
+        oldMinuteValue = minuteValue;
         
         if (images == null) {
             hourSpinner = new Spinner(
@@ -523,6 +543,69 @@ public class DurationSpinner extends FlowPanel implements HasValue<Integer>{
         minuteValueBoxLabel = new Label(minuteLabelText);
         add(minuteSpinnerContainer);
         add(minuteValueBoxLabel);
+        
+        // Add blur handlers
+        hourValueBox.addBlurHandler(new BlurHandler() {
+            
+            /**
+             * This method will fire if focus is lost on the hour input field
+             * 
+             * @author Michael Barnard <michael.barnard@a24group.com>
+             * @since  3 August 2015
+             * 
+             * @param event - The blur event that made this code execute
+             */
+            @Override
+            public void onBlur(BlurEvent event) {
+                if (!readOnly) {
+                    try {
+                        int newHourValue = Integer.parseInt(hourValueBox.getValue());
+                        if (newHourValue > getHourSpinner().getMax()) {
+                            newHourValue = (int)getHourSpinner().getMax();
+                        }
+                        if (newHourValue < getHourSpinner().getMin()) {
+                            newHourValue = (int)getHourSpinner().getMin();
+                        }
+                        getHourSpinner().setValue(newHourValue, true);
+                        oldHourValue = newHourValue;
+                    } catch (Exception e) {
+                        // This means the number entered was invalid... reverting back to the original
+                        getHourSpinner().setValue(oldHourValue, true);
+                    }
+                }
+            }
+        });
+        
+        minuteValueBox.addBlurHandler(new BlurHandler() {
+            
+            /**
+             * This method will fire if focus is lost on the minute input field
+             * 
+             * @author Michael Barnard <michael.barnard@a24group.com>
+             * @since  3 August 2015
+             * 
+             * @param event - The blur event that made this code execute
+             */
+            @Override
+            public void onBlur(BlurEvent event) {
+                if (!readOnly) {
+                    try {
+                        int newMinuteValue = Integer.parseInt(minuteValueBox.getValue());
+                        if (newMinuteValue > getMinuteSpinner().getMax()) {
+                            newMinuteValue = (int)getMinuteSpinner().getMax();
+                        }
+                        if (newMinuteValue < getMinuteSpinner().getMin()) {
+                            newMinuteValue = (int)getMinuteSpinner().getMin();
+                        }
+                        getMinuteSpinner().setValue(newMinuteValue, true);
+                        oldMinuteValue = newMinuteValue;
+                    } catch (Exception e) {
+                        // This means the number entered was invalid... reverting back to the original
+                        getMinuteSpinner().setValue(oldMinuteValue, true);
+                    }
+                }
+            }
+        });
     }
     
     /**
@@ -558,6 +641,7 @@ public class DurationSpinner extends FlowPanel implements HasValue<Integer>{
         } else {
             minuteValueBox.setText(String.valueOf(newValue));
         }
+        oldMinuteValue = newValue;
     }
 
     /**
@@ -672,6 +756,7 @@ public class DurationSpinner extends FlowPanel implements HasValue<Integer>{
      * @param enabled - true to set the text boxes to read only, false to enable it
      */
     public void setTextBoxReadOnly(boolean enabled) {
+        this.readOnly = enabled;
         hourValueBox.setReadOnly(enabled);
         minuteValueBox.setReadOnly(enabled);
     }

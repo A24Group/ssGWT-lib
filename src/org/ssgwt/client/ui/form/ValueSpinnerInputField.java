@@ -43,7 +43,6 @@ public abstract class ValueSpinnerInputField<T> extends ValueSpinner implements 
      */
     public ValueSpinnerInputField(long value) {
         super(value);
-        System.out.println("asdf");
     }
 
     /**

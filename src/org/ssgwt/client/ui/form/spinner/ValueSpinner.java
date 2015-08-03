@@ -19,8 +19,8 @@ import org.ssgwt.client.ui.datagrid.SSDataGrid.Resources;
 import org.ssgwt.client.ui.form.spinner.Spinner.SpinnerResources;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -64,51 +64,85 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
 
     private Spinner spinner;
     private final TextBox valueBox = new TextBox();
+    
+    public long multiplier = -1;
+    private long oldValue;
 
     private final SpinnerListener spinnerListener = new SpinnerListener() {
         @Override
         public void onSpinning(long value) {
+
             if (getSpinner() != null) {
                 getSpinner().setValue(value, false);
             }
-            valueBox.setText(formatValue(value));
+            String updateValue = formatValue(value);
+            valueBox.setText(updateValue);
+            if (updateValue != null && !updateValue.equals("")) {
+                oldValue = Long.parseLong(updateValue);
+            }
         }
     };
 
-    private final KeyPressHandler keyPressHandler = new KeyPressHandler() {
+    private final BlurHandler blurHandler = new BlurHandler() {
 
+        /**
+         * This method will fire as soon as the spinner loses focus
+         * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  27 July 2015
+         * 
+         * @param event - The blur event for the focus lost
+         */
         @Override
-        public void onKeyPress(KeyPressEvent event) {
-            System.out.println(event.getCharCode());
-            int index = valueBox.getCursorPos();
-            String previousText = valueBox.getText();
-            String newText;
-            if (valueBox.getSelectionLength() > 0) {
-                newText = previousText.substring(0, valueBox.getCursorPos())
-                        + event.getCharCode()
-                        + previousText.substring(valueBox.getCursorPos()
-                                + valueBox.getSelectionLength(),
-                                previousText.length());
-            } else {
-                newText = previousText.substring(0, index)
-                        + event.getCharCode()
-                        + previousText.substring(index, previousText.length());
-            }
-            valueBox.cancelKey();
+        public void onBlur(BlurEvent event) {
+            String value = valueBox.getValue();
             try {
-                long newValue = parseValue(newText);
-                if (spinner.isConstrained()
-                        && (newValue > spinner.getMax() || newValue < spinner
-                                .getMin())) {
-                    return;
+                long numericNew = Long.parseLong(value);
+                
+                if (numericNew < 0) {
+                    numericNew = 0;
                 }
-                spinner.setValue(newValue, true);
+                
+                long maxValue = getSpinner().getMax();
+                long minValue = getSpinner().getMin();
+                
+                long difference = numericNew - oldValue;
+                long timeDiff = difference * multiplier;
+                long newValue = spinner.getValue() + timeDiff;
+                
+                long shortNewValue = Long.parseLong(formatValue(newValue));
+                
+                if (numericNew != shortNewValue) {
+                    long shifting = (numericNew - Long.parseLong(formatValue(newValue)));
+                    shifting -= 1;
+                    difference = shifting - oldValue;
+                    timeDiff = difference * multiplier;
+                    newValue = spinner.getValue() + timeDiff;
+                }
+                if (getSpinner().isConstrained()) {
+                    if (newValue < minValue) {
+                        newValue = minValue;
+                    }
+                    if (newValue > maxValue) {
+                        newValue = maxValue;
+                    }
+                }
+
+                if (getSpinner() != null) {
+                    getSpinner().setValue(newValue, false);
+                }
+                String updateValue = formatValue(newValue);
+                valueBox.setText(updateValue);
+                if (updateValue != null && !updateValue.equals("")) {
+                    oldValue = Long.parseLong(updateValue);
+                }
             } catch (Exception e) {
-                // valueBox.cancelKey();
+                valueBox.setText(formatValue(getSpinner().getValue()));
             }
+            getSpinner().fireOnValueChanged();
         }
     };
-
+    
     /**
      * Set the max value
      *
@@ -244,7 +278,6 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
             int maxStep, boolean constrained, ValueSpinnerResources resources,
             SpinnerResources images) {
         super();
-        System.out.println("construct");
         setStylePrimaryName(STYLENAME_DEFAULT);
         if (images == null) {
             spinner = new Spinner(spinnerListener, value, min, max, minStep,
@@ -253,8 +286,9 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
             spinner = new Spinner(spinnerListener, value, min, max, minStep,
                     maxStep, constrained, images);
         }
+        setValue(spinner.getValue());
         valueBox.setStyleName("textBox");
-        valueBox.addKeyPressHandler(keyPressHandler);
+        valueBox.addBlurHandler(blurHandler);
         add(valueBox);
         FlowPanel arrowsPanel = new FlowPanel();
         arrowsPanel.setStylePrimaryName("arrows");
@@ -298,7 +332,6 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
      *            true to enable the widget, false to disable it
      */
     public void setEnabled(boolean enabled) {
-    	System.out.println("enable");
         spinner.setEnabled(enabled);
         valueBox.setEnabled(enabled);
     }
@@ -309,7 +342,6 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
      * @return the formatted value
      */
     protected String formatValue(long value) {
-    	System.out.println("format");
         return String.valueOf(value);
     }
 
@@ -319,7 +351,6 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
      * @return the parsed value
      */
     protected long parseValue(String value) {
-    	System.out.println("parse");
         return Long.valueOf(value);
     }
 
@@ -335,7 +366,6 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
      */
     @Override
     public HandlerRegistration addValueChangeHandler(ValueChangeHandler<Long> handler) {
-    	System.out.println("add value change handler");
          return addHandler(handler, ValueChangeEvent.getType());
     }
 
@@ -376,7 +406,6 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
      */
     @Override
     public void setValue(Long value, boolean fireEvents) {
-    	System.out.println("setValue");
         spinner.setValue(value, fireEvents);
     }
 
