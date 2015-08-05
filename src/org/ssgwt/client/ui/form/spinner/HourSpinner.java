@@ -340,9 +340,14 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
                 String value = valueBox.getValue();
                 try {
                     long newValue = parseValue(value);
-                    if (spinner.isConstrained() && (newValue > spinner.getMax() || newValue < spinner.getMin())) {
-                        return;
+                    if (spinner.isConstrained()) {
+                        if (newValue > spinner.getMax()) {
+                            newValue = spinner.getMax();
+                        } else if (newValue < spinner.getMin()){
+                            newValue = spinner.getMin();
+                        }
                     }
+
                     newValue = Math.round((float)newValue/(float)spinner.getMinStep())*spinner.getMinStep();
                     
                     spinner.setValue(newValue, true);
