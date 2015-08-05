@@ -621,8 +621,6 @@ public class DateFilter extends AbstractHeaderFilter {
         } else if (range.equals("Last 30 days")) {
             fromDate.setDate(fromDate.getDate() - 30);
 
-            System.out.println(fromDate);
-
             toDateBox.setValue(toDate);
             fromDateBox.setValue(fromDate);
 

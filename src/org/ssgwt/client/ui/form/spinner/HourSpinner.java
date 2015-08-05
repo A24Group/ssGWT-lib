@@ -17,8 +17,8 @@ import org.ssgwt.client.ui.datagrid.SSDataGrid.Resources;
 import org.ssgwt.client.ui.form.spinner.Spinner.SpinnerResources;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -128,54 +128,6 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
                 getSpinner().setValue(value, false);
             }
             valueBox.setText(formatValue(value));
-        }
-    };
-
-    /**
-     * The key press handler that handle the event of a key press.
-     *
-     * @author Alec Erasmus <alec.erasmus@a24group.com>
-     * @since  08 July 2013
-     */
-    private final KeyPressHandler keyPressHandler = new KeyPressHandler() {
-
-        /**
-         * Function that is called each time an a key is pressed
-         *
-         * @author Alec Erasmus <alec.erasmus@a24group.com>
-         * @since  08 July 2013
-         *
-         * @param event - The KeyPressEvent fired
-         */
-        @Override
-        public void onKeyPress(KeyPressEvent event) {
-            int index = valueBox.getCursorPos();
-            String previousText = valueBox.getText();
-            String newText;
-            if (valueBox.getSelectionLength() > 0) {
-                newText = previousText.substring(
-                    0,
-                    valueBox.getCursorPos())
-                    + event.getCharCode()
-                    + previousText.substring(
-                        valueBox.getCursorPos() + valueBox.getSelectionLength(),
-                        previousText.length()
-                    );
-            } else {
-                newText = previousText.substring(0, index)
-                    + event.getCharCode()
-                    + previousText.substring(index, previousText.length());
-            }
-            valueBox.cancelKey();
-            try {
-                long newValue = parseValue(newText);
-                if (spinner.isConstrained() && (newValue > spinner.getMax() || newValue < spinner.getMin())) {
-                    return;
-                }
-                spinner.setValue(newValue, true);
-            } catch (Exception e) {
-                // Die silently
-            }
         }
     };
 
@@ -372,7 +324,38 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
             );
         }
         valueBox.setStyleName(TEXTBOX_STYLE);
-        valueBox.addKeyPressHandler(keyPressHandler);
+        valueBox.addBlurHandler(new BlurHandler() {
+
+            /**
+             * This method will fire as soon as the spinner loses focus
+             * 
+             * @author Michael Barnard <michael.barnard@a24group.com>
+             * @since  27 July 2015
+             * 
+             * @param event - The blur event for the focus lost
+             */
+            @Override
+            public void onBlur(BlurEvent event) {
+                long oldValue = spinner.getValue();
+                String value = valueBox.getValue();
+                try {
+                    long newValue = parseValue(value);
+                    if (spinner.isConstrained()) {
+                        if (newValue > spinner.getMax()) {
+                            newValue = spinner.getMax();
+                        } else if (newValue < spinner.getMin()){
+                            newValue = spinner.getMin();
+                        }
+                    }
+
+                    newValue = Math.round((float)newValue/(float)spinner.getMinStep())*spinner.getMinStep();
+                    
+                    spinner.setValue(newValue, true);
+                } catch (Exception e) {
+                    spinner.setValue(oldValue, true);
+                }
+            }
+        });
         spinnerContainer.add(valueBox);
 
         FlowPanel arrowsPanel = new FlowPanel();
@@ -452,8 +435,7 @@ public class HourSpinner extends FlowPanel implements HasValue<Double>{
      */
     protected long parseValue(String value) {
         double doubleValue = Double.parseDouble(value);
-        doubleValue = doubleValue * 100;
-        return Long.valueOf(String.valueOf(doubleValue));
+        return (long)(doubleValue * 100);
     }
 
     /**

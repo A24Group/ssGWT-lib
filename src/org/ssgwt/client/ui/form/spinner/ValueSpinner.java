@@ -19,8 +19,8 @@ import org.ssgwt.client.ui.datagrid.SSDataGrid.Resources;
 import org.ssgwt.client.ui.form.spinner.Spinner.SpinnerResources;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -64,50 +64,110 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
 
     private Spinner spinner;
     private final TextBox valueBox = new TextBox();
+    
+    /**
+     * This stores the default multiplier used by the value spinner for calculations
+     */
+    public long multiplier = 1;
+    
+    /**
+     * This will store the old value on the spinner
+     */
+    private long oldValue;
 
     private final SpinnerListener spinnerListener = new SpinnerListener() {
         @Override
         public void onSpinning(long value) {
+
             if (getSpinner() != null) {
                 getSpinner().setValue(value, false);
             }
-            valueBox.setText(formatValue(value));
+            String updateValue = formatValue(value);
+            // Set the new value for the valueBox
+            valueBox.setText(updateValue);
+            if (updateValue != null && !updateValue.equals("")) {
+                // Replace old value with a new one
+                oldValue = Long.parseLong(updateValue);
+            }
         }
     };
 
-    private final KeyPressHandler keyPressHandler = new KeyPressHandler() {
+    /**
+     * This is a blur handler for the numeric field
+     * 
+     * @author Michael Barnard <michael.barnard@a24group.com>
+     * @since  03 August 2015
+     */
+    private final BlurHandler blurHandler = new BlurHandler() {
 
+        /**
+         * This method will fire as soon as the spinner loses focus
+         * 
+         * @author Michael Barnard <michael.barnard@a24group.com>
+         * @since  27 July 2015
+         * 
+         * @param event - The blur event for the focus lost
+         */
         @Override
-        public void onKeyPress(KeyPressEvent event) {
-            int index = valueBox.getCursorPos();
-            String previousText = valueBox.getText();
-            String newText;
-            if (valueBox.getSelectionLength() > 0) {
-                newText = previousText.substring(0, valueBox.getCursorPos())
-                        + event.getCharCode()
-                        + previousText.substring(valueBox.getCursorPos()
-                                + valueBox.getSelectionLength(),
-                                previousText.length());
-            } else {
-                newText = previousText.substring(0, index)
-                        + event.getCharCode()
-                        + previousText.substring(index, previousText.length());
-            }
-            valueBox.cancelKey();
-            try {
-                long newValue = parseValue(newText);
-                if (spinner.isConstrained()
-                        && (newValue > spinner.getMax() || newValue < spinner
-                                .getMin())) {
-                    return;
+        public void onBlur(BlurEvent event) {
+            // Get the value from the text box
+            String value = valueBox.getValue();
+            if (!value.equals(formatValue(getSpinner().getValue()))){
+                try {
+                    // Convert text to number
+                    long numericNew = Long.parseLong(value);
+                    
+                    // Calculate the difference between the typed value and the old value
+                    long difference = numericNew - oldValue;
+                    long timeDiff = difference * multiplier;
+                    long newValue = spinner.getValue() + timeDiff;
+                    
+                    // Get a formatted version of the value typed in
+                    long formattedNewValue = Long.parseLong(formatValue(newValue));
+                    // Compare the limited and non limited values
+                    if (numericNew != formattedNewValue) {
+                        // Shift the time
+                        long shifting = (numericNew - Long.parseLong(formatValue(newValue)));
+                        // minus one to conform to 0 start
+                        shifting -= 1;
+                        difference = shifting - oldValue;
+                        timeDiff = difference * multiplier;
+                        // Recalculate the value
+                        newValue = spinner.getValue() + timeDiff;
+                    }
+                    if (getSpinner().isConstrained()) {
+                        // Get spinner constraints
+                        long maxValue = getSpinner().getMax();
+                        long minValue = getSpinner().getMin();
+                        // Check that the spinner conforms to the constraints
+                        if (newValue < minValue) {
+                            newValue = minValue;
+                        }
+                        if (newValue > maxValue) {
+                            newValue = maxValue;
+                        }
+                    }
+    
+                    // Set the spinner value
+                    if (getSpinner() != null) {
+                        getSpinner().setValue(newValue, false);
+                    }
+                    String updateValue = formatValue(newValue);
+                    //Perform normal update
+                    valueBox.setText(updateValue);
+                    if (updateValue != null && !updateValue.equals("")) {
+                        oldValue = Long.parseLong(updateValue);
+                    }
+                    // Fire update so that recalculations can happen
+                    getSpinner().fireOnValueChanged();
+                } catch (Exception e) {
+                    // If any exception happens, we revert back to the original value that was typed in
+                    valueBox.setText(formatValue(getSpinner().getValue()));
                 }
-                spinner.setValue(newValue, true);
-            } catch (Exception e) {
-                // valueBox.cancelKey();
             }
         }
     };
-
+    
     /**
      * Set the max value
      *
@@ -251,8 +311,9 @@ public class ValueSpinner extends FlowPanel implements HasValue<Long>{
             spinner = new Spinner(spinnerListener, value, min, max, minStep,
                     maxStep, constrained, images);
         }
+        setValue(spinner.getValue());
         valueBox.setStyleName("textBox");
-        valueBox.addKeyPressHandler(keyPressHandler);
+        valueBox.addBlurHandler(blurHandler);
         add(valueBox);
         FlowPanel arrowsPanel = new FlowPanel();
         arrowsPanel.setStylePrimaryName("arrows");
