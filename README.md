@@ -22,6 +22,7 @@ Easiest is to include this in your auto generated code stub
 # The following sections are included in the ssGWT project
 
 ## Validation
+
 This pacakge contains reusable validation components. These components include validators that can be called by a ValidationChain or a FormValidator
 Each validator implements the ValidatorInterface to ensure that each validator has the `isValid()` method.
 
