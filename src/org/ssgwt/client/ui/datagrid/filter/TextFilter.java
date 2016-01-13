@@ -693,11 +693,10 @@ public class TextFilter extends AbstractHeaderFilter {
     
     /**
      * Retrieves the check box that is displayed on the TextFilter.
-     * This function is protected as it is only used by test cases.
      * 
      * @return instance of the check box that is displayed on the TextFilter
      */
-    protected CheckBox getCheckBox() {
+    public CheckBox getCheckBox() {
         return checkBox;
     }
 
