@@ -697,7 +697,7 @@ public class TextFilter extends AbstractHeaderFilter {
      * 
      * @return instance of the check box that is displayed on the TextFilter
      */
-    protected CheckBox getCheckBox() {
+    public CheckBox getCheckBox() {
         return checkBox;
     }
 
