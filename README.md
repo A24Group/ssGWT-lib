@@ -49,7 +49,7 @@ This class contains the styling and action application of the MenuItems for the 
 This class stores the values used for both the LeftMenuBar and the TopMenuBar buttons
 
 ### TopMenuBar
-This class will display the the top menu based on buttons made from a list on MenuItems sent in to it
+This class will display the top menu based on buttons made from a list on MenuItems sent in to it
 
 ## Datagrid
 
