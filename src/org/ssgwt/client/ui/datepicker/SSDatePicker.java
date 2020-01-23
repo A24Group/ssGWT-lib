@@ -37,7 +37,7 @@ public class SSDatePicker extends DatePicker {
      * Default maximum year that will be displayed in the default date picker's
      * year combo box.
      */
-    public static final int DEFAULT_MAXIMUM_YEAR = 2020;
+    public static final int DEFAULT_MAXIMUM_YEAR = 2040;
 
     /**
      * Default constructor. This creates an instance that with the minimum and
