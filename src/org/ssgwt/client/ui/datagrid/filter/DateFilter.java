@@ -445,8 +445,8 @@ public class DateFilter extends AbstractHeaderFilter {
             resources,
             new SSDate(70, 0, 1),
             new SSDate(70, 0, 1),
-            new SSDate(120, 11, 31),
-            new SSDate(120, 11, 31)
+            new SSDate(140, 11, 31),
+            new SSDate(140, 11, 31)
         );
     }
 
