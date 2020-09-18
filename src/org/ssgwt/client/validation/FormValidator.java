@@ -26,6 +26,7 @@ import org.ssgwt.client.validation.validators.StringRegexValidator;
 import org.ssgwt.client.validation.validators.StringValidator;
 import org.ssgwt.client.validation.validators.UsernameValidator;
 import org.ssgwt.client.validation.validators.ValidatorInterface;
+import org.ssgwt.client.validation.validators.RangeValidator;
 
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Widget;
@@ -177,6 +178,8 @@ public class FormValidator {
             formValidationInstance = new StringRegexValidator();
         } else if (validatorReferenceName.equals(FormFieldConstants.VALIDATE_AGE_REFERENCE)) {
             formValidationInstance = new AgeValidator();
+        } else if (validatorReferenceName.equals(FormFieldConstants.VALIDATE_MINMAX_REFERENCE)) {
+            formValidationInstance = new RangeValidator();
         }
 
         //add validation class instance to array
