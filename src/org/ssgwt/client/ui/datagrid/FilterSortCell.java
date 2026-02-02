@@ -210,7 +210,14 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> implements HasHa
         Element filterImageElement = getImageElement(parent);
         Element filterImageParentElement = filterImageElement.getParentElement();
 
-        if (event.getEventTarget().equals(filterImageElement)) {
+        Element eventTarget = Element.as(event.getEventTarget());
+
+        // Check if click is on the image OR on the image's parent container (Chrome 144+ fix)
+        boolean isTargetMatch = eventTarget == filterImageElement
+            || filterImageElement.isOrHasChild(eventTarget)
+            || eventTarget.isOrHasChild(filterImageElement);
+
+        if (isTargetMatch) {
             if ("mousedown".equals(event.getType())) {
                 replaceImageElement(resources.filterIconDown(), filterImageElement, filterImageParentElement);
             } else if ("mouseover".equals(event.getType())) {
@@ -342,12 +349,30 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> implements HasHa
 
     /**
      * This is used to fire an event
-     * 
+     *
      * @param event - The event that needs to be fired
      */
     @Override
     public void fireEvent(GwtEvent<?> event) {
         handlerManager.fireEvent(event);
     }
+
+    /**
+     * Native method to log to browser console for debugging
+     */
+    private static native void logToConsole(String message) /*-{
+        if (typeof console !== "undefined" && typeof console.log !== "undefined") {
+            console.log("[FilterSortCell] " + message);
+        }
+    }-*/;
+
+    /**
+     * Native method to log an object to browser console for debugging
+     */
+    private static native void logObjectToConsole(String label, Object obj) /*-{
+        if (typeof console !== "undefined" && typeof console.log !== "undefined") {
+            console.log("[FilterSortCell] " + label, obj);
+        }
+    }-*/;
 
 }
