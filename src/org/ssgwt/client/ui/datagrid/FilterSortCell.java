@@ -357,22 +357,4 @@ public class FilterSortCell extends AbstractCell<HeaderDetails> implements HasHa
         handlerManager.fireEvent(event);
     }
 
-    /**
-     * Native method to log to browser console for debugging
-     */
-    private static native void logToConsole(String message) /*-{
-        if (typeof console !== "undefined" && typeof console.log !== "undefined") {
-            console.log("[FilterSortCell] " + message);
-        }
-    }-*/;
-
-    /**
-     * Native method to log an object to browser console for debugging
-     */
-    private static native void logObjectToConsole(String label, Object obj) /*-{
-        if (typeof console !== "undefined" && typeof console.log !== "undefined") {
-            console.log("[FilterSortCell] " + label, obj);
-        }
-    }-*/;
-
 }
